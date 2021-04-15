@@ -1,0 +1,6 @@
+framework module Pharos {
+  umbrella header "Pharos-umbrella.h"
+
+  export *
+  module * { export * }
+}
