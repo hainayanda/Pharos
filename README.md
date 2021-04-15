@@ -185,6 +185,23 @@ class MyClass {
         $text.whenDidUniqueSet { changes in
             print(changes.new)
             print(changes.old)
+        }.multipleSetDelayed(by: 1)
+    }
+}
+```
+
+## Add DispatchQueue
+
+You could add `DispatchQueue` to make sure your observable is run on right thread. If DispatchQueue is not provided, it will use the thread from the notifier:
+
+```swift
+class MyClass {
+    @Observable var text: String?
+    
+    func observeText() {
+        $text.whenDidUniqueSet { changes in
+            print(changes.new)
+            print(changes.old)
         }.observe(on: .main)
     }
 }
@@ -202,22 +219,6 @@ class MyClass {
             print(changes.old)
         }.observe(on: .main)
         .syncWhenInSameThread()
-    }
-}
-```
-
-## Add DispatchQueue
-
-You could add `DispatchQueue` to make sure your observable is run on right thread. If DispatchQueue is not provided, it will use the thread from the notifier:
-```swift
-class MyClass {
-    @Observable var text: String?
-    
-    func observeText() {
-        $text.whenDidUniqueSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.multipleSetDelayed(by: 1)
     }
 }
 ```
