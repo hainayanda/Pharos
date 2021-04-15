@@ -28,15 +28,15 @@ pod 'Pharos'
 
 ### Swift Package Manager
 
-First, create a Package.swift file and add this github url. It should look like:
+Pharos is available through [Swift Package Manager](https://swift.org/package-manager/). To install it, 
+simply go to File > Swift Package > Add Swift Package Dependency and add "https://github.com/nayanda1/Pharos.git" as Swift Package URL.
+Or add the following line to Package.swift:
 
 ```swift
 dependencies: [
     .package(url: "https://github.com/nayanda1/Pharos.git", from: "1.0.0")
 ]
 ```
-
-Then run swift build to build the dependency before you use it
 
 ## Author
 
