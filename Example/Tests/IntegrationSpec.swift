@@ -1,7 +1,10 @@
+import Foundation
 import Quick
 import Nimble
 import Pharos
+#if canImport(UIKit)
 import UIKit
+#endif
 import Quick
 import Nimble
 @testable import Pharos
@@ -11,11 +14,15 @@ class ObservableStateSpec: QuickSpec {
         describe("observable state property wrapper") {
             var initialValue: String?
             var observables: Observable<String?>!
+            #if canImport(UIKit)
             var label: UILabel!
+            #endif
             beforeEach {
                 initialValue = .randomString(length: 9)
                 observables = .init(wrappedValue: initialValue)
+                #if canImport(UIKit)
                 label = .init()
+                #endif
             }
             it("should notify next observer on set") {
                 let new: String = .randomString()
@@ -57,7 +64,7 @@ class ObservableStateSpec: QuickSpec {
                         expect(changes.old).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
-                }
+                    }
                 observables.wrappedValue = new
                 expect(didSetCount).to(equal(1))
             }
@@ -182,6 +189,7 @@ class ObservableStateSpec: QuickSpec {
                 expect(latestChanges.old.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(newBool))
             }
+            #if canImport(UIKit)
             it("should bond with view") {
                 var source: Any = self
                 var didSetCount: Int = 0
@@ -193,6 +201,26 @@ class ObservableStateSpec: QuickSpec {
                 label.text = fromLabel
                 expect(observables.wrappedValue).to(equal(fromLabel))
                 expect(source as? UILabel).to(equal(label))
+                expect(didSetCount).to(equal(1))
+                let fromState = String.randomString()
+                observables.wrappedValue = fromState
+                expect(observables.wrappedValue).to(equal(fromState))
+                expect(source as? Observable<String?>).toNot(beNil())
+                expect(didSetCount).to(equal(2))
+            }
+            #endif
+            it("should bond with NSObject") {
+                let object: Dummy = .init()
+                var source: Any = self
+                var didSetCount: Int = 0
+                observables.relay.bond(with: object, \.text).whenDidSet { changes in
+                    source = changes.source
+                    didSetCount += 1
+                }
+                let fromObject = String.randomString()
+                object.text = fromObject
+                expect(observables.wrappedValue).to(equal(fromObject))
+                expect(source as? Dummy).to(equal(object))
                 expect(didSetCount).to(equal(1))
                 let fromState = String.randomString()
                 observables.wrappedValue = fromState
@@ -218,16 +246,13 @@ class ObservableStateSpec: QuickSpec {
     }
 }
 
+class Dummy: NSObject {
+    @objc dynamic var text: String?
+}
+
 extension String {
-    public static func randomString(length: Int = 9) -> String {
-        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let len = UInt32(letters.length)
-        var randomString = ""
-        for _ in 0 ..< length {
-            let rand = arc4random_uniform(len)
-            var nextChar = letters.character(at: Int(rand))
-            randomString += NSString(characters: &nextChar, length: 1) as String
-        }
-        return randomString
+    static func randomString(length: Int = 8) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
