@@ -235,7 +235,7 @@ class MyClass {
         $text.whenDidSet { changes in
             print("first closure")
         }.whenDidSet { changes in
-            print("second closure")
+            print("will replace first closure")
         }
     }
 }
