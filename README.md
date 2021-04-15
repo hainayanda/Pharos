@@ -4,9 +4,9 @@ Pharos is Observer pattern framework for Swift that utilize `propertyWrapper`
 
 ![build](https://github.com/nayanda1/Pharos/workflows/build/badge.svg)
 ![test](https://github.com/nayanda1/Pharos/workflows/test/badge.svg)
-[![Version](https://img.shields.io/cocoapods/v/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Pharos)
-[![License](https://img.shields.io/cocoapods/l/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Pharos)
-[![Platform](https://img.shields.io/cocoapods/p/Draftsman.svg?style=flat)](https://cocoapods.org/pods/Pharos)
+[![Version](https://img.shields.io/cocoapods/v/Pharos.svg?style=flat)](https://cocoapods.org/pods/Pharos)
+[![License](https://img.shields.io/cocoapods/l/Pharos.svg?style=flat)](https://cocoapods.org/pods/Pharos)
+[![Platform](https://img.shields.io/cocoapods/p/Pharos.svg?style=flat)](https://cocoapods.org/pods/Pharos)
 
 ## Example
 
