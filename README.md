@@ -110,6 +110,8 @@ class MyClass {
 }
 ```
 
+it will store self as weak reference for the method call.
+
 if you want the observer to run using the current value, just invoke it:
 
 ```swift
@@ -124,8 +126,6 @@ class MyClass {
     }
 }
 ```
-
-it will store self as weak reference for the method call.
 
 ## Bonding using KVO
 
