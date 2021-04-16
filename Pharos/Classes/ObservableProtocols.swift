@@ -26,7 +26,7 @@ public protocol ObservableRelay: class {
     @discardableResult
     func relayNotification(to relay: BaseRelay<Observed>) -> Self
     @discardableResult
-    func relayValue(to relay: BondableRelay<Observed>) -> BondableRelay<Observed>
+    func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed>
     func invokeRelay()
 }
 
@@ -53,7 +53,7 @@ public extension ObservableRelay {
     }
     
     @discardableResult
-    func relayValue(to relay: BondableRelay<Observed>) -> BondableRelay<Observed> {
+    func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
         relayNotification(to: ClosureRelay { [weak relay] changes in
             relay?.relayBack(changes: changes)
         })

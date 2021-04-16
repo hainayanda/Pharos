@@ -85,10 +85,7 @@ class RelayDispatchHandler<Value>: RelayOperationHandler {
         (dispatcher ?? OperationQueue.current?.underlyingQueue) ?? .main
     }
     
-    var uniqueKey: String {
-        let address = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
-        return NSString(format: "%p", address) as String
-    }
+    var uniqueKey: String = UUID().uuidString
     
     func relay(changes: Changes<Value>) {
         guard let consumer = self.consumer else { return }
