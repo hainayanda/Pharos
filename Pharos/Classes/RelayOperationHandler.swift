@@ -85,10 +85,7 @@ class RelayDispatchHandler<Value>: RelayOperationHandler {
         (dispatcher ?? OperationQueue.current?.underlyingQueue) ?? .main
     }
     
-    var uniqueKey: String {
-        let address = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
-        return NSString(format: "%p", address) as String
-    }
+    var uniqueKey: String = UUID().uuidString
     
     func relay(changes: Changes<Value>) {
         guard let consumer = self.consumer else { return }
@@ -177,14 +174,14 @@ extension RelayDispatchHandler {
         override var isReady: Bool { state == .idle }
         override var isExecuting: Bool { state == .running }
         override var isCancelled: Bool { state == .cancelled }
-        override var isFinished: Bool { state == .completed }
+        override var isFinished: Bool { state == .completed || state == .cancelled }
         
         init(_ closure: @escaping () -> Void) {
             self.closure = closure
             super.init()
         }
         
-        override func start() {
+        override func main() {
             defer {
                 state = .completed
             }
@@ -192,10 +189,6 @@ extension RelayDispatchHandler {
                 return
             }
             state = .running
-            main()
-        }
-        
-        override func main() {
             closure()
         }
         

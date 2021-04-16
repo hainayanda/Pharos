@@ -20,10 +20,7 @@ open class BaseRelay<Value>: RelayOperationHandler, Hashable {
     
     var isInvalid: Bool { referenced && discardable?.discarded ?? true }
     
-    var uniqueKey: String {
-        let address = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
-        return NSString(format: "%p", address) as String
-    }
+    var uniqueKey: String = UUID().uuidString
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uniqueKey)

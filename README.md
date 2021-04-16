@@ -30,7 +30,7 @@ pod 'Pharos'
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Pharos.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.0.0** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.1.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
