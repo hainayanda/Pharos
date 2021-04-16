@@ -17,7 +17,11 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
     }
     
     open func relayBack(changes: Changes<Value>) {
-        callBackRelay?(changes)
+        guard let callBack = callBackRelay else {
+            relay(changes: changes)
+            return
+        }
+        callBack(changes)
     }
     
     public func relayBackConsumer(_ consumer: @escaping BackConsumer) {
