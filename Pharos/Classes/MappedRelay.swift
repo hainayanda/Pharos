@@ -15,7 +15,7 @@ public extension ObservableRelay {
     }
 }
 
-public class MappedRelay<Value, Mapped>: NextRelay<Value>, ObservableRelay {
+public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     
     public typealias Mapper = (Value) -> Mapped
     public typealias Observed = Mapped
@@ -23,7 +23,7 @@ public class MappedRelay<Value, Mapped>: NextRelay<Value>, ObservableRelay {
     public internal(set) var currentValue: Mapped
     
     var relayDispatch: RelayDispatchHandler<Mapped> = .init()
-    var nextRelays: Set<NextRelay<Mapped>> = Set()
+    var nextRelays: Set<BaseRelay<Mapped>> = Set()
     let mapper: Mapper
     
     init(value: Value, mapper: @escaping Mapper) {
@@ -31,7 +31,7 @@ public class MappedRelay<Value, Mapped>: NextRelay<Value>, ObservableRelay {
         self.mapper = mapper
     }
     
-    override func relay(changes: Changes<Value>) {
+    public override func relay(changes: Changes<Value>) {
         let mappedChanges = changes.map(mapper)
         currentValue = mappedChanges.new
         relayDispatch.relay(changes: mappedChanges)
@@ -64,12 +64,8 @@ public class MappedRelay<Value, Mapped>: NextRelay<Value>, ObservableRelay {
         return self
     }
     
-    public func addNext() -> ValueRelay<Mapped> {
+    public func nextRelay() -> ValueRelay<Mapped> {
         return ValueRelay<Mapped>(currentValue: currentValue)
-    }
-    
-    public func addNext(with dereferencer: Dereferencer) -> ValueRelay<Mapped> {
-        addNext().with(dereferencer: dereferencer)
     }
     
     public func invokeRelay() {
@@ -86,7 +82,7 @@ public class MappedRelay<Value, Mapped>: NextRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func relayNotification(to relay: NextRelay<Mapped>) -> Self {
+    public func relayNotification(to relay: BaseRelay<Mapped>) -> Self {
         nextRelays.insert(relay)
         return self
     }

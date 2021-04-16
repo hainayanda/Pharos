@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class NextRelay<Value>: RelayOperationHandler, Hashable {
+open class BaseRelay<Value>: RelayOperationHandler, Hashable {
     
     var referenced: Bool = false
     weak var discardable: Discardable? {
@@ -29,11 +29,11 @@ public class NextRelay<Value>: RelayOperationHandler, Hashable {
         hasher.combine(uniqueKey)
     }
     
-    func relay(changes: Changes<Value>) {
+    open func relay(changes: Changes<Value>) {
         fatalError("should overridden")
     }
     
-    func with(dereferencer: Dereferencer) -> Self {
+    open func referenceManaged(by dereferencer: Dereferencer) -> Self {
         dereferencer.add(discardable: makeDiscardable())
         return self
     }
@@ -49,11 +49,11 @@ public class NextRelay<Value>: RelayOperationHandler, Hashable {
         return discardable
     }
     
-    public func removeAllNextRelays() {
+    open func removeAllNextRelays() {
         fatalError("should overridden")
     }
     
-    public static func == (lhs: NextRelay<Value>, rhs: NextRelay<Value>) -> Bool {
+    public static func == (lhs: BaseRelay<Value>, rhs: BaseRelay<Value>) -> Bool {
         lhs.uniqueKey == rhs.uniqueKey
     }
 }
