@@ -20,14 +20,21 @@ public protocol ObservableRelay: class {
     @discardableResult
     func syncWhenInSameThread() -> Self
     @discardableResult
-    func addNext() -> ValueRelay<Observed>
+    func referenceManaged(by dereferencer: Dereferencer) -> Self
     @discardableResult
-    func addNext(with dereferencer: Dereferencer) -> ValueRelay<Observed>
+    func nextRelay() -> ValueRelay<Observed>
     @discardableResult
-    func relayNotification(to relay: NextRelay<Observed>) -> Self
+    func relayNotification(to relay: BaseRelay<Observed>) -> Self
     @discardableResult
     func relayValue(to relay: BondableRelay<Observed>) -> BondableRelay<Observed>
     func invokeRelay()
+}
+
+public protocol CallBackRelay {
+    associatedtype ValueBack
+    typealias BackConsumer = (Changes<ValueBack>) -> Void
+    func relayBack(changes: Changes<ValueBack>)
+    func relayBackConsumer(_ consumer: @escaping BackConsumer)
 }
 
 public protocol StateObservable {

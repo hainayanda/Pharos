@@ -39,7 +39,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -151,7 +151,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.bond(with: textField, \.text)
+        $text.bonding(with: .relay(of: textField, \.text))
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -170,7 +170,7 @@ class MyClass {
     @Observable var text: String?
     
     func applyToField() {
-        $text.bondAndApply(to: textField, \.text)
+        $text.bondAndApply(to: .relay(of: textField, \.text))
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -178,11 +178,30 @@ class MyClass {
     }
     
     func mapFromField() {
-        $text.bondAndMap(from: textField, \.text)
+        $text.bondAndMap(from: .relay(of: textField, \.text))
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
+    }
+}
+```
+
+Actually what `relay(of:,)` static method do is creating `TwoWayRelay` of given object keypath. `TwoWayRelay` is open, so you could also creating one of your own. You can always treat `TwoWayRelay` as observable:
+
+```swift
+class MyClass {
+    var relay: TwoWayRelay<String?>
+
+    init(textField: UITextField) {
+        self.relay = .relay(of: textField, \.text)
+    }
+    
+    func observeRelay() {
+        relay.whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }
     }
 }
 ```
@@ -269,20 +288,20 @@ class MyClass {
     func observeTextLinearly() {
         $text.whenDidSet { changes in
             print("notified by Observable")
-        }.addNext().whenDidSet { changes in
+        }.nextRelay().whenDidSet { changes in
             print("notified by Main Relay")
-        }.addNext().whenDidSet { changes in
+        }.nextRelay().whenDidSet { changes in
             print("notified by Previous Relay")
         }
     }
     
     func addRelayToMainRelay() {
-        $text.addNext().whenDidSet {
+        $text.nextRelay().whenDidSet {
             print("notified by Main Relay")
         }
-        $text.addNext().whenDidSet {
+        $text.nextRelay().whenDidSet {
             print("notified by Main Relay Too")
-        }.addNext().whenDidSet { changes in
+        }.nextRelay().whenDidSet { changes in
             print("notified by Previous Relay")
         }
     }
@@ -371,7 +390,8 @@ class MyClass {
     var dereferencer: Dereferencer = .init()
     
     func observeText() {
-        $text.addNext(with: dereferencer)
+        $text.nextRelay()
+            .referenceManaged(by: dereferencer)
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)

@@ -7,19 +7,19 @@
 
 import Foundation
 
-public class ValueRelay<Value>: NextRelay<Value>, ObservableRelay {
+open class ValueRelay<Value>: BaseRelay<Value>, ObservableRelay {
     
     public typealias Observed = Value
     
     public internal(set) var currentValue: Value
     var relayDispatch: RelayDispatchHandler<Value> = .init()
-    var nextRelays: Set<NextRelay<Value>> = Set()
+    var nextRelays: Set<BaseRelay<Value>> = Set()
     
-    init(currentValue: Value) {
+    public init(currentValue: Value) {
         self.currentValue = currentValue
     }
     
-    override func relay(changes: Changes<Value>) {
+    open override func relay(changes: Changes<Value>) {
         currentValue = changes.new
         relayDispatch.relay(changes: changes)
         nextRelays = nextRelays.filter {
@@ -53,14 +53,10 @@ public class ValueRelay<Value>: NextRelay<Value>, ObservableRelay {
         return self
     }
     
-    public func addNext() -> ValueRelay<Value> {
+    public func nextRelay() -> ValueRelay<Value> {
         let nextRelay = ValueRelay<Value>(currentValue: currentValue)
         relayNotification(to: nextRelay)
         return nextRelay
-    }
-    
-    public func addNext(with dereferencer: Dereferencer) -> ValueRelay<Value> {
-        addNext().with(dereferencer: dereferencer)
     }
     
     public func invokeRelay() {
@@ -73,7 +69,7 @@ public class ValueRelay<Value>: NextRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func relayNotification(to relay: NextRelay<Value>) -> Self {
+    public func relayNotification(to relay: BaseRelay<Value>) -> Self {
         nextRelays.insert(relay)
         return self
     }

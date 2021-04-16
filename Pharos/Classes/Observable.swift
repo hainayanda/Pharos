@@ -9,10 +9,14 @@ import Foundation
 
 @propertyWrapper
 public class Observable<Wrapped>: StateObservable {
-    lazy var relay: BondableRelay<Wrapped> = .init(currentValue: _wrappedValue) { [weak self] changes in
-        guard let self = self else { return }
-        self.setAndInformToRelay(with: changes)
-    }
+    lazy public internal(set) var relay: BondableRelay<Wrapped> = {
+        let relay = BondableRelay<Wrapped>(currentValue: _wrappedValue)
+        relay.relayBackConsumer { [weak self] changes in
+            guard let self = self else { return }
+            self.setAndInformToRelay(with: changes)
+        }
+        return relay
+    }()
     private var _wrappedValue: Wrapped
     public var wrappedValue: Wrapped {
         get {

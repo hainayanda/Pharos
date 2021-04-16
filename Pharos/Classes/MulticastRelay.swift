@@ -75,7 +75,7 @@ public func mergeRelays<R1: ObservableRelay, R2: ObservableRelay, R3: Observable
     relay1.merge(with: relay2, relay3, relay4)
 }
 
-class ClosureRelay<Value>: NextRelay<Value> {
+class ClosureRelay<Value>: BaseRelay<Value> {
     
     typealias RelayAction = (Changes<Value>) -> Void
     
