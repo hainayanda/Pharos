@@ -30,6 +30,13 @@ public protocol ObservableRelay: class {
     func invokeRelay()
 }
 
+public protocol CallBackRelay {
+    associatedtype ValueBack
+    typealias BackConsumer = (Changes<ValueBack>) -> Void
+    func relayBack(changes: Changes<ValueBack>)
+    func relayBackConsumer(_ consumer: @escaping BackConsumer)
+}
+
 public protocol StateObservable {
     func invokeRelayWithCurrent()
     func removeAllRelay()
