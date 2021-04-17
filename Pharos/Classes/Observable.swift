@@ -17,7 +17,7 @@ public class Observable<Wrapped>: StateObservable {
         }
         return relay
     }()
-    private var _wrappedValue: Wrapped
+    var _wrappedValue: Wrapped
     public var wrappedValue: Wrapped {
         get {
             _wrappedValue
