@@ -143,12 +143,12 @@ class MyClass {
 
 ## Custom getter and setter
 
-You can create Observable using custom getter and setter which will relay value if there's some value set to those observable. Use `ObservableMutator`:
+You can create Observable using custom getter and setter which will relay value if there's some value set to those observable.
 
 ```swift
 class MyClass {
     var button: UIButton = .init()
-    @ObservableMutator var title: String?
+    @Observable var title: String?
     
     func observeText() {
         _title.mutator {
