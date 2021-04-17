@@ -106,6 +106,7 @@
 		BAE453A15CC93D9864577A1FEDE4E0E7 /* Contain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C27EE7E44371B589841046617BC4EA /* Contain.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB0DA8E626297F38001B51D5 /* KVORelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DA8E526297F38001B51D5 /* KVORelay.swift */; };
 		BB0DA8FD26299252001B51D5 /* TwoWayRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0DA8FC26299252001B51D5 /* TwoWayRelay.swift */; };
+		BB3D2A5C262A9FBC00218AD2 /* ObservableMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D2A5B262A9FBC00218AD2 /* ObservableMutator.swift */; };
 		BE56C54CD29F23A1C631645390E8569D /* ErrorUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330449905CBD0256B295240608C83E2E /* ErrorUtility.swift */; };
 		BFEBC90223F66B0FF770B92B1C670BCF /* QuickConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D92C57D471EE3A427AB823E625B39311 /* QuickConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C296C88987846630CEE4481536D5198B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8B94E9D3B433157168D1EECCEC11CD /* Foundation.framework */; };
@@ -271,6 +272,7 @@
 		BAE263041362D074978BB3B577DF0A05 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB0DA8E526297F38001B51D5 /* KVORelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVORelay.swift; sourceTree = "<group>"; };
 		BB0DA8FC26299252001B51D5 /* TwoWayRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayRelay.swift; sourceTree = "<group>"; };
+		BB3D2A5B262A9FBC00218AD2 /* ObservableMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableMutator.swift; sourceTree = "<group>"; };
 		BC27C93DA6791BC5665A06610DA6B0B7 /* CwlCatchException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CwlCatchException.m; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchExceptionSupport/CwlCatchException.m; sourceTree = "<group>"; };
 		BDCD413122228AE78B16A8E31B6CE4D8 /* Pods-Pharos_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Pharos_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BECD80309DE00E5510340E0D9AD5B8E9 /* Pharos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Pharos.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -594,10 +596,11 @@
 				6FDB3CDEBFED9F18D9C3221A853E682E /* BondableRelay.swift */,
 				37C729DAE5DE9960AD9AEFC473F4E606 /* Changes.swift */,
 				44EE89145A0AAFF110BD2CDFFD3DCE7F /* Dereferencer.swift */,
+				BB0DA8E526297F38001B51D5 /* KVORelay.swift */,
 				E96B73767964266C5556AAF294C8DB65 /* MappedRelay.swift */,
 				B492DAB1BB23933365FD5E0C39783E36 /* MulticastRelay.swift */,
-				BB0DA8E526297F38001B51D5 /* KVORelay.swift */,
 				ECC7EB8F6106B988705843BA7EC57512 /* Observable.swift */,
+				BB3D2A5B262A9FBC00218AD2 /* ObservableMutator.swift */,
 				FD16640FAED473C56704B06FB2FC25DD /* ObservableProtocols.swift */,
 				ED5F46527480F0B0BD40E785F7E8E5F5 /* RelayOperationHandler.swift */,
 				BB0DA8FC26299252001B51D5 /* TwoWayRelay.swift */,
@@ -951,6 +954,7 @@
 				2110A7C49227728978A434E833F020CA /* ObservableProtocols.swift in Sources */,
 				01204D7C87FE46E28C75E5A125584DF9 /* Pharos-dummy.m in Sources */,
 				EBA3A199DD4242BB8A25F75939F66FF4 /* RelayOperationHandler.swift in Sources */,
+				BB3D2A5C262A9FBC00218AD2 /* ObservableMutator.swift in Sources */,
 				6328C2266B4DA1F90C67AF0B89187073 /* UISearchBar.swift in Sources */,
 				BB0DA8FD26299252001B51D5 /* TwoWayRelay.swift in Sources */,
 				41B7E59C8B1443F4542BEAD9F6C4106C /* ValueRelay.swift in Sources */,

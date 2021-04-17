@@ -45,6 +45,32 @@ class ObservableStateSpec: QuickSpec {
                 observables.wrappedValue = new
                 expect(didSetCount).to(equal(3))
             }
+            it("should use getter and setter") {
+                let mutator: ObservableMutator<String?> = .init(wrappedValue: initialValue)
+                var inRelay: String?
+                var didSetCount: Int = 0
+                mutator.relay.whenDidSet { changes in
+                    inRelay = changes.new
+                    didSetCount += 1
+                }
+                var dummies: String?
+                expect(mutator.wrappedValue).to(equal(initialValue))
+                expect(didSetCount).to(equal(0))
+                mutator.mutator {
+                    dummies
+                } set: {
+                    dummies = $0
+                }
+                expect(mutator.wrappedValue).to(beNil())
+                expect(dummies).to(beNil())
+                expect(didSetCount).to(equal(0))
+                let set = String.randomString()
+                mutator.wrappedValue = set
+                expect(mutator.wrappedValue).to(equal(set))
+                expect(dummies).to(equal(set))
+                expect(inRelay).to(equal(set))
+                expect(didSetCount).to(equal(1))
+            }
             it("should delayed") {
                 let newValue1: String = .randomString()
                 let newValue2: String = .randomString()
