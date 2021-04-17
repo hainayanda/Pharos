@@ -141,6 +141,31 @@ class MyClass {
 }
 ```
 
+## Custom getter and setter
+
+You can create Observable using custom getter and setter which will relay value if there's some value set to those observable.
+
+```swift
+class MyClass {
+    var button: UIButton = .init()
+    @Observable var title: String?
+    
+    func observeText() {
+        _title.mutator {
+            button.title(for: .normal)
+        } set {
+            button.setTitle($0, for: .normal)
+        }
+        $title.whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }.invokeRelay()
+    }
+}
+```
+
+On the example above , everytime title is set, it will call the set closure and then relay it to its relays.
+
 ## Bonding using KVO
 
 You can observe changes in any `NSObject` property that are compatible with `KVO` like most of `UIView` properties using `KeyPath`:

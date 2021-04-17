@@ -9,6 +9,11 @@ import Foundation
 
 @propertyWrapper
 public class Observable<Wrapped>: StateObservable {
+    public typealias Getter = () -> Wrapped
+    typealias OptionalGetter = () -> Wrapped?
+    public typealias Setter = (Wrapped) -> Void
+    var getter: OptionalGetter?
+    var setter: Setter?
     lazy public internal(set) var relay: BondableRelay<Wrapped> = {
         let relay = BondableRelay<Wrapped>(currentValue: _wrappedValue)
         relay.relayBackConsumer { [weak self] changes in
@@ -17,12 +22,13 @@ public class Observable<Wrapped>: StateObservable {
         }
         return relay
     }()
-    private var _wrappedValue: Wrapped
+    var _wrappedValue: Wrapped
     public var wrappedValue: Wrapped {
         get {
-            _wrappedValue
+            getter?() ?? _wrappedValue
         }
         set {
+            setter?(newValue)
             setAndInformToRelay(with: Changes(old: _wrappedValue, new: newValue, source: self))
         }
     }
@@ -31,8 +37,40 @@ public class Observable<Wrapped>: StateObservable {
         self._wrappedValue = wrappedValue
     }
     
+    public init(get getter: @escaping Getter, set setter: @escaping Setter) {
+        self._wrappedValue = getter()
+        mutator(get: getter, set: setter)
+    }
+    
+    public init<Object: AnyObject>(
+        of object: Object,
+        get getter: @escaping (Object) -> Getter,
+        set setter: @escaping (Object) -> Setter) {
+        self._wrappedValue = getter(object)()
+        mutator(of: object, get: getter, set: setter)
+    }
+    
     public var projectedValue: BondableRelay<Wrapped> {
         relay
+    }
+    
+    public func mutator(get getter: @escaping Getter, set setter: @escaping Setter) {
+        self.getter = getter
+        self.setter = setter
+    }
+    
+    public func mutator<Object: AnyObject>(
+        of object: Object,
+        get getter: @escaping (Object) -> Getter,
+        set setter: @escaping (Object) -> Setter) {
+        self.getter = { [weak object] in
+            guard let object = object else { return nil }
+            return getter(object)()
+        }
+        self.setter = { [weak object] value in
+            guard let object = object else { return }
+            setter(object)(value)
+        }
     }
     
     public func invokeRelayWithCurrent() {
