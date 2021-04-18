@@ -74,7 +74,6 @@ class ObservableStateSpec: QuickSpec {
                 let ignored: String = .randomString(length: 5)
                 var didSetCount: Int = 0
                 observables.relay
-                    .ignore { $0.new == ignored }
                     .whenDidSet { changes in
                         didSetCount += 1
                     }.nextRelay()
@@ -82,14 +81,13 @@ class ObservableStateSpec: QuickSpec {
                     .whenDidSet { changes in
                         didSetCount += 1
                     }.nextRelay()
-                    .ignore { $0.new == ignored }
                     .whenDidSet { changes in
                         didSetCount += 1
                     }
                 observables.wrappedValue = ignored
-                expect(didSetCount).to(equal(0))
+                expect(didSetCount).to(equal(1))
                 observables.wrappedValue = .randomString(length: 10)
-                expect(didSetCount).to(equal(3))
+                expect(didSetCount).to(equal(4))
             }
             it("should delayed") {
                 let newValue1: String = .randomString()
