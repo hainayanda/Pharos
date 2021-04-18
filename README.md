@@ -371,6 +371,22 @@ class MyClass {
 }
 ```
 
+If your value is `Array`, you can use `compactMap` to map original `Array` to target `Array`:
+
+```swift
+class MyClass {
+    @Observable var array: [String] = []
+    
+    func observeText() {
+        $array.compactMap { $0.count }
+            .whenDidSet { changes in
+                print("notified by Main Relay")
+                print("changes now is [Int]")
+            }
+    }
+}
+```
+
 ## Relay value to another Observable
 
 You can relay value from any Relay to another Relay as long as the type is the same. Use `relayValue(to:)` or `relayUniqueValue(to:)` if the value is `Equatable`. It will return new Relay under the target Relay:
