@@ -70,6 +70,27 @@ class ObservableStateSpec: QuickSpec {
                 expect(inRelay).to(equal(set))
                 expect(didSetCount).to(equal(1))
             }
+            it("should ignore") {
+                let ignored: String = .randomString(length: 5)
+                var didSetCount: Int = 0
+                observables.relay
+                    .ignore { $0.new == ignored }
+                    .whenDidSet { changes in
+                        didSetCount += 1
+                    }.nextRelay()
+                    .ignore { $0.new == ignored }
+                    .whenDidSet { changes in
+                        didSetCount += 1
+                    }.nextRelay()
+                    .ignore { $0.new == ignored }
+                    .whenDidSet { changes in
+                        didSetCount += 1
+                    }
+                observables.wrappedValue = ignored
+                expect(didSetCount).to(equal(0))
+                observables.wrappedValue = .randomString(length: 10)
+                expect(didSetCount).to(equal(3))
+            }
             it("should delayed") {
                 let newValue1: String = .randomString()
                 let newValue2: String = .randomString()
