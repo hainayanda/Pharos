@@ -10,9 +10,12 @@ import Foundation
 public protocol ObservableRelay: class {
     associatedtype Observed
     typealias Consumer = (Changes<Observed>) -> Void
+    typealias Ignorer = (Changes<Observed>) -> Bool
     var currentValue: Observed { get }
     @discardableResult
     func whenDidSet(then consume: @escaping Consumer) -> Self
+    @discardableResult
+    func ignore(when ignoring: @escaping Ignorer) -> Self
     @discardableResult
     func multipleSetDelayed(by interval: TimeInterval) -> Self
     @discardableResult
@@ -33,7 +36,8 @@ public protocol ObservableRelay: class {
 public protocol CallBackRelay {
     associatedtype ValueBack
     typealias BackConsumer = (Changes<ValueBack>) -> Void
-    func relayBack(changes: Changes<ValueBack>)
+    @discardableResult
+    func relayBack(changes: Changes<ValueBack>) -> Bool
     func relayBackConsumer(_ consumer: @escaping BackConsumer)
 }
 
@@ -85,5 +89,9 @@ public extension ObservableRelay where Observed: Equatable {
             relay?.relayBack(changes: changes)
         })
         return relay
+    }
+    
+    func ignoreSameValue() -> Self {
+        ignore { $0.isNotChanging }
     }
 }
