@@ -15,6 +15,14 @@ public extension ObservableRelay {
     }
 }
 
+public extension ObservableRelay where Observed: Collection {
+    func compactMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
+        map {
+            $0.compactMap(mapper)
+        }
+    }
+}
+
 public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     
     public typealias Mapper = (Value) -> Mapped
