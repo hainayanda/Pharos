@@ -87,8 +87,10 @@ class ClosureRelay<Value>: BaseRelay<Value> {
         self.relayAction = relayAction
     }
     
-    override func relay(changes: Changes<Value>) {
+    @discardableResult
+    override func relay(changes: Changes<Value>) -> Bool {
         relayAction(changes)
+        return true
     }
     
     override func removeAllNextRelays() { }

@@ -9,7 +9,8 @@ import Foundation
 
 protocol RelayOperationHandler {
     associatedtype Value
-    func relay(changes: Changes<Value>)
+    @discardableResult
+    func relay(changes: Changes<Value>) -> Bool
 }
 
 class RelayDispatchHandler<Value>: RelayOperationHandler {
@@ -87,19 +88,20 @@ class RelayDispatchHandler<Value>: RelayOperationHandler {
     
     var uniqueKey: String = UUID().uuidString
     
-    func relay(changes: Changes<Value>) {
-        guard let consumer = self.consumer else { return }
+    @discardableResult
+    func relay(changes: Changes<Value>) -> Bool {
+        guard let consumer = self.consumer else { return false }
         guard let delay = delay,
               latestRelayTime.addingTimeInterval(delay) > Date() else {
             latestRelayTime = Date()
             run { consumer(changes) }
-            return
+            return true
         }
         defer {
             set(pendingChanges: changes)
         }
         guard !havePendingChanges else {
-            return
+            return true
         }
         let timeIntervalToFire = max(latestRelayTime.addingTimeInterval(delay).timeIntervalSinceNow, 0)
         delayDispatcher.asyncAfter(deadline: .now() + timeIntervalToFire) { [weak self] in
@@ -107,6 +109,7 @@ class RelayDispatchHandler<Value>: RelayOperationHandler {
             let latestChanges = self.getAndRemovePendingChanges() ?? changes
             self.relay(changes: latestChanges)
         }
+        return true
     }
     
     func run(operation: @escaping () -> Void) {

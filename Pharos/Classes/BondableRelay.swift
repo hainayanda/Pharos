@@ -11,9 +11,11 @@ public class BondableRelay<Value>: TwoWayRelay<Value> {
     var bondingRelay: BaseRelay<Value>?
     var outsideInvoked: Bool = false
     
-    public override func relay(changes: Changes<Value>) {
-        super.relay(changes: changes)
+    @discardableResult
+    public override func relay(changes: Changes<Value>) -> Bool {
+        guard super.relay(changes: changes) else { return false }
         bondingRelay?.relay(changes: changes)
+        return true
     }
     
     @discardableResult

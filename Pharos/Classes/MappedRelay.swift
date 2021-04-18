@@ -15,6 +15,14 @@ public extension ObservableRelay {
     }
 }
 
+public extension ObservableRelay where Observed: Collection {
+    func compactMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
+        map {
+            $0.compactMap(mapper)
+        }
+    }
+}
+
 public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     
     public typealias Mapper = (Value) -> Mapped
@@ -25,24 +33,34 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     var relayDispatch: RelayDispatchHandler<Mapped> = .init()
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
     let mapper: Mapper
+    var ignoring: Ignorer = { _ in false }
     
     init(value: Value, mapper: @escaping Mapper) {
         self.currentValue = mapper(value)
         self.mapper = mapper
     }
     
-    public override func relay(changes: Changes<Value>) {
+    @discardableResult
+    public override func relay(changes: Changes<Value>) -> Bool {
         let mappedChanges = changes.map(mapper)
+        guard !ignoring(mappedChanges) else { return false }
         currentValue = mappedChanges.new
         relayDispatch.relay(changes: mappedChanges)
         nextRelays.forEach { relay in
             relay.relay(changes: mappedChanges)
         }
+        return true
     }
     
     @discardableResult
     public func whenDidSet(then consume: @escaping Consumer) -> Self {
         relayDispatch.consumer = consume
+        return self
+    }
+    
+    @discardableResult
+    public func ignore(when ignoring: @escaping Ignorer) -> Self {
+        self.ignoring = ignoring
         return self
     }
     

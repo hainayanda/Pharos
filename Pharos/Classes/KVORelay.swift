@@ -34,11 +34,15 @@ public class KVORelay<Object: NSObject, Value>: TwoWayRelay<Value> {
         self.token = bond(with: object)
     }
     
-    public override func relay(changes: Changes<Value>) {
-        guard let object = object, changes.source as? Object != object else { return }
+    @discardableResult
+    public override func relay(changes: Changes<Value>) -> Bool {
+        guard let object = object,
+              changes.source as? Object != object,
+              !ignoring(changes) else { return false }
         self.outsideInvoked = true
         object[keyPath: keyPath] = changes.new
         super.relay(changes: changes)
+        return true
     }
     
     @discardableResult

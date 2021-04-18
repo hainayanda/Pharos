@@ -16,12 +16,13 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
         super.init(currentValue: currentValue)
     }
     
-    open func relayBack(changes: Changes<Value>) {
+    @discardableResult
+    open func relayBack(changes: Changes<Value>) -> Bool {
         guard let callBack = callBackRelay else {
-            relay(changes: changes)
-            return
+            return relay(changes: changes)
         }
         callBack(changes)
+        return true
     }
     
     public func relayBackConsumer(_ consumer: @escaping BackConsumer) {

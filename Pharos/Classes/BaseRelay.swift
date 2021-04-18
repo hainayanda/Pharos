@@ -26,7 +26,8 @@ open class BaseRelay<Value>: RelayOperationHandler, Hashable {
         hasher.combine(uniqueKey)
     }
     
-    open func relay(changes: Changes<Value>) {
+    @discardableResult
+    open func relay(changes: Changes<Value>) -> Bool {
         fatalError("should overridden")
     }
     
