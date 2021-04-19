@@ -28,7 +28,6 @@ public class Observable<Wrapped>: StateObservable {
             getter?() ?? _wrappedValue
         }
         set {
-            setter?(newValue)
             setAndInformToRelay(with: Changes(old: _wrappedValue, new: newValue, source: self))
         }
     }
@@ -86,6 +85,7 @@ public class Observable<Wrapped>: StateObservable {
     }
     
     func setAndInformToRelay(with changes: Changes<Wrapped>) {
+        setter?(changes.new)
         _wrappedValue = changes.new
         informDidSetToRelay(with: changes)
     }
