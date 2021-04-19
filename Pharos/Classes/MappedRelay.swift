@@ -10,7 +10,7 @@ import Foundation
 public extension ObservableRelay {
     func map<Mapped>(_ mapper: @escaping (Observed) -> Mapped) -> MappedRelay<Observed, Mapped> {
         let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
-        relayNotification(to: mappedRelay)
+        next(relay: mappedRelay)
         return mappedRelay
     }
 }
@@ -82,10 +82,6 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
         return self
     }
     
-    public func nextRelay() -> ValueRelay<Mapped> {
-        return ValueRelay<Mapped>(currentValue: currentValue)
-    }
-    
     public func invokeRelay() {
         let changes: Changes<Mapped> = .init(old: currentValue, new: currentValue, source: self)
         relayDispatch.relay(changes: changes)
@@ -100,8 +96,8 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func relayNotification(to relay: BaseRelay<Mapped>) -> Self {
+    public func next<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
-        return self
+        return relay
     }
 }

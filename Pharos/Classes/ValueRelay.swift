@@ -64,12 +64,6 @@ open class ValueRelay<Value>: BaseRelay<Value>, ObservableRelay {
         return self
     }
     
-    public func nextRelay() -> ValueRelay<Value> {
-        let nextRelay = ValueRelay<Value>(currentValue: currentValue)
-        relayNotification(to: nextRelay)
-        return nextRelay
-    }
-    
     public func invokeRelay() {
         relay(changes: .init(old: currentValue, new: currentValue, source: self))
     }
@@ -80,8 +74,8 @@ open class ValueRelay<Value>: BaseRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func relayNotification(to relay: BaseRelay<Value>) -> Self {
+    public func next<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
-        return self
+        return relay
     }
 }
