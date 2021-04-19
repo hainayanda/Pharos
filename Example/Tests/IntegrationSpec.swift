@@ -110,9 +110,13 @@ class ObservableStateSpec: QuickSpec {
                         expect(changes.old).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
+                    }.nextRelay().whenDidSet { changes in
+                        expect(changes.old).to(equal(9))
+                        expect(changes.new).to(equal(18))
+                        didSetCount += 1
                     }
                 observables.wrappedValue = new
-                expect(didSetCount).to(equal(1))
+                expect(didSetCount).to(equal(2))
             }
             it("should merge 2 observables") {
                 let number = Int.random(in: 0..<100)
