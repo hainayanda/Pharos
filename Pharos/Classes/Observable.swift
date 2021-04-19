@@ -62,8 +62,10 @@ public class Observable<Wrapped>: StateObservable {
         of object: Object,
         get getter: @escaping (Object) -> Getter,
         set setter: @escaping (Object) -> Setter) {
-        self.getter = { [weak object] in
-            guard let object = object else { return nil }
+        self.getter = { [weak self, weak object] in
+            guard let object = object else {
+                return self?._wrappedValue
+            }
             return getter(object)()
         }
         self.setter = { [weak object] value in
