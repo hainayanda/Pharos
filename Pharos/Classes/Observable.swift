@@ -28,7 +28,6 @@ public class Observable<Wrapped>: StateObservable {
             getter?() ?? _wrappedValue
         }
         set {
-            setter?(newValue)
             setAndInformToRelay(with: Changes(old: _wrappedValue, new: newValue, source: self))
         }
     }
@@ -63,8 +62,10 @@ public class Observable<Wrapped>: StateObservable {
         of object: Object,
         get getter: @escaping (Object) -> Getter,
         set setter: @escaping (Object) -> Setter) {
-        self.getter = { [weak object] in
-            guard let object = object else { return nil }
+        self.getter = { [weak self, weak object] in
+            guard let object = object else {
+                return self?._wrappedValue
+            }
             return getter(object)()
         }
         self.setter = { [weak object] value in
@@ -86,6 +87,7 @@ public class Observable<Wrapped>: StateObservable {
     }
     
     func setAndInformToRelay(with changes: Changes<Wrapped>) {
+        setter?(changes.new)
         _wrappedValue = changes.new
         informDidSetToRelay(with: changes)
     }

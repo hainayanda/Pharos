@@ -27,7 +27,7 @@ public protocol ObservableRelay: class {
     @discardableResult
     func nextRelay() -> ValueRelay<Observed>
     @discardableResult
-    func relayNotification(to relay: BaseRelay<Observed>) -> Self
+    func next<Relay: BaseRelay<Observed>>(relay: Relay) -> Relay
     @discardableResult
     func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed>
     func invokeRelay()
@@ -48,6 +48,11 @@ public protocol StateObservable {
 }
 
 public extension ObservableRelay {
+    
+    func nextRelay() -> ValueRelay<Observed> {
+        next(relay: ValueRelay<Observed>(currentValue: currentValue))
+    }
+    
     @discardableResult
     func whenDidSet<Observer: AnyObject>(invoke observer: Observer, method: @escaping (Observer) -> Consumer) -> Self {
         whenDidSet { [weak observer] changes in
@@ -58,7 +63,7 @@ public extension ObservableRelay {
     
     @discardableResult
     func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
-        relayNotification(to: ClosureRelay { [weak relay] changes in
+        next(relay: ClosureRelay { [weak relay] changes in
             relay?.relayBack(changes: changes)
         })
         return relay
@@ -84,7 +89,7 @@ public extension ObservableRelay where Observed: Equatable {
     
     @discardableResult
     func relayUniqueValue(to relay: BondableRelay<Observed>) -> BondableRelay<Observed> {
-        relayNotification(to: ClosureRelay { [weak relay] changes in
+        next(relay: ClosureRelay { [weak relay] changes in
             guard changes.isChanging else { return }
             relay?.relayBack(changes: changes)
         })

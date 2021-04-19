@@ -12,10 +12,10 @@ public extension ObservableRelay {
         let biCastRelay: BiCastRelay<Observed, Relay.Observed> = .init(
             currentValue: (currentValue, relay.currentValue)
         )
-        relayNotification(to: ClosureRelay {
+        next(relay: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
-        relay.relayNotification(to: ClosureRelay {
+        relay.next(relay: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
         return biCastRelay
@@ -26,13 +26,13 @@ public extension ObservableRelay {
         let triCastRelay: TriCastRelay<Observed, R2.Observed, R3.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue)
         )
-        relayNotification(to: ClosureRelay {
+        next(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay2.relayNotification(to: ClosureRelay {
+        relay2.next(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay3.relayNotification(to: ClosureRelay {
+        relay3.next(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
         return triCastRelay
@@ -44,16 +44,16 @@ public extension ObservableRelay {
         let quadCastRelay: QuadCastRelay<Observed, R2.Observed, R3.Observed, R4.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue, relay4.currentValue)
         )
-        relayNotification(to: ClosureRelay {
+        next(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay2.relayNotification(to: ClosureRelay {
+        relay2.next(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay3.relayNotification(to: ClosureRelay {
+        relay3.next(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay4.relayNotification(to: ClosureRelay {
+        relay4.next(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
         return quadCastRelay
