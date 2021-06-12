@@ -31,6 +31,7 @@ open class BaseRelay<Value>: RelayOperationHandler, Hashable {
         fatalError("should overridden")
     }
     
+    @discardableResult
     open func referenceManaged(by dereferencer: Dereferencer) -> Self {
         dereferencer.add(discardable: makeDiscardable())
         return self

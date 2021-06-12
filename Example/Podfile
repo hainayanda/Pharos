@@ -2,6 +2,6 @@ use_frameworks!
 target 'Pharos_Tests' do
   pod 'Pharos', :path => '../'
   
-  pod 'Quick', '~> 3.0.0'
-  pod 'Nimble', '~> 9.0.0'
+  pod 'Quick', '~> 4.0.0'
+  pod 'Nimble', '~> 9.2.0'
 end

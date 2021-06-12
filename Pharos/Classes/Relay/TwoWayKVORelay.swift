@@ -1,5 +1,5 @@
 //
-//  KVORelay.swift
+//  TwoWayKVORelay.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 16/04/21.
@@ -13,12 +13,13 @@ import UIKit
 public extension TwoWayRelay {
     static func relay<Object: NSObject, Value>(
         of object: Object,
-        _ keyPath: ReferenceWritableKeyPath<Object, Value>) -> TwoWayRelay<Value> {
-        KVORelay<Object, Value>(object, keyPath: keyPath)
+        _ keyPath: ReferenceWritableKeyPath<Object, Value>,
+        dereferencedBy dereferencer: Dereferencer? = nil) -> TwoWayRelay<Value> {
+        TwoWayKVORelay<Object, Value>(object, keyPath: keyPath)
     }
 }
 
-public class KVORelay<Object: NSObject, Value>: TwoWayRelay<Value> {
+public class TwoWayKVORelay<Object: NSObject, Value>: TwoWayRelay<Value> {
     
     public typealias Observed = Value
     
