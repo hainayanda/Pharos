@@ -32,7 +32,7 @@ pod 'Pharos'
 
 - Add it using xcode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Pharos.git** as Swift Package url
-- Set rules at **version**, with **Up to Next Major** option and put **1.1.5** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.1.6** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -41,7 +41,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.1.5"))
+    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.1.6"))
 ]
 ```
 
@@ -143,6 +143,41 @@ class MyClass {
 }
 ```
 
+## Using Dereferencer
+
+You could use `Dereferencer` to make sure the relay created will discarded by `ARC` when `Dereferencer` is discarded so the closure in the relay and all of its next relays will not run if its not used anymore:
+
+```swift
+class MyClass {
+    @Observable var text: String?
+    
+    var dereferencer: Dereferencer = .init()
+    
+    func observeText() {
+        $text.nextRelay()
+            .referenceManaged(by: dereferencer)
+            .whenDidSet { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+    }
+    
+    func discardManually() {
+        dereferencer.discardAll()
+    }
+    
+    func discardByCreateNewDereferencer() {
+        dereferencer = .init()
+    }
+    
+}
+```
+
+There are many ways to discard the relay managed by `Dereferencer`:
+- call `discardAll()` from relay's dereferencer
+- replace dereferencer by new one, which will trigger `ARC` to remove dereferencer from memory thus will discard all of its managed relays by default.
+- doing nothing, which if the object that have dereferencer is discarded by `ARC`, it will automatically discard the `Dereferencer` thus will discard all of its managed relays by default.
+
 ## Custom getter and setter
 
 You can create Observable using custom getter and setter which will relay value if there's some value set to those observable.
@@ -168,7 +203,7 @@ class MyClass {
 
 On the example above , everytime title is set, it will call the set closure and then relay it to its relays.
 
-## Bonding using KVO
+## KVO Observable
 
 You can observe changes in any `NSObject` property that are compatible with `KVO` like most of `UIView` properties using `KeyPath`:
 
@@ -178,7 +213,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.bonding(with: .relay(of: textField, \.text))
+        $text.bonding(with: textField.relays.text)
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -197,7 +232,7 @@ class MyClass {
     @Observable var text: String?
     
     func applyToField() {
-        $text.bondAndApply(to: .relay(of: textField, \.text))
+        $text.bondAndApply(to: textField.relays.text)
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -205,7 +240,7 @@ class MyClass {
     }
     
     func mapFromField() {
-        $text.bondAndMap(from: .relay(of: textField, \.text))
+        $text.bondAndMap(from: textField.relays.text)
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -214,14 +249,14 @@ class MyClass {
 }
 ```
 
-Actually what `relay(of:,)` static method do is creating `TwoWayRelay` of given object keypath. `TwoWayRelay` is open, so you could also creating one of your own. You can always treat `TwoWayRelay` as observable:
+Actually what `textField.relays.text` do is creating `TwoWayRelay` of given object keypath. `TwoWayRelay` is open, so you could also creating one of your own. You can always treat `TwoWayRelay` as observable:
 
 ```swift
 class MyClass {
     var relay: TwoWayRelay<String?>
 
     init(textField: UITextField) {
-        self.relay = .relay(of: textField, \.text)
+        self.relay = textField.relays.text
     }
     
     func observeRelay() {
@@ -232,6 +267,45 @@ class MyClass {
     }
 }
 ```
+
+Some of the relays are just `ValueRelay` which cannot be bond since its readonly, but you can always observe the value of it:
+
+```swift
+class MyClass {
+    var relay: ValueRelay<UIControl.State>
+
+    init(button: UIButton) {
+        self.relay = button.relays.state
+    }
+    
+    func observeRelay() {
+        relay.whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }
+    }
+}
+```
+
+If you just want to observe the value without storing the relay, don't forget to use `Dereferencer`, since if not, the relay will automatically removed by `ARC` right away:
+
+```swift
+class MyClass {
+    var button: UIButton = .init()
+
+    var dereferencer: Dereferencer = .init()
+    
+    func observeRelay() {
+        button.relays.state
+            .referenceManaged(by: dereferencer)
+            .whenDidSet { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+    }
+}
+```
+
 ## Ignoring Set
 
 You can ignore set to relay by passing closure that returning `Bool` value which indicated those value should be ignored:
@@ -439,38 +513,6 @@ class MyClass {
 ```
 
 Keep in mind that merged relays will strong referenced in new relay.
-
-## Using Dereferencer
-
-You could use `Dereferencer` to make sure the relay created will discarded by `ARC` when `Dereferencer` is discarded so the closure in the relay will not run if its not used anymore:
-
-```swift
-class MyClass {
-    @Observable var text: String?
-    
-    var dereferencer: Dereferencer = .init()
-    
-    func observeText() {
-        $text.nextRelay()
-            .referenceManaged(by: dereferencer)
-            .whenDidSet { changes in
-                print(changes.new)
-                print(changes.old)
-            }
-    }
-    
-    func discardManually() {
-        dereferencer.discardAll()
-    }
-    
-    func discardByCreateNewDereferencer() {
-        dereferencer = .init()
-    }
-    
-}
-```
-
-`discardAll` will invalidate all relay associated with those `Dereferencer`. But `discardAll` not necessarily needed to invalidate relay since everytime `Dereferencer` is discarded by `ARC`, it will automatically invalidate all relay associated with those `Dereferencer`.
 
 ***
 
