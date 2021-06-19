@@ -340,6 +340,28 @@ class ObservableStateSpec: QuickSpec {
                 expect(source as? Observable<String?>).toNot(beNil())
                 expect(didSetCount).to(equal(2))
             }
+            it("should bear data to NSObject") {
+                var source: Any = self
+                var didSetCount: Int = 0
+                observables.relay.relayValue(to: object.bearerRelays.text)
+                    .nextRelay()
+                    .whenDidSet { changes in
+                        source = changes.source
+                        didSetCount += 1
+                    }
+                expect(object.text).to(beNil())
+                expect(didSetCount).to(equal(0))
+                let fromObject = String.randomString()
+                object.text = fromObject
+                expect(observables.wrappedValue).toNot(equal(fromObject))
+                expect(source as? Dummy).to(beNil())
+                expect(didSetCount).to(equal(0))
+                let fromState = String.randomString()
+                observables.wrappedValue = fromState
+                expect(observables.wrappedValue).to(equal(fromState))
+                expect(source as? Observable<String?>).toNot(beNil())
+                expect(didSetCount).to(equal(1))
+            }
             it("should bond and map from NSObject") {
                 var source: Any = self
                 var didSetCount: Int = 0

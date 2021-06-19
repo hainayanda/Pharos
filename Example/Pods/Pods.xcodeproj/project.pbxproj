@@ -13,7 +13,7 @@
 		03D2B9651FD82FC0D5C97AD6F0E561D4 /* BeLessThanOrEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01872A5724C80F9F66F85BE505EF41E /* BeLessThanOrEqual.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		096A350DACDDDFF8805FDAEBE86EC2F6 /* NimbleEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CA7814D47356EA90B9ECB4FDB3F859 /* NimbleEnvironment.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		0A363AD0A93A6F9E8961F52B10580718 /* NMBExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4097A6637537D84D28A10721A2E7EC6 /* NMBExpectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		0C6B2DE9B743E20168DFEE663F87CAB8 /* ObservableProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C72E8E8F7D46FDC00E2B30BD5BD4099 /* ObservableProtocols.swift */; };
+		0C6B2DE9B743E20168DFEE663F87CAB8 /* RelayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C72E8E8F7D46FDC00E2B30BD5BD4099 /* RelayProtocols.swift */; };
 		0D76A5CAF71781C4E1CC5E0D70D3426D /* QuickSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C572C7D93AF0E9B50A517675CD4D665 /* QuickSpec.m */; };
 		0DFBCBE5C1E75DC9CD38757ACF33E0A7 /* ToSucceed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25751F36800946C1A1A22406B3596FE /* ToSucceed.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		0E48962ACAEDD1289D7DAE793F3A731F /* Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3558661CEF3BE87C498E32AEC3EB0 /* Expectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -115,6 +115,8 @@
 		B7DC487922D4C68B6A698D106F3A535E /* Pharos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 12F754466A3F6B01B60189371749191B /* Pharos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B844C53365327CB75CC1645AE73CDCED /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4533A88B2DE8230A61D3FE3F4CD5BC98 /* CwlMachBadInstructionHandler.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BB6128B2267D8B7F00D1670D /* AssociativeRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B1267D8B7F00D1670D /* AssociativeRelay.swift */; };
+		BB6128B6267DB27200D1670D /* BearerRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B5267DB27200D1670D /* BearerRelay.swift */; };
+		BB6128B8267DB3EB00D1670D /* BearerKVORelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B7267DB3EB00D1670D /* BearerKVORelay.swift */; };
 		C0D3EDC5F8D2546D5B5CB583230606B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D232917B7F9161AD32800BD7188F6 /* Errors.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		C12A5EDA29052D6AB6B5C08EB827147F /* mach_excServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B2EF8A720D0EAA49000115560DF7BBC /* mach_excServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C296C88987846630CEE4481536D5198B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8B94E9D3B433157168D1EECCEC11CD /* Foundation.framework */; };
@@ -288,7 +290,7 @@
 		9817083983497DB3ED6001E3E97533CB /* BeGreaterThan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeGreaterThan.swift; path = Sources/Nimble/Matchers/BeGreaterThan.swift; sourceTree = "<group>"; };
 		98AD1D4272540420383C7922F88E000E /* Nimble-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Nimble-Info.plist"; sourceTree = "<group>"; };
 		999E13FC03F2CA5622C99A165DF3A64E /* TwoWayRelay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TwoWayRelay.swift; sourceTree = "<group>"; };
-		9C72E8E8F7D46FDC00E2B30BD5BD4099 /* ObservableProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObservableProtocols.swift; sourceTree = "<group>"; };
+		9C72E8E8F7D46FDC00E2B30BD5BD4099 /* RelayProtocols.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RelayProtocols.swift; sourceTree = "<group>"; };
 		9D790CFC0DD27CF5E3726D13716B8457 /* String+C99ExtendedIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+C99ExtendedIdentifier.swift"; path = "Sources/Quick/String+C99ExtendedIdentifier.swift"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F61102487CB58DE16286ECE250A191D /* RelayCollection+UIImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIImageView.swift"; sourceTree = "<group>"; };
@@ -309,6 +311,8 @@
 		BAE263041362D074978BB3B577DF0A05 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2DD27CB90704924D6D50162205BD97 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BB6128B1267D8B7F00D1670D /* AssociativeRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociativeRelay.swift; sourceTree = "<group>"; };
+		BB6128B5267DB27200D1670D /* BearerRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerRelay.swift; sourceTree = "<group>"; };
+		BB6128B7267DB3EB00D1670D /* BearerKVORelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BearerKVORelay.swift; sourceTree = "<group>"; };
 		BDCD413122228AE78B16A8E31B6CE4D8 /* Pods-Pharos_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Pharos_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BEE0135D5FDA5A4415EADADB336B9246 /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
 		C0EE0182653D00926C08100E31BD3795 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Quick/Filter.swift; sourceTree = "<group>"; };
@@ -400,7 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				EECAE507016222A011413C8CD822A57D /* Observable.swift */,
-				9C72E8E8F7D46FDC00E2B30BD5BD4099 /* ObservableProtocols.swift */,
+				9C72E8E8F7D46FDC00E2B30BD5BD4099 /* RelayProtocols.swift */,
 			);
 			name = Observable;
 			path = Pharos/Classes/Observable;
@@ -683,7 +687,10 @@
 		C721EC23FC68923520C11ECD6BECDB90 /* Relay */ = {
 			isa = PBXGroup;
 			children = (
+				BB6128B1267D8B7F00D1670D /* AssociativeRelay.swift */,
 				52C41C01BAB3647A8F1F5BAB04C51F26 /* BaseRelay.swift */,
+				BB6128B7267DB3EB00D1670D /* BearerKVORelay.swift */,
+				BB6128B5267DB27200D1670D /* BearerRelay.swift */,
 				1EEB389E55779CC17366DD213D810F94 /* BondableRelay.swift */,
 				D2BC1A0B321484488626595F632006FA /* MappedRelay.swift */,
 				5337ADF513AFD1E8F7BC0BBEE908E142 /* MulticastRelay.swift */,
@@ -691,7 +698,6 @@
 				999E13FC03F2CA5622C99A165DF3A64E /* TwoWayRelay.swift */,
 				64C74F809F49FB67BD316D61F8278875 /* ValueKVORelay.swift */,
 				4829E25417D74C77D8EC76836609FD47 /* ValueRelay.swift */,
-				BB6128B1267D8B7F00D1670D /* AssociativeRelay.swift */,
 			);
 			name = Relay;
 			path = Pharos/Classes/Relay;
@@ -938,7 +944,7 @@
 				FFE0C3EE72176E2AE2BF38D500B3F0E7 /* MappedRelay.swift in Sources */,
 				45705DA60F08277F8EDDE2499F63E59B /* MulticastRelay.swift in Sources */,
 				CA35FC1950E62A8030517A6095917373 /* Observable.swift in Sources */,
-				0C6B2DE9B743E20168DFEE663F87CAB8 /* ObservableProtocols.swift in Sources */,
+				0C6B2DE9B743E20168DFEE663F87CAB8 /* RelayProtocols.swift in Sources */,
 				FCF52900F8E5B5DB61E73E93E1E11436 /* Pharos-dummy.m in Sources */,
 				BB6128B2267D8B7F00D1670D /* AssociativeRelay.swift in Sources */,
 				AB42589561713DF4499B9A76C1E95E96 /* RelayCollection+CellView.swift in Sources */,
@@ -946,6 +952,7 @@
 				007F82474FDB8A392A865C7028095081 /* RelayCollection+UIButton.swift in Sources */,
 				960740AE498AC05D8E3796E2B60771DF /* RelayCollection+UICollectionView.swift in Sources */,
 				3A14A47E4FDFBCA7AE848D1CCDEE6C65 /* RelayCollection+UIControl.swift in Sources */,
+				BB6128B8267DB3EB00D1670D /* BearerKVORelay.swift in Sources */,
 				01C83BE38ABDEF77A121C3D21AE82BC1 /* RelayCollection+UIImageView.swift in Sources */,
 				9CCB182E68EB96A4620B5BC2EFA2E94B /* RelayCollection+UILabel.swift in Sources */,
 				984D7A45D286F74907D4B48863F7D73B /* RelayCollection+UIRefreshControl.swift in Sources */,
@@ -958,6 +965,7 @@
 				6B2B63914E991F782988BA37DE61CE7B /* RelayCollection+UIView.swift in Sources */,
 				16BBC26D342F121FF6B8C3E0966AB425 /* RelayCollection.swift in Sources */,
 				5D6F9BA58CC08B484F883EC0D0C3496E /* RelayOperationHandler.swift in Sources */,
+				BB6128B6267DB27200D1670D /* BearerRelay.swift in Sources */,
 				2B211C1BE974D643BDDE64BD9A85418C /* TwoWayKVORelay.swift in Sources */,
 				788756E08CE9F7D4F695F99ECA2998AD /* TwoWayRelay.swift in Sources */,
 				7FDF3556C1F44C1082307F3F5A3448FE /* UISearchBar.swift in Sources */,

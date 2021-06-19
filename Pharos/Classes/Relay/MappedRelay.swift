@@ -10,7 +10,7 @@ import Foundation
 public extension ObservableRelay {
     func map<Mapped>(_ mapper: @escaping (Observed) -> Mapped) -> MappedRelay<Observed, Mapped> {
         let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
-        next(relay: mappedRelay)
+        addNext(relay: mappedRelay)
         return mappedRelay
     }
 }
@@ -99,7 +99,7 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func next<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
+    public func addNext<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
         return relay
     }
