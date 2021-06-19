@@ -10,17 +10,17 @@ import Foundation
 public extension ValueRelay {
     static func relay<Object: NSObject, Value>(
         of object: Object,
-        _ keyPath: KeyPath<Object, Value>) -> ValueRelay<Value> {
+        _ keyPath: KeyPath<Object, Value>) -> AssociativeValueRelay<Value> {
         ValueKVORelay<Object, Value>(object, keyPath: keyPath)
     }
 }
 
-public class ValueKVORelay<Object: NSObject, Value>: ValueRelay<Value> {
+public class ValueKVORelay<Object: NSObject, Value>: AssociativeValueRelay<Value> {
     public typealias Observed = Value
     var token: Any?
     
     init(_ object: Object, keyPath: KeyPath<Object, Value>) {
-        super.init(currentValue: object[keyPath: keyPath])
+        super.init(object, currentValue: object[keyPath: keyPath])
         self.token = observeChange(object: object, keyPath)
     }
     
