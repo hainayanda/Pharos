@@ -15,6 +15,9 @@ open class ValueRelay<Value>: BaseRelay<Value>, ObservableRelay {
     var relayDispatch: RelayDispatchHandler<Value> = .init()
     var nextRelays: Set<BaseRelay<Value>> = Set()
     var ignoring: Ignorer = { _ in false }
+    open override var isValid: Bool {
+        relayDispatch.consumer != nil
+    }
     
     public init(currentValue: Value) {
         self.currentValue = currentValue
@@ -77,5 +80,9 @@ open class ValueRelay<Value>: BaseRelay<Value>, ObservableRelay {
     public func next<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
         return relay
+    }
+    
+    public override func discard() {
+        relayDispatch.consumer = nil
     }
 }

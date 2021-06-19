@@ -34,6 +34,9 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
     let mapper: Mapper
     var ignoring: Ignorer = { _ in false }
+    public override var isValid: Bool {
+        relayDispatch.consumer != nil
+    }
     
     init(value: Value, mapper: @escaping Mapper) {
         self.currentValue = mapper(value)
@@ -99,5 +102,9 @@ public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     public func next<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
         return relay
+    }
+    
+    public override func discard() {
+        relayDispatch.consumer = nil
     }
 }

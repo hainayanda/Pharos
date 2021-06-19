@@ -23,7 +23,7 @@ public protocol ObservableRelay: class {
     @discardableResult
     func syncWhenInSameThread() -> Self
     @discardableResult
-    func referenceManaged(by dereferencer: Dereferencer) -> Self
+    func retained(by retainer: Retainer) -> Self
     @discardableResult
     func nextRelay() -> ValueRelay<Observed>
     @discardableResult

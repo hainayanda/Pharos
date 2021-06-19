@@ -7,18 +7,11 @@
 
 import Foundation
 
-open class BaseRelay<Value>: RelayOperationHandler, Hashable {
+open class BaseRelay<Value>: RelayOperationHandler, Discardable, Hashable {
     
-    var referenced: Bool = false
-    weak var discardable: Discardable? {
-        didSet {
-            referenced = true
-        }
+    open var isValid: Bool {
+        fatalError("should overridden")
     }
-    
-    var isValid: Bool { !isInvalid }
-    
-    var isInvalid: Bool { referenced && discardable?.discarded ?? true }
     
     var uniqueKey: String = UUID().uuidString
     
@@ -31,21 +24,15 @@ open class BaseRelay<Value>: RelayOperationHandler, Hashable {
         fatalError("should overridden")
     }
     
+    @available(*, renamed: "referenceManaged")
     @discardableResult
-    open func referenceManaged(by dereferencer: Dereferencer) -> Self {
-        dereferencer.add(discardable: makeDiscardable())
+    open func retained(by retainer: Retainer) -> Self {
+        retainer.add(discardable: self)
         return self
     }
     
     public func discard() {
-        referenced = true
-        discardable?.discard()
-    }
-    
-    public func makeDiscardable() -> Discardable {
-        let discardable = self.discardable ?? Discardable(content: self)
-        self.discardable = discardable
-        return discardable
+        fatalError("should overridden")
     }
     
     open func removeAllNextRelays() {

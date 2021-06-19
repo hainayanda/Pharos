@@ -79,8 +79,11 @@ class ClosureRelay<Value>: BaseRelay<Value> {
     
     typealias RelayAction = (Changes<Value>) -> Void
     
-    let relayAction: RelayAction
-    let retained: Any?
+    var relayAction: RelayAction?
+    var retained: Any?
+    override var isValid: Bool {
+        relayAction != nil
+    }
     
     init(retained: Any? = nil, relayAction: @escaping RelayAction) {
         self.retained = retained
@@ -89,8 +92,13 @@ class ClosureRelay<Value>: BaseRelay<Value> {
     
     @discardableResult
     override func relay(changes: Changes<Value>) -> Bool {
-        relayAction(changes)
+        relayAction?(changes)
         return true
+    }
+    
+    override func discard() {
+        relayAction = nil
+        retained = nil
     }
     
     override func removeAllNextRelays() { }
