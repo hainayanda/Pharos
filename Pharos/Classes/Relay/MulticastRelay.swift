@@ -7,70 +7,70 @@
 
 import Foundation
 
-public extension ObservableRelay {
-    func merge<Relay: ObservableRelay>(with relay: Relay) -> ValueRelay<(Observed, Relay.Observed)> {
+public extension TransportRelay {
+    func merge<Relay: TransportRelay>(with relay: Relay) -> ValueRelay<(Observed, Relay.Observed)> {
         let biCastRelay: BiCastRelay<Observed, Relay.Observed> = .init(
             currentValue: (currentValue, relay.currentValue)
         )
-        next(relay: ClosureRelay {
+        addNext(relay: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
-        relay.next(relay: ClosureRelay {
+        relay.addNext(relay: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
         return biCastRelay
     }
     
-    func merge<R2: ObservableRelay, R3: ObservableRelay>(with relay2: R2, _ relay3: R3)
+    func merge<R2: TransportRelay, R3: TransportRelay>(with relay2: R2, _ relay3: R3)
     -> ValueRelay<(Observed, R2.Observed, R3.Observed)> {
         let triCastRelay: TriCastRelay<Observed, R2.Observed, R3.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue)
         )
-        next(relay: ClosureRelay {
+        addNext(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay2.next(relay: ClosureRelay {
+        relay2.addNext(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay3.next(relay: ClosureRelay {
+        relay3.addNext(relay: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
         return triCastRelay
     }
     
-    func merge<R2: ObservableRelay, R3: ObservableRelay, R4: ObservableRelay>(
+    func merge<R2: TransportRelay, R3: TransportRelay, R4: TransportRelay>(
         with relay2: R2, _ relay3: R3, _ relay4: R4)
     -> ValueRelay<(Observed, R2.Observed, R3.Observed, R4.Observed)> {
         let quadCastRelay: QuadCastRelay<Observed, R2.Observed, R3.Observed, R4.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue, relay4.currentValue)
         )
-        next(relay: ClosureRelay {
+        addNext(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay2.next(relay: ClosureRelay {
+        relay2.addNext(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay3.next(relay: ClosureRelay {
+        relay3.addNext(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay4.next(relay: ClosureRelay {
+        relay4.addNext(relay: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
         return quadCastRelay
     }
 }
 
-public func mergeRelays<R1: ObservableRelay, R2: ObservableRelay>(
+public func mergeRelays<R1: TransportRelay, R2: TransportRelay>(
     _ relay1: R1, _ relay2: R2) -> ValueRelay<(R1.Observed, R2.Observed)> {
     relay1.merge(with: relay2)
 }
 
-public func mergeRelays<R1: ObservableRelay, R2: ObservableRelay, R3: ObservableRelay>(
+public func mergeRelays<R1: TransportRelay, R2: TransportRelay, R3: TransportRelay>(
     _ relay1: R1, _ relay2: R2, _ relay3: R3) -> ValueRelay<(R1.Observed, R2.Observed, R3.Observed)> {
     relay1.merge(with: relay2, relay3)
 }
 
-public func mergeRelays<R1: ObservableRelay, R2: ObservableRelay, R3: ObservableRelay, R4: ObservableRelay>(
+public func mergeRelays<R1: TransportRelay, R2: TransportRelay, R3: TransportRelay, R4: TransportRelay>(
     _ relay1: R1, _ relay2: R2, _ relay3: R3, _ relay4: R4) -> ValueRelay<(R1.Observed, R2.Observed, R3.Observed, R4.Observed)> {
     relay1.merge(with: relay2, relay3, relay4)
 }
@@ -79,8 +79,11 @@ class ClosureRelay<Value>: BaseRelay<Value> {
     
     typealias RelayAction = (Changes<Value>) -> Void
     
-    let relayAction: RelayAction
-    let retained: Any?
+    var relayAction: RelayAction?
+    var retained: Any?
+    override var isValid: Bool {
+        relayAction != nil
+    }
     
     init(retained: Any? = nil, relayAction: @escaping RelayAction) {
         self.retained = retained
@@ -89,8 +92,13 @@ class ClosureRelay<Value>: BaseRelay<Value> {
     
     @discardableResult
     override func relay(changes: Changes<Value>) -> Bool {
-        relayAction(changes)
+        relayAction?(changes)
         return true
+    }
+    
+    override func discard() {
+        relayAction = nil
+        retained = nil
     }
     
     override func removeAllNextRelays() { }

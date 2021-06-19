@@ -9,62 +9,44 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UISlider: PopulatedRelays {
-    public typealias BaseRelayObject = UISlider
-}
-
 public extension RelayCollection where Object: UISlider {
     
     // MARK: Two Way Relay
     
-    var value: TwoWayRelay<Float> {
+    var value: AssociativeTwoWayRelay<Float> {
         .relay(of: object, \.value)
     }
     
-    var minimumValue: TwoWayRelay<Float> {
+    var minimumValue: AssociativeTwoWayRelay<Float> {
         .relay(of: object, \.minimumValue)
     }
     
-    var maximumValue: TwoWayRelay<Float> {
+    var maximumValue: AssociativeTwoWayRelay<Float> {
         .relay(of: object, \.maximumValue)
     }
     
-    var minimumValueImage: TwoWayRelay<UIImage?> {
+    var minimumValueImage: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.minimumValueImage)
     }
     
-    var maximumValueImage: TwoWayRelay<UIImage?> {
+    var maximumValueImage: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.maximumValueImage)
     }
     
-    var isContinuous: TwoWayRelay<Bool> {
+    var isContinuous: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isContinuous)
     }
     
-    var minimumTrackTintColor: TwoWayRelay<UIColor?> {
+    var minimumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.minimumTrackTintColor)
     }
     
-    var maximumTrackTintColor: TwoWayRelay<UIColor?> {
+    var maximumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.maximumTrackTintColor)
     }
     
-    var thumbTintColor: TwoWayRelay<UIColor?> {
+    var thumbTintColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.thumbTintColor)
-    }
-    
-    // MARK: Value Relay
-    
-    var currentThumbImage: ValueRelay<UIImage?> {
-        .relay(of: object, \.currentThumbImage)
-    }
-    
-    var currentMinimumTrackImage: ValueRelay<UIImage?> {
-        .relay(of: object, \.currentMinimumTrackImage)
-    }
-    
-    var currentMaximumTrackImage: ValueRelay<UIImage?> {
-        .relay(of: object, \.currentMaximumTrackImage)
     }
     
 }

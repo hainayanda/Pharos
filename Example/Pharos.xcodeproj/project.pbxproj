@@ -9,6 +9,21 @@
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */; };
 		6637C15102A6B68C6B7D8486 /* Pods_Pharos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */; };
+		BB6128B4267D8EA400D1670D /* TextInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */; };
+		BB6128BA267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */; };
+		BB6128BC267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */; };
+		BB6128C2267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */; };
+		BB6128C4267E20FF00D1670D /* UIControlRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */; };
+		BB6128C6267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */; };
+		BB6128C8267E23DD00D1670D /* UILabelRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */; };
+		BB6128CA267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */; };
+		BB6128CC267E29CC00D1670D /* UISliderRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */; };
+		BB6128CE267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */; };
+		BB6128D0267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */; };
+		BB6128D2267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */; };
+		BB6128D4267E300200D1670D /* UITableViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */; };
+		BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */; };
+		BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +35,21 @@
 		96427FB076AEC3F72B8CFE14 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pharos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E4AF481F13ADEA7D3697D /* Pharos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Pharos.podspec; path = ../Pharos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISliderRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStepperRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwitchRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayKVORelayTester.swift; sourceTree = "<group>"; };
 		CDD394D6EBAB1D2D08A68AA7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +87,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BB6128C0267E101400D1670D /* Tester */,
+				BB6128BE267E0FF800D1670D /* PopulatedRelays */,
 				607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -79,6 +111,35 @@
 				CDD394D6EBAB1D2D08A68AA7 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		BB6128BE267E0FF800D1670D /* PopulatedRelays */ = {
+			isa = PBXGroup;
+			children = (
+				BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */,
+				BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */,
+				BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */,
+				BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */,
+				BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */,
+				BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */,
+				BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */,
+				BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */,
+				BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */,
+				BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */,
+				BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */,
+				BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */,
+				BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */,
+				BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */,
+			);
+			path = PopulatedRelays;
+			sourceTree = "<group>";
+		};
+		BB6128C0267E101400D1670D /* Tester */ = {
+			isa = PBXGroup;
+			children = (
+				BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */,
+			);
+			path = Tester;
 			sourceTree = "<group>";
 		};
 		E4B69CA72C07D2716FE43A0A /* Pods */ = {
@@ -217,7 +278,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6128C8267E23DD00D1670D /* UILabelRelayCollectionSpec.swift in Sources */,
+				BB6128C6267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift in Sources */,
+				BB6128D0267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift in Sources */,
+				BB6128C4267E20FF00D1670D /* UIControlRelayCollectionSpec.swift in Sources */,
+				BB6128D4267E300200D1670D /* UITableViewRelayCollectionSpec.swift in Sources */,
+				BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */,
+				BB6128D2267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift in Sources */,
+				BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */,
+				BB6128CA267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift in Sources */,
+				BB6128B4267D8EA400D1670D /* TextInputRelayCollectionSpec.swift in Sources */,
+				BB6128CC267E29CC00D1670D /* UISliderRelayCollectionSpec.swift in Sources */,
+				BB6128CE267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */,
+				BB6128C2267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift in Sources */,
+				BB6128BA267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift in Sources */,
+				BB6128BC267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +415,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -356,6 +433,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

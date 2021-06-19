@@ -9,183 +9,102 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public extension UIScrollView {
-    var scrollRelays: RelayCollection<UIScrollView> {
-        .init(object: self)
-    }
-}
-
 public extension RelayCollection where Object: UIScrollView {
     
     // MARK: Two Way Relay
     
-    var contentOffset: TwoWayRelay<CGPoint> {
+    var contentOffset: AssociativeTwoWayRelay<CGPoint> {
         .relay(of: object, \.contentOffset)
     }
     
-    var contentSize: TwoWayRelay<CGSize> {
+    var contentSize: AssociativeTwoWayRelay<CGSize> {
         .relay(of: object, \.contentSize)
     }
     
-    var contentInset: TwoWayRelay<UIEdgeInsets> {
+    var contentInset: AssociativeTwoWayRelay<UIEdgeInsets> {
         .relay(of: object, \.contentInset)
     }
     
-    @available(iOS 11.0, *)
-    var contentInsetAdjustmentBehavior: TwoWayRelay<UIScrollView.ContentInsetAdjustmentBehavior> {
-        .relay(of: object, \.contentInsetAdjustmentBehavior)
-    }
-    
-    @available(iOS 13.0, *)
-    var automaticallyAdjustsScrollIndicatorInsets: TwoWayRelay<Bool> {
-        .relay(of: object, \.automaticallyAdjustsScrollIndicatorInsets)
-    }
-    
-    var delegate: TwoWayRelay<UIScrollViewDelegate?> {
+    var delegate: AssociativeTwoWayRelay<UIScrollViewDelegate?> {
         .relay(of: object, \.delegate)
     }
     
-    var isDirectionalLockEnabled: TwoWayRelay<Bool> {
+    var isDirectionalLockEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isDirectionalLockEnabled)
     }
     
-    var bounces: TwoWayRelay<Bool> {
+    var bounces: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.bounces)
     }
     
-    var alwaysBounceVertical: TwoWayRelay<Bool> {
+    var alwaysBounceVertical: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.alwaysBounceVertical)
     }
     
-    var alwaysBounceHorizontal: TwoWayRelay<Bool> {
+    var alwaysBounceHorizontal: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.alwaysBounceHorizontal)
     }
     
-    var isPagingEnabled: TwoWayRelay<Bool> {
+    var isPagingEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isPagingEnabled)
     }
     
-    var isScrollEnabled: TwoWayRelay<Bool> {
+    var isScrollEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isScrollEnabled)
     }
     
-    var showsVerticalScrollIndicator: TwoWayRelay<Bool> {
+    var showsVerticalScrollIndicator: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.showsVerticalScrollIndicator)
     }
     
-    var showsHorizontalScrollIndicator: TwoWayRelay<Bool> {
+    var showsHorizontalScrollIndicator: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.showsHorizontalScrollIndicator)
     }
     
-    var indicatorStyle: TwoWayRelay<UIScrollView.IndicatorStyle> {
-        .relay(of: object, \.indicatorStyle)
-    }
-    
     @available(iOS 11.1, *)
-    var verticalScrollIndicatorInsets: TwoWayRelay<UIEdgeInsets> {
+    var verticalScrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
         .relay(of: object, \.verticalScrollIndicatorInsets)
     }
     
     @available(iOS 11.1, *)
-    var horizontalScrollIndicatorInsets: TwoWayRelay<UIEdgeInsets> {
+    var horizontalScrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
         .relay(of: object, \.horizontalScrollIndicatorInsets)
     }
     
-    var scrollIndicatorInsets: TwoWayRelay<UIEdgeInsets> {
+    var scrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
         .relay(of: object, \.scrollIndicatorInsets)
     }
     
-    var decelerationRate: TwoWayRelay<UIScrollView.DecelerationRate> {
-        .relay(of: object, \.decelerationRate)
-    }
-
-    var indexDisplayMode: TwoWayRelay<UIScrollView.IndexDisplayMode> {
-        .relay(of: object, \.indexDisplayMode)
-    }
-    
-    var delaysContentTouches: TwoWayRelay<Bool> {
+    var delaysContentTouches: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.delaysContentTouches)
     }
     
-    var canCancelContentTouches: TwoWayRelay<Bool> {
+    var canCancelContentTouches: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.canCancelContentTouches)
     }
     
-    var minimumZoomScale: TwoWayRelay<CGFloat> {
+    var minimumZoomScale: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.minimumZoomScale)
     }
     
-    var maximumZoomScale: TwoWayRelay<CGFloat> {
+    var maximumZoomScale: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.maximumZoomScale)
     }
     
-    var zoomScale: TwoWayRelay<CGFloat> {
+    var zoomScale: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.zoomScale)
     }
     
-    var bouncesZoom: TwoWayRelay<Bool> {
+    var bouncesZoom: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.bouncesZoom)
     }
     
-    var scrollsToTop: TwoWayRelay<Bool> {
+    var scrollsToTop: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.scrollsToTop)
     }
     
-    var keyboardDismissMode: TwoWayRelay<UIScrollView.KeyboardDismissMode> {
-        .relay(of: object, \.keyboardDismissMode)
-    }
-    
-    var refreshControl: TwoWayRelay<UIRefreshControl?> {
+    var refreshControl: AssociativeTwoWayRelay<UIRefreshControl?> {
         .relay(of: object, \.refreshControl)
-    }
-    
-    // MARK: Value Relay
-    
-    @available(iOS 11.0, *)
-    var adjustedContentInset: ValueRelay<UIEdgeInsets> {
-        .relay(of: object, \.adjustedContentInset)
-    }
-    
-    @available(iOS 11.0, *)
-    var contentLayoutGuide: ValueRelay<UILayoutGuide> {
-        .relay(of: object, \.contentLayoutGuide)
-    }
-    
-    @available(iOS 11.0, *)
-    var frameLayoutGuide: ValueRelay<UILayoutGuide> {
-        .relay(of: object, \.frameLayoutGuide)
-    }
-    
-    var isTracking: ValueRelay<Bool> {
-        .relay(of: object, \.isTracking)
-    }
-    
-    var isDragging: ValueRelay<Bool> {
-        .relay(of: object, \.isDragging)
-    }
-    
-    var isDecelerating: ValueRelay<Bool> {
-        .relay(of: object, \.isDecelerating)
-    }
-    
-    var isZooming: ValueRelay<Bool> {
-        .relay(of: object, \.isZooming)
-    }
-    
-    var isZoomBouncing: ValueRelay<Bool> {
-        .relay(of: object, \.isZoomBouncing)
-    }
-    
-    var panGestureRecognizer: ValueRelay<UIPanGestureRecognizer> {
-        .relay(of: object, \.panGestureRecognizer)
-    }
-    
-    var pinchGestureRecognizer: ValueRelay<UIPinchGestureRecognizer?> {
-        .relay(of: object, \.pinchGestureRecognizer)
-    }
-    
-    var directionalPressGestureRecognizer: ValueRelay<UIGestureRecognizer> {
-        .relay(of: object, \.directionalPressGestureRecognizer)
     }
     
 }

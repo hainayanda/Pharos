@@ -9,87 +9,67 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UILabel: PopulatedRelays {
-    public typealias BaseRelayObject = UILabel
-}
-
 public extension RelayCollection where Object: UILabel {
     
     // MARK: Two Way Relay
     
-    var text: TwoWayRelay<String?> {
+    var text: AssociativeTwoWayRelay<String?> {
         .relay(of: object, \.text)
     }
 
-    var font: TwoWayRelay<UIFont?> {
+    var font: AssociativeTwoWayRelay<UIFont?> {
         .relay(of: object, \.font)
     }
 
-    var textColor: TwoWayRelay<UIColor?> {
+    var textColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.textColor)
     }
 
-    var shadowColor: TwoWayRelay<UIColor?> {
+    var shadowColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.shadowColor)
     }
 
-    var shadowOffset: TwoWayRelay<CGSize> {
+    var shadowOffset: AssociativeTwoWayRelay<CGSize> {
         .relay(of: object, \.shadowOffset)
     }
-
-    var textAlignment: TwoWayRelay<NSTextAlignment> {
-        .relay(of: object, \.textAlignment)
-    }
-
-    var lineBreakMode: TwoWayRelay<NSLineBreakMode> {
-        .relay(of: object, \.lineBreakMode)
-    }
     
-    var attributedText: TwoWayRelay<NSAttributedString?> {
+    var attributedText: AssociativeTwoWayRelay<NSAttributedString?> {
         .relay(of: object, \.attributedText)
     }
     
-    var highlightedTextColor: TwoWayRelay<UIColor?> {
+    var highlightedTextColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.highlightedTextColor)
     }
 
-    var isHighlighted: TwoWayRelay<Bool> {
+    var isHighlighted: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isHighlighted)
     }
 
-    var isUserInteractionEnabled: TwoWayRelay<Bool> {
+    var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isUserInteractionEnabled)
     }
 
-    var isEnabled: TwoWayRelay<Bool> {
+    var isEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isEnabled)
     }
     
-    var numberOfLines: TwoWayRelay<Int> {
+    var numberOfLines: AssociativeTwoWayRelay<Int> {
         .relay(of: object, \.numberOfLines)
     }
     
-    var adjustsFontSizeToFitWidth: TwoWayRelay<Bool> {
+    var adjustsFontSizeToFitWidth: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.adjustsFontSizeToFitWidth)
     }
-
-    var baselineAdjustment: TwoWayRelay<UIBaselineAdjustment> {
-        .relay(of: object, \.baselineAdjustment)
-    }
-
+    
     var minimumScaleFactor: TwoWayRelay<CGFloat> {
         .relay(of: object, \.minimumScaleFactor)
     }
     
-    var allowsDefaultTighteningForTruncation: TwoWayRelay<Bool> {
+    var allowsDefaultTighteningForTruncation: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.allowsDefaultTighteningForTruncation)
     }
     
-    var lineBreakStrategy: TwoWayRelay<NSParagraphStyle.LineBreakStrategy> {
-        .relay(of: object, \.lineBreakStrategy)
-    }
-    
-    var preferredMaxLayoutWidth: TwoWayRelay<CGFloat> {
+    var preferredMaxLayoutWidth: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.preferredMaxLayoutWidth)
     }
     

@@ -1,5 +1,5 @@
 //
-//  Dereferencer.swift
+//  Retainer.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 15/04/21.
@@ -7,13 +7,14 @@
 
 import Foundation
 
-public class Dereferencer {
+@available(*, renamed: "Dereferencer")
+public class Retainer {
     var discardables: [Discardable] = []
     
     public init() { }
     
     func add(discardable: Discardable) {
-        guard !discardable.discarded else { return }
+        guard !discardable.isValid else { return }
         discardables.append(discardable)
     }
     
@@ -27,16 +28,11 @@ public class Dereferencer {
     }
 }
 
-public class Discardable {
-    public internal(set) var discarded: Bool = false
-    var content: Any?
-    
-    init(content: Any) {
-        self.content = content
-    }
-    
-    public func discard() {
-        content = nil
-        discarded = true
-    }
+public protocol Discardable {
+    var isValid: Bool { get }
+    func discard()
+}
+
+extension Discardable {
+    var isInValid: Bool { !isValid }
 }

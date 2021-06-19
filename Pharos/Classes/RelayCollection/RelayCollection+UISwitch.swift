@@ -9,49 +9,28 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UISwitch: PopulatedRelays {
-    public typealias BaseRelayObject = UISwitch
-}
-
 public extension RelayCollection where Object: UISwitch {
     
     // MARK: Two Way Relay
     
-    var onTintColor: TwoWayRelay<UIColor?> {
+    var onTintColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.onTintColor)
     }
     
-    var thumbTintColor: TwoWayRelay<UIColor?> {
+    var thumbTintColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.thumbTintColor)
     }
     
-    var onImage: TwoWayRelay<UIImage?> {
+    var onImage: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.onImage)
     }
     
-    var offImage: TwoWayRelay<UIImage?> {
+    var offImage: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.offImage)
     }
     
-    @available(iOS 14.0, *)
-    var title: TwoWayRelay<String?> {
-        .relay(of: object, \.title)
-    }
-    
-    @available(iOS 14.0, *)
-    var preferredStyle: TwoWayRelay<UISwitch.Style> {
-        .relay(of: object, \.preferredStyle)
-    }
-    
-    var isOn: TwoWayRelay<Bool> {
+    var isOn: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isOn)
-    }
-    
-    // MARK: Value Relay
-    
-    @available(iOS 14.0, *)
-    var style: ValueRelay<UISwitch.Style> {
-        .relay(of: object, \.style)
     }
     
 }

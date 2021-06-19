@@ -25,7 +25,7 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
         return true
     }
     
-    public func relayBackConsumer(_ consumer: @escaping BackConsumer) {
+    open func relayBackConsumer(_ consumer: @escaping BackConsumer) {
         self.callBackRelay = consumer
     }
     

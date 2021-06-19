@@ -9,59 +9,40 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UIImageView: PopulatedRelays {
-    public typealias BaseRelayObject = UIImageView
-}
-
 public extension RelayCollection where Object: UIImageView {
     
     // MARK: Two Way Relay
     
-    var image: TwoWayRelay<UIImage?> {
+    var image: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.image)
     }
-
-    @available(iOS 3.0, *)
-    var highlightedImage: TwoWayRelay<UIImage?> {
+    
+    var highlightedImage: AssociativeTwoWayRelay<UIImage?> {
         .relay(of: object, \.highlightedImage)
     }
 
-    @available(iOS 13.0, *)
-    var preferredSymbolConfiguration: TwoWayRelay<UIImage.SymbolConfiguration?> {
-        .relay(of: object, \.preferredSymbolConfiguration)
-    }
-
-    var isUserInteractionEnabled: TwoWayRelay<Bool> {
+    var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isUserInteractionEnabled)
     }
-
     
-    @available(iOS 3.0, *)
-    var isHighlighted: TwoWayRelay<Bool> {
+    var isHighlighted: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isHighlighted)
     }
     
-    var animationImages: TwoWayRelay<[UIImage]?> {
+    var animationImages: AssociativeTwoWayRelay<[UIImage]?> {
         .relay(of: object, \.animationImages)
     }
 
-    var highlightedAnimationImages: TwoWayRelay<[UIImage]?> {
+    var highlightedAnimationImages: AssociativeTwoWayRelay<[UIImage]?> {
         .relay(of: object, \.highlightedAnimationImages)
     }
-
     
-    var animationDuration: TwoWayRelay<TimeInterval> {
+    var animationDuration: AssociativeTwoWayRelay<TimeInterval> {
         .relay(of: object, \.animationDuration)
     }
 
-    var animationRepeatCount: TwoWayRelay<Int> {
+    var animationRepeatCount: AssociativeTwoWayRelay<Int> {
         .relay(of: object, \.animationRepeatCount)
-    }
-    
-    // MARK: Value Relay
-    
-    var isAnimating: ValueRelay<Bool> {
-        .relay(of: object, \.isAnimating)
     }
     
 }

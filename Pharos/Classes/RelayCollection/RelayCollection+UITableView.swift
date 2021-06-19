@@ -9,191 +9,133 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UITableView: PopulatedRelays {
-    public typealias BaseRelayObject = UITableView
-}
-
 public extension RelayCollection where Object: UITableView {
     
     // MARK: Two Way Relay
     
-    var dataSource: TwoWayRelay<UITableViewDataSource?> {
+    var dataSource: AssociativeTwoWayRelay<UITableViewDataSource?> {
         .relay(of: object, \.dataSource)
     }
     
-    var delegate: TwoWayRelay<UITableViewDelegate?> {
+    var delegate: AssociativeTwoWayRelay<UITableViewDelegate?> {
         .relay(of: object, \.delegate)
     }
     
-    var prefetchDataSource: TwoWayRelay<UITableViewDataSourcePrefetching?> {
+    var prefetchDataSource: AssociativeTwoWayRelay<UITableViewDataSourcePrefetching?> {
         .relay(of: object, \.prefetchDataSource)
     }
     
     @available(iOS 11.0, *)
-    var dragDelegate: TwoWayRelay<UITableViewDragDelegate?> {
+    var dragDelegate: AssociativeTwoWayRelay<UITableViewDragDelegate?> {
         .relay(of: object, \.dragDelegate)
     }
     
     @available(iOS 11.0, *)
-    var dropDelegate: TwoWayRelay<UITableViewDropDelegate?> {
+    var dropDelegate: AssociativeTwoWayRelay<UITableViewDropDelegate?> {
         .relay(of: object, \.dropDelegate)
     }
     
-    var rowHeight: TwoWayRelay<CGFloat> {
+    var rowHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.rowHeight)
     }
     
-    var sectionHeaderHeight: TwoWayRelay<CGFloat> {
+    var sectionHeaderHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.sectionHeaderHeight)
     }
     
-    var sectionFooterHeight: TwoWayRelay<CGFloat> {
+    var sectionFooterHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.sectionFooterHeight)
     }
     
-    var estimatedRowHeight: TwoWayRelay<CGFloat> {
+    var estimatedRowHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.estimatedRowHeight)
     }
     
-    var estimatedSectionHeaderHeight: TwoWayRelay<CGFloat> {
+    var estimatedSectionHeaderHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.estimatedSectionHeaderHeight)
     }
     
-    var estimatedSectionFooterHeight: TwoWayRelay<CGFloat> {
+    var estimatedSectionFooterHeight: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.estimatedSectionFooterHeight)
     }
     
-    var separatorInset: TwoWayRelay<UIEdgeInsets> {
+    var separatorInset: AssociativeTwoWayRelay<UIEdgeInsets> {
         .relay(of: object, \.separatorInset)
     }
     
-    @available(iOS 11.0, *)
-    var separatorInsetReference: TwoWayRelay<UITableView.SeparatorInsetReference> {
-        .relay(of: object, \.separatorInsetReference)
-    }
-    
-    var backgroundView: TwoWayRelay<UIView?> {
+    var backgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.backgroundView)
     }
     
-    var isEditing: TwoWayRelay<Bool> {
+    var isEditing: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isEditing)
     }
     
-    var allowsSelection: TwoWayRelay<Bool> {
+    var allowsSelection: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.allowsSelection)
     }
     
-    var allowsSelectionDuringEditing: TwoWayRelay<Bool> {
-        .relay(of: object, \.allowsSelectionDuringEditing)
-    }
-    
-    var allowsMultipleSelection: TwoWayRelay<Bool> {
+    var allowsMultipleSelection: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.allowsMultipleSelection)
     }
     
-    var allowsMultipleSelectionDuringEditing: TwoWayRelay<Bool> {
-        .relay(of: object, \.allowsMultipleSelectionDuringEditing)
-    }
-    
-    var sectionIndexMinimumDisplayRowCount: TwoWayRelay<Int> {
+    var sectionIndexMinimumDisplayRowCount: AssociativeTwoWayRelay<Int> {
         .relay(of: object, \.sectionIndexMinimumDisplayRowCount)
     }
     
-    var sectionIndexColor: TwoWayRelay<UIColor?> {
+    var sectionIndexColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.sectionIndexColor)
     }
     
-    var sectionIndexBackgroundColor: TwoWayRelay<UIColor?> {
+    var sectionIndexBackgroundColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.sectionIndexBackgroundColor)
     }
     
-    var sectionIndexTrackingBackgroundColor: TwoWayRelay<UIColor?> {
+    var sectionIndexTrackingBackgroundColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.sectionIndexTrackingBackgroundColor)
     }
     
-    var separatorStyle: TwoWayRelay<UITableViewCell.SeparatorStyle> {
+    var separatorStyle: AssociativeTwoWayRelay<UITableViewCell.SeparatorStyle> {
         .relay(of: object, \.separatorStyle)
     }
     
-    var separatorColor: TwoWayRelay<UIColor?> {
+    var separatorColor: AssociativeTwoWayRelay<UIColor?> {
         .relay(of: object, \.separatorColor)
     }
     
-    var separatorEffect: TwoWayRelay<UIVisualEffect?> {
+    var separatorEffect: AssociativeTwoWayRelay<UIVisualEffect?> {
         .relay(of: object, \.separatorEffect)
     }
     
-    var cellLayoutMarginsFollowReadableWidth: TwoWayRelay<Bool> {
+    var cellLayoutMarginsFollowReadableWidth: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.cellLayoutMarginsFollowReadableWidth)
     }
     
     @available(iOS 11.0, *)
-    var insetsContentViewsToSafeArea: TwoWayRelay<Bool> {
+    var insetsContentViewsToSafeArea: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.insetsContentViewsToSafeArea)
     }
     
-    var tableHeaderView: TwoWayRelay<UIView?> {
+    var tableHeaderView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.tableHeaderView)
     }
     
-    var tableFooterView: TwoWayRelay<UIView?> {
+    var tableFooterView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.tableFooterView)
     }
     
-    var remembersLastFocusedIndexPath: TwoWayRelay<Bool> {
+    var remembersLastFocusedIndexPath: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.remembersLastFocusedIndexPath)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: TwoWayRelay<Bool> {
+    var selectionFollowsFocus: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.selectionFollowsFocus)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: TwoWayRelay<Bool> {
+    var dragInteractionEnabled: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.dragInteractionEnabled)
-    }
-    
-    // MARK: Value Relay
-    
-    var style: ValueRelay<UITableView.Style> {
-        .relay(of: object, \.style)
-    }
-    
-    var numberOfSections: ValueRelay<Int> {
-        .relay(of: object, \.numberOfSections)
-    }
-    
-    var visibleCells: ValueRelay<[UITableViewCell]> {
-        .relay(of: object, \.visibleCells)
-    }
-    
-    var indexPathsForVisibleRows: ValueRelay<[IndexPath]?> {
-        .relay(of: object, \.indexPathsForVisibleRows)
-    }
-    
-    @available(iOS 11.0, *)
-    var hasUncommittedUpdates: ValueRelay<Bool> {
-        .relay(of: object, \.hasUncommittedUpdates)
-    }
-    
-    var indexPathForSelectedRow: ValueRelay<IndexPath?> {
-        .relay(of: object, \.indexPathForSelectedRow)
-    }
-    
-    var indexPathsForSelectedRows: ValueRelay<[IndexPath]?> {
-        .relay(of: object, \.indexPathsForSelectedRows)
-    }
-    
-    @available(iOS 11.0, *)
-    var hasActiveDrag: ValueRelay<Bool> {
-        .relay(of: object, \.hasActiveDrag)
-    }
-    
-    @available(iOS 11.0, *)
-    var hasActiveDrop: ValueRelay<Bool> {
-        .relay(of: object, \.hasActiveDrop)
     }
     
 }
