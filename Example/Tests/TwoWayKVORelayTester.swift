@@ -82,6 +82,18 @@ func testRelay<Object: NSObject>(
 
 func testRelay<Object: NSObject>(
     for object: Object,
+    relay: TwoWayRelay<UIOffset>,
+    keyPath: ReferenceWritableKeyPath<Object, UIOffset>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .init(horizontal: 123, vertical: 456)
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
     relay: TwoWayRelay<UITextField.BorderStyle>,
     keyPath: ReferenceWritableKeyPath<Object, UITextField.BorderStyle>) {
     testRelay(

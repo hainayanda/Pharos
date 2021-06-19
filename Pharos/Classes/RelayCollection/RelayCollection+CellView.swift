@@ -11,157 +11,103 @@ import UIKit
 
 // MARK: UITableViewCell
 
-extension UITableViewCell: PopulatedRelays {
-    public typealias BaseRelayObject = UITableViewCell
-}
-
 public extension RelayCollection where Object: UITableViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: TwoWayRelay<Bool> {
+    var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.automaticallyUpdatesContentConfiguration)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: TwoWayRelay<Bool> {
+    var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: TwoWayRelay<UIView?> {
+    var backgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.backgroundView)
     }
     
-    var selectedBackgroundView: TwoWayRelay<UIView?> {
+    var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.selectedBackgroundView)
     }
     
-    var multipleSelectionBackgroundView: TwoWayRelay<UIView?> {
+    var multipleSelectionBackgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.multipleSelectionBackgroundView)
     }
     
-    var selectionStyle: TwoWayRelay<UITableViewCell.SelectionStyle> {
-        .relay(of: object, \.selectionStyle)
-    }
-    
-    var isSelected: TwoWayRelay<Bool> {
+    var isSelected: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isSelected)
     }
     
-    var isHighlighted: TwoWayRelay<Bool> {
+    var isHighlighted: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isHighlighted)
     }
     
-    var showsReorderControl: TwoWayRelay<Bool> {
+    var showsReorderControl: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.showsReorderControl)
     }
     
-    var shouldIndentWhileEditing: TwoWayRelay<Bool> {
+    var shouldIndentWhileEditing: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.shouldIndentWhileEditing)
     }
     
-    var accessoryType: TwoWayRelay<UITableViewCell.AccessoryType> {
-        .relay(of: object, \.accessoryType)
-    }
-    
-    var accessoryView: TwoWayRelay<UIView?> {
+    var accessoryView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.accessoryView)
     }
     
-    var editingAccessoryType: TwoWayRelay<UITableViewCell.AccessoryType> {
-        .relay(of: object, \.editingAccessoryType)
-    }
-    
-    var editingAccessoryView: TwoWayRelay<UIView?> {
+    var editingAccessoryView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.editingAccessoryView)
     }
     
-    var indentationLevel: TwoWayRelay<Int> {
+    var indentationLevel: AssociativeTwoWayRelay<Int> {
         .relay(of: object, \.indentationLevel)
     }
     
-    var indentationWidth: TwoWayRelay<CGFloat> {
+    var indentationWidth: AssociativeTwoWayRelay<CGFloat> {
         .relay(of: object, \.indentationWidth)
     }
     
-    @available(iOS 7.0, *)
-    var separatorInset: TwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.separatorInset)
-    }
-    
-    var isEditing: TwoWayRelay<Bool> {
+    var isEditing: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isEditing)
     }
     
-    @available(iOS 9.0, *)
-    var focusStyle: TwoWayRelay<UITableViewCell.FocusStyle> {
-        .relay(of: object, \.focusStyle)
-    }
-    
     @available(iOS 11.0, *)
-    var userInteractionEnabledWhileDragging: TwoWayRelay<Bool> {
+    var userInteractionEnabledWhileDragging: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.userInteractionEnabledWhileDragging)
-    }
-    
-    // MARK: Value Relay
-    
-    var contentView: ValueRelay<UIView> {
-        .relay(of: object, \.contentView)
-    }
-    
-    var reuseIdentifier: ValueRelay<String?> {
-        .relay(of: object, \.reuseIdentifier)
-    }
-    
-    var editingStyle: ValueRelay<UITableViewCell.EditingStyle> {
-        .relay(of: object, \.editingStyle)
-    }
-    
-    var showingDeleteConfirmation: ValueRelay<Bool> {
-        .relay(of: object, \.showingDeleteConfirmation)
     }
 }
 
 // MARK: UICollectionViewCell
-
-extension UICollectionViewCell: PopulatedRelays {
-    public typealias BaseRelayObject = UICollectionViewCell
-}
 
 public extension RelayCollection where Object: UICollectionViewCell {
     
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: TwoWayRelay<Bool> {
+    var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.automaticallyUpdatesContentConfiguration)
     }
     
-    var isSelected: TwoWayRelay<Bool> {
+    var isSelected: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isSelected)
     }
     
-    var isHighlighted: TwoWayRelay<Bool> {
+    var isHighlighted: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isHighlighted)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: TwoWayRelay<Bool> {
+    var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: TwoWayRelay<UIView?> {
+    var backgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.backgroundView)
     }
     
-    var selectedBackgroundView: TwoWayRelay<UIView?> {
+    var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
         .relay(of: object, \.selectedBackgroundView)
-    }
-    
-    // MARK: Value Relay
-    
-    var contentView: ValueRelay<UIView> {
-        .relay(of: object, \.contentView)
     }
     
 }
