@@ -9,12 +9,6 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public extension UIView {
-    var viewRelays: RelayCollection<UIView> {
-        .init(object: self)
-    }
-}
-
 public extension RelayCollection where Object: UIView {
     
     // MARK: Two Way Relay
