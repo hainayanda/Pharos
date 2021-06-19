@@ -164,11 +164,11 @@ class MyClass {
 
 At example above, first closure will replaced by second closure since both are assigned in Main Relay. But any relay could have multiple child relay which will notified by the previous relay as described by diagram below:
 
-![alt text](https://github.com/nayanda1/Vellum/blob/main/ObservableRelay.png)
+![alt text](https://github.com/nayanda1/Pharos/blob/main/ObservableRelay.png)
 
 And remember, single relay will always just have one did set listener:
 
-![alt text](https://github.com/nayanda1/Vellum/blob/main/DidSet.png)
+![alt text](https://github.com/nayanda1/Pharos/blob/main/DidSet.png)
 
 To use next relay, you could just do something like this:
 
@@ -284,7 +284,7 @@ At the example above, everytime `text` is set, it will automatically set the `te
 
 The mechanism can be describe by diagram below:
 
-![alt text](https://github.com/nayanda1/Vellum/blob/main/BondingRelay.png)
+![alt text](https://github.com/nayanda1/Pharos/blob/main/BondingRelay.png)
 
 If you want to bond and match both value right away, use `bondAndApply` or `bondAndMap`. the difference between both is apply will set the `Observable` value to `Object property` and map will set the `Object property` to `Observable`
 
