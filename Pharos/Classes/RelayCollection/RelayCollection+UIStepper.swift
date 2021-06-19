@@ -9,39 +9,35 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-extension UIStepper: PopulatedRelays {
-    public typealias BaseRelayObject = UIStepper
-}
-
 public extension RelayCollection where Object: UIStepper {
     
     // MARK: Two Way Relay
     
-    var isContinuous: TwoWayRelay<Bool> {
+    var isContinuous: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.isContinuous)
     }
     
-    var autorepeat: TwoWayRelay<Bool> {
+    var autorepeat: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.autorepeat)
     }
     
-    var wraps: TwoWayRelay<Bool> {
+    var wraps: AssociativeTwoWayRelay<Bool> {
         .relay(of: object, \.wraps)
     }
     
-    var value: TwoWayRelay<Double> {
+    var value: AssociativeTwoWayRelay<Double> {
         .relay(of: object, \.value)
     }
     
-    var minimumValue: TwoWayRelay<Double> {
+    var minimumValue: AssociativeTwoWayRelay<Double> {
         .relay(of: object, \.minimumValue)
     }
     
-    var maximumValue: TwoWayRelay<Double> {
+    var maximumValue: AssociativeTwoWayRelay<Double> {
         .relay(of: object, \.maximumValue)
     }
     
-    var stepValue: TwoWayRelay<Double> {
+    var stepValue: AssociativeTwoWayRelay<Double> {
         .relay(of: object, \.stepValue)
     }
 }
