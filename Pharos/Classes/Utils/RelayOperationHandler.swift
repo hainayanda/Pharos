@@ -71,7 +71,8 @@ class RelayDispatchHandler<Value>: RelayOperationHandler {
     }
     
     var maySynchronized: Bool {
-        OperationQueue.current?.underlyingQueue == dispatcher
+        guard let dispatcher = dispatcher else { return true }
+        return OperationQueue.current?.underlyingQueue == dispatcher
     }
     
     var shouldSynchronous: Bool {
