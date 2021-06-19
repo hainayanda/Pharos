@@ -488,6 +488,19 @@ class MyClass {
 }
 ```
 
+You can always relay value to Any NSObject Bearer Relays by accessing `bearerRelays`. Its using dynamicMemberLookup, so all of the object writable properties will available there:
+
+```swift
+class MyClass {
+    var label: UILabel = UILabel()
+    @Observable var text: String?
+    
+    func observeText() {
+        $text.relayValue(to: label.bearerRelays.text)
+    }
+}
+```
+
 All relay will weak referenced and will stop relaying to other Observable if those relay is dereferenced by `ARC`
 
 ## Merging Relay
