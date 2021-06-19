@@ -22,6 +22,8 @@
 		96427FB076AEC3F72B8CFE14 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pharos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E4AF481F13ADEA7D3697D /* Pharos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Pharos.podspec; path = ../Pharos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
 		BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
 		BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayKVORelayTester.swift; sourceTree = "<group>"; };
 		CDD394D6EBAB1D2D08A68AA7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */,
 				BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */,
+				BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */,
+				BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -225,7 +229,9 @@
 			files = (
 				BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */,
 				BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */,
+				BB6128B4267D8EA400D1670D /* TextInputRelayCollectionSpec.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */,
+				BB6128BA267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
