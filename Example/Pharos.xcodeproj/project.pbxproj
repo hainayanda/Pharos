@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */; };
 		6637C15102A6B68C6B7D8486 /* Pods_Pharos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */; };
+		BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */; };
+		BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		96427FB076AEC3F72B8CFE14 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pharos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E4AF481F13ADEA7D3697D /* Pharos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Pharos.podspec; path = ../Pharos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayKVORelayTester.swift; sourceTree = "<group>"; };
 		CDD394D6EBAB1D2D08A68AA7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +63,8 @@
 			children = (
 				607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */,
+				BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -217,6 +223,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */,
+				BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
