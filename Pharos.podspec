@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Pharos'
-  s.version          = '1.1.6'
+  s.version          = '1.2.0'
   s.summary          = 'Pharos is Observer pattern framework for Swift that utilize `propertyWrapper'
 
 # This description is used to generate tags and improve search results.
