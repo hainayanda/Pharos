@@ -21,21 +21,21 @@ class UIStackViewRelayCollectionSpec: QuickSpec {
                 view = UIStackView()
             }
             it("should relay spacing") {
-                testRelay(
+                testCGFloatRelay(
                     for: view,
                     relay: view.bondableRelays.spacing,
                     keyPath: \.spacing
                 )
             }
             it("should relay isBaselineRelativeArrangement") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isBaselineRelativeArrangement,
                     keyPath: \.isBaselineRelativeArrangement
                 )
             }
             it("should relay isLayoutMarginsRelativeArrangement") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isLayoutMarginsRelativeArrangement,
                     keyPath: \.isLayoutMarginsRelativeArrangement

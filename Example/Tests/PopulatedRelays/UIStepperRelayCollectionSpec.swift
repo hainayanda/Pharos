@@ -21,39 +21,47 @@ class UIStepperRelayCollectionSpec: QuickSpec {
                 view = UIStepper()
             }
             it("should relay isContinuous") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isContinuous,
                     keyPath: \.isContinuous
                 )
             }
             it("should relay autorepeat") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.autorepeat,
                     keyPath: \.autorepeat
                 )
             }
             it("should relay wraps") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.wraps,
                     keyPath: \.wraps
                 )
             }
             it("should relay minimumValue") {
+                let newValue = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bondableRelays.minimumValue,
-                    keyPath: \.minimumValue
-                )
+                    keyPath: \.minimumValue,
+                    with: newValue) { changes, oldValue in
+                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                }
             }
             it("should relay maximumValue") {
+                let newValue = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bondableRelays.maximumValue,
-                    keyPath: \.maximumValue
-                )
+                    keyPath: \.maximumValue,
+                    with: newValue) { changes, oldValue in
+                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                }
             }
             it("should relay stepValue") {
                 let newValue = Double.random(in: 0..<1024)

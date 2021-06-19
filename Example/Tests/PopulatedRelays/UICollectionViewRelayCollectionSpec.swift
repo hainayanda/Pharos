@@ -109,7 +109,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay isPrefetchingEnabled") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isPrefetchingEnabled,
                     keyPath: \.isPrefetchingEnabled
@@ -117,7 +117,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay dragInteractionEnabled") {
                 if #available(iOS 11.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.dragInteractionEnabled,
                         keyPath: \.dragInteractionEnabled
@@ -125,28 +125,28 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay backgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay allowsSelection") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsSelection,
                     keyPath: \.allowsSelection
                 )
             }
             it("should relay allowsMultipleSelection") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsMultipleSelection,
                     keyPath: \.allowsMultipleSelection
                 )
             }
             it("should relay remembersLastFocusedIndexPath") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.remembersLastFocusedIndexPath,
                     keyPath: \.remembersLastFocusedIndexPath
@@ -154,7 +154,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay selectionFollowsFocus") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.selectionFollowsFocus,
                         keyPath: \.selectionFollowsFocus
@@ -163,7 +163,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay isEditing") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.isEditing,
                         keyPath: \.isEditing

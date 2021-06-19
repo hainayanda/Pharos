@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 public protocol PopulatedRelays: NSObject { }
 
@@ -17,11 +20,13 @@ public extension PopulatedRelays {
     }
 }
 
+#if canImport(UIKit)
 public extension PopulatedRelays where Self: UIView {
     var bondableRelays: RelayCollection<Self> {
         .init(object: self)
     }
 }
+#endif
 
 public class RelayCollection<Object: NSObject> {
     let object: Object

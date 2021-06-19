@@ -21,98 +21,98 @@ class UILabelRelayCollectionSpec: QuickSpec {
                 view = UILabel()
             }
             it("should relay text") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.text,
                     keyPath: \.text
                 )
             }
             it("should relay font") {
-                testRelay(
+                testFontRelay(
                     for: view,
                     relay: view.bondableRelays.font,
                     keyPath: \.font
                 )
             }
             it("should relay textColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.textColor,
                     keyPath: \.textColor
                 )
             }
             it("should relay shadowColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.shadowColor,
                     keyPath: \.shadowColor
                 )
             }
             it("should relay shadowOffset") {
-                testRelay(
+                testSizeRelay(
                     for: view,
                     relay: view.bondableRelays.shadowOffset,
                     keyPath: \.shadowOffset
                 )
             }
             it("should relay attributedText") {
-                testRelay(
+                testOptAttributedStringRelay(
                     for: view,
                     relay: view.bondableRelays.attributedText,
                     keyPath: \.attributedText
                 )
             }
             it("should relay highlightedTextColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.highlightedTextColor,
                     keyPath: \.highlightedTextColor
                 )
             }
             it("should relay isHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isHighlighted,
                     keyPath: \.isHighlighted
                 )
             }
             it("should relay isUserInteractionEnabled") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isUserInteractionEnabled,
                     keyPath: \.isUserInteractionEnabled
                 )
             }
             it("should relay isEnabled") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isEnabled,
                     keyPath: \.isEnabled
                 )
             }
             it("should relay numberOfLines") {
-                testRelay(
+                testIntRelay(
                     for: view,
                     relay: view.bondableRelays.numberOfLines,
                     keyPath: \.numberOfLines
                 )
             }
             it("should relay adjustsFontSizeToFitWidth") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.adjustsFontSizeToFitWidth,
                     keyPath: \.adjustsFontSizeToFitWidth
                 )
             }
             it("should relay allowsDefaultTighteningForTruncation") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsDefaultTighteningForTruncation,
                     keyPath: \.allowsDefaultTighteningForTruncation
                 )
             }
             it("should relay preferredMaxLayoutWidth") {
-                testRelay(
+                testCGFloatRelay(
                     for: view,
                     relay: view.bondableRelays.preferredMaxLayoutWidth,
                     keyPath: \.preferredMaxLayoutWidth

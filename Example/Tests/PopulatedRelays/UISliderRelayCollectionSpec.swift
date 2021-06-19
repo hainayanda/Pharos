@@ -21,56 +21,56 @@ class UISliderRelayCollectionSpec: QuickSpec {
                 view = UISlider()
             }
             it("should relay minimumValue") {
-                testRelay(
+                testFloatRelay(
                     for: view,
                     relay: view.bondableRelays.minimumValue,
                     keyPath: \.minimumValue
                 )
             }
             it("should relay maximumValue") {
-                testRelay(
+                testFloatRelay(
                     for: view,
                     relay: view.bondableRelays.maximumValue,
                     keyPath: \.maximumValue
                 )
             }
             it("should relay minimumValueImage") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.minimumValueImage,
                     keyPath: \.minimumValueImage
                 )
             }
             it("should relay maximumValueImage") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.maximumValueImage,
                     keyPath: \.maximumValueImage
                 )
             }
             it("should relay isContinuous") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isContinuous,
                     keyPath: \.isContinuous
                 )
             }
             it("should relay minimumTrackTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.minimumTrackTintColor,
                     keyPath: \.minimumTrackTintColor
                 )
             }
             it("should relay maximumTrackTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.maximumTrackTintColor,
                     keyPath: \.maximumTrackTintColor
                 )
             }
             it("should relay thumbTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.thumbTintColor,
                     keyPath: \.thumbTintColor

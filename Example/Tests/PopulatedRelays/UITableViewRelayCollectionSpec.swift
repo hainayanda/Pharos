@@ -164,7 +164,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay separatorInset") {
-                testRelay(
+                testInsetsRelay(
                     for: view,
                     relay: view.bondableRelays.separatorInset,
                     keyPath: \.separatorInset
@@ -172,7 +172,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay dragInteractionEnabled") {
                 if #available(iOS 11.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.dragInteractionEnabled,
                         keyPath: \.dragInteractionEnabled
@@ -180,28 +180,28 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay backgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay allowsSelection") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsSelection,
                     keyPath: \.allowsSelection
                 )
             }
             it("should relay allowsMultipleSelection") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsMultipleSelection,
                     keyPath: \.allowsMultipleSelection
                 )
             }
             it("should relay remembersLastFocusedIndexPath") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.remembersLastFocusedIndexPath,
                     keyPath: \.remembersLastFocusedIndexPath
@@ -209,7 +209,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay selectionFollowsFocus") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.selectionFollowsFocus,
                         keyPath: \.selectionFollowsFocus
@@ -217,63 +217,63 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay isEditing") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isEditing,
                     keyPath: \.isEditing
                 )
             }
             it("should relay sectionIndexMinimumDisplayRowCount") {
-                testRelay(
+                testIntRelay(
                     for: view,
                     relay: view.bondableRelays.sectionIndexMinimumDisplayRowCount,
                     keyPath: \.sectionIndexMinimumDisplayRowCount
                 )
             }
             it("should relay sectionIndexColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.sectionIndexColor,
                     keyPath: \.sectionIndexColor
                 )
             }
             it("should relay sectionIndexBackgroundColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.sectionIndexBackgroundColor,
                     keyPath: \.sectionIndexBackgroundColor
                 )
             }
             it("should relay sectionIndexTrackingBackgroundColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.sectionIndexTrackingBackgroundColor,
                     keyPath: \.sectionIndexTrackingBackgroundColor
                 )
             }
             it("should relay sectionIndexTrackingBackgroundColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.sectionIndexTrackingBackgroundColor,
                     keyPath: \.sectionIndexTrackingBackgroundColor
                 )
             }
             it("should relay separatorColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.separatorColor,
                     keyPath: \.separatorColor
                 )
             }
             it("should relay separatorEffect") {
-                testRelay(
+                testVisualEffectRelay(
                     for: view,
                     relay: view.bondableRelays.separatorEffect,
                     keyPath: \.separatorEffect
                 )
             }
             it("should relay cellLayoutMarginsFollowReadableWidth") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.cellLayoutMarginsFollowReadableWidth,
                     keyPath: \.cellLayoutMarginsFollowReadableWidth
@@ -281,7 +281,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay insetsContentViewsToSafeArea") {
                 if #available(iOS 11.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.insetsContentViewsToSafeArea,
                         keyPath: \.insetsContentViewsToSafeArea
@@ -289,34 +289,18 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay tableHeaderView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.tableHeaderView,
                     keyPath: \.tableHeaderView
                 )
             }
             it("should relay tableFooterView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.tableFooterView,
                     keyPath: \.tableFooterView
                 )
-            }
-            it("should relay remembersLastFocusedIndexPath") {
-                testRelay(
-                    for: view,
-                    relay: view.bondableRelays.remembersLastFocusedIndexPath,
-                    keyPath: \.remembersLastFocusedIndexPath
-                )
-            }
-            it("should relay insetsContentViewsToSafeArea") {
-                if #available(iOS 14.0, *) {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.selectionFollowsFocus,
-                        keyPath: \.selectionFollowsFocus
-                    )
-                }
             }
         }
     }

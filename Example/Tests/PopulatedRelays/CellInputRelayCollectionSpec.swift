@@ -22,7 +22,7 @@ class TableCellInputRelayCollectionSpec: QuickSpec {
             }
             it("should relay automaticallyUpdatesContentConfiguration") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.automaticallyUpdatesContentConfiguration,
                         keyPath: \.automaticallyUpdatesContentConfiguration
@@ -31,7 +31,7 @@ class TableCellInputRelayCollectionSpec: QuickSpec {
             }
             it("should relay automaticallyUpdatesBackgroundConfiguration") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.automaticallyUpdatesBackgroundConfiguration,
                         keyPath: \.automaticallyUpdatesBackgroundConfiguration
@@ -39,77 +39,77 @@ class TableCellInputRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay backgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay selectedBackgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.selectedBackgroundView,
                     keyPath: \.selectedBackgroundView
                 )
             }
             it("should relay multipleSelectionBackgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.multipleSelectionBackgroundView,
                     keyPath: \.multipleSelectionBackgroundView
                 )
             }
             it("should relay isSelected") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isSelected,
                     keyPath: \.isSelected
                 )
             }
             it("should relay isHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isHighlighted,
                     keyPath: \.isHighlighted
                 )
             }
             it("should relay showsReorderControl") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.showsReorderControl,
                     keyPath: \.showsReorderControl
                 )
             }
             it("should relay shouldIndentWhileEditing") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.shouldIndentWhileEditing,
                     keyPath: \.shouldIndentWhileEditing
                 )
             }
             it("should relay accessoryView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.accessoryView,
                     keyPath: \.accessoryView
                 )
             }
             it("should relay indentationLevel") {
-                testRelay(
+                testIntRelay(
                     for: view,
                     relay: view.bondableRelays.indentationLevel,
                     keyPath: \.indentationLevel
                 )
             }
             it("should relay indentationWidth") {
-                testRelay(
+                testCGFloatRelay(
                     for: view,
                     relay: view.bondableRelays.indentationWidth,
                     keyPath: \.indentationWidth
                 )
             }
             it("should relay isEditing") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isEditing,
                     keyPath: \.isEditing
@@ -117,7 +117,7 @@ class TableCellInputRelayCollectionSpec: QuickSpec {
             }
             it("should relay userInteractionEnabledWhileDragging") {
                 if #available(iOS 11.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.userInteractionEnabledWhileDragging,
                         keyPath: \.userInteractionEnabledWhileDragging
@@ -137,7 +137,7 @@ class CollectionCellInputRelayCollectionSpec: QuickSpec {
             }
             it("should relay automaticallyUpdatesContentConfiguration") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.automaticallyUpdatesContentConfiguration,
                         keyPath: \.automaticallyUpdatesContentConfiguration
@@ -146,7 +146,7 @@ class CollectionCellInputRelayCollectionSpec: QuickSpec {
             }
             it("should relay automaticallyUpdatesBackgroundConfiguration") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.automaticallyUpdatesBackgroundConfiguration,
                         keyPath: \.automaticallyUpdatesBackgroundConfiguration
@@ -154,28 +154,28 @@ class CollectionCellInputRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay backgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay selectedBackgroundView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.selectedBackgroundView,
                     keyPath: \.selectedBackgroundView
                 )
             }
             it("should relay isSelected") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isSelected,
                     keyPath: \.isSelected
                 )
             }
             it("should relay isHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isHighlighted,
                     keyPath: \.isHighlighted

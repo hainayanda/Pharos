@@ -22,7 +22,7 @@ class UIButtonRelayCollectionSpec: QuickSpec {
             }
             it("should relay automaticallyUpdatesBackgroundConfiguration") {
                 if #available(iOS 13.4, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.isPointerInteractionEnabled,
                         keyPath: \.isPointerInteractionEnabled
@@ -30,49 +30,49 @@ class UIButtonRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay contentEdgeInsets") {
-                testRelay(
+                testInsetsRelay(
                     for: view,
                     relay: view.bondableRelays.contentEdgeInsets,
                     keyPath: \.contentEdgeInsets
                 )
             }
             it("should relay titleEdgeInsets") {
-                testRelay(
+                testInsetsRelay(
                     for: view,
                     relay: view.bondableRelays.titleEdgeInsets,
                     keyPath: \.titleEdgeInsets
                 )
             }
             it("should relay reversesTitleShadowWhenHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.reversesTitleShadowWhenHighlighted,
                     keyPath: \.reversesTitleShadowWhenHighlighted
                 )
             }
             it("should relay imageEdgeInsets") {
-                testRelay(
+                testInsetsRelay(
                     for: view,
                     relay: view.bondableRelays.imageEdgeInsets,
                     keyPath: \.imageEdgeInsets
                 )
             }
             it("should relay adjustsImageWhenHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.adjustsImageWhenHighlighted,
                     keyPath: \.adjustsImageWhenHighlighted
                 )
             }
             it("should relay adjustsImageWhenDisabled") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.adjustsImageWhenDisabled,
                     keyPath: \.adjustsImageWhenDisabled
                 )
             }
             it("should relay showsTouchWhenHighlighted") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.showsTouchWhenHighlighted,
                     keyPath: \.showsTouchWhenHighlighted

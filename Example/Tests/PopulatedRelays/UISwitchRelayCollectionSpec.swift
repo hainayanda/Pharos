@@ -21,28 +21,28 @@ class UISwitchRelayCollectionSpec: QuickSpec {
                 view = UISwitch()
             }
             it("should relay onTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.onTintColor,
                     keyPath: \.onTintColor
                 )
             }
             it("should relay thumbTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.thumbTintColor,
                     keyPath: \.thumbTintColor
                 )
             }
             it("should relay onImage") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.onImage,
                     keyPath: \.onImage
                 )
             }
             it("should relay offImage") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.offImage,
                     keyPath: \.offImage
@@ -50,7 +50,7 @@ class UISwitchRelayCollectionSpec: QuickSpec {
             }
             it("should relay isOn") {
                 if #available(iOS 14.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.isOn,
                         keyPath: \.isOn

@@ -21,84 +21,84 @@ class UITextViewRelayCollectionSpec: QuickSpec {
                 view = UITextView()
             }
             it("should relay text") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.text,
                     keyPath: \.text
                 )
             }
             it("should relay font") {
-                testRelay(
+                testFontRelay(
                     for: view,
                     relay: view.bondableRelays.font,
                     keyPath: \.font
                 )
             }
             it("should relay textColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.textColor,
                     keyPath: \.textColor
                 )
             }
             it("should relay selectedRange") {
-                testRelay(
+                testRangeRelay(
                     for: view,
                     relay: view.bondableRelays.selectedRange,
                     keyPath: \.selectedRange
                 )
             }
             it("should relay isEditable") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isEditable,
                     keyPath: \.isEditable
                 )
             }
             it("should relay isSelectable") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isSelectable,
                     keyPath: \.isSelectable
                 )
             }
             it("should relay allowsEditingTextAttributes") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsEditingTextAttributes,
                     keyPath: \.allowsEditingTextAttributes
                 )
             }
             it("should relay attributedText") {
-                testRelay(
+                testAttributedStringRelay(
                     for: view,
                     relay: view.bondableRelays.attributedText,
                     keyPath: \.attributedText
                 )
             }
             it("should relay inputView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.inputView,
                     keyPath: \.inputView
                 )
             }
             it("should relay inputAccessoryView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.inputAccessoryView,
                     keyPath: \.inputAccessoryView
                 )
             }
             it("should relay clearsOnInsertion") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.clearsOnInsertion,
                     keyPath: \.clearsOnInsertion
                 )
             }
             it("should relay textContainerInset") {
-                testRelay(
+                testInsetsRelay(
                     for: view,
                     relay: view.bondableRelays.textContainerInset,
                     keyPath: \.textContainerInset
@@ -106,7 +106,7 @@ class UITextViewRelayCollectionSpec: QuickSpec {
             }
             it("should relay usesStandardTextScaling") {
                 if #available(iOS 13.0, *) {
-                    testRelay(
+                    testBoolRelay(
                         for: view,
                         relay: view.bondableRelays.usesStandardTextScaling,
                         keyPath: \.usesStandardTextScaling
@@ -142,42 +142,42 @@ class UITextFieldRelayCollectionSpec: QuickSpec {
                 view = UITextField()
             }
             it("should relay text") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.text,
                     keyPath: \.text
                 )
             }
             it("should relay attributedText") {
-                testRelay(
+                testOptAttributedStringRelay(
                     for: view,
                     relay: view.bondableRelays.attributedText,
                     keyPath: \.attributedText
                 )
             }
             it("should relay textColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.textColor,
                     keyPath: \.textColor
                 )
             }
             it("should relay font") {
-                testRelay(
+                testFontRelay(
                     for: view,
                     relay: view.bondableRelays.font,
                     keyPath: \.font
                 )
             }
             it("should relay placeholder") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.placeholder,
                     keyPath: \.placeholder
                 )
             }
             it("should relay adjustsFontSizeToFitWidth") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.adjustsFontSizeToFitWidth,
                     keyPath: \.adjustsFontSizeToFitWidth
@@ -199,56 +199,49 @@ class UITextFieldRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay disabledBackground") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.disabledBackground,
                     keyPath: \.disabledBackground
                 )
             }
             it("should relay allowsEditingTextAttributes") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.allowsEditingTextAttributes,
                     keyPath: \.allowsEditingTextAttributes
                 )
             }
             it("should relay leftView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.leftView,
                     keyPath: \.leftView
                 )
             }
             it("should relay rightViewMode") {
-                testRelay(
-                    for: view,
-                    relay: view.bondableRelays.rightView,
-                    keyPath: \.rightView
-                )
-            }
-            it("should relay rightViewMode") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.rightView,
                     keyPath: \.rightView
                 )
             }
             it("should relay inputView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.inputView,
                     keyPath: \.inputView
                 )
             }
             it("should relay inputAccessoryView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.inputAccessoryView,
                     keyPath: \.inputAccessoryView
                 )
             }
             it("should relay clearsOnInsertion") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.clearsOnInsertion,
                     keyPath: \.clearsOnInsertion
@@ -283,91 +276,91 @@ class UISearchBarRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay text") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.text,
                     keyPath: \.text
                 )
             }
             it("should relay prompt") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.prompt,
                     keyPath: \.prompt
                 )
             }
             it("should relay placeholder") {
-                testRelay(
+                testStringRelay(
                     for: view,
                     relay: view.bondableRelays.placeholder,
                     keyPath: \.placeholder
                 )
             }
             it("should relay showsBookmarkButton") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.showsBookmarkButton,
                     keyPath: \.showsBookmarkButton
                 )
             }
             it("should relay showsCancelButton") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.showsCancelButton,
                     keyPath: \.showsCancelButton
                 )
             }
             it("should relay showsSearchResultsButton") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.showsSearchResultsButton,
                     keyPath: \.showsSearchResultsButton
                 )
             }
             it("should relay isSearchResultsButtonSelected") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isSearchResultsButtonSelected,
                     keyPath: \.isSearchResultsButtonSelected
                 )
             }
             it("should relay barTintColor") {
-                testRelay(
+                testColorRelay(
                     for: view,
                     relay: view.bondableRelays.barTintColor,
                     keyPath: \.barTintColor
                 )
             }
             it("should relay isTranslucent") {
-                testRelay(
+                testBoolRelay(
                     for: view,
                     relay: view.bondableRelays.isTranslucent,
                     keyPath: \.isTranslucent
                 )
             }
             it("should relay inputAccessoryView") {
-                testRelay(
+                testViewRelay(
                     for: view,
                     relay: view.bondableRelays.inputAccessoryView,
                     keyPath: \.inputAccessoryView
                 )
             }
             it("should relay backgroundImage") {
-                testRelay(
+                testImageRelay(
                     for: view,
                     relay: view.bondableRelays.backgroundImage,
                     keyPath: \.backgroundImage
                 )
             }
             it("should relay searchFieldBackgroundPositionAdjustment") {
-                testRelay(
+                testOffsetRelay(
                     for: view,
                     relay: view.bondableRelays.searchFieldBackgroundPositionAdjustment,
                     keyPath: \.searchFieldBackgroundPositionAdjustment
                 )
             }
             it("should relay searchTextPositionAdjustment") {
-                testRelay(
+                testOffsetRelay(
                     for: view,
                     relay: view.bondableRelays.searchTextPositionAdjustment,
                     keyPath: \.searchTextPositionAdjustment
