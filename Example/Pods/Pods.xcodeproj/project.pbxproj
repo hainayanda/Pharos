@@ -85,7 +85,6 @@
 		82DA4A16971E771D1785EEDF17F61A56 /* BaseRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C41C01BAB3647A8F1F5BAB04C51F26 /* BaseRelay.swift */; };
 		8510469EB9B18B318478019A11F7D784 /* SatisfyAllOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CD7AC874836F8DA7EC88B0872CDBAE /* SatisfyAllOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		86D9716ADE347B2916F9CB715A3B26D5 /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F5C65CA8F308F74190933D608601A6 /* CwlCatchException.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		87D675D3200F07E476C4CE5053DC2A06 /* ValueKVORelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C74F809F49FB67BD316D61F8278875 /* ValueKVORelay.swift */; };
 		89396273444D853480B62B113EE22623 /* BeginWithPrefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802103650A4E5841D47428C4B297B890 /* BeginWithPrefix.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		8E2D915F77F55ADEBC7C3B223A4F3A9C /* NMBObjCMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81330D968B34C59FC40E730C91DA50 /* NMBObjCMatcher.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		8EAAA9CEE5D6ECA7A89D754080128164 /* RelayCollection+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BBC0967B1CF850A595842F45EF321D /* RelayCollection+UIStackView.swift */; };
@@ -95,7 +94,6 @@
 		960740AE498AC05D8E3796E2B60771DF /* RelayCollection+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7D321BAE55FB68C112C721C109670 /* RelayCollection+UICollectionView.swift */; };
 		96B0CB02417DBF662ABEC9679CEAB613 /* ValueRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4829E25417D74C77D8EC76836609FD47 /* ValueRelay.swift */; };
 		97FA3A0D9196BB3D170B7F7F2A6BDFCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8B94E9D3B433157168D1EECCEC11CD /* Foundation.framework */; };
-		984D7A45D286F74907D4B48863F7D73B /* RelayCollection+UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC103D1D2C722537E36CBEE17457D29 /* RelayCollection+UIRefreshControl.swift */; };
 		98D4C88DB61717125A36A5334F27E5C6 /* NSBundle+CurrentTestBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69E074D53782BE2F1E1AEC1CAA6797 /* NSBundle+CurrentTestBundle.swift */; };
 		9A1BE88CE8717D03F12BF668F2ACF766 /* BeginWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA676B386635A5851AD41777A665907 /* BeginWith.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		9CCB182E68EB96A4620B5BC2EFA2E94B /* RelayCollection+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A07B36B8615979D53869F440AB84259 /* RelayCollection+UILabel.swift */; };
@@ -249,7 +247,6 @@
 		5FDF855D797FF314FA501247ABF1FEC7 /* QuickTestObservation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickTestObservation.swift; path = Sources/Quick/QuickTestObservation.swift; sourceTree = "<group>"; };
 		5FEFE937E90A5B807DD725155A89B69F /* RelayCollection+UIButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIButton.swift"; sourceTree = "<group>"; };
 		61667B1E5FF26B8558093A9A71ECDB64 /* RelayCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RelayCollection.swift; sourceTree = "<group>"; };
-		64C74F809F49FB67BD316D61F8278875 /* ValueKVORelay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ValueKVORelay.swift; sourceTree = "<group>"; };
 		65E90A5D8F62293F783A8E25A56E8B23 /* Pharos.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Pharos.modulemap; sourceTree = "<group>"; };
 		6645CB0EA61CF61654A6456C637CC905 /* Nimble-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-prefix.pch"; sourceTree = "<group>"; };
 		68BC691C67B0A64F7510D5C6298F4A80 /* CwlMachBadInstructionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CwlMachBadInstructionHandler.h; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/include/CwlMachBadInstructionHandler.h; sourceTree = "<group>"; };
@@ -332,7 +329,6 @@
 		D2CC867E16210A5E3628561E0E52DAED /* Example.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Example.swift; path = Sources/Quick/Example.swift; sourceTree = "<group>"; };
 		D864B01792C2475774D9271679F17B9A /* QuickConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickConfiguration.swift; path = Sources/Quick/Configuration/QuickConfiguration.swift; sourceTree = "<group>"; };
 		DBCE4BA046CAEB42619707DBED53725C /* XCTestSuite+QuickTestSuiteBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestSuite+QuickTestSuiteBuilder.m"; path = "Sources/QuickObjectiveC/XCTestSuite+QuickTestSuiteBuilder.m"; sourceTree = "<group>"; };
-		DEC103D1D2C722537E36CBEE17457D29 /* RelayCollection+UIRefreshControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIRefreshControl.swift"; sourceTree = "<group>"; };
 		E0FE7DF20C0080F14BDF5F181BF2345F /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Sources/QuickObjectiveC/Quick.h; sourceTree = "<group>"; };
 		E4097A6637537D84D28A10721A2E7EC6 /* NMBExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NMBExpectation.swift; path = Sources/Nimble/Adapters/NMBExpectation.swift; sourceTree = "<group>"; };
 		E44D64C97F0EB045C86340CAD74FF65D /* CwlCatchException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlCatchException.swift; path = Carthage/Checkouts/CwlCatchException/Sources/CwlCatchException/CwlCatchException.swift; sourceTree = "<group>"; };
@@ -533,7 +529,6 @@
 				301AF4DD87C7DC56D82D0BCBABA6C432 /* RelayCollection+UIControl.swift */,
 				9F61102487CB58DE16286ECE250A191D /* RelayCollection+UIImageView.swift */,
 				5A07B36B8615979D53869F440AB84259 /* RelayCollection+UILabel.swift */,
-				DEC103D1D2C722537E36CBEE17457D29 /* RelayCollection+UIRefreshControl.swift */,
 				159E074DC8E68D9771680C0BF2191B4E /* RelayCollection+UIScrollView.swift */,
 				55156BEEFF5C1D2F3C49C71CCBF3679C /* RelayCollection+UISlider.swift */,
 				25BBC0967B1CF850A595842F45EF321D /* RelayCollection+UIStackView.swift */,
@@ -696,7 +691,6 @@
 				5337ADF513AFD1E8F7BC0BBEE908E142 /* MulticastRelay.swift */,
 				09A2D0E71A1D765414F841F8927A947A /* TwoWayKVORelay.swift */,
 				999E13FC03F2CA5622C99A165DF3A64E /* TwoWayRelay.swift */,
-				64C74F809F49FB67BD316D61F8278875 /* ValueKVORelay.swift */,
 				4829E25417D74C77D8EC76836609FD47 /* ValueRelay.swift */,
 			);
 			name = Relay;
@@ -955,7 +949,6 @@
 				BB6128B8267DB3EB00D1670D /* BearerKVORelay.swift in Sources */,
 				01C83BE38ABDEF77A121C3D21AE82BC1 /* RelayCollection+UIImageView.swift in Sources */,
 				9CCB182E68EB96A4620B5BC2EFA2E94B /* RelayCollection+UILabel.swift in Sources */,
-				984D7A45D286F74907D4B48863F7D73B /* RelayCollection+UIRefreshControl.swift in Sources */,
 				C7596B22EC99F8FF4208158C99EC425A /* RelayCollection+UIScrollView.swift in Sources */,
 				56D7886AA0592E5C246D87EAF56A0B2C /* RelayCollection+UISlider.swift in Sources */,
 				8EAAA9CEE5D6ECA7A89D754080128164 /* RelayCollection+UIStackView.swift in Sources */,
@@ -969,7 +962,6 @@
 				2B211C1BE974D643BDDE64BD9A85418C /* TwoWayKVORelay.swift in Sources */,
 				788756E08CE9F7D4F695F99ECA2998AD /* TwoWayRelay.swift in Sources */,
 				7FDF3556C1F44C1082307F3F5A3448FE /* UISearchBar.swift in Sources */,
-				87D675D3200F07E476C4CE5053DC2A06 /* ValueKVORelay.swift in Sources */,
 				96B0CB02417DBF662ABEC9679CEAB613 /* ValueRelay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
