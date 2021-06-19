@@ -18,9 +18,9 @@ public extension TwoWayRelay {
     }
 }
 
-public class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
+class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
     
-    public typealias Observed = Value
+    typealias Observed = Value
     
     var object: Object? {
         associatedObject as? Object
@@ -37,7 +37,7 @@ public class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Val
     }
     
     @discardableResult
-    public override func relay(changes: Changes<Value>) -> Bool {
+    override func relay(changes: Changes<Value>) -> Bool {
         guard let object = object,
               changes.source as? Object != object else {
             return super.relay(changes: changes)

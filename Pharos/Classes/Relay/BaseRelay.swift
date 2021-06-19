@@ -15,7 +15,7 @@ open class BaseRelay<Value>: RelayOperationHandler, Discardable, Hashable {
     
     var uniqueKey: String = UUID().uuidString
     
-    public func hash(into hasher: inout Hasher) {
+    open func hash(into hasher: inout Hasher) {
         hasher.combine(uniqueKey)
     }
     
@@ -31,7 +31,7 @@ open class BaseRelay<Value>: RelayOperationHandler, Discardable, Hashable {
         return self
     }
     
-    public func discard() {
+    open func discard() {
         fatalError("should overridden")
     }
     

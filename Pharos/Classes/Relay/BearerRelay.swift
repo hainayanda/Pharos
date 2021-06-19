@@ -39,45 +39,45 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
         return true
     }
     
-    public func ignore(when ignoring: @escaping Ignorer) -> Self {
+    open func ignore(when ignoring: @escaping Ignorer) -> Self {
         self.ignoring = ignoring
         return self
     }
     
     @discardableResult
-    public func multipleSetDelayed(by interval: TimeInterval) -> Self {
+    open func multipleSetDelayed(by interval: TimeInterval) -> Self {
         relayDispatch.delay = interval
         return self
     }
     
     @discardableResult
-    public func observe(on dispatcher: DispatchQueue) -> Self {
+    open func observe(on dispatcher: DispatchQueue) -> Self {
         relayDispatch.dispatcher = dispatcher
         return self
     }
     
     @discardableResult
-    public func syncWhenInSameThread() -> Self {
+    open func syncWhenInSameThread() -> Self {
         relayDispatch.syncIfPossible = true
         return self
     }
     
-    public func invokeRelay() {
+    open func invokeRelay() {
         relay(changes: .init(old: currentValue, new: currentValue, source: self))
     }
     
-    public override func removeAllNextRelays() {
+    open override func removeAllNextRelays() {
         nextRelays.forEach { $0.removeAllNextRelays() }
         nextRelays.removeAll()
     }
     
     @discardableResult
-    public func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
+    open func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
         nextRelays.insert(relay)
         return relay
     }
     
-    public override func discard() {
+    open override func discard() {
         relayDispatch.consumer = nil
     }
 }

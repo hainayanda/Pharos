@@ -15,8 +15,8 @@ public extension BearerRelay {
     }
 }
 
-public class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Value> {
-    public typealias Observed = Value
+class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Value> {
+    typealias Observed = Value
     
     var keyPath: ReferenceWritableKeyPath<Object, Value>
     
@@ -28,7 +28,7 @@ public class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Val
         }
     }
     
-    public override func relay(changes: Changes<Value>) -> Bool {
+    override func relay(changes: Changes<Value>) -> Bool {
         super.relay(changes: changes)
     }
 }

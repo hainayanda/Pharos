@@ -39,7 +39,7 @@ public protocol TransportRelay: class {
     func relayValue(to relay: BearerRelay<Observed>) -> BearerRelay<Observed>
 }
 
-protocol CallBackRelay {
+public protocol CallBackRelay {
     associatedtype ValueBack
     typealias BackConsumer = (Changes<ValueBack>) -> Void
     @discardableResult

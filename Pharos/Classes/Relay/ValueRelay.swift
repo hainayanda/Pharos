@@ -14,12 +14,12 @@ open class ValueRelay<Value>: BearerRelay<Value>, ObservableRelay {
     }
     
     @discardableResult
-    public func whenDidSet(then consume: @escaping Consumer) -> Self {
+    open func whenDidSet(then consume: @escaping Consumer) -> Self {
         relayDispatch.consumer = consume
         return self
     }
     
-    public override func discard() {
+    open override func discard() {
         relayDispatch.consumer = nil
     }
 }

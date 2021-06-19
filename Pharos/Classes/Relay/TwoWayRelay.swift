@@ -17,7 +17,7 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
     }
     
     @discardableResult
-    func relayBack(changes: Changes<Value>) -> Bool {
+    open func relayBack(changes: Changes<Value>) -> Bool {
         guard let callBack = callBackRelay else {
             return relay(changes: changes)
         }
@@ -25,7 +25,7 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
         return true
     }
     
-    func relayBackConsumer(_ consumer: @escaping BackConsumer) {
+    open func relayBackConsumer(_ consumer: @escaping BackConsumer) {
         self.callBackRelay = consumer
     }
     
