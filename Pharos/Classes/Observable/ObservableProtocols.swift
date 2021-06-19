@@ -41,6 +41,10 @@ protocol CallBackRelay {
     func relayBackConsumer(_ consumer: @escaping BackConsumer)
 }
 
+public protocol AssociativeRelay {
+    func retainWithSource() -> Self
+}
+
 public protocol StateObservable {
     func invokeRelayWithCurrent()
     func removeAllRelay()
