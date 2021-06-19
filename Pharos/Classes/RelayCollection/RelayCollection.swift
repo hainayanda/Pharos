@@ -25,11 +25,11 @@ public class RelayCollection<Object: NSObject> {
         self.object = object
     }
     
-    public func create<Property>(forRefKeyPath keyPath: ReferenceWritableKeyPath<Object, Property>) -> TwoWayRelay<Property> {
+    public func create<Property>(forRefKeyPath keyPath: ReferenceWritableKeyPath<Object, Property>) -> AssociativeTwoWayRelay<Property> {
         .relay(of: object, keyPath)
     }
     
-    public func create<Property>(forKeyPath keyPath: KeyPath<Object, Property>) -> ValueRelay<Property> {
+    public func create<Property>(forKeyPath keyPath: KeyPath<Object, Property>) -> AssociativeValueRelay<Property> {
         .relay(of: object, keyPath)
     }
 }
