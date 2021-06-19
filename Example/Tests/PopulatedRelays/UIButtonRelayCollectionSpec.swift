@@ -20,65 +20,63 @@ class UIButtonRelayCollectionSpec: QuickSpec {
             beforeEach {
                 view = UIButton()
             }
-            context("TwoWayRelay") {
-                it("should relay automaticallyUpdatesBackgroundConfiguration") {
-                    if #available(iOS 13.4, *) {
-                        testRelay(
-                            for: view,
-                            relay: view.bondableRelays.isPointerInteractionEnabled,
-                            keyPath: \.isPointerInteractionEnabled
-                        )
-                    }
-                }
-                it("should relay contentEdgeInsets") {
+            it("should relay automaticallyUpdatesBackgroundConfiguration") {
+                if #available(iOS 13.4, *) {
                     testRelay(
                         for: view,
-                        relay: view.bondableRelays.contentEdgeInsets,
-                        keyPath: \.contentEdgeInsets
+                        relay: view.bondableRelays.isPointerInteractionEnabled,
+                        keyPath: \.isPointerInteractionEnabled
                     )
                 }
-                it("should relay titleEdgeInsets") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.titleEdgeInsets,
-                        keyPath: \.titleEdgeInsets
-                    )
-                }
-                it("should relay reversesTitleShadowWhenHighlighted") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.reversesTitleShadowWhenHighlighted,
-                        keyPath: \.reversesTitleShadowWhenHighlighted
-                    )
-                }
-                it("should relay imageEdgeInsets") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.imageEdgeInsets,
-                        keyPath: \.imageEdgeInsets
-                    )
-                }
-                it("should relay adjustsImageWhenHighlighted") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.adjustsImageWhenHighlighted,
-                        keyPath: \.adjustsImageWhenHighlighted
-                    )
-                }
-                it("should relay adjustsImageWhenDisabled") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.adjustsImageWhenDisabled,
-                        keyPath: \.adjustsImageWhenDisabled
-                    )
-                }
-                it("should relay showsTouchWhenHighlighted") {
-                    testRelay(
-                        for: view,
-                        relay: view.bondableRelays.showsTouchWhenHighlighted,
-                        keyPath: \.showsTouchWhenHighlighted
-                    )
-                }
+            }
+            it("should relay contentEdgeInsets") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.contentEdgeInsets,
+                    keyPath: \.contentEdgeInsets
+                )
+            }
+            it("should relay titleEdgeInsets") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.titleEdgeInsets,
+                    keyPath: \.titleEdgeInsets
+                )
+            }
+            it("should relay reversesTitleShadowWhenHighlighted") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.reversesTitleShadowWhenHighlighted,
+                    keyPath: \.reversesTitleShadowWhenHighlighted
+                )
+            }
+            it("should relay imageEdgeInsets") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.imageEdgeInsets,
+                    keyPath: \.imageEdgeInsets
+                )
+            }
+            it("should relay adjustsImageWhenHighlighted") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.adjustsImageWhenHighlighted,
+                    keyPath: \.adjustsImageWhenHighlighted
+                )
+            }
+            it("should relay adjustsImageWhenDisabled") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.adjustsImageWhenDisabled,
+                    keyPath: \.adjustsImageWhenDisabled
+                )
+            }
+            it("should relay showsTouchWhenHighlighted") {
+                testRelay(
+                    for: view,
+                    relay: view.bondableRelays.showsTouchWhenHighlighted,
+                    keyPath: \.showsTouchWhenHighlighted
+                )
             }
         }
     }
