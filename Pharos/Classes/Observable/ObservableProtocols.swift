@@ -33,7 +33,7 @@ public protocol ObservableRelay: class {
     func invokeRelay()
 }
 
-public protocol CallBackRelay {
+protocol CallBackRelay {
     associatedtype ValueBack
     typealias BackConsumer = (Changes<ValueBack>) -> Void
     @discardableResult
