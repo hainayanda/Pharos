@@ -7,13 +7,18 @@
 
 import Foundation
 
-public protocol PopulatedRelays: NSObject {
-    associatedtype BaseRelayObject: NSObject
-    var relays: RelayCollection<BaseRelayObject> { get }
+public protocol PopulatedRelays: NSObject { }
+
+extension NSObject: PopulatedRelays { }
+
+public extension PopulatedRelays {
+    var bearerRelays: BearerRelayCollection<Self> {
+        .init(object: self)
+    }
 }
 
-public extension PopulatedRelays where BaseRelayObject == Self {
-    var relays: RelayCollection<BaseRelayObject> {
+public extension PopulatedRelays where Self: UIView {
+    var bondableRelays: RelayCollection<Self> {
         .init(object: self)
     }
 }
@@ -24,12 +29,17 @@ public class RelayCollection<Object: NSObject> {
     init(object: Object) {
         self.object = object
     }
+}
+
+@dynamicMemberLookup
+public class BearerRelayCollection<Object: NSObject> {
+    let object: Object
     
-    public func create<Property>(forRefKeyPath keyPath: ReferenceWritableKeyPath<Object, Property>) -> AssociativeTwoWayRelay<Property> {
-        .relay(of: object, keyPath)
+    init(object: Object) {
+        self.object = object
     }
     
-    public func create<Property>(forKeyPath keyPath: KeyPath<Object, Property>) -> AssociativeValueRelay<Property> {
-        .relay(of: object, keyPath)
+    public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> AssociativeBearerRelay<Property> {
+        .relay(of: object, member)
     }
 }
