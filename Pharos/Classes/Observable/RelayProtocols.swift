@@ -49,7 +49,7 @@ public protocol CallBackRelay {
 
 public protocol AssociativeRelay: class {
     var associatedObject: AnyObject? { get }
-    func retainWithSource() -> Self
+    func retainToSource() -> Self
 }
 
 public protocol StateObservable {
@@ -59,7 +59,7 @@ public protocol StateObservable {
 }
 
 public extension AssociativeRelay {
-    func retainWithSource() -> Self {
+    func retainToSource() -> Self {
         guard let object = associatedObject else { return self }
         objc_setAssociatedObject(
             object,
