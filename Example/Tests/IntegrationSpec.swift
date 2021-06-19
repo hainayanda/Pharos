@@ -1,12 +1,9 @@
 import Foundation
 import Quick
 import Nimble
-import Pharos
 #if canImport(UIKit)
 import UIKit
 #endif
-import Quick
-import Nimble
 @testable import Pharos
 
 class ObservableStateSpec: QuickSpec {
@@ -366,10 +363,10 @@ class ObservableStateSpec: QuickSpec {
                 expect(didSetCount).to(equal(2))
             }
             it("should auto dereference relay when AutoDereferencer is dereferenced") {
-                let dereferencer: Dereferencer = .init()
+                let retainer: Retainer = .init()
                 var didSetCount: Int = 0
                 weak var relay1 = observables.relay.nextRelay()
-                    .referenceManaged(by: dereferencer)
+                    .retained(by: retainer)
                     .whenDidSet { changes in
                         didSetCount += 1
                     }
@@ -381,7 +378,7 @@ class ObservableStateSpec: QuickSpec {
                 expect(didSetCount).to(equal(2))
                 expect(relay1).toNot(beNil())
                 expect(relay2).toNot(beNil())
-                dereferencer.discardAll()
+                retainer.discardAll()
                 observables.wrappedValue = .randomString()
                 expect(relay1).to(beNil())
                 expect(relay2).to(beNil())
