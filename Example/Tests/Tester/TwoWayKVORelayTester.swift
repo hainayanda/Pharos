@@ -70,6 +70,54 @@ func testRelay<Object: NSObject>(
 
 func testRelay<Object: NSObject>(
     for object: Object,
+    relay: TwoWayRelay<NSLineBreakMode>,
+    keyPath: ReferenceWritableKeyPath<Object, NSLineBreakMode>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .byClipping
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<UIBaselineAdjustment>,
+    keyPath: ReferenceWritableKeyPath<Object, UIBaselineAdjustment>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .alignBaselines
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<NSParagraphStyle.LineBreakStrategy>,
+    keyPath: ReferenceWritableKeyPath<Object, NSParagraphStyle.LineBreakStrategy>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .pushOut
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<[UIImage]?>,
+    keyPath: ReferenceWritableKeyPath<Object, [UIImage]?>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: [UIImage()]
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
     relay: TwoWayRelay<NSTextAlignment>,
     keyPath: ReferenceWritableKeyPath<Object, NSTextAlignment>) {
     testRelay(
@@ -152,7 +200,11 @@ func testRelay<Object: NSObject>(
         keyPath: keyPath,
         with: NSAttributedString(string: "test")) { changes, oldValue in
         expect(changes.new?.string).to(equal("test"))
-        expect(changes.old?.string).to(equal(oldValue?.string))
+        if oldValue?.string == nil {
+            expect(changes.old?.string).to(beNil())
+        } else {
+            expect(changes.old?.string).to(equal(oldValue?.string))
+        }
     }
 }
 
@@ -218,6 +270,54 @@ func testRelay<Object: NSObject>(
 
 func testRelay<Object: NSObject>(
     for object: Object,
+    relay: TwoWayRelay<UIVisualEffect?>,
+    keyPath: ReferenceWritableKeyPath<Object, UIVisualEffect?>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: UIVisualEffect()
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<NSLayoutConstraint.Axis>,
+    keyPath: ReferenceWritableKeyPath<Object, NSLayoutConstraint.Axis>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .horizontal
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<UIStackView.Distribution>,
+    keyPath: ReferenceWritableKeyPath<Object, UIStackView.Distribution>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .equalCentering
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<UIStackView.Alignment>,
+    keyPath: ReferenceWritableKeyPath<Object, UIStackView.Alignment>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: .center
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
     relay: TwoWayRelay<UIView?>,
     keyPath: ReferenceWritableKeyPath<Object, UIView?>) {
     testRelay(
@@ -225,6 +325,18 @@ func testRelay<Object: NSObject>(
         relay: relay,
         keyPath: keyPath,
         with: UIView()
+    )
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<UIRefreshControl?>,
+    keyPath: ReferenceWritableKeyPath<Object, UIRefreshControl?>) {
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: UIRefreshControl()
     )
 }
 
@@ -242,9 +354,39 @@ func testRelay<Object: NSObject>(
 
 func testRelay<Object: NSObject>(
     for object: Object,
+    relay: TwoWayRelay<TimeInterval>,
+    keyPath: ReferenceWritableKeyPath<Object, TimeInterval>) {
+    let newValue = TimeInterval.random(in: -1024..<1024)
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: newValue) { changes, oldValue in
+        expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
+        expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+    }
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
     relay: TwoWayRelay<CGFloat>,
     keyPath: ReferenceWritableKeyPath<Object, CGFloat>) {
     let newValue = CGFloat.random(in: -1024..<1024)
+    testRelay(
+        for: object,
+        relay: relay,
+        keyPath: keyPath,
+        with: newValue) { changes, oldValue in
+        expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
+        expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+    }
+}
+
+func testRelay<Object: NSObject>(
+    for object: Object,
+    relay: TwoWayRelay<Float>,
+    keyPath: ReferenceWritableKeyPath<Object, Float>) {
+    let newValue = Float.random(in: -1024..<1024)
     testRelay(
         for: object,
         relay: relay,
