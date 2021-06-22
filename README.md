@@ -213,7 +213,7 @@ class MyClass {
     
     func observeText() {
         $text.nextRelay()
-            .referenceManaged(by: dereferencer)
+            .referenceManaged(by: retainer)
             .whenDidSet { changes in
                 print(changes.new)
                 print(changes.old)
@@ -221,20 +221,20 @@ class MyClass {
     }
     
     func discardManually() {
-        dereferencer.discardAll()
+        retainer.discardAll()
     }
     
-    func discardByCreateNewDereferencer() {
-        dereferencer = .init()
+    func discardByCreateNewRetainer() {
+        retainer = .init()
     }
     
 }
 ```
 
-There are many ways to discard the relay managed by `Dereferencer`:
-- call `discardAll()` from relay's dereferencer
-- replace dereferencer by new one, which will trigger `ARC` to remove dereferencer from memory thus will discard all of its managed relays by default.
-- doing nothing, which if the object that have dereferencer is discarded by `ARC`, it will automatically discard the `Dereferencer` thus will discard all of its managed relays by default.
+There are many ways to discard the relay managed by `Retainer`:
+- call `discardAll()` from relay's retainer
+- replace retainer by new one, which will trigger `ARC` to remove retainer from memory thus will discard all of its managed relays by default.
+- doing nothing, which if the object that have retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed relays by default.
 
 ## Custom getter and setter
 
