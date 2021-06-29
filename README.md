@@ -330,21 +330,15 @@ class MyClass {
 }
 ```
 
-Some of the relays are just `ValueRelay` which cannot be bond since its not observable, but you can always observe the value of it:
+Some of the relays are just `ValueRelay` which cannot be bond since its not observable, but you can always use it as next relay or next value relay:
 
 ```swift
 class MyClass {
-    var relay: ValueRelay<UIControl.State>
-
-    init(button: UIButton) {
-        self.relay = button.relays.state
-    }
+    var button: UIButton = .init()
+    @Observable var buttonState: UIControl.State
     
-    func observeRelay() {
-        relay.whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }
+    func relayStateToButton() {
+        $buttonState.relayValue(to: button.relays.state)
     }
 }
 ```
