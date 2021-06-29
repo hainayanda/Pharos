@@ -512,7 +512,7 @@ class MyClass {
     @Observable var userName: String = ""
     @Observable var fullName: String = ""
     @Observable var password: String = ""
-    @Observable var user: User = ""
+    @Observable var user: User = User()
     
     func observeText() {
         mergeRelays($userName, $fullName, $password)
