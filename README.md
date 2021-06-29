@@ -330,7 +330,7 @@ class MyClass {
 }
 ```
 
-Some of the relays are just `ValueRelay` which cannot be bond since its readonly, but you can always observe the value of it:
+Some of the relays are just `ValueRelay` which cannot be bond since its not observable, but you can always observe the value of it:
 
 ```swift
 class MyClass {
