@@ -531,7 +531,7 @@ class MyClass {
 }
 ```
 
-Keep in mind that merged relays will strong referenced in new relay.
+Keep in mind that merged relays will strong referenced in new relay. It would be wise to store the merged relays locally or using `Retainer`
 
 ***
 
