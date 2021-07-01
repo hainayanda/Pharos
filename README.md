@@ -30,8 +30,8 @@ pod 'Pharos'
 
 ### Swift Package Manager from XCode
 
-- Add it using xcode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/nayanda1/Pharos.git** as Swift Package url
+- Add it using XCode menu **File > Swift Package > Add Package Dependency**
+- Add **https://github.com/nayanda1/Pharos.git** as Swift Package URL
 - Set rules at **version**, with **Up to Next Major** option and put **1.2.0** as its version
 - Click next and wait
 
@@ -70,7 +70,7 @@ Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper
 
 ## Basic
 
-Basically, all you need is a property that you want to observed and add `@Observable` propertyWrapper at it:
+Basically, all you need is a property that you want to observe and add `@Observable` propertyWrapper at it:
 
 ```swift
 class MyClass {
@@ -143,7 +143,7 @@ class MyClass {
 }
 ```
 
-## Multiple observer
+## Multiple observers
 
 By design, the Observable will have one main relay which only consists of one observer.
 So if you set observer closure multiple times on Main Relay, it will only replace it but not add a new one:
@@ -525,7 +525,7 @@ class MyClass {
 }
 ```
 
-Keep in mind that merged relays will strong referenced in a new relay. It would be wise to store the merged relays locally or using `Retainer`
+Keep in mind that merged relays will strongly referenced in a new relay. It would be wise to store the merged relays locally or using `Retainer`
 
 ***
 
