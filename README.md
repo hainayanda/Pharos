@@ -16,8 +16,13 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
-- Swift 5.1 or higher
-- iOS 10.0 or higher
+- Swift 5.0 or higher (or 5.3 when using Swift Package Manager)
+- iOS 9.3 or higher (or 10 when using Swift Package Manager)
+
+### Only Swift Package Manager
+
+- macOS 10.10 or higher
+- tvOS 10 or higher
 
 ### Cocoapods
 
