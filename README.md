@@ -1,6 +1,6 @@
 # Pharos
 
-Pharos is Observer pattern framework for Swift that utilize `propertyWrapper`. It could help a lot when designing Apps using reactive programming
+Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming
 
 [![codebeat badge](https://codebeat.co/badges/e4784f82-ff10-45cf-92e2-93497bb6b1a4)](https://codebeat.co/projects/github-com-nayanda1-pharos-main)
 ![build](https://github.com/nayanda1/Pharos/workflows/build/badge.svg)
@@ -66,11 +66,11 @@ Pharos is available under the MIT license. See the LICENSE file for more info.
 
 # Basic Usage
 
-Pharos is Observer pattern framework for Swift that utilize `propertyWrapper`. It using builder pattern and designed so it could be read just like english language.
+Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It using a builder pattern and was designed so it could be read just like the English language.
 
 ## Basic
 
-Basically all you need is property that you want to be obeserved and add `@Observable` propertyWrapper at it:
+Basically, all you need is a property that you want to observed and add `@Observable` propertyWrapper at it:
 
 ```swift
 class MyClass {
@@ -78,7 +78,7 @@ class MyClass {
 }
 ```
 
-to observe any changes happens in the text, use its projectedValue to get its main relay. and pass the closure:
+to observe any changes that happen in the text, use its `projectedValue` to get its main relay. and pass the closure:
 
 ```swift
 class MyClass {
@@ -93,7 +93,7 @@ class MyClass {
 }
 ```
 
-everytime any set happens in text, it will call the closure with its changes which including old value and new value.
+every time any set happens in text, it will call the closure with its changes which including old value and new value.
 You could ignore any set that not changing the value as long the value is `Equatable`
 
 ```swift
@@ -126,7 +126,7 @@ class MyClass {
 }
 ```
 
-it will store self as weak reference for the method call.
+it will store self as a weak reference for the method call.
 
 if you want the observer to run using the current value, just invoke it:
 
@@ -145,8 +145,8 @@ class MyClass {
 
 ## Multiple observer
 
-By design the Observable will have one main relay which only consist of one observer.
-So if you set observer closure multiple time on Main Relay, it will only replace it but not add a new one:
+By design, the Observable will have one main relay which only consists of one observer.
+So if you set observer closure multiple times on Main Relay, it will only replace it but not add a new one:
 
 ```swift
 class MyClass {
@@ -162,15 +162,15 @@ class MyClass {
 }
 ```
 
-At example above, first closure will replaced by second closure since both are assigned in Main Relay. But any relay could have multiple child relay which will notified by the previous relay as described by diagram below:
+In the example above, the first closure will be replaced by the second closure since both are assigned in Main Relay. But any relay could have multiple child relays which will be notified by the previous relay as described by the diagram below:
 
 ![alt text](https://github.com/nayanda1/Pharos/blob/main/ObservableRelay.png)
 
-And remember, single relay will always just have one did set listener:
+And remember, a single relay will always just have one did set listener:
 
 ![alt text](https://github.com/nayanda1/Pharos/blob/main/DidSet.png)
 
-To use next relay, you could just do something like this:
+To use the next relay, you could just do something like this:
 
 ```swift
 class MyClass {
@@ -199,11 +199,11 @@ class MyClass {
 }
 ```
 
-At example above, all closure will be run if any set happens. The only difference between all the relay is just the one who notified it.
+In the example above, all closure will be run if any set happens. The only difference between all the relays is just the one who notified it.
 
 ## Using Retainer
 
-You could use `Retainer` to make sure the relay created will discarded by `ARC` when `Retainer` is discarded so the closure in the relay and all of its next relays will not run if its not used anymore:
+You could use `Retainer` to make sure the relay created will be discarded by `ARC` when `Retainer` is discarded so the closure in the relay and all of its next relays will not run if it's not used anymore:
 
 ```swift
 class MyClass {
@@ -233,8 +233,8 @@ class MyClass {
 
 There are many ways to discard the relay managed by `Retainer`:
 - call `discardAll()` from relay's retainer
-- replace retainer by new one, which will trigger `ARC` to remove retainer from memory thus will discard all of its managed relays by default.
-- doing nothing, which if the object that have retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed relays by default.
+- replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed relays by default.
+- doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed relays by default.
 
 ## Custom getter and setter
 
@@ -259,11 +259,11 @@ class MyClass {
 }
 ```
 
-On the example above , everytime title is set, it will call the set closure and then relay it to its relays.
+In the example above, every time title is set, it will call the set closure and then relay it to its relays.
 
 ## Bondable Relays
 
-You can observe changes in supported `UIView` property by accesing it with `bondableRelays`:
+You can observe changes in supported `UIView` property by accessing it with `bondableRelays`:
 
 ```swift
 class MyClass {
@@ -280,13 +280,13 @@ class MyClass {
 }
 ```
 
-At the example above, everytime `text` is set, it will automatically set the `textField.text`, and when  `textField.text` is set it will automatically set the `text`. On both occasion it will always notify the `whenDidSet` closure.
+At the example above, every time `text` is set, it will automatically set the `textField.text`, and when  `textField.text` is set it will automatically set the `text`. On both occasions, it will always notify the `whenDidSet` closure.
 
-The mechanism can be describe by diagram below:
+The mechanism can be described by 
 
 ![alt text](https://github.com/nayanda1/Pharos/blob/main/BondingRelay.png)
 
-If you want to bond and match both value right away, use `bondAndApply` or `bondAndMap`. the difference between both is apply will set the `Observable` value to `Object property` and map will set the `Object property` to `Observable`
+If you want to bond and match both values right away, use `bondAndApply` or `bondAndMap`. the difference between both is that apply will set the `Observable` value to `Object property` and map will set the `Object property` to `Observable`
 
 ```swift
 class MyClass {
@@ -330,7 +330,7 @@ class MyClass {
 }
 ```
 
-Some of the relays are just `ValueRelay` which cannot be bond since its not observable, but you can always use it as next relay or next value relay:
+Some of the relays are just `ValueRelay` which cannot be bond since it's not observable, but you can always use it as the next relay or next value relay:
 
 ```swift
 class MyClass {
@@ -343,7 +343,7 @@ class MyClass {
 }
 ```
 
-If you just want to observe the value without storing the relay, retain it with the source of the relay, so it will always called until the source is removed by `ARC`. You could always use `Retainer` if you want:
+If you just want to observe the value without storing the relay, retain it with the source of the relay, so it will always be called until the source is removed by `ARC`. You could always use `Retainer` if you want:
 
 ```swift
 class MyClass {
@@ -362,7 +362,7 @@ class MyClass {
 
 ## Ignoring Set
 
-You can ignore set to relay by passing closure that returning `Bool` value which indicated those value should be ignored:
+You can ignore set to relay by passing a closure that returning `Bool` value which indicated that value should be ignored:
 
 ```swift
 class MyClass {
@@ -377,11 +377,11 @@ class MyClass {
 }
 ```
 
-At the example above, whenDidSet closure will not run when new value is empty or null
+At the example above, whenDidSet closure will not run when the new value is empty or null
 
 ## Delaying Multiple Set
 
-Sometimes you just want to delay some observing because if the value is coming too fast, it could be bottleneck some of your business logic like when you call API or something. It will automatically use latest value when the closure fire:
+Sometimes you just want to delay some observing because if the value is coming too fast, it could be bottleneck some of your business logic like when you call API or something. It will automatically use the latest value when the closure fire:
 
 ```swift
 class MyClass {
@@ -398,7 +398,7 @@ class MyClass {
 
 ## Add DispatchQueue
 
-You could add `DispatchQueue` to make sure your observable is run on right thread. If DispatchQueue is not provided, it will use the thread from the notifier:
+You could add `DispatchQueue` to make sure your observable is run on the right thread. If DispatchQueue is not provided, it will use the thread from the notifier:
 
 ```swift
 class MyClass {
@@ -413,7 +413,7 @@ class MyClass {
 }
 ```
 
-You could make sure the the closure will run synchronously if the current thread is the same as passed `DispatchQueue`:
+You could make sure the closure will run synchronously if the current thread is the same as passed `DispatchQueue`:
 
 ```swift
 class MyClass {
@@ -431,7 +431,7 @@ class MyClass {
 
 ## Mapping Value
 
-You could change the value from your `Observable` to another by using mapping. Mapping will add new Relay under previous one:
+You could change the value from your `Observable` to another by using mapping. Mapping will add a new Relay under the previous one:
 
 ```swift
 class MyClass {
@@ -447,7 +447,7 @@ class MyClass {
 }
 ```
 
-If your value is `Array`, you can use `compactMap` to map original `Array` to target `Array`:
+If your value is `Array`, you can use `compactMap` to map the original `Array` to target `Array`:
 
 ```swift
 class MyClass {
@@ -465,7 +465,7 @@ class MyClass {
 
 ## Relay value to another Observable
 
-You can relay value from any Relay to another Relay as long as the type is the same. Use `relayValue(to:)` or `relayUniqueValue(to:)` if the value is `Equatable`. It will return new Relay under the target Relay:
+You can relay value from any Relay to another Relay as long as the type is the same. Use `relayValue(to:)` or `relayUniqueValue(to:)` if the value is `Equatable`. It will return a new Relay under the target Relay:
 
 ```swift
 class MyClass {
@@ -482,7 +482,7 @@ class MyClass {
 }
 ```
 
-You can always relay value to Any NSObject Bearer Relays by accessing `bearerRelays`. Its using dynamicMemberLookup, so all of the object writable properties will available there:
+You can always relay value to Any NSObject Bearer Relays by accessing `bearerRelays`. Its using `dynamicMemberLookup`, so all of the object writable properties will available there:
 
 ```swift
 class MyClass {
@@ -495,11 +495,11 @@ class MyClass {
 }
 ```
 
-All relay will weak referenced and will stop relaying to other Observable if those relay is dereferenced by `ARC`
+All relay will weak referenced and will stop relaying to other Observable if that relay is dereferenced by `ARC`
 
 ## Merging Relay
 
-You can merge up to 4 relay as one and observe if any of those relay is set:
+You can merge up to 4 relays as one and observe if any of those relays is set:
 
 ```swift
 class MyClass {
@@ -525,10 +525,10 @@ class MyClass {
 }
 ```
 
-Keep in mind that merged relays will strong referenced in new relay. It would be wise to store the merged relays locally or using `Retainer`
+Keep in mind that merged relays will strong referenced in a new relay. It would be wise to store the merged relays locally or using `Retainer`
 
 ***
 
 ## Contribute
 
-You know how, just clone and do pull request
+You know how just clone and do pull request
