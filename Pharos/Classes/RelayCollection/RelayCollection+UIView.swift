@@ -14,102 +14,102 @@ public extension RelayCollection where Object: UIView {
     // MARK: Two Way Relay
 
     var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isUserInteractionEnabled)
+        .relay(of: underlyingObject, \.isUserInteractionEnabled)
     }
     
     var tag: AssociativeTwoWayRelay<Int> {
-        .relay(of: object, \.tag)
+        .relay(of: underlyingObject, \.tag)
     }
     
     @available(iOS 14.0, *)
     var focusGroupIdentifier: AssociativeTwoWayRelay<String?> {
-        .relay(of: object, \.focusGroupIdentifier)
+        .relay(of: underlyingObject, \.focusGroupIdentifier)
     }
     
     var frame: AssociativeTwoWayRelay<CGRect> {
-        .relay(of: object, \.frame)
+        .relay(of: underlyingObject, \.frame)
     }
     
     var bounds: AssociativeTwoWayRelay<CGRect> {
-        .relay(of: object, \.bounds)
+        .relay(of: underlyingObject, \.bounds)
     }
     
     var center: AssociativeTwoWayRelay<CGPoint> {
-        .relay(of: object, \.center)
+        .relay(of: underlyingObject, \.center)
     }
     
     var contentScaleFactor: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.contentScaleFactor)
+        .relay(of: underlyingObject, \.contentScaleFactor)
     }
     
     var isMultipleTouchEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isMultipleTouchEnabled)
+        .relay(of: underlyingObject, \.isMultipleTouchEnabled)
     }
     
     var isExclusiveTouch: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isExclusiveTouch)
+        .relay(of: underlyingObject, \.isExclusiveTouch)
     }
 
     var autoresizesSubviews: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.autoresizesSubviews)
+        .relay(of: underlyingObject, \.autoresizesSubviews)
     }
     
     var layoutMargins: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.layoutMargins)
+        .relay(of: underlyingObject, \.layoutMargins)
     }
     
     @available(iOS 11.0, *)
     var directionalLayoutMargins: AssociativeTwoWayRelay<NSDirectionalEdgeInsets> {
-        .relay(of: object, \.directionalLayoutMargins)
+        .relay(of: underlyingObject, \.directionalLayoutMargins)
     }
     
     var preservesSuperviewLayoutMargins: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.preservesSuperviewLayoutMargins)
+        .relay(of: underlyingObject, \.preservesSuperviewLayoutMargins)
     }
     
     @available(iOS 11.0, *)
     var insetsLayoutMarginsFromSafeArea: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.insetsLayoutMarginsFromSafeArea)
+        .relay(of: underlyingObject, \.insetsLayoutMarginsFromSafeArea)
     }
     
     var clipsToBounds: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.clipsToBounds)
+        .relay(of: underlyingObject, \.clipsToBounds)
     }
     
     var backgroundColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.backgroundColor)
+        .relay(of: underlyingObject, \.backgroundColor)
     }
     
     var alpha: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.alpha)
+        .relay(of: underlyingObject, \.alpha)
     }
     
     var isOpaque: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isOpaque)
+        .relay(of: underlyingObject, \.isOpaque)
     }
     
     var clearsContextBeforeDrawing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.clearsContextBeforeDrawing)
+        .relay(of: underlyingObject, \.clearsContextBeforeDrawing)
     }
     
     var isHidden: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHidden)
+        .relay(of: underlyingObject, \.isHidden)
     }
     
     var mask: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.mask)
+        .relay(of: underlyingObject, \.mask)
     }
     
     var tintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.tintColor)
+        .relay(of: underlyingObject, \.tintColor)
     }
     
     var translatesAutoresizingMaskIntoConstraints: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.translatesAutoresizingMaskIntoConstraints)
+        .relay(of: underlyingObject, \.translatesAutoresizingMaskIntoConstraints)
     }
     
     var restorationIdentifier: AssociativeTwoWayRelay<String?> {
-        .relay(of: object, \.restorationIdentifier)
+        .relay(of: underlyingObject, \.restorationIdentifier)
     }
     
 }

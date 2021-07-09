@@ -14,97 +14,97 @@ public extension RelayCollection where Object: UIScrollView {
     // MARK: Two Way Relay
     
     var contentOffset: AssociativeTwoWayRelay<CGPoint> {
-        .relay(of: object, \.contentOffset)
+        .relay(of: underlyingObject, \.contentOffset)
     }
     
     var contentSize: AssociativeTwoWayRelay<CGSize> {
-        .relay(of: object, \.contentSize)
+        .relay(of: underlyingObject, \.contentSize)
     }
     
     var contentInset: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.contentInset)
+        .relay(of: underlyingObject, \.contentInset)
     }
     
     var delegate: AssociativeTwoWayRelay<UIScrollViewDelegate?> {
-        .relay(of: object, \.delegate)
+        .relay(of: underlyingObject, \.delegate)
     }
     
     var isDirectionalLockEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isDirectionalLockEnabled)
+        .relay(of: underlyingObject, \.isDirectionalLockEnabled)
     }
     
     var bounces: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.bounces)
+        .relay(of: underlyingObject, \.bounces)
     }
     
     var alwaysBounceVertical: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.alwaysBounceVertical)
+        .relay(of: underlyingObject, \.alwaysBounceVertical)
     }
     
     var alwaysBounceHorizontal: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.alwaysBounceHorizontal)
+        .relay(of: underlyingObject, \.alwaysBounceHorizontal)
     }
     
     var isPagingEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isPagingEnabled)
+        .relay(of: underlyingObject, \.isPagingEnabled)
     }
     
     var isScrollEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isScrollEnabled)
+        .relay(of: underlyingObject, \.isScrollEnabled)
     }
     
     var showsVerticalScrollIndicator: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.showsVerticalScrollIndicator)
+        .relay(of: underlyingObject, \.showsVerticalScrollIndicator)
     }
     
     var showsHorizontalScrollIndicator: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.showsHorizontalScrollIndicator)
+        .relay(of: underlyingObject, \.showsHorizontalScrollIndicator)
     }
     
     @available(iOS 11.1, *)
     var verticalScrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.verticalScrollIndicatorInsets)
+        .relay(of: underlyingObject, \.verticalScrollIndicatorInsets)
     }
     
     @available(iOS 11.1, *)
     var horizontalScrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.horizontalScrollIndicatorInsets)
+        .relay(of: underlyingObject, \.horizontalScrollIndicatorInsets)
     }
     
     var scrollIndicatorInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.scrollIndicatorInsets)
+        .relay(of: underlyingObject, \.scrollIndicatorInsets)
     }
     
     var delaysContentTouches: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.delaysContentTouches)
+        .relay(of: underlyingObject, \.delaysContentTouches)
     }
     
     var canCancelContentTouches: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.canCancelContentTouches)
+        .relay(of: underlyingObject, \.canCancelContentTouches)
     }
     
     var minimumZoomScale: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.minimumZoomScale)
+        .relay(of: underlyingObject, \.minimumZoomScale)
     }
     
     var maximumZoomScale: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.maximumZoomScale)
+        .relay(of: underlyingObject, \.maximumZoomScale)
     }
     
     var zoomScale: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.zoomScale)
+        .relay(of: underlyingObject, \.zoomScale)
     }
     
     var bouncesZoom: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.bouncesZoom)
+        .relay(of: underlyingObject, \.bouncesZoom)
     }
     
     var scrollsToTop: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.scrollsToTop)
+        .relay(of: underlyingObject, \.scrollsToTop)
     }
     
     var refreshControl: AssociativeTwoWayRelay<UIRefreshControl?> {
-        .relay(of: object, \.refreshControl)
+        .relay(of: underlyingObject, \.refreshControl)
     }
     
 }

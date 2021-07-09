@@ -14,28 +14,28 @@ public extension RelayCollection where Object: UIControl {
     // MARK: Two Way Relay
     
     var isEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isEnabled)
+        .relay(of: underlyingObject, \.isEnabled)
     }
     
     var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isSelected)
+        .relay(of: underlyingObject, \.isSelected)
     }
     
     var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHighlighted)
+        .relay(of: underlyingObject, \.isHighlighted)
     }
     
     var contentVerticalAlignment: AssociativeTwoWayRelay<UIControl.ContentVerticalAlignment> {
-        .relay(of: object, \.contentVerticalAlignment)
+        .relay(of: underlyingObject, \.contentVerticalAlignment)
     }
     
     var contentHorizontalAlignment: AssociativeTwoWayRelay<UIControl.ContentHorizontalAlignment> {
-        .relay(of: object, \.contentHorizontalAlignment)
+        .relay(of: underlyingObject, \.contentHorizontalAlignment)
     }
     
     @available(iOS 14.0, *)
     var showsMenuAsPrimaryAction: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.showsMenuAsPrimaryAction)
+        .relay(of: underlyingObject, \.showsMenuAsPrimaryAction)
     }
 }
 #endif

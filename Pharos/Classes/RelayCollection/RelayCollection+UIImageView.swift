@@ -14,35 +14,35 @@ public extension RelayCollection where Object: UIImageView {
     // MARK: Two Way Relay
     
     var image: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: object, \.image)
+        .relay(of: underlyingObject, \.image)
     }
     
     var highlightedImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: object, \.highlightedImage)
+        .relay(of: underlyingObject, \.highlightedImage)
     }
 
     var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isUserInteractionEnabled)
+        .relay(of: underlyingObject, \.isUserInteractionEnabled)
     }
     
     var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHighlighted)
+        .relay(of: underlyingObject, \.isHighlighted)
     }
     
     var animationImages: AssociativeTwoWayRelay<[UIImage]?> {
-        .relay(of: object, \.animationImages)
+        .relay(of: underlyingObject, \.animationImages)
     }
 
     var highlightedAnimationImages: AssociativeTwoWayRelay<[UIImage]?> {
-        .relay(of: object, \.highlightedAnimationImages)
+        .relay(of: underlyingObject, \.highlightedAnimationImages)
     }
     
     var animationDuration: AssociativeTwoWayRelay<TimeInterval> {
-        .relay(of: object, \.animationDuration)
+        .relay(of: underlyingObject, \.animationDuration)
     }
 
     var animationRepeatCount: AssociativeTwoWayRelay<Int> {
-        .relay(of: object, \.animationRepeatCount)
+        .relay(of: underlyingObject, \.animationRepeatCount)
     }
     
 }
