@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class BondableRelay<Value>: TwoWayRelay<Value> {
+public final class BondableRelay<Value>: TwoWayRelay<Value> {
     var bondingRelay: BaseRelay<Value>?
     var outsideInvoked: Bool = false
     

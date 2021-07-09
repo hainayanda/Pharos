@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #endif
 
-public extension TwoWayRelay {
+extension TwoWayRelay {
     static func relay<Object: NSObject, Value>(
         of object: Object,
         _ keyPath: ReferenceWritableKeyPath<Object, Value>) -> AssociativeTwoWayRelay<Value> {
@@ -18,7 +18,7 @@ public extension TwoWayRelay {
     }
 }
 
-class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
+final class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
     
     typealias Observed = Value
     

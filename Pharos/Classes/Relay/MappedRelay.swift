@@ -23,7 +23,7 @@ public extension ObservableRelay where Observed: Collection {
     }
 }
 
-public class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
+public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     
     public typealias Mapper = (Value) -> Mapped
     public typealias Observed = Mapped
