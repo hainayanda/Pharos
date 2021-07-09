@@ -12,6 +12,10 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
     
     public var callBackRelay: Consumer?
     
+    open override var isValid: Bool {
+        super.isValid || callBackRelay != nil
+    }
+    
     public override init(currentValue: Value) {
         super.init(currentValue: currentValue)
     }
@@ -37,5 +41,10 @@ open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
                 source: self
             )
         )
+    }
+    
+    open override func discard() {
+        super.discard()
+        callBackRelay = nil
     }
 }

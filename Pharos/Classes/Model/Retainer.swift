@@ -15,11 +15,14 @@ public final class Retainer {
     
     func add(discardable: Discardable) {
         guard !discardable.isValid else { return }
+        discardable.retained()
         discardables.append(discardable)
     }
     
     public func discardAll() {
-        discardables.forEach { $0.discard() }
+        discardables.forEach {
+            $0.unretained()
+        }
         discardables = []
     }
     
@@ -29,8 +32,11 @@ public final class Retainer {
 }
 
 public protocol Discardable {
+    var retainerCount: Int { get }
     var isValid: Bool { get }
     func discard()
+    func retained()
+    func unretained()
 }
 
 extension Discardable {

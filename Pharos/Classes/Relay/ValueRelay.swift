@@ -20,6 +20,6 @@ open class ValueRelay<Value>: BearerRelay<Value>, ObservableRelay {
     }
     
     open override func discard() {
-        relayDispatch.consumer = nil
+        super.discard()
     }
 }

@@ -9,6 +9,8 @@ import Foundation
 
 open class BaseRelay<Value>: RelayHandler, Discardable, Hashable {
     
+    public private(set) var retainerCount: Int = 0
+    
     open var isValid: Bool {
         fatalError("should overridden")
     }
@@ -29,6 +31,17 @@ open class BaseRelay<Value>: RelayHandler, Discardable, Hashable {
     open func retained(by retainer: Retainer) -> Self {
         retainer.add(discardable: self)
         return self
+    }
+    
+    public func retained() {
+        retainerCount += 1
+    }
+    
+    public func unretained() {
+        retainerCount -= 1
+        if retainerCount <= 0 {
+            discard()
+        }
     }
     
     open func discard() {

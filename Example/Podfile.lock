@@ -1,6 +1,6 @@
 PODS:
   - Nimble (9.2.0)
-  - Pharos (1.2.0)
+  - Pharos (1.2.2)
   - Quick (4.0.0)
 
 DEPENDENCIES:
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
-  Pharos: c21e7ded1efe9e00c226324220f1d67df34cf295
+  Pharos: 7c748b396d4c6eb87a8f73b292c6fb3b87460ccd
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
 PODFILE CHECKSUM: f9ac4a686a1c96573a2b9a13cae9ae1adba56e81
