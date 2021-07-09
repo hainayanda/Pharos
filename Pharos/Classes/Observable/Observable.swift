@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-public class Observable<Wrapped>: StateObservable {
+public final class Observable<Wrapped>: StateObservable {
     public typealias Getter = () -> Wrapped
     typealias OptionalGetter = () -> Wrapped?
     public typealias Setter = (Wrapped) -> Void

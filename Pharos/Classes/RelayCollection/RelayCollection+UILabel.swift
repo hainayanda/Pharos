@@ -14,63 +14,63 @@ public extension RelayCollection where Object: UILabel {
     // MARK: Two Way Relay
     
     var text: AssociativeTwoWayRelay<String?> {
-        .relay(of: object, \.text)
+        .relay(of: underlyingObject, \.text)
     }
 
     var font: AssociativeTwoWayRelay<UIFont?> {
-        .relay(of: object, \.font)
+        .relay(of: underlyingObject, \.font)
     }
 
     var textColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.textColor)
+        .relay(of: underlyingObject, \.textColor)
     }
 
     var shadowColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.shadowColor)
+        .relay(of: underlyingObject, \.shadowColor)
     }
 
     var shadowOffset: AssociativeTwoWayRelay<CGSize> {
-        .relay(of: object, \.shadowOffset)
+        .relay(of: underlyingObject, \.shadowOffset)
     }
     
     var attributedText: AssociativeTwoWayRelay<NSAttributedString?> {
-        .relay(of: object, \.attributedText)
+        .relay(of: underlyingObject, \.attributedText)
     }
     
     var highlightedTextColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.highlightedTextColor)
+        .relay(of: underlyingObject, \.highlightedTextColor)
     }
 
     var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHighlighted)
+        .relay(of: underlyingObject, \.isHighlighted)
     }
 
     var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isUserInteractionEnabled)
+        .relay(of: underlyingObject, \.isUserInteractionEnabled)
     }
 
     var isEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isEnabled)
+        .relay(of: underlyingObject, \.isEnabled)
     }
     
     var numberOfLines: AssociativeTwoWayRelay<Int> {
-        .relay(of: object, \.numberOfLines)
+        .relay(of: underlyingObject, \.numberOfLines)
     }
     
     var adjustsFontSizeToFitWidth: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.adjustsFontSizeToFitWidth)
+        .relay(of: underlyingObject, \.adjustsFontSizeToFitWidth)
     }
     
     var minimumScaleFactor: TwoWayRelay<CGFloat> {
-        .relay(of: object, \.minimumScaleFactor)
+        .relay(of: underlyingObject, \.minimumScaleFactor)
     }
     
     var allowsDefaultTighteningForTruncation: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.allowsDefaultTighteningForTruncation)
+        .relay(of: underlyingObject, \.allowsDefaultTighteningForTruncation)
     }
     
     var preferredMaxLayoutWidth: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.preferredMaxLayoutWidth)
+        .relay(of: underlyingObject, \.preferredMaxLayoutWidth)
     }
     
 }

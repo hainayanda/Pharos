@@ -14,6 +14,8 @@ Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+# Installation
+
 ## Requirements
 
 - Swift 5.0 or higher (or 5.3 when using Swift Package Manager)
@@ -37,7 +39,7 @@ pod 'Pharos'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/nayanda1/Pharos.git** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **1.2.0** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **1.2.1** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -46,7 +48,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.2.0"))
+    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.2.1"))
 ]
 ```
 
@@ -534,6 +536,6 @@ Keep in mind that merged relays will strongly referenced in a new relay. It woul
 
 ***
 
-## Contribute
+# Contribute
 
 You know how just clone and do pull request

@@ -14,31 +14,31 @@ public extension RelayCollection where Object: UIStepper {
     // MARK: Two Way Relay
     
     var isContinuous: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isContinuous)
+        .relay(of: underlyingObject, \.isContinuous)
     }
     
     var autorepeat: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.autorepeat)
+        .relay(of: underlyingObject, \.autorepeat)
     }
     
     var wraps: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.wraps)
+        .relay(of: underlyingObject, \.wraps)
     }
     
     var value: AssociativeTwoWayRelay<Double> {
-        .relay(of: object, \.value)
+        .relay(of: underlyingObject, \.value)
     }
     
     var minimumValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: object, \.minimumValue)
+        .relay(of: underlyingObject, \.minimumValue)
     }
     
     var maximumValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: object, \.maximumValue)
+        .relay(of: underlyingObject, \.maximumValue)
     }
     
     var stepValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: object, \.stepValue)
+        .relay(of: underlyingObject, \.stepValue)
     }
 }
 #endif

@@ -14,36 +14,36 @@ public extension RelayCollection where Object: UIButton {
     // MARK: Two Way Relay
     
     var contentEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.contentEdgeInsets)
+        .relay(of: underlyingObject, \.contentEdgeInsets)
     }
     
     var titleEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.titleEdgeInsets)
+        .relay(of: underlyingObject, \.titleEdgeInsets)
     }
     
     var reversesTitleShadowWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.reversesTitleShadowWhenHighlighted)
+        .relay(of: underlyingObject, \.reversesTitleShadowWhenHighlighted)
     }
     
     var imageEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: object, \.imageEdgeInsets)
+        .relay(of: underlyingObject, \.imageEdgeInsets)
     }
     
     var adjustsImageWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.adjustsImageWhenHighlighted)
+        .relay(of: underlyingObject, \.adjustsImageWhenHighlighted)
     }
     
     var adjustsImageWhenDisabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.adjustsImageWhenDisabled)
+        .relay(of: underlyingObject, \.adjustsImageWhenDisabled)
     }
     
     var showsTouchWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.showsTouchWhenHighlighted)
+        .relay(of: underlyingObject, \.showsTouchWhenHighlighted)
     }
     
     @available(iOS 13.4, *)
     var isPointerInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isPointerInteractionEnabled)
+        .relay(of: underlyingObject, \.isPointerInteractionEnabled)
     }
     
 }

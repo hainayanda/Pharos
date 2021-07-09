@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #endif
 
-public extension TwoWayRelay {
+extension TwoWayRelay {
     static func relay<Object: NSObject, Value>(
         of object: Object,
         _ keyPath: ReferenceWritableKeyPath<Object, Value>) -> AssociativeTwoWayRelay<Value> {
@@ -18,7 +18,7 @@ public extension TwoWayRelay {
     }
 }
 
-class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
+final class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
     
     typealias Observed = Value
     
@@ -27,7 +27,6 @@ class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
     }
     let keyPath: ReferenceWritableKeyPath<Object, Value>
     var token: Any?
-    var textToken: Any?
     var relayedFromOutside: Bool = false
     
     init(_ object: Object, keyPath: ReferenceWritableKeyPath<Object, Value>) {
@@ -51,9 +50,9 @@ class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
         #if canImport(UIKit)
         if let field = object as? UITextInput,
            keyPath == \UITextView.text || keyPath == \UITextField.text {
-            textToken = observeText(of: field)
+            observeText(of: field)
         } else if let searchBar = object as? UISearchBar, keyPath == \UISearchBar.text {
-            textToken = observeText(of: searchBar.textField)
+            observeText(of: searchBar.textField)
         }
         #endif
         token = observeChange(object: object, keyPath)
@@ -79,28 +78,36 @@ class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Value> {
     }
     
     #if canImport(UIKit)
-    func observeText(of textInput: UITextInput) -> NSObjectProtocol {
+    func observeText(of textInput: UITextInput) {
         let notificationName: NSNotification.Name = textInput is UITextField ?
             UITextField.textDidChangeNotification : UITextView.textDidChangeNotification
-        return NotificationCenter.default.addObserver(forName: notificationName, object: textInput, queue: nil) { [weak self, weak textInput] _ in
-            guard let self = self else { return }
-            guard !self.relayedFromOutside,
-                  let textInput = textInput,
-                  let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
-                  let newValue: Value = (
-                    textInput.text(in: textRange) as? Value
-                        ?? Optional<String>(nilLiteral: ()) as? Value) else {
-                self.relayedFromOutside = false
-                return
-            }
-            self.relayBack(
-                changes: .init(
-                    old: self.currentValue,
-                    new: newValue,
-                    source: textInput
-                )
-            )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(textNotification(_:)),
+            name: notificationName,
+            object: textInput
+        )
+    }
+    
+    @objc func textNotification(_ notification: Notification) {
+        guard let textInput = notification.object as? UITextInput,
+              !relayedFromOutside,
+              let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
+              let newValue = textInput.text(in: textRange) as? Value else {
+            relayedFromOutside = false
+            return
         }
+        relayBack(
+            changes: .init(
+                old: self.currentValue,
+                new: newValue,
+                source: textInput
+            )
+        )
     }
     #endif
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }

@@ -16,65 +16,65 @@ public extension RelayCollection where Object: UITableViewCell {
     
     @available(iOS 14.0, *)
     var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.automaticallyUpdatesContentConfiguration)
+        .relay(of: underlyingObject, \.automaticallyUpdatesContentConfiguration)
     }
     
     @available(iOS 14.0, *)
     var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.automaticallyUpdatesBackgroundConfiguration)
+        .relay(of: underlyingObject, \.automaticallyUpdatesBackgroundConfiguration)
     }
     
     var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.backgroundView)
+        .relay(of: underlyingObject, \.backgroundView)
     }
     
     var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.selectedBackgroundView)
+        .relay(of: underlyingObject, \.selectedBackgroundView)
     }
     
     var multipleSelectionBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.multipleSelectionBackgroundView)
+        .relay(of: underlyingObject, \.multipleSelectionBackgroundView)
     }
     
     var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isSelected)
+        .relay(of: underlyingObject, \.isSelected)
     }
     
     var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHighlighted)
+        .relay(of: underlyingObject, \.isHighlighted)
     }
     
     var showsReorderControl: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.showsReorderControl)
+        .relay(of: underlyingObject, \.showsReorderControl)
     }
     
     var shouldIndentWhileEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.shouldIndentWhileEditing)
+        .relay(of: underlyingObject, \.shouldIndentWhileEditing)
     }
     
     var accessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.accessoryView)
+        .relay(of: underlyingObject, \.accessoryView)
     }
     
     var editingAccessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.editingAccessoryView)
+        .relay(of: underlyingObject, \.editingAccessoryView)
     }
     
     var indentationLevel: AssociativeTwoWayRelay<Int> {
-        .relay(of: object, \.indentationLevel)
+        .relay(of: underlyingObject, \.indentationLevel)
     }
     
     var indentationWidth: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.indentationWidth)
+        .relay(of: underlyingObject, \.indentationWidth)
     }
     
     var isEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isEditing)
+        .relay(of: underlyingObject, \.isEditing)
     }
     
     @available(iOS 11.0, *)
     var userInteractionEnabledWhileDragging: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.userInteractionEnabledWhileDragging)
+        .relay(of: underlyingObject, \.userInteractionEnabledWhileDragging)
     }
 }
 
@@ -86,28 +86,28 @@ public extension RelayCollection where Object: UICollectionViewCell {
     
     @available(iOS 14.0, *)
     var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.automaticallyUpdatesContentConfiguration)
+        .relay(of: underlyingObject, \.automaticallyUpdatesContentConfiguration)
     }
     
     var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isSelected)
+        .relay(of: underlyingObject, \.isSelected)
     }
     
     var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isHighlighted)
+        .relay(of: underlyingObject, \.isHighlighted)
     }
     
     @available(iOS 14.0, *)
     var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.automaticallyUpdatesBackgroundConfiguration)
+        .relay(of: underlyingObject, \.automaticallyUpdatesBackgroundConfiguration)
     }
     
     var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.backgroundView)
+        .relay(of: underlyingObject, \.backgroundView)
     }
     
     var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: object, \.selectedBackgroundView)
+        .relay(of: underlyingObject, \.selectedBackgroundView)
     }
     
 }

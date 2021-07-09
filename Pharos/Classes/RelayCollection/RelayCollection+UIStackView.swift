@@ -14,15 +14,15 @@ public extension RelayCollection where Object: UIStackView {
     // MARK: Two Way Relay
     
     var spacing: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: object, \.spacing)
+        .relay(of: underlyingObject, \.spacing)
     }
     
     var isBaselineRelativeArrangement: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isBaselineRelativeArrangement)
+        .relay(of: underlyingObject, \.isBaselineRelativeArrangement)
     }
     
     var isLayoutMarginsRelativeArrangement: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isLayoutMarginsRelativeArrangement)
+        .relay(of: underlyingObject, \.isLayoutMarginsRelativeArrangement)
     }
     
 }

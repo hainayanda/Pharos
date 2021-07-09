@@ -75,7 +75,7 @@ public func mergeRelays<R1: TransportRelay, R2: TransportRelay, R3: TransportRel
     relay1.merge(with: relay2, relay3, relay4)
 }
 
-class ClosureRelay<Value>: BaseRelay<Value> {
+final class ClosureRelay<Value>: BaseRelay<Value> {
     
     typealias RelayAction = (Changes<Value>) -> Void
     
@@ -104,7 +104,7 @@ class ClosureRelay<Value>: BaseRelay<Value> {
     override func removeAllNextRelays() { }
 }
 
-class BiCastRelay<V1, V2>: ValueRelay<(V1, V2)> {
+final class BiCastRelay<V1, V2>: ValueRelay<(V1, V2)> {
     
     func relay(changes: Changes<V1>) {
         let old: (V1, V2) = (changes.old, currentValue.1)
@@ -119,7 +119,7 @@ class BiCastRelay<V1, V2>: ValueRelay<(V1, V2)> {
     }
 }
 
-class TriCastRelay<V1, V2, V3>: ValueRelay<(V1, V2, V3)> {
+final class TriCastRelay<V1, V2, V3>: ValueRelay<(V1, V2, V3)> {
     
     func relay(changes: Changes<V1>) {
         let old: (V1, V2, V3) = (changes.old, currentValue.1, currentValue.2)
@@ -140,7 +140,7 @@ class TriCastRelay<V1, V2, V3>: ValueRelay<(V1, V2, V3)> {
     }
 }
 
-class QuadCastRelay<V1, V2, V3, V4>: ValueRelay<(V1, V2, V3, V4)> {
+final class QuadCastRelay<V1, V2, V3, V4>: ValueRelay<(V1, V2, V3, V4)> {
     
     func relay(changes: Changes<V1>) {
         let old: (V1, V2, V3, V4) = (changes.old, currentValue.1, currentValue.2, currentValue.3)

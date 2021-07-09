@@ -14,39 +14,39 @@ public extension RelayCollection where Object: UISlider {
     // MARK: Two Way Relay
     
     var value: AssociativeTwoWayRelay<Float> {
-        .relay(of: object, \.value)
+        .relay(of: underlyingObject, \.value)
     }
     
     var minimumValue: AssociativeTwoWayRelay<Float> {
-        .relay(of: object, \.minimumValue)
+        .relay(of: underlyingObject, \.minimumValue)
     }
     
     var maximumValue: AssociativeTwoWayRelay<Float> {
-        .relay(of: object, \.maximumValue)
+        .relay(of: underlyingObject, \.maximumValue)
     }
     
     var minimumValueImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: object, \.minimumValueImage)
+        .relay(of: underlyingObject, \.minimumValueImage)
     }
     
     var maximumValueImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: object, \.maximumValueImage)
+        .relay(of: underlyingObject, \.maximumValueImage)
     }
     
     var isContinuous: AssociativeTwoWayRelay<Bool> {
-        .relay(of: object, \.isContinuous)
+        .relay(of: underlyingObject, \.isContinuous)
     }
     
     var minimumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.minimumTrackTintColor)
+        .relay(of: underlyingObject, \.minimumTrackTintColor)
     }
     
     var maximumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.maximumTrackTintColor)
+        .relay(of: underlyingObject, \.maximumTrackTintColor)
     }
     
     var thumbTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: object, \.thumbTintColor)
+        .relay(of: underlyingObject, \.thumbTintColor)
     }
     
 }

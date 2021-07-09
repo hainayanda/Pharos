@@ -28,23 +28,23 @@ public extension PopulatedRelays where Self: UIView {
 }
 #endif
 
-public class RelayCollection<Object: NSObject> {
-    let object: Object
+public final class RelayCollection<Object: NSObject> {
+    public let underlyingObject: Object
     
     init(object: Object) {
-        self.object = object
+        self.underlyingObject = object
     }
 }
 
 @dynamicMemberLookup
-public class BearerRelayCollection<Object: NSObject> {
-    let object: Object
+public final class BearerRelayCollection<Object: NSObject> {
+    public let underlyingObject: Object
     
     init(object: Object) {
-        self.object = object
+        self.underlyingObject = object
     }
     
     public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> AssociativeBearerRelay<Property> {
-        .relay(of: object, member)
+        .relay(of: underlyingObject, member)
     }
 }

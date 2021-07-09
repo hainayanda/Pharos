@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension BearerRelay {
+extension BearerRelay {
     static func relay<Object: NSObject, Value>(
         of object: Object,
         _ keyPath: ReferenceWritableKeyPath<Object, Value>) -> AssociativeBearerRelay<Value> {
@@ -15,7 +15,7 @@ public extension BearerRelay {
     }
 }
 
-class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Value> {
+final class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Value> {
     typealias Observed = Value
     
     var keyPath: ReferenceWritableKeyPath<Object, Value>
