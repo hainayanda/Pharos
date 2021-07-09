@@ -35,7 +35,7 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     let mapper: Mapper
     var ignoring: Ignorer = { _ in false }
     public override var isValid: Bool {
-        relayDispatch.consumer != nil
+        relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
     
     init(value: Value, mapper: @escaping Mapper) {
@@ -106,5 +106,6 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     
     public override func discard() {
         relayDispatch.consumer = nil
+        nextRelays.removeAll()
     }
 }

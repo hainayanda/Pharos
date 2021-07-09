@@ -16,7 +16,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     var nextRelays: Set<BaseRelay<Value>> = Set()
     var ignoring: Ignorer = { _ in false }
     open override var isValid: Bool {
-        relayDispatch.consumer != nil
+        relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
     
     public init(currentValue: Value, consumer: ((Changes<Value>) -> Void)?) {
@@ -79,5 +79,6 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     
     open override func discard() {
         relayDispatch.consumer = nil
+        nextRelays.removeAll()
     }
 }
