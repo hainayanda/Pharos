@@ -12,7 +12,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     public typealias Observed = Value
     
     public internal(set) var currentValue: Value
-    var relayDispatch: RelayDispatchHandler<Value> = .init()
+    var relayDispatch: RelayChangeHandler<Value> = .init()
     var nextRelays: Set<BaseRelay<Value>> = Set()
     var ignoring: Ignorer = { _ in false }
     open override var isValid: Bool {

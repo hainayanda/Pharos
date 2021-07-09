@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class BaseRelay<Value>: RelayOperationHandler, Discardable, Hashable {
+open class BaseRelay<Value>: RelayHandler, Discardable, Hashable {
     
     open var isValid: Bool {
         fatalError("should overridden")

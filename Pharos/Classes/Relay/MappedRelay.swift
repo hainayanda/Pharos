@@ -30,7 +30,7 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     
     public internal(set) var currentValue: Mapped
     
-    var relayDispatch: RelayDispatchHandler<Mapped> = .init()
+    var relayDispatch: RelayChangeHandler<Mapped> = .init()
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
     let mapper: Mapper
     var ignoring: Ignorer = { _ in false }
