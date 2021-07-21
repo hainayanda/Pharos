@@ -2,9 +2,9 @@
 
 Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming
 
-[![codebeat badge](https://codebeat.co/badges/e4784f82-ff10-45cf-92e2-93497bb6b1a4)](https://codebeat.co/projects/github-com-nayanda1-pharos-main)
-![build](https://github.com/nayanda1/Pharos/workflows/build/badge.svg)
-![test](https://github.com/nayanda1/Pharos/workflows/test/badge.svg)
+[![codebeat badge](https://codebeat.co/badges/e4784f82-ff10-45cf-92e2-93497bb6b1a4)](https://codebeat.co/projects/github-com-hainayanda-pharos-main)
+![build](https://github.com/hainayanda/Pharos/workflows/build/badge.svg)
+![test](https://github.com/hainayanda/Pharos/workflows/test/badge.svg)
 [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
 [![Version](https://img.shields.io/cocoapods/v/Pharos.svg?style=flat)](https://cocoapods.org/pods/Pharos)
 [![License](https://img.shields.io/cocoapods/l/Pharos.svg?style=flat)](https://cocoapods.org/pods/Pharos)
@@ -38,8 +38,8 @@ pod 'Pharos'
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/nayanda1/Pharos.git** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **1.2.2** as its version
+- Add **https://github.com/hainayanda/Pharos.git** as Swift Package URL
+- Set rules at **version**, with **Up to Next Major** option and put **1.2.3** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -48,7 +48,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/nayanda1/Pharos.git", .upToNextMajor(from: "1.2.2"))
+    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "1.2.3"))
 ]
 ```
 
@@ -63,7 +63,7 @@ Use it in your target as `Pharos`
 
 ## Author
 
-Nayanda Haberty, nayanda1@outlook.com
+Nayanda Haberty, hainayanda@outlook.com
 
 ## License
 
@@ -171,11 +171,11 @@ class MyClass {
 
 In the example above, the first closure will be replaced by the second closure since both are assigned in Main Relay. But any relay could have multiple child relays which will be notified by the previous relay as described by the diagram below:
 
-![alt text](https://github.com/nayanda1/Pharos/blob/main/ObservableRelay.png)
+![alt text](https://github.com/hainayanda/Pharos/blob/main/ObservableRelay.png)
 
 And remember, a single relay will always just have one did set listener:
 
-![alt text](https://github.com/nayanda1/Pharos/blob/main/DidSet.png)
+![alt text](https://github.com/hainayanda/Pharos/blob/main/DidSet.png)
 
 To use the next relay, you could just do something like this:
 
@@ -291,7 +291,7 @@ At the example above, every time `text` is set, it will automatically set the `t
 
 The mechanism can be described by 
 
-![alt text](https://github.com/nayanda1/Pharos/blob/main/BondingRelay.png)
+![alt text](https://github.com/hainayanda/Pharos/blob/main/BondingRelay.png)
 
 If you want to bond and match both values right away, use `bondAndApply` or `bondAndMap`. the difference between both is that apply will set the `Observable` value to `Object property` and map will set the `Object property` to `Observable`
 
