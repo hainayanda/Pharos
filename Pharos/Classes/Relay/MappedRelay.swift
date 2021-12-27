@@ -10,13 +10,20 @@ import Foundation
 public extension ObservableRelay {
     func map<Mapped>(_ mapper: @escaping (Observed) -> Mapped) -> MappedRelay<Observed, Mapped> {
         let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
-        addNext(relay: mappedRelay)
+        add(observer: mappedRelay)
+        return mappedRelay
+    }
+    
+    func compactMap<Mapped>(_ mapper: @escaping (Observed) throws -> Mapped?) -> MappedRelay<Observed, Mapped> {
+        let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
+        add(observer: mappedRelay)
         return mappedRelay
     }
 }
 
 public extension ObservableRelay where Observed: Collection {
-    func compactMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
+    @available(*, renamed: "compactMap")
+    func listMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
         map {
             $0.compactMap(mapper)
         }
@@ -25,10 +32,16 @@ public extension ObservableRelay where Observed: Collection {
 
 public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay {
     
-    public typealias Mapper = (Value) -> Mapped
+    public typealias Mapper = (Value) throws -> Mapped?
     public typealias Observed = Mapped
     
-    public internal(set) var currentValue: Mapped
+    internal var _currentValue: Mapped?
+    public var currentValue: Mapped {
+        guard let value = _currentValue else {
+            fatalError("fail to map currentValue")
+        }
+        return value
+    }
     
     var relayDispatch: RelayChangeHandler<Mapped> = .init()
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
@@ -39,19 +52,17 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     }
     
     init(value: Value, mapper: @escaping Mapper) {
-        self.currentValue = mapper(value)
+        self._currentValue = try? mapper(value)
         self.mapper = mapper
     }
     
     @discardableResult
     public override func relay(changes: Changes<Value>) -> Bool {
-        let mappedChanges = changes.map(mapper)
-        guard !ignoring(mappedChanges) else { return false }
-        currentValue = mappedChanges.new
+        guard let mappedChanges = changes.map(mapper),
+              !ignoring(mappedChanges) else { return false }
+        _currentValue = mappedChanges.new
         relayDispatch.relay(changes: mappedChanges)
-        nextRelays.forEach { relay in
-            relay.relay(changes: mappedChanges)
-        }
+        nextRelays.relay(changes: mappedChanges)
         return true
     }
     
@@ -85,23 +96,23 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
         return self
     }
     
-    public func invokeRelay() {
-        let changes: Changes<Mapped> = .init(old: currentValue, new: currentValue, source: self)
-        relayDispatch.relay(changes: changes)
-        nextRelays.forEach { relay in
-            relay.relay(changes: changes)
+    public func invokeRelayWithCurrent() {
+        guard let value = _currentValue else {
+            return
         }
+        let changes: Changes<Mapped> = .init(old: value, new: value, invokedManually: true, source: self)
+        relayDispatch.relay(changes: changes)
+        nextRelays.relay(changes: changes)
     }
     
     public override func removeAllNextRelays() {
-        nextRelays.forEach { $0.removeAllNextRelays() }
-        nextRelays.removeAll()
+        nextRelays.cleanRelays()
     }
     
     @discardableResult
-    public func addNext<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
-        nextRelays.insert(relay)
-        return relay
+    public func add<Relay: BaseRelay<Mapped>>(observer: Relay) -> Relay {
+        nextRelays.insert(observer)
+        return observer
     }
     
     public override func discard() {

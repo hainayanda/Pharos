@@ -39,8 +39,8 @@ open class AssociativeBearerRelay<Value>: BearerRelay<Value>, AssociativeRelay {
         super.syncWhenInSameThread() as? Self ?? self
     }
     
-    open override func invokeRelay() {
-        super.invokeRelay()
+    open override func invokeRelayWithCurrent() {
+        super.invokeRelayWithCurrent()
     }
     
     open override func removeAllNextRelays() {
@@ -48,8 +48,8 @@ open class AssociativeBearerRelay<Value>: BearerRelay<Value>, AssociativeRelay {
     }
     
     @discardableResult
-    open override func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
-        super.addNext(relay: relay)
+    open override func add<Relay: BaseRelay<Value>>(observer: Relay) -> Relay {
+        super.add(observer: observer)
     }
     
     open override func discard() {
@@ -89,8 +89,8 @@ open class AssociativeValueRelay<Value>: ValueRelay<Value>, AssociativeRelay {
         super.syncWhenInSameThread() as? Self ?? self
     }
     
-    open override func invokeRelay() {
-        super.invokeRelay()
+    open override func invokeRelayWithCurrent() {
+        super.invokeRelayWithCurrent()
     }
     
     open override func removeAllNextRelays() {
@@ -98,8 +98,8 @@ open class AssociativeValueRelay<Value>: ValueRelay<Value>, AssociativeRelay {
     }
     
     @discardableResult
-    open override func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
-        super.addNext(relay: relay)
+    open override func add<Relay: BaseRelay<Value>>(observer: Relay) -> Relay {
+        super.add(observer: observer)
     }
     
     open override func discard() {
@@ -139,8 +139,8 @@ open class AssociativeTwoWayRelay<Value>: TwoWayRelay<Value>, AssociativeRelay {
         super.syncWhenInSameThread() as? Self ?? self
     }
     
-    open override func invokeRelay() {
-        super.invokeRelay()
+    open override func invokeRelayWithCurrent() {
+        super.invokeRelayWithCurrent()
     }
     
     open override func removeAllNextRelays() {
@@ -148,8 +148,8 @@ open class AssociativeTwoWayRelay<Value>: TwoWayRelay<Value>, AssociativeRelay {
     }
     
     @discardableResult
-    open override func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
-        super.addNext(relay: relay)
+    open override func add<Relay: BaseRelay<Value>>(observer: Relay) -> Relay {
+        super.add(observer: observer)
     }
     
     open override func discard() {

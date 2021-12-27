@@ -75,7 +75,7 @@ public final class Observable<Wrapped>: StateObservable {
     }
     
     public func invokeRelayWithCurrent() {
-        informDidSetToRelay(with: .init(old: _wrappedValue, new: _wrappedValue, source: self))
+        informDidSetToRelay(with: .init(old: _wrappedValue, new: _wrappedValue, invokedManually: true, source: self))
     }
     
     public func removeBond() {

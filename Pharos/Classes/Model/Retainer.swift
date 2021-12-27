@@ -7,7 +7,6 @@
 
 import Foundation
 
-@available(*, renamed: "Dereferencer")
 public final class Retainer {
     var discardables: [Discardable] = []
     

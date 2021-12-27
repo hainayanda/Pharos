@@ -62,19 +62,18 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
         return self
     }
     
-    open func invokeRelay() {
-        relay(changes: .init(old: currentValue, new: currentValue, source: self))
+    open func invokeRelayWithCurrent() {
+        relay(changes: .init(old: currentValue, new: currentValue, invokedManually: true, source: self))
     }
     
     open override func removeAllNextRelays() {
-        nextRelays.forEach { $0.removeAllNextRelays() }
-        nextRelays.removeAll()
+        nextRelays.cleanRelays()
     }
     
     @discardableResult
-    open func addNext<Relay: BaseRelay<Value>>(relay: Relay) -> Relay {
-        nextRelays.insert(relay)
-        return relay
+    open func add<Relay: BaseRelay<Value>>(observer: Relay) -> Relay {
+        nextRelays.insert(observer)
+        return observer
     }
     
     open override func discard() {

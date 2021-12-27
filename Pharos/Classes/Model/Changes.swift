@@ -8,22 +8,36 @@
 import Foundation
 
 public struct Changes<Value> {
+    public let invokedManually: Bool
     public let old: Value
     public let new: Value
     public let source: Any
     
-    init(old: Value, new: Value, source: Any) {
+    init(old: Value, new: Value, invokedManually: Bool = false, source: Any) {
         self.old = old
         self.new = new
+        self.invokedManually = invokedManually
         self.source = source
     }
     
-    func map<NewValue>(_ mapper: (Value) -> NewValue) -> Changes<NewValue> {
-        .init(
-            old: mapper(old),
-            new:  mapper(new),
+    func map<NewValue>(_ mapper: (Value) throws -> NewValue?) -> Changes<NewValue>? {
+        guard let mappedOld: NewValue = try? mapper(old),
+              let mappedNew: NewValue = try? mapper(new) else { return nil }
+        return Changes<NewValue>(
+            old: mappedOld,
+            new:  mappedNew,
             source: source
         )
+    }
+}
+
+extension Changes where Value: AnyObject {
+    public var isSameInstance: Bool {
+        old === new
+    }
+    
+    public var isChangingWithNewInstance: Bool {
+        !isSameInstance
     }
 }
 

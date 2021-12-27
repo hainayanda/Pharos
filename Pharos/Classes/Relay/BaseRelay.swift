@@ -26,7 +26,6 @@ open class BaseRelay<Value>: RelayHandler, Discardable, Hashable {
         fatalError("should overridden")
     }
     
-    @available(*, renamed: "referenceManaged")
     @discardableResult
     open func retained(by retainer: Retainer) -> Self {
         retainer.add(discardable: self)
