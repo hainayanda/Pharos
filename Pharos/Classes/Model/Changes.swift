@@ -8,13 +8,15 @@
 import Foundation
 
 public struct Changes<Value> {
+    public let invokedManually: Bool
     public let old: Value
     public let new: Value
     public let source: Any
     
-    init(old: Value, new: Value, source: Any) {
+    init(old: Value, new: Value, invokedManually: Bool = false, source: Any) {
         self.old = old
         self.new = new
+        self.invokedManually = invokedManually
         self.source = source
     }
     
