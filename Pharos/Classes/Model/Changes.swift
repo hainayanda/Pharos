@@ -27,6 +27,16 @@ public struct Changes<Value> {
     }
 }
 
+extension Changes where Value: AnyObject {
+    public var isSameInstance: Bool {
+        old === new
+    }
+    
+    public var isChangingWithNewInstance: Bool {
+        !isSameInstance
+    }
+}
+
 extension Changes: Equatable where Value: Equatable {
     public var isNotChanging: Bool {
         old == new
