@@ -18,10 +18,12 @@ public struct Changes<Value> {
         self.source = source
     }
     
-    func map<NewValue>(_ mapper: (Value) -> NewValue) -> Changes<NewValue> {
-        .init(
-            old: mapper(old),
-            new:  mapper(new),
+    func map<NewValue>(_ mapper: (Value) throws -> NewValue?) -> Changes<NewValue>? {
+        guard let mappedOld: NewValue = try? mapper(old),
+              let mappedNew: NewValue = try? mapper(new) else { return nil }
+        return Changes<NewValue>(
+            old: mappedOld,
+            new:  mappedNew,
             source: source
         )
     }
