@@ -145,7 +145,7 @@ class MyClass {
         $text.whenDidSet { changes in
             print(changes.new)
             print(changes.old)
-        }.invokeRelay()
+        }.invokeRelayWithCurrentValue()
     }
 }
 ```
@@ -178,6 +178,35 @@ And remember, a single relay will always just have one did set listener:
 ![alt text](https://github.com/hainayanda/Pharos/blob/main/DidSet.png)
 
 To use the next relay, you could just do something like this:
+
+```swift
+class MyClass {
+    @Observable var text: String?
+    
+    func observeTextLinearly() {
+        $text.whenDidSet { changes in
+            print("notified by Observable")
+        }.addDidSet { changes in
+            print("notified by Main Relay")
+        }.addDidSet { changes in
+            print("notified by Previous Relay")
+        }
+    }
+    
+    func addRelayToMainRelay() {
+        $text.addDidSet {
+            print("notified by Main Relay")
+        }
+        $text.addDidSet {
+            print("notified by Main Relay Too")
+        }.addDidSet { changes in
+            print("notified by Previous Relay")
+        }
+    }
+}
+```
+
+Or more explicit which basically the same, like this:
 
 ```swift
 class MyClass {
@@ -219,12 +248,11 @@ class MyClass {
     var retainer: Retainer = .init()
     
     func observeText() {
-        $text.nextRelay()
-            .referenceManaged(by: retainer)
-            .whenDidSet { changes in
+        $text.addDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
+            .referenceManaged(by: retainer)
     }
     
     func discardManually() {
@@ -261,7 +289,7 @@ class MyClass {
         $title.whenDidSet { changes in
             print(changes.new)
             print(changes.old)
-        }.invokeRelay()
+        }.invokeRelayWithCurrentValue()
     }
 }
 ```
