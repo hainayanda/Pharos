@@ -21,22 +21,22 @@ open class AssociativeBearerRelay<Value>: BearerRelay<Value>, AssociativeRelay {
     }
     
     open override func ignore(when ignoring: @escaping Ignorer) -> Self {
-        super.ignore(when: ignoring)
+        super.ignore(when: ignoring) as? Self ?? self
     }
     
     @discardableResult
     open override func multipleSetDelayed(by interval: TimeInterval) -> Self {
-        super.multipleSetDelayed(by: interval)
+        super.multipleSetDelayed(by: interval) as? Self ?? self
     }
     
     @discardableResult
     open override func observe(on dispatcher: DispatchQueue) -> Self {
-        super.observe(on: dispatcher)
+        super.observe(on: dispatcher) as? Self ?? self
     }
     
     @discardableResult
     open override func syncWhenInSameThread() -> Self {
-        super.syncWhenInSameThread()
+        super.syncWhenInSameThread() as? Self ?? self
     }
     
     open override func invokeRelayWithCurrent() {
@@ -71,22 +71,22 @@ open class AssociativeValueRelay<Value>: ValueRelay<Value>, AssociativeRelay {
     }
     
     open override func ignore(when ignoring: @escaping Ignorer) -> Self {
-        super.ignore(when: ignoring)
+        super.ignore(when: ignoring) as? Self ?? self
     }
     
     @discardableResult
     open override func multipleSetDelayed(by interval: TimeInterval) -> Self {
-        super.multipleSetDelayed(by: interval)
+        super.multipleSetDelayed(by: interval) as? Self ?? self
     }
     
     @discardableResult
     open override func observe(on dispatcher: DispatchQueue) -> Self {
-        super.observe(on: dispatcher)
+        super.observe(on: dispatcher) as? Self ?? self
     }
     
     @discardableResult
     open override func syncWhenInSameThread() -> Self {
-        super.syncWhenInSameThread()
+        super.syncWhenInSameThread() as? Self ?? self
     }
     
     open override func invokeRelayWithCurrent() {
@@ -121,22 +121,22 @@ open class AssociativeTwoWayRelay<Value>: TwoWayRelay<Value>, AssociativeRelay {
     }
     
     open override func ignore(when ignoring: @escaping Ignorer) -> Self {
-        super.ignore(when: ignoring)
+        super.ignore(when: ignoring) as? Self ?? self
     }
     
     @discardableResult
     open override func multipleSetDelayed(by interval: TimeInterval) -> Self {
-        super.multipleSetDelayed(by: interval)
+        super.multipleSetDelayed(by: interval) as? Self ?? self
     }
     
     @discardableResult
     open override func observe(on dispatcher: DispatchQueue) -> Self {
-        super.observe(on: dispatcher)
+        super.observe(on: dispatcher) as? Self ?? self
     }
     
     @discardableResult
     open override func syncWhenInSameThread() -> Self {
-        super.syncWhenInSameThread()
+        super.syncWhenInSameThread() as? Self ?? self
     }
     
     open override func invokeRelayWithCurrent() {
