@@ -12,10 +12,10 @@ public extension TransportRelay {
         let biCastRelay: BiCastRelay<Observed, Relay.Observed> = .init(
             currentValue: (currentValue, relay.currentValue)
         )
-        addNext(relay: ClosureRelay {
+        add(observer: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
-        relay.addNext(relay: ClosureRelay {
+        relay.add(observer: ClosureRelay {
             biCastRelay.relay(changes: $0)
         })
         return biCastRelay
@@ -26,13 +26,13 @@ public extension TransportRelay {
         let triCastRelay: TriCastRelay<Observed, R2.Observed, R3.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue)
         )
-        addNext(relay: ClosureRelay {
+        add(observer: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay2.addNext(relay: ClosureRelay {
+        relay2.add(observer: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
-        relay3.addNext(relay: ClosureRelay {
+        relay3.add(observer: ClosureRelay {
             triCastRelay.relay(changes: $0)
         })
         return triCastRelay
@@ -44,16 +44,16 @@ public extension TransportRelay {
         let quadCastRelay: QuadCastRelay<Observed, R2.Observed, R3.Observed, R4.Observed> = .init(
             currentValue: (currentValue, relay2.currentValue, relay3.currentValue, relay4.currentValue)
         )
-        addNext(relay: ClosureRelay {
+        add(observer: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay2.addNext(relay: ClosureRelay {
+        relay2.add(observer: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay3.addNext(relay: ClosureRelay {
+        relay3.add(observer: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
-        relay4.addNext(relay: ClosureRelay {
+        relay4.add(observer: ClosureRelay {
             quadCastRelay.relay(changes: $0)
         })
         return quadCastRelay

@@ -20,7 +20,7 @@ public final class BondableRelay<Value>: TwoWayRelay<Value> {
     
     @discardableResult
     public func bonding(with twoWayRelay: TwoWayRelay<Value>) -> Self {
-        addNext(relay: twoWayRelay)
+        add(observer: twoWayRelay)
         twoWayRelay.relayBackConsumer { [weak self] changes in
             self?.relayBack(changes: changes)
         }

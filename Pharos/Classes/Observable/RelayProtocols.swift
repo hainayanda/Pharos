@@ -7,15 +7,7 @@
 
 import Foundation
 
-public protocol ObservableRelay: TransportRelay {
-    associatedtype Observed
-    typealias Consumer = (Changes<Observed>) -> Void
-    typealias Ignorer = (Changes<Observed>) -> Bool
-    @discardableResult
-    func whenDidSet(then consume: @escaping Consumer) -> Self
-}
-
-public protocol TransportRelay: class {
+public protocol TransportRelay: AnyObject {
     associatedtype Observed
     typealias Ignorer = (Changes<Observed>) -> Bool
     var currentValue: Observed { get }
@@ -30,13 +22,22 @@ public protocol TransportRelay: class {
     @discardableResult
     func retained(by retainer: Retainer) -> Self
     @discardableResult
-    func nextRelay() -> ValueRelay<Observed>
+    @available(*, renamed: "nextRelay")
+    func addObserver() -> ValueRelay<Observed>
     @discardableResult
-    func addNext<Relay: BaseRelay<Observed>>(relay: Relay) -> Relay
+    func add<Relay: BaseRelay<Observed>>(observer: Relay) -> Relay
     @discardableResult
-    func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed>
+    func relayValue(to observer: TwoWayRelay<Observed>) -> TwoWayRelay<Observed>
     @discardableResult
-    func relayValue(to relay: BearerRelay<Observed>) -> BearerRelay<Observed>
+    func relayValue(to observer: BearerRelay<Observed>) -> BearerRelay<Observed>
+}
+
+public protocol ObservableRelay: TransportRelay {
+    associatedtype Observed
+    typealias Consumer = (Changes<Observed>) -> Void
+    typealias Ignorer = (Changes<Observed>) -> Bool
+    @discardableResult
+    func whenDidSet(then consume: @escaping Consumer) -> Self
 }
 
 public protocol CallBackRelay {
@@ -47,7 +48,7 @@ public protocol CallBackRelay {
     func relayBackConsumer(_ consumer: @escaping BackConsumer)
 }
 
-public protocol AssociativeRelay: class {
+public protocol AssociativeRelay: AnyObject {
     var associatedObject: AnyObject? { get }
     func retainToSource() -> Self
 }
@@ -56,6 +57,11 @@ public protocol StateObservable {
     func invokeRelayWithCurrent()
     func removeAllRelay()
     func removeBond()
+}
+
+public enum RelayException {
+    case always
+    case exceptInvokedManually
 }
 
 public extension AssociativeRelay {
@@ -74,38 +80,72 @@ public extension AssociativeRelay {
 
 public extension TransportRelay {
     
-    func nextRelay() -> ValueRelay<Observed> {
-        addNext(relay: ValueRelay<Observed>(currentValue: currentValue))
+    func addObserver() -> ValueRelay<Observed> {
+        add(observer: ValueRelay<Observed>(currentValue: currentValue))
     }
     
     @discardableResult
-    func relayValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
-        addNext(relay: ClosureRelay { [weak relay] changes in
-            relay?.relayBack(changes: changes)
+    func relayValue(to observer: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
+        add(observer: ClosureRelay { [weak observer] changes in
+            observer?.relayBack(changes: changes)
         })
-        return relay
+        return observer
     }
     
     @discardableResult
-    func relayValue(to relay: BearerRelay<Observed>) -> BearerRelay<Observed> {
-        addNext(relay: relay)
+    func relayValue(to observer: BearerRelay<Observed>) -> BearerRelay<Observed> {
+        add(observer: observer)
+    }
+    
+    /// shortcut to addObserver().whenDidSet(then:)
+    /// - Parameter consume: closure that will run when relay fire
+    /// - Returns: relay of value observed
+    func addDidSet(_ consume: @escaping ValueRelay<Observed>.Consumer) -> ValueRelay<Observed> {
+        addObserver().whenDidSet(then: consume)
+    }
+}
+
+public extension TransportRelay where Observed: AnyObject {
+    func ignoreSameInstance(_ except: RelayException = .always) -> Self {
+        ignore {
+            switch except {
+            case .always:
+                return $0.isSameInstance
+            case .exceptInvokedManually:
+                return !$0.invokedManually && $0.isSameInstance
+            }
+        }
     }
 }
 
 public extension TransportRelay where Observed: Equatable {
     
     @discardableResult
-    func relayUniqueValue(to relay: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
-        nextRelay().ignoreSameValue().relayValue(to: relay)
+    func relayUniqueValue(_ except: RelayException = .always, to observer: TwoWayRelay<Observed>) -> TwoWayRelay<Observed> {
+        addObserver().ignoreSameValue(except).relayValue(to: observer)
     }
     
     @discardableResult
-    func relayUniqueValue(to relay: BearerRelay<Observed>) -> BearerRelay<Observed> {
-        nextRelay().ignoreSameValue().relayValue(to: relay)
+    func relayUniqueValue(_ except: RelayException = .always, to observer: BearerRelay<Observed>) -> BearerRelay<Observed> {
+        addObserver().ignoreSameValue(except).relayValue(to: observer)
     }
     
-    func ignoreSameValue() -> Self {
-        ignore { $0.isNotChanging }
+    /// shortcut to addObserver().whenDidSet(then:)
+    /// - Parameter consume: closure that will run when relay fire
+    /// - Returns: relay of value observed
+    func addDidUniqueSet(_ except: RelayException = .always, _ consume: @escaping ValueRelay<Observed>.Consumer) -> ValueRelay<Observed> {
+        addObserver().whenDidUniqueSet(except, then: consume)
+    }
+    
+    func ignoreSameValue(_ except: RelayException = .always) -> Self {
+        ignore {
+            switch except {
+            case .always:
+                return $0.isNotChanging
+            case .exceptInvokedManually:
+                return !$0.invokedManually && $0.isNotChanging
+            }
+        }
     }
 }
 
@@ -123,18 +163,12 @@ public extension ObservableRelay {
 public extension ObservableRelay where Observed: Equatable {
     
     @discardableResult
-    func whenDidUniqueSet<Observer: AnyObject>(invoke observer: Observer, method: @escaping (Observer) -> Consumer) -> Self {
-        whenDidUniqueSet { [weak observer] changes in
-            guard let observer = observer else { return }
-            method(observer)(changes)
-        }
+    func whenDidUniqueSet<Observer: AnyObject>(_ except: RelayException = .always, invoke observer: Observer, method: @escaping (Observer) -> Consumer) -> Self {
+        ignoreSameValue(except).whenDidSet(invoke: observer, method: method)
     }
     
     @discardableResult
-    func whenDidUniqueSet(then consume: @escaping Consumer) -> Self {
-        whenDidSet { changes in
-            guard changes.isChanging else { return }
-            consume(changes)
-        }
+    func whenDidUniqueSet(_ except: RelayException = .always, then consume: @escaping Consumer) -> Self {
+        ignoreSameValue(except).whenDidSet(then: consume)
     }
 }

@@ -11,6 +11,7 @@ public protocol RelayHandler {
     associatedtype Value
     @discardableResult
     func relay(changes: Changes<Value>) -> Bool
+    func removeAllNextRelays()
 }
 
 protocol RelayOperationHandler: RelayHandler {
@@ -28,6 +29,7 @@ enum RelayOperationStatus {
 }
 
 final class RelayChangeHandler<Value>: RelayOperationHandler {
+    
     typealias Task = () -> Void
     typealias Consumer = (Changes<Value>) -> Void
     
@@ -163,6 +165,10 @@ final class RelayChangeHandler<Value>: RelayOperationHandler {
             lock.unlock()
         }
         return closure()
+    }
+    
+    func removeAllNextRelays() {
+        consumer = nil
     }
     
 }

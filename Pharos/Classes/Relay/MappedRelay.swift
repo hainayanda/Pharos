@@ -110,9 +110,9 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     }
     
     @discardableResult
-    public func addNext<Relay: BaseRelay<Mapped>>(relay: Relay) -> Relay {
-        nextRelays.insert(relay)
-        return relay
+    public func add<Relay: BaseRelay<Mapped>>(observer: Relay) -> Relay {
+        nextRelays.insert(observer)
+        return observer
     }
     
     public override func discard() {
