@@ -30,11 +30,11 @@ class ObservableStateSpec: QuickSpec {
                     expect(changes.old).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
-                }.nextRelay().whenDidSet { changes in
+                }.addObserver().whenDidSet { changes in
                     expect(changes.old).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
-                }.nextRelay().whenDidSet { changes in
+                }.addObserver().whenDidSet { changes in
                     expect(changes.old).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
@@ -73,11 +73,11 @@ class ObservableStateSpec: QuickSpec {
                 observables.relay
                     .whenDidSet { changes in
                         didSetCount += 1
-                    }.nextRelay()
+                    }.addObserver()
                     .ignore { $0.new == ignored }
                     .whenDidSet { changes in
                         didSetCount += 1
-                    }.nextRelay()
+                    }.addObserver()
                     .whenDidSet { changes in
                         didSetCount += 1
                     }
@@ -107,7 +107,7 @@ class ObservableStateSpec: QuickSpec {
                         expect(changes.old).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
-                    }.nextRelay().whenDidSet { changes in
+                    }.addObserver().whenDidSet { changes in
                         expect(changes.old).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
@@ -344,7 +344,7 @@ class ObservableStateSpec: QuickSpec {
                 var source: Any = self
                 var didSetCount: Int = 0
                 observables.relay.relayValue(to: object.bearerRelays.text)
-                    .nextRelay()
+                    .addObserver()
                     .whenDidSet { changes in
                         source = changes.source
                         didSetCount += 1
@@ -387,12 +387,12 @@ class ObservableStateSpec: QuickSpec {
             it("should auto dereference relay when AutoDereferencer is dereferenced") {
                 let retainer: Retainer = .init()
                 var didSetCount: Int = 0
-                weak var relay1 = observables.relay.nextRelay()
+                weak var relay1 = observables.relay.addObserver()
                     .retained(by: retainer)
                     .whenDidSet { changes in
                         didSetCount += 1
                     }
-                weak var relay2 = relay1?.nextRelay()
+                weak var relay2 = relay1?.addObserver()
                     .whenDidSet { changes in
                         didSetCount += 1
                     }
