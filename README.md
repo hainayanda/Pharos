@@ -14,8 +14,6 @@ Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-# Installation
-
 ## Requirements
 
 - Swift 5.0 or higher (or 5.3 when using Swift Package Manager)
@@ -25,6 +23,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 - macOS 10.10 or higher
 - tvOS 10 or higher
+
+## Installation
 
 ### Cocoapods
 
@@ -38,7 +38,7 @@ pod 'Pharos'
 ### Swift Package Manager from XCode
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
-- Add **https://github.com/hainayanda/Pharos.git** as Swift Package URL
+- Add **<https://github.com/hainayanda/Pharos.git>** as Swift Package URL
 - Set rules at **version**, with **Up to Next Major** option and put **1.2.3** as its version
 - Click next and wait
 
@@ -71,11 +71,7 @@ Pharos is available under the MIT license. See the LICENSE file for more info.
 
 ***
 
-# Basic Usage
-
-Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It using a builder pattern and was designed so it could be read just like the English language.
-
-## Basic
+## Basic Usage
 
 Basically, all you need is a property that you want to observe and add `@Observable` propertyWrapper at it:
 
@@ -267,6 +263,7 @@ class MyClass {
 ```
 
 There are many ways to discard the relay managed by `Retainer`:
+
 - call `discardAll()` from relay's retainer
 - replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed relays by default.
 - doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed relays by default.
@@ -317,7 +314,7 @@ class MyClass {
 
 At the example above, every time `text` is set, it will automatically set the `textField.text`, and when  `textField.text` is set it will automatically set the `text`. On both occasions, it will always notify the `whenDidSet` closure.
 
-The mechanism can be described by 
+The mechanism can be described by the diagram below:
 
 ![alt text](https://github.com/hainayanda/Pharos/blob/main/BondingRelay.png)
 
@@ -564,6 +561,6 @@ Keep in mind that merged relays will strongly referenced in a new relay. It woul
 
 ***
 
-# Contribute
+## Contribute
 
 You know how just clone and do pull request
