@@ -63,7 +63,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     }
     
     open func invokeRelay() {
-        relay(changes: .init(old: currentValue, new: currentValue, source: self))
+        relay(changes: .init(old: currentValue, new: currentValue, invokedManually: true, source: self))
     }
     
     open override func removeAllNextRelays() {
