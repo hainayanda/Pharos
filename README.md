@@ -404,18 +404,19 @@ You can ignore set to relay by passing a closure that returning `Bool` value whi
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Observable var text: String
     
     func observeText() {
-        $text.addDidSet { changes in
-            print(changes.new)
-            print(changes.old.value)
-        }.ignore { $0.new?.isEmpty ?? true }
+        $text.ignore { $0.new.isEmpty }
+            .addDidSet { changes in
+                print(changes.new)
+                print(changes.old.value)
+            }
     }
 }
 ```
 
-At the example above, whenDidSet closure will not run when the new value is empty or null
+At the example above, whenDidSet closure will not run when the new value is empty
 
 ## Delaying Multiple Set
 
