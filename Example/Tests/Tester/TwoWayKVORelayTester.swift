@@ -25,13 +25,13 @@ func testRelay<Object: NSObject, Property>(
     }
     let oldValue: Property = underlyingObject[keyPath: keyPath]
     waitUntil { done in
-        relay.retained(by: retainer)
-            .syncWhenInSameThread()
-            .whenDidSet { changes in
+        relay
+            .addDidSet { changes in
                 test(changes, oldValue)
                 done()
             }
             .syncWhenInSameThread()
+            .retained(by: retainer)
         underlyingObject[keyPath: keyPath] = newValue
     }
     retainer.discardAll()
@@ -48,7 +48,7 @@ func testBoolRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -63,7 +63,7 @@ func testBreakModeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -78,7 +78,7 @@ func testBaselineRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -93,7 +93,7 @@ func testLineBreakRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -109,9 +109,9 @@ func testArrayImageRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? [UIImage]).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -127,7 +127,7 @@ func testTextAlignementRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -142,9 +142,9 @@ func testOffsetRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.horizontal - newValue.horizontal)).to(beLessThan(0.0001))
-        expect(abs(changes.old.horizontal - oldValue.horizontal)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.horizontal - oldValue.horizontal)).to(beLessThan(0.0001))
         expect(abs(changes.new.vertical - newValue.vertical)).to(beLessThan(0.0001))
-        expect(abs(changes.old.vertical - oldValue.vertical)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.vertical - oldValue.vertical)).to(beLessThan(0.0001))
     }
 }
 
@@ -159,7 +159,7 @@ func testBorderStyleRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -174,7 +174,7 @@ func testRangeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -189,7 +189,7 @@ func testDataDetectorRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -203,7 +203,7 @@ func testAttributedStringRelay<Object: NSObject>(
         keyPath: keyPath,
         with: NSAttributedString(string: "test")) { changes, oldValue in
         expect(changes.new.string).to(equal("test"))
-        expect(changes.old.string).to(equal(oldValue.string))
+        expect(changes.old.value?.string).to(equal(oldValue.string))
     }
 }
 
@@ -218,9 +218,9 @@ func testOptAttributedStringRelay<Object: NSObject>(
         with: NSAttributedString(string: "test")) { changes, oldValue in
         expect(changes.new?.string).to(equal("test"))
         if oldValue?.string == nil {
-            expect(changes.old?.string).to(beNil())
+            expect(changes.old.value??.string).to(beNil())
         } else {
-            expect(changes.old?.string).to(equal(oldValue?.string))
+            expect(changes.old.value??.string).to(equal(oldValue?.string))
         }
     }
 }
@@ -237,9 +237,9 @@ func testFontRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIFont).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -255,7 +255,7 @@ func testViewModeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -271,9 +271,9 @@ func testImageRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIImage).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -290,9 +290,9 @@ func testStringRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? String).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -309,9 +309,9 @@ func testColorRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIColor).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -328,9 +328,9 @@ func testVisualEffectRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIVisualEffect).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -346,7 +346,7 @@ func testAxisRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -361,7 +361,7 @@ func testDistributionRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -376,7 +376,7 @@ func testAlignmentRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -392,9 +392,9 @@ func testViewRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIView).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -411,9 +411,9 @@ func testRefreshRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old).to(beNil())
+            expect(changes.old.value as? UIRefreshControl).to(beNil())
         } else {
-            expect(changes.old).to(equal(oldValue))
+            expect(changes.old.value).to(equal(oldValue))
         }
     }
 }
@@ -429,7 +429,7 @@ func testIntRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old).to(equal(oldValue))
+        expect(changes.old.value).to(equal(oldValue))
     }
 }
 
@@ -512,10 +512,10 @@ func testCGRectRelay<Object: NSObject>(
         expect(abs(changes.new.origin.y - newValue.origin.y)).to(beLessThan(0.0001))
         expect(abs(changes.new.width - newValue.width)).to(beLessThan(0.0001))
         expect(abs(changes.new.height - newValue.height)).to(beLessThan(0.0001))
-        expect(abs(changes.old.origin.x - oldValue.origin.x)).to(beLessThan(0.0001))
-        expect(abs(changes.old.origin.y - oldValue.origin.y)).to(beLessThan(0.0001))
-        expect(abs(changes.old.width - oldValue.width)).to(beLessThan(0.0001))
-        expect(abs(changes.old.height - oldValue.height)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.origin.x - oldValue.origin.x)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.origin.y - oldValue.origin.y)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.width - oldValue.width)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.height - oldValue.height)).to(beLessThan(0.0001))
     }
 }
 
@@ -534,8 +534,8 @@ func testCGPointRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.x - newValue.x)).to(beLessThan(0.0001))
         expect(abs(changes.new.y - newValue.y)).to(beLessThan(0.0001))
-        expect(abs(changes.old.x - oldValue.x)).to(beLessThan(0.0001))
-        expect(abs(changes.old.y - oldValue.y)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.x - oldValue.x)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.y - oldValue.y)).to(beLessThan(0.0001))
     }
 }
 
@@ -554,8 +554,8 @@ func testSizeRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.width - newValue.width)).to(beLessThan(0.0001))
         expect(abs(changes.new.height - newValue.height)).to(beLessThan(0.0001))
-        expect(abs(changes.old.width - oldValue.width)).to(beLessThan(0.0001))
-        expect(abs(changes.old.height - oldValue.height)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.width - oldValue.width)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.height - oldValue.height)).to(beLessThan(0.0001))
     }
 }
 
@@ -578,10 +578,10 @@ func testInsetsRelay<Object: NSObject>(
         expect(abs(changes.new.left - newValue.left)).to(beLessThan(0.0001))
         expect(abs(changes.new.bottom - newValue.bottom)).to(beLessThan(0.0001))
         expect(abs(changes.new.right - newValue.right)).to(beLessThan(0.0001))
-        expect(abs(changes.old.top - oldValue.top)).to(beLessThan(0.0001))
-        expect(abs(changes.old.left - oldValue.left)).to(beLessThan(0.0001))
-        expect(abs(changes.old.bottom - oldValue.bottom)).to(beLessThan(0.0001))
-        expect(abs(changes.old.right - oldValue.right)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.top - oldValue.top)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.left - oldValue.left)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.right - oldValue.right)).to(beLessThan(0.0001))
     }
 }
 
@@ -605,10 +605,46 @@ func testDirectionalInsetsRelay<Object: NSObject>(
         expect(abs(changes.new.leading - newValue.leading)).to(beLessThan(0.0001))
         expect(abs(changes.new.bottom - newValue.bottom)).to(beLessThan(0.0001))
         expect(abs(changes.new.trailing - newValue.trailing)).to(beLessThan(0.0001))
-        expect(abs(changes.old.top - oldValue.top)).to(beLessThan(0.0001))
-        expect(abs(changes.old.leading - oldValue.leading)).to(beLessThan(0.0001))
-        expect(abs(changes.old.bottom - oldValue.bottom)).to(beLessThan(0.0001))
-        expect(abs(changes.old.trailing - oldValue.trailing)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.top - oldValue.top)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.leading - oldValue.leading)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
+        expect(abs(changes.old.value?.trailing - oldValue.trailing)).to(beLessThan(0.0001))
     }
 }
+
+func - (_ lhs: RelayValue<Float>, _ rhs: RelayValue<Float>) -> Float {
+    guard let lValue = lhs.value, let rValue = rhs.value else {
+        return .nan
+    }
+    return lValue - rValue
+}
+
+func - (_ lhs: RelayValue<Float>, _ rhs: Float) -> Float {
+    guard let lValue = lhs.value else {
+        return .nan
+    }
+    return lValue - rhs
+}
+
+func - (_ lhs: Float?, _ rhs: Float) -> Float {
+    guard let lValue = lhs else {
+        return .nan
+    }
+    return lValue - rhs
+}
+
+func - (_ lhs: CGFloat?, _ rhs: CGFloat) -> CGFloat {
+    guard let lValue = lhs else {
+        return .nan
+    }
+    return lValue - rhs
+}
+
+func - (_ lhs: Double?, _ rhs: Double) -> Double {
+    guard let lValue = lhs else {
+        return .nan
+    }
+    return lValue - rhs
+}
+
 #endif
