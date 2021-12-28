@@ -22,7 +22,6 @@ public extension TransportRelay {
 }
 
 public extension TransportRelay where Observed: Collection {
-    @available(*, renamed: "compactMap")
     func listMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
         map {
             $0.compactMap(mapper)
@@ -40,7 +39,6 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     var relayDispatch: RelayChangeHandler<Mapped> = .init()
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
     let mapper: Mapper
-    var ignoring: Ignorer = { _ in false }
     public override var isValid: Bool {
         relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
@@ -52,23 +50,16 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     
     @discardableResult
     public override func relay(changes: Changes<Value>) -> Bool {
-        guard let mappedChanges = changes.map(mapper),
-              !ignoring(mappedChanges) else { return false }
+        guard let mappedChanges = changes.map(mapper) else { return false }
         currentValue = .value(mappedChanges.new)
         relayDispatch.relay(changes: mappedChanges)
-        nextRelays.relay(changes: mappedChanges)
+        nextRelays.relayAndRemoveInvalid(changes: mappedChanges)
         return true
     }
     
     @discardableResult
     func whenDidSet(then consume: @escaping Consumer) -> Self {
         relayDispatch.consumer = consume
-        return self
-    }
-    
-    @discardableResult
-    public func ignore(when ignoring: @escaping Ignorer) -> Self {
-        self.ignoring = ignoring
         return self
     }
     
@@ -96,7 +87,7 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
         }
         let changes: Changes<Mapped> = .init(old: currentValue, new: value, invokedManually: true, source: self)
         relayDispatch.relay(changes: changes)
-        nextRelays.relay(changes: changes)
+        nextRelays.relayAndRemoveInvalid(changes: changes)
     }
     
     public override func removeAllNextRelays() {

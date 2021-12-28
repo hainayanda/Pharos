@@ -14,7 +14,6 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     public internal(set) var currentValue: RelayValue<Value>
     var relayDispatch: RelayChangeHandler<Value> = .init()
     var nextRelays: Set<BaseRelay<Value>> = Set()
-    var ignoring: Ignorer = { _ in false }
     open override var isValid: Bool {
         relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
@@ -26,22 +25,10 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     
     @discardableResult
     open override func relay(changes: Changes<Value>) -> Bool {
-        guard !ignoring(changes) else {
-            return false
-        }
         currentValue = .value(changes.new)
         relayDispatch.relay(changes: changes)
-        nextRelays = nextRelays.filter {
-            guard $0.isValid else { return false }
-            $0.relay(changes: changes)
-            return true
-        }
+        nextRelays.relayAndRemoveInvalid(changes: changes)
         return true
-    }
-    
-    open func ignore(when ignoring: @escaping Ignorer) -> Self {
-        self.ignoring = ignoring
-        return self
     }
     
     @discardableResult
