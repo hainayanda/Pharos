@@ -111,6 +111,7 @@
 		B9CC157CA977436C13EF510A56F80840 /* Pharos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C17290908434918E022C087E77341117 /* Pharos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BB1217722779F33300F32676 /* Set+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1217712779F33300F32676 /* Set+Extensions.swift */; };
 		BB121776277A983000F32676 /* PharosError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB121775277A983000F32676 /* PharosError.swift */; };
+		BBC9C43A277AF50D00D8A6F5 /* IgnoreRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC9C439277AF50D00D8A6F5 /* IgnoreRelay.swift */; };
 		BCE43FCCBF169B58696CB486F53B8958 /* RelayCollection+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23BFDB2C6D09C708B8155F395230A01 /* RelayCollection+UIView.swift */; };
 		BE4554510B7F73D38A9DFBF893FA32F3 /* BearerRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2651963AFD3CED93EC88BA6944D1657A /* BearerRelay.swift */; };
 		C0D3EDC5F8D2546D5B5CB583230606B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D232917B7F9161AD32800BD7188F6 /* Errors.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -311,6 +312,7 @@
 		BB121775277A983000F32676 /* PharosError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharosError.swift; sourceTree = "<group>"; };
 		BB2DD27CB90704924D6D50162205BD97 /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		BB7C542A7C5ACA88C05A46FDD79EF228 /* RelayCollection+UITableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UITableView.swift"; sourceTree = "<group>"; };
+		BBC9C439277AF50D00D8A6F5 /* IgnoreRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreRelay.swift; sourceTree = "<group>"; };
 		BDCD413122228AE78B16A8E31B6CE4D8 /* Pods-Pharos_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Pharos_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BEE0135D5FDA5A4415EADADB336B9246 /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
 		C0EE0182653D00926C08100E31BD3795 /* Filter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Sources/Quick/Filter.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				5B47AEE119F3C258850915B355E13E2E /* TwoWayKVORelay.swift */,
 				269F963E772E9628153E5983DDD30700 /* TwoWayRelay.swift */,
 				456281AFE2C2FB9D565F5FA39C3DA32C /* ValueRelay.swift */,
+				BBC9C439277AF50D00D8A6F5 /* IgnoreRelay.swift */,
 			);
 			name = Relay;
 			path = Pharos/Classes/Relay;
@@ -961,6 +964,7 @@
 				5D7530E1EE6C1119405F622EA8703215 /* RelayCollection+UIImageView.swift in Sources */,
 				26EA1A11899C03376BC3D9DB64AFD981 /* RelayCollection+UILabel.swift in Sources */,
 				68E33545C044F9A7F6404A78AC89332B /* RelayCollection+UIScrollView.swift in Sources */,
+				BBC9C43A277AF50D00D8A6F5 /* IgnoreRelay.swift in Sources */,
 				2812299D0C609F927E31C514BEC12B75 /* RelayCollection+UISlider.swift in Sources */,
 				438A8173B0B52640E8A75868DD09982B /* RelayCollection+UIStackView.swift in Sources */,
 				7F4F93117C4757FD5FF292A78FFD97AB /* RelayCollection+UIStepper.swift in Sources */,

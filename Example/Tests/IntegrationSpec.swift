@@ -26,15 +26,15 @@ class ObservableStateSpec: QuickSpec {
             it("should notify next observer on set") {
                 let new: String = .randomString()
                 var didSetCount: Int = 0
-                observables.relay.whenDidSet { changes in
+                observables.relay.addDidSet { changes in
                     expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
-                }.addObserver().whenDidSet { changes in
+                }.addDidSet { changes in
                     expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
-                }.addObserver().whenDidSet { changes in
+                }.addDidSet { changes in
                     expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
@@ -71,14 +71,12 @@ class ObservableStateSpec: QuickSpec {
                 let ignored: String = .randomString(length: 5)
                 var didSetCount: Int = 0
                 observables.relay
-                    .whenDidSet { changes in
+                    .addDidSet { changes in
                         didSetCount += 1
-                    }.addObserver()
-                    .ignore { $0.new == ignored }
-                    .whenDidSet { changes in
+                    }.ignore { $0.new == ignored }
+                    .addDidSet { changes in
                         didSetCount += 1
-                    }.addObserver()
-                    .whenDidSet { changes in
+                    }.addDidSet { changes in
                         didSetCount += 1
                     }
                 observables.wrappedValue = ignored
@@ -103,11 +101,11 @@ class ObservableStateSpec: QuickSpec {
                 let new: String = .randomString(length: 18)
                 var didSetCount: Int = 0
                 observables.relay.map { $0?.count ?? 0 }
-                    .whenDidSet { changes in
+                    .addDidSet { changes in
                         expect(changes.old.value).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
-                    }.addObserver().whenDidSet { changes in
+                    }.addDidSet { changes in
                         expect(changes.old.value).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
@@ -344,8 +342,7 @@ class ObservableStateSpec: QuickSpec {
                 var source: Any = self
                 var didSetCount: Int = 0
                 observables.relay.relayValue(to: object.bearerRelays.text)
-                    .addObserver()
-                    .whenDidSet { changes in
+                    .addDidSet { changes in
                         source = changes.source
                         didSetCount += 1
                     }
@@ -387,13 +384,13 @@ class ObservableStateSpec: QuickSpec {
             it("should auto dereference relay when AutoDereferencer is dereferenced") {
                 let retainer: Retainer = .init()
                 var didSetCount: Int = 0
-                weak var relay1 = observables.relay.addObserver()
-                    .retained(by: retainer)
-                    .whenDidSet { changes in
+                weak var relay1 = observables.relay
+                    .addDidSet { changes in
                         didSetCount += 1
                     }
-                weak var relay2 = relay1?.addObserver()
-                    .whenDidSet { changes in
+                    .retained(by: retainer)
+                weak var relay2 = relay1?
+                    .addDidSet { changes in
                         didSetCount += 1
                     }
                 observables.wrappedValue = .randomString()
