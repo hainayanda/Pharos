@@ -10,13 +10,13 @@ import Foundation
 open class TwoWayRelay<Value>: ValueRelay<Value>, CallBackRelay {
     public typealias ValueBack = Value
     
-    public var callBackRelay: Consumer?
+    var callBackRelay: Consumer?
     
     open override var isValid: Bool {
         super.isValid || callBackRelay != nil
     }
     
-    public override init(currentValue: Value) {
+    public override init(currentValue: RelayValue<Value>) {
         super.init(currentValue: currentValue)
     }
     

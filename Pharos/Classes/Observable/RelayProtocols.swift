@@ -10,7 +10,7 @@ import Foundation
 public protocol TransportRelay: AnyObject {
     associatedtype Observed
     typealias Ignorer = (Changes<Observed>) -> Bool
-    var currentValue: Observed { get }
+    var currentValue: RelayValue<Observed> { get }
     @discardableResult
     func ignore(when ignoring: @escaping Ignorer) -> Self
     @discardableResult

@@ -11,7 +11,7 @@ open class AssociativeBearerRelay<Value>: BearerRelay<Value>, AssociativeRelay {
     
     public weak var associatedObject: AnyObject?
     
-    public init(_ object: AnyObject, currentValue: Value, consumer: ((Changes<Value>) -> Void)?) {
+    public init(_ object: AnyObject, currentValue: RelayValue<Value>, consumer: ((Changes<Value>) -> Void)?) {
         self.associatedObject = object
         super.init(currentValue: currentValue, consumer: consumer)
     }
@@ -61,7 +61,7 @@ open class AssociativeValueRelay<Value>: ValueRelay<Value>, AssociativeRelay {
     
     public weak var associatedObject: AnyObject?
     
-    public init(_ object: AnyObject, currentValue: Value) {
+    public init(_ object: AnyObject, currentValue: RelayValue<Value>) {
         self.associatedObject = object
         super.init(currentValue: currentValue)
     }
@@ -111,7 +111,7 @@ open class AssociativeTwoWayRelay<Value>: TwoWayRelay<Value>, AssociativeRelay {
     
     public weak var associatedObject: AnyObject?
     
-    public init(_ object: AnyObject, currentValue: Value) {
+    public init(_ object: AnyObject, currentValue: RelayValue<Value>) {
         self.associatedObject = object
         super.init(currentValue: currentValue)
     }
