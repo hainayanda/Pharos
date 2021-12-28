@@ -11,7 +11,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     
     public typealias Observed = Value
     
-    public internal(set) var currentValue: Value
+    public internal(set) var currentValue: RelayValue<Value>
     var relayDispatch: RelayChangeHandler<Value> = .init()
     var nextRelays: Set<BaseRelay<Value>> = Set()
     var ignoring: Ignorer = { _ in false }
@@ -19,7 +19,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
         relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
     
-    public init(currentValue: Value, consumer: ((Changes<Value>) -> Void)?) {
+    public init(currentValue: RelayValue<Value>, consumer: ((Changes<Value>) -> Void)?) {
         self.currentValue = currentValue
         self.relayDispatch.consumer = consumer
     }
@@ -29,7 +29,7 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
         guard !ignoring(changes) else {
             return false
         }
-        currentValue = changes.new
+        currentValue = .value(changes.new)
         relayDispatch.relay(changes: changes)
         nextRelays = nextRelays.filter {
             guard $0.isValid else { return false }
@@ -63,7 +63,8 @@ open class BearerRelay<Value>: BaseRelay<Value>, TransportRelay {
     }
     
     open func invokeRelayWithCurrent() {
-        relay(changes: .init(old: currentValue, new: currentValue, invokedManually: true, source: self))
+        guard let value = currentValue.value else { return }
+        relay(changes: .init(old: currentValue, new: value, invokedManually: true, source: self))
     }
     
     open override func removeAllNextRelays() {

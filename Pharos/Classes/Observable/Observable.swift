@@ -15,21 +15,33 @@ public final class Observable<Wrapped>: StateObservable {
     var getter: OptionalGetter?
     var setter: Setter?
     lazy public internal(set) var relay: BondableRelay<Wrapped> = {
-        let relay = BondableRelay<Wrapped>(currentValue: _wrappedValue)
+        let relay = BondableRelay<Wrapped>(currentValue: safeValue)
         relay.relayBackConsumer { [weak self] changes in
             guard let self = self else { return }
             self.setAndInformToRelay(with: changes)
         }
         return relay
     }()
-    var _wrappedValue: Wrapped
+    var _wrappedValue: Wrapped?
     public var wrappedValue: Wrapped {
         get {
-            getter?() ?? _wrappedValue
+            getter?() ?? _wrappedValue!
         }
         set {
-            setAndInformToRelay(with: Changes(old: _wrappedValue, new: newValue, source: self))
+            setAndInformToRelay(with: Changes(old: safeValue, new: newValue, source: self))
         }
+    }
+    
+    public var safeValue: RelayValue<Wrapped> {
+        if let value = _wrappedValue {
+            return .value(value)
+        } else {
+            return .none
+        }
+    }
+    
+    public init() {
+        self._wrappedValue = nil
     }
     
     public init(wrappedValue: Wrapped) {
@@ -75,7 +87,8 @@ public final class Observable<Wrapped>: StateObservable {
     }
     
     public func invokeRelayWithCurrent() {
-        informDidSetToRelay(with: .init(old: _wrappedValue, new: _wrappedValue, invokedManually: true, source: self))
+        guard let value = _wrappedValue else { return }
+        informDidSetToRelay(with: .init(old: safeValue, new: value, invokedManually: true, source: self))
     }
     
     public func removeBond() {

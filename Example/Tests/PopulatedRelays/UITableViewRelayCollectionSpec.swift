@@ -306,6 +306,20 @@ class UITableViewRelayCollectionSpec: QuickSpec {
     }
 }
 
+func - (_ lhs: RelayValue<CGFloat>, _ rhs: RelayValue<CGFloat>) -> CGFloat {
+    guard let lValue = lhs.value, let rValue = rhs.value else {
+        return .nan
+    }
+    return lValue - rValue
+}
+
+func - (_ lhs: RelayValue<CGFloat>, _ rhs: CGFloat) -> CGFloat {
+    guard let lValue = lhs.value else {
+        return .nan
+    }
+    return lValue - rhs
+}
+
 extension UITableViewRelayCollectionSpec:
     UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

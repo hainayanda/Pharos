@@ -29,19 +29,23 @@ public final class BondableRelay<Value>: TwoWayRelay<Value> {
     
     @discardableResult
     public func bondAndApply(to twoWayRelay: TwoWayRelay<Value>) -> Self {
-        twoWayRelay.apply(value: currentValue)
+        if let value = currentValue.value {
+            twoWayRelay.apply(value: value)
+        }
         return bonding(with: twoWayRelay)
     }
     
     @discardableResult
     public func bondAndMap(from twoWayRelay: TwoWayRelay<Value>) -> Self {
-        relayBack(
-            changes: .init(
-                old: currentValue,
-                new: twoWayRelay.currentValue,
-                source: self
+        if let value = twoWayRelay.currentValue.value {
+            relayBack(
+                changes: .init(
+                    old: currentValue,
+                    new: value,
+                    source: self
+                )
             )
-        )
+        }
         return bonding(with: twoWayRelay)
     }
     

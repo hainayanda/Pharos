@@ -27,15 +27,15 @@ class ObservableStateSpec: QuickSpec {
                 let new: String = .randomString()
                 var didSetCount: Int = 0
                 observables.relay.whenDidSet { changes in
-                    expect(changes.old).to(equal(initialValue))
+                    expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
                 }.addObserver().whenDidSet { changes in
-                    expect(changes.old).to(equal(initialValue))
+                    expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
                 }.addObserver().whenDidSet { changes in
-                    expect(changes.old).to(equal(initialValue))
+                    expect(changes.old.value).to(equal(initialValue))
                     expect(changes.new).to(equal(new))
                     didSetCount += 1
                 }
@@ -104,11 +104,11 @@ class ObservableStateSpec: QuickSpec {
                 var didSetCount: Int = 0
                 observables.relay.map { $0?.count ?? 0 }
                     .whenDidSet { changes in
-                        expect(changes.old).to(equal(9))
+                        expect(changes.old.value).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
                     }.addObserver().whenDidSet { changes in
-                        expect(changes.old).to(equal(9))
+                        expect(changes.old.value).to(equal(9))
                         expect(changes.new).to(equal(18))
                         didSetCount += 1
                     }
@@ -127,16 +127,16 @@ class ObservableStateSpec: QuickSpec {
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.0).to(equal(initialValue))
+                expect(latestChanges.old.value?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(number))
+                expect(latestChanges.old.value?.1).to(equal(number))
                 expect(latestChanges.new.1).to(equal(number))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(number))
+                expect(latestChanges.old.value?.1).to(equal(number))
                 expect(latestChanges.new.1).to(equal(newInt))
             }
             it("should merge 3 observables") {
@@ -153,29 +153,29 @@ class ObservableStateSpec: QuickSpec {
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.0).to(equal(initialValue))
+                expect(latestChanges.old.value?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(int))
+                expect(latestChanges.old.value?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(int))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(int))
+                expect(latestChanges.old.value?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
                 let newDouble: Double = Double.random(in: 10..<20)
                 observables3.wrappedValue = newDouble
                 expect(didSetCount).to(equal(3))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(newInt))
+                expect(latestChanges.old.value?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(newDouble))
             }
             it("should merge 4 observables") {
@@ -194,46 +194,46 @@ class ObservableStateSpec: QuickSpec {
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.0).to(equal(initialValue))
+                expect(latestChanges.old.value?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(int))
+                expect(latestChanges.old.value?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(int))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
-                expect(latestChanges.old.3).to(equal(bool))
+                expect(latestChanges.old.value?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(int))
+                expect(latestChanges.old.value?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
-                expect(latestChanges.old.3).to(equal(bool))
+                expect(latestChanges.old.value?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
                 let newDouble: Double = Double.random(in: 10..<20)
                 observables3.wrappedValue = newDouble
                 expect(didSetCount).to(equal(3))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(newInt))
+                expect(latestChanges.old.value?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.2).to(equal(double))
+                expect(latestChanges.old.value?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(newDouble))
-                expect(latestChanges.old.3).to(equal(bool))
+                expect(latestChanges.old.value?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
                 let newBool: Bool = Bool.random()
                 observables4.wrappedValue = newBool
                 expect(didSetCount).to(equal(4))
-                expect(latestChanges.old.0).to(equal(newStr))
+                expect(latestChanges.old.value?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.1).to(equal(newInt))
+                expect(latestChanges.old.value?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.2).to(equal(newDouble))
+                expect(latestChanges.old.value?.2).to(equal(newDouble))
                 expect(latestChanges.new.2).to(equal(newDouble))
-                expect(latestChanges.old.3).to(equal(bool))
+                expect(latestChanges.old.value?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(newBool))
             }
             #if canImport(UIKit)

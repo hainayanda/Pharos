@@ -31,7 +31,7 @@ final class TwoWayKVORelay<Object: NSObject, Value>: AssociativeTwoWayRelay<Valu
     
     init(_ object: Object, keyPath: ReferenceWritableKeyPath<Object, Value>) {
         self.keyPath = keyPath
-        super.init(object, currentValue: object[keyPath: keyPath])
+        super.init(object, currentValue: .value(object[keyPath: keyPath]))
         bond(with: object)
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension ObservableRelay {
+public extension TransportRelay {
     func map<Mapped>(_ mapper: @escaping (Observed) -> Mapped) -> MappedRelay<Observed, Mapped> {
         let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
         add(observer: mappedRelay)
@@ -21,7 +21,7 @@ public extension ObservableRelay {
     }
 }
 
-public extension ObservableRelay where Observed: Collection {
+public extension TransportRelay where Observed: Collection {
     @available(*, renamed: "compactMap")
     func listMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
         map {
@@ -35,13 +35,7 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     public typealias Mapper = (Value) throws -> Mapped?
     public typealias Observed = Mapped
     
-    internal var _currentValue: Mapped?
-    public var currentValue: Mapped {
-        guard let value = _currentValue else {
-            fatalError("fail to map currentValue")
-        }
-        return value
-    }
+    public internal(set) var currentValue: RelayValue<Mapped>
     
     var relayDispatch: RelayChangeHandler<Mapped> = .init()
     var nextRelays: Set<BaseRelay<Mapped>> = Set()
@@ -51,8 +45,8 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
         relayDispatch.consumer != nil || !nextRelays.isEmpty
     }
     
-    init(value: Value, mapper: @escaping Mapper) {
-        self._currentValue = try? mapper(value)
+    init(value: RelayValue<Value>, mapper: @escaping Mapper) {
+        self.currentValue = value.map(mapper)
         self.mapper = mapper
     }
     
@@ -60,14 +54,14 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     public override func relay(changes: Changes<Value>) -> Bool {
         guard let mappedChanges = changes.map(mapper),
               !ignoring(mappedChanges) else { return false }
-        _currentValue = mappedChanges.new
+        currentValue = .value(mappedChanges.new)
         relayDispatch.relay(changes: mappedChanges)
         nextRelays.relay(changes: mappedChanges)
         return true
     }
     
     @discardableResult
-    public func whenDidSet(then consume: @escaping Consumer) -> Self {
+    func whenDidSet(then consume: @escaping Consumer) -> Self {
         relayDispatch.consumer = consume
         return self
     }
@@ -97,10 +91,10 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     }
     
     public func invokeRelayWithCurrent() {
-        guard let value = _currentValue else {
+        guard let value = currentValue.value else {
             return
         }
-        let changes: Changes<Mapped> = .init(old: value, new: value, invokedManually: true, source: self)
+        let changes: Changes<Mapped> = .init(old: currentValue, new: value, invokedManually: true, source: self)
         relayDispatch.relay(changes: changes)
         nextRelays.relay(changes: changes)
     }

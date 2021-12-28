@@ -77,4 +77,18 @@ class UIStepperRelayCollectionSpec: QuickSpec {
         }
     }
 }
+
+func - (_ lhs: RelayValue<Double>, _ rhs: RelayValue<Double>) -> Double {
+    guard let lValue = lhs.value, let rValue = rhs.value else {
+        return .nan
+    }
+    return lValue - rValue
+}
+
+func - (_ lhs: RelayValue<Double>, _ rhs: Double) -> Double {
+    guard let lValue = lhs.value else {
+        return .nan
+    }
+    return lValue - rhs
+}
 #endif
