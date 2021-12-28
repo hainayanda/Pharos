@@ -13,7 +13,7 @@ public final class Retainer {
     public init() { }
     
     func add(discardable: Discardable) {
-        guard !discardable.isValid else { return }
+        guard discardable.isValid else { return }
         discardable.retained()
         discardables.append(discardable)
     }
