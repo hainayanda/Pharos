@@ -22,7 +22,7 @@ final class BearerKVORelay<Object: NSObject, Value>: AssociativeBearerRelay<Valu
     
     init(_ object: Object, keyPath: ReferenceWritableKeyPath<Object, Value>) {
         self.keyPath = keyPath
-        super.init(object, currentValue: object[keyPath: keyPath]) { [weak object] changes in
+        super.init(object, currentValue: .value(object[keyPath: keyPath])) { [weak object] changes in
             guard let object = object else { return }
             object[keyPath: keyPath] = changes.new
         }

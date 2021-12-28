@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension ObservableRelay {
+public extension TransportRelay {
     func map<Mapped>(_ mapper: @escaping (Observed) -> Mapped) -> MappedRelay<Observed, Mapped> {
         let mappedRelay = MappedRelay(value: currentValue, mapper: mapper)
         add(observer: mappedRelay)
@@ -21,7 +21,7 @@ public extension ObservableRelay {
     }
 }
 
-public extension ObservableRelay where Observed: Collection {
+public extension TransportRelay where Observed: Collection {
     @available(*, renamed: "compactMap")
     func listMap<Mapped>(_ mapper: @escaping (Observed.Element) -> Mapped?) -> MappedRelay<Observed, [Mapped]> {
         map {
@@ -61,7 +61,7 @@ public final class MappedRelay<Value, Mapped>: BaseRelay<Value>, ObservableRelay
     }
     
     @discardableResult
-    public func whenDidSet(then consume: @escaping Consumer) -> Self {
+    func whenDidSet(then consume: @escaping Consumer) -> Self {
         relayDispatch.consumer = consume
         return self
     }

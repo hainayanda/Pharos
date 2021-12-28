@@ -32,7 +32,7 @@ public protocol TransportRelay: AnyObject {
     func relayValue(to observer: BearerRelay<Observed>) -> BearerRelay<Observed>
 }
 
-public protocol ObservableRelay: TransportRelay {
+protocol ObservableRelay: TransportRelay {
     associatedtype Observed
     typealias Consumer = (Changes<Observed>) -> Void
     typealias Ignorer = (Changes<Observed>) -> Bool
@@ -100,7 +100,7 @@ public extension TransportRelay {
     /// shortcut to addObserver().whenDidSet(then:)
     /// - Parameter consume: closure that will run when relay fire
     /// - Returns: relay of value observed
-    func addDidSet(_ consume: @escaping ValueRelay<Observed>.Consumer) -> ValueRelay<Observed> {
+    func addDidSet(_ consume: @escaping (Changes<Observed>) -> Void) -> ValueRelay<Observed> {
         addObserver().whenDidSet(then: consume)
     }
 }
@@ -133,7 +133,7 @@ public extension TransportRelay where Observed: Equatable {
     /// shortcut to addObserver().whenDidSet(then:)
     /// - Parameter consume: closure that will run when relay fire
     /// - Returns: relay of value observed
-    func addDidUniqueSet(_ except: RelayException = .always, _ consume: @escaping ValueRelay<Observed>.Consumer) -> ValueRelay<Observed> {
+    func addDidUniqueSet(_ except: RelayException = .always, _ consume: @escaping (Changes<Observed>) -> Void) -> ValueRelay<Observed> {
         addObserver().whenDidUniqueSet(except, then: consume)
     }
     
@@ -149,7 +149,7 @@ public extension TransportRelay where Observed: Equatable {
     }
 }
 
-public extension ObservableRelay {
+extension ObservableRelay {
     
     @discardableResult
     func whenDidSet<Observer: AnyObject>(invoke observer: Observer, method: @escaping (Observer) -> Consumer) -> Self {
@@ -160,7 +160,7 @@ public extension ObservableRelay {
     }
 }
 
-public extension ObservableRelay where Observed: Equatable {
+extension ObservableRelay where Observed: Equatable {
     
     @discardableResult
     func whenDidUniqueSet<Observer: AnyObject>(_ except: RelayException = .always, invoke observer: Observer, method: @escaping (Observer) -> Consumer) -> Self {
