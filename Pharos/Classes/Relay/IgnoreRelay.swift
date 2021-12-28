@@ -13,15 +13,15 @@ public enum RelayException {
 }
 
 public extension TransportRelay {
-    func ignore(_ exception: RelayException = .always, ifTrue shouldIgnore: @escaping IgnoreRelay<Observed>.Ignorer) -> IgnoreRelay<Observed> {
-        let ignoreRelay = IgnoreRelay(value: currentValue, exception: exception, ignoring: shouldIgnore)
+    func ignore(_ exception: RelayException = .always, ifTrue shouldIgnore: @escaping (Changes<Observed>) -> Bool) -> ValueRelay<Observed> {
+        let ignoreRelay = IgnoreRelay(currentValue: currentValue, exception: exception, ignoring: shouldIgnore)
         add(observer: ignoreRelay)
         return ignoreRelay
     }
 }
 
 public extension TransportRelay where Observed: AnyObject {
-    func ignoreSameInstance(_ exception: RelayException = .always) -> IgnoreRelay<Observed> {
+    func ignoreSameInstance(_ exception: RelayException = .always) -> ValueRelay<Observed> {
         ignore(exception) { $0.isSameInstance }
     }
     
@@ -36,14 +36,14 @@ public extension TransportRelay where Observed: AnyObject {
     }
     
     @discardableResult
-    func addDidUniqueInstanceSet(_ exception: RelayException = .always, _ consume: @escaping (Changes<Observed>) -> Void) -> IgnoreRelay<Observed> {
+    func addDidUniqueInstanceSet(_ exception: RelayException = .always, _ consume: @escaping (Changes<Observed>) -> Void) -> ValueRelay<Observed> {
         ignoreSameInstance(exception).whenDidSet(then: consume)
     }
 }
 
 public extension TransportRelay where Observed: Equatable {
     
-    func ignoreSameValue(_ exception: RelayException = .always) -> IgnoreRelay<Observed> {
+    func ignoreSameValue(_ exception: RelayException = .always) -> ValueRelay<Observed> {
         ignore(exception) { $0.isNotChanging }
     }
     
@@ -58,87 +58,29 @@ public extension TransportRelay where Observed: Equatable {
     }
     
     @discardableResult
-    func addDidUniqueSet(_ exception: RelayException = .always, _ consume: @escaping (Changes<Observed>) -> Void) -> IgnoreRelay<Observed> {
+    func addDidUniqueSet(_ exception: RelayException = .always, _ consume: @escaping (Changes<Observed>) -> Void) -> ValueRelay<Observed> {
         ignoreSameValue(exception).whenDidSet(then: consume)
     }
 }
 
-public final class IgnoreRelay<Value>: BaseRelay<Value>, ObservableRelay {
+final class IgnoreRelay<Value>: ValueRelay<Value> {
     
-    public typealias Observed = Value
-    public typealias Ignorer = (Changes<Value>) -> Bool
+    typealias Observed = Value
+    typealias Ignorer = (Changes<Value>) -> Bool
     
-    public internal(set) var currentValue: RelayValue<Value>
-    
-    var relayDispatch: RelayChangeHandler<Value> = .init()
-    var nextRelays: Set<BaseRelay<Value>> = Set()
     var ignoring: Ignorer = { _ in false }
     var exception: RelayException
-    public override var isValid: Bool {
-        relayDispatch.consumer != nil || !nextRelays.isEmpty
-    }
     
-    init(value: RelayValue<Value>, exception: RelayException, ignoring: @escaping Ignorer) {
+    init(currentValue: RelayValue<Value>, exception: RelayException, ignoring: @escaping Ignorer) {
         self.exception = exception
-        self.currentValue = value
         self.ignoring = ignoring
+        super.init(currentValue: currentValue)
     }
     
     @discardableResult
-    public override func relay(changes: Changes<Value>) -> Bool {
+    override func relay(changes: Changes<Value>) -> Bool {
         guard !shouldIgnore(changes: changes) else { return false }
-        currentValue = .value(changes.new)
-        relayDispatch.relay(changes: changes)
-        nextRelays.relayAndRemoveInvalid(changes: changes)
-        return true
-    }
-    
-    @discardableResult
-    func whenDidSet(then consume: @escaping Consumer) -> Self {
-        relayDispatch.consumer = consume
-        return self
-    }
-    
-    @discardableResult
-    public func multipleSetDelayed(by interval: TimeInterval) -> Self {
-        relayDispatch.delay = interval
-        return self
-    }
-    
-    @discardableResult
-    public func observe(on dispatcher: DispatchQueue) -> Self {
-        relayDispatch.dispatcher = dispatcher
-        return self
-    }
-    
-    @discardableResult
-    public func syncWhenInSameThread() -> Self {
-        relayDispatch.syncIfPossible = true
-        return self
-    }
-    
-    public func invokeRelayWithCurrent() {
-        guard let value = currentValue.value else {
-            return
-        }
-        let changes: Changes<Value> = .init(old: currentValue, new: value, invokedManually: true, source: self)
-        relayDispatch.relay(changes: changes)
-        nextRelays.relayAndRemoveInvalid(changes: changes)
-    }
-    
-    public override func removeAllNextRelays() {
-        nextRelays.cleanRelays()
-    }
-    
-    @discardableResult
-    public func add<Relay: BaseRelay<Value>>(observer: Relay) -> Relay {
-        nextRelays.insert(observer)
-        return observer
-    }
-    
-    public override func discard() {
-        relayDispatch.consumer = nil
-        nextRelays.removeAll()
+        return super.relay(changes: changes)
     }
     
     func shouldIgnore(changes: Changes<Value>) -> Bool {
