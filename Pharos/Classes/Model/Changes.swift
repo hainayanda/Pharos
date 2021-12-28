@@ -84,7 +84,7 @@ public enum RelayValue<Value> {
                 }
                 return .value(mapped)
             } catch {
-                return .error(error)
+                return .error(PharosMapError(beforeMapped: value, error: error))
             }
         }
     }

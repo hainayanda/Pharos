@@ -7,6 +7,11 @@
 
 import Foundation
 
+public struct PharosMapError<Real>: LocalizedError {
+    public let beforeMapped: Real
+    public let error: Error
+}
+
 public struct PharosBiMergeIncompleteError<V1, V2>: LocalizedError {
     public let realValue1: RelayValue<V1>
     public let realValue2: RelayValue<V2>
