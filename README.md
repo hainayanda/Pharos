@@ -88,7 +88,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.addDidSet { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -104,7 +104,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidUniqueSet { changes in
+        $text.addDidUniqueSet { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -119,7 +119,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidSet(invoke: self, method: MyClass.textDidChange)
+        $text.addDidSet(invoke: self, method: MyClass.textDidChange)
     }
     
     func textDidChange(_ changes: Changes<String?>) {
@@ -138,7 +138,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.addDidSet { changes in
             print(changes.new)
             print(changes.old)
         }.invokeRelayWithCurrentValue()
@@ -148,24 +148,7 @@ class MyClass {
 
 ## Multiple observers
 
-By design, the Observable will have one main relay which only consists of one observer.
-So if you set observer closure multiple times on Main Relay, it will only replace it but not add a new one:
-
-```swift
-class MyClass {
-    @Observable var text: String?
-    
-    func observeText() {
-        $text.whenDidSet { changes in
-            print("first closure")
-        }.whenDidSet { changes in
-            print("will replace first closure")
-        }
-    }
-}
-```
-
-In the example above, the first closure will be replaced by the second closure since both are assigned in Main Relay. But any relay could have multiple child relays which will be notified by the previous relay as described by the diagram below:
+Any relay could have multiple child relays which will be notified by the previous relay as described by the diagram below:
 
 ![alt text](https://github.com/hainayanda/Pharos/blob/main/ObservableRelay.png)
 
@@ -180,9 +163,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeTextLinearly() {
-        $text.whenDidSet { changes in
-            print("notified by Observable")
-        }.addDidSet { changes in
+        $text.addDidSet { changes in
             print("notified by Main Relay")
         }.addDidSet { changes in
             print("notified by Previous Relay")
@@ -196,35 +177,6 @@ class MyClass {
         $text.addDidSet {
             print("notified by Main Relay Too")
         }.addDidSet { changes in
-            print("notified by Previous Relay")
-        }
-    }
-}
-```
-
-Or more explicit which basically the same, like this:
-
-```swift
-class MyClass {
-    @Observable var text: String?
-    
-    func observeTextLinearly() {
-        $text.whenDidSet { changes in
-            print("notified by Observable")
-        }.nextRelay().whenDidSet { changes in
-            print("notified by Main Relay")
-        }.nextRelay().whenDidSet { changes in
-            print("notified by Previous Relay")
-        }
-    }
-    
-    func addRelayToMainRelay() {
-        $text.nextRelay().whenDidSet {
-            print("notified by Main Relay")
-        }
-        $text.nextRelay().whenDidSet {
-            print("notified by Main Relay Too")
-        }.nextRelay().whenDidSet { changes in
             print("notified by Previous Relay")
         }
     }
@@ -283,7 +235,7 @@ class MyClass {
         } set {
             button.setTitle($0, for: .normal)
         }
-        $title.whenDidSet { changes in
+        $title.addDidSet { changes in
             print(changes.new)
             print(changes.old)
         }.invokeRelayWithCurrentValue()
@@ -304,7 +256,7 @@ class MyClass {
     
     func observeText() {
         $text.bonding(with: textField.bondableRelays.text)
-            .whenDidSet { changes in
+            .addDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
@@ -327,7 +279,7 @@ class MyClass {
     
     func applyToField() {
         $text.bondAndApply(to: textField.bondableRelays.text)
-            .whenDidSet { changes in
+            .addDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
@@ -335,7 +287,7 @@ class MyClass {
     
     func mapFromField() {
         $text.bondAndMap(from: textField.bondableRelays.text)
-            .whenDidSet { changes in
+            .addDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
@@ -354,7 +306,7 @@ class MyClass {
     }
     
     func observeRelay() {
-        relay.whenDidSet { changes in
+        relay.addDidSet { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -383,11 +335,11 @@ class MyClass {
     
     func observeRelay() {
         button.relays.state
-            .retainToSource()
-            .whenDidSet { changes in
+            .addDidSet { changes in
                 print(changes.new)
                 print(changes.old)
             }
+            .retainToSource()
     }
 }
 ```
@@ -401,7 +353,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.addDidSet { changes in
             print(changes.new)
             print(changes.old)
         }.ignore { $0.new?.isEmpty ?? true }
@@ -420,7 +372,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidUniqueSet { changes in
+        $text.addDidUniqueSet { changes in
             print(changes.new)
             print(changes.old)
         }.multipleSetDelayed(by: 1)
@@ -437,7 +389,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidUniqueSet { changes in
+        $text.addDidUniqueSet { changes in
             print(changes.new)
             print(changes.old)
         }.observe(on: .main)
@@ -452,7 +404,7 @@ class MyClass {
     @Observable var text: String?
     
     func observeText() {
-        $text.whenDidUniqueSet { changes in
+        $text.addDidUniqueSet { changes in
             print(changes.new)
             print(changes.old)
         }.observe(on: .main)
@@ -471,8 +423,24 @@ class MyClass {
     
     func observeText() {
         $text.map { $0?.count ?? 0 }
-            .whenDidSet { changes in
-                print("notified by Main Relay")
+            .addDidSet { changes in
+                print("notified by Map Relay")
+                print("changes now is Int with value \(changes.new)")
+            }
+    }
+}
+```
+
+You could always map and ignore error or nil during mapping. Did set closure will always be called when mapping is succeed:
+
+```swift
+class MyClass {
+    @Observable var text: String?
+    
+    func observeText() {
+        $text.compactMap { $0?.count }
+            .addDidSet { changes in
+                print("notified by Map Relay")
                 print("changes now is Int with value \(changes.new)")
             }
     }
@@ -486,9 +454,9 @@ class MyClass {
     @Observable var array: [String] = []
     
     func observeText() {
-        $array.compactMap { $0.count }
+        $array.listtMap { $0.count }
             .whenDidSet { changes in
-                print("notified by Main Relay")
+                print("notified by Map Relay")
                 print("changes now is [Int]")
             }
     }
@@ -542,7 +510,7 @@ class MyClass {
     
     func observeText() {
         mergeRelays($userName, $fullName, $password)
-            .whenDidSet { changes in
+            .addDidSet { changes in
                 print("userName: \(changes.new.0)")
                 print("fullName: \(changes.new.1)")
                 print("password: \(changes.new.2)")
