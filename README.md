@@ -90,9 +90,19 @@ class MyClass {
     func observeText() {
         $text.addDidSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }
     }
+}
+```
+
+old value is `RelayValue<Value>` struct which declared like this:
+
+```swift
+public enum RelayValue<Value> {
+    case value(Value)
+    case none
+    case error(Error)
 }
 ```
 
@@ -106,7 +116,7 @@ class MyClass {
     func observeText() {
         $text.addDidUniqueSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }
     }
 }
@@ -124,7 +134,7 @@ class MyClass {
     
     func textDidChange(_ changes: Changes<String?>) {
         print(changes.new)
-        print(changes.old)
+        print(changes.old.value)
     }
 }
 ```
@@ -140,8 +150,52 @@ class MyClass {
     func observeText() {
         $text.addDidSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.invokeRelayWithCurrentValue()
+    }
+}
+```
+
+you can always check the current value by accessing the observable property:
+
+```swift
+class MyClass {
+    @Observable var text: String = "my text"
+    
+    func printCurrentText() {
+        print(text)
+    }
+}
+```
+
+but always keep in mind it will throw an error if value is not initialized yet:
+
+```swift
+class MyClass {
+    @Observable var text: String
+    
+    func printCurrentText() {
+        // will throws fatal error because text is not initialized yet
+        print(text)
+    }
+}
+```
+
+to avoid error, you can use safeValue instead which will return `RelayValue<Value>`:
+
+```swift
+class MyClass {
+    @Observable var text: String
+    
+    func printCurrentText() {
+        switch _text.safeValue {
+            case .value(let value):
+                print(value)
+            case .none:
+                print(not initialised yet)
+            case .error(let error):
+                print(some error happened)
+        }
     }
 }
 ```
@@ -198,7 +252,7 @@ class MyClass {
     func observeText() {
         $text.addDidSet { changes in
                 print(changes.new)
-                print(changes.old)
+                print(changes.old.value)
             }
             .referenceManaged(by: retainer)
     }
@@ -237,7 +291,7 @@ class MyClass {
         }
         $title.addDidSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.invokeRelayWithCurrentValue()
     }
 }
@@ -258,7 +312,7 @@ class MyClass {
         $text.bonding(with: textField.bondableRelays.text)
             .addDidSet { changes in
                 print(changes.new)
-                print(changes.old)
+                print(changes.old.value)
             }
     }
 }
@@ -281,7 +335,7 @@ class MyClass {
         $text.bondAndApply(to: textField.bondableRelays.text)
             .addDidSet { changes in
                 print(changes.new)
-                print(changes.old)
+                print(changes.old.value)
             }
     }
     
@@ -289,7 +343,7 @@ class MyClass {
         $text.bondAndMap(from: textField.bondableRelays.text)
             .addDidSet { changes in
                 print(changes.new)
-                print(changes.old)
+                print(changes.old.value)
             }
     }
 }
@@ -308,7 +362,7 @@ class MyClass {
     func observeRelay() {
         relay.addDidSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }
     }
 }
@@ -337,7 +391,7 @@ class MyClass {
         button.relays.state
             .addDidSet { changes in
                 print(changes.new)
-                print(changes.old)
+                print(changes.old.value)
             }
             .retainToSource()
     }
@@ -355,7 +409,7 @@ class MyClass {
     func observeText() {
         $text.addDidSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.ignore { $0.new?.isEmpty ?? true }
     }
 }
@@ -374,7 +428,7 @@ class MyClass {
     func observeText() {
         $text.addDidUniqueSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.multipleSetDelayed(by: 1)
     }
 }
@@ -391,7 +445,7 @@ class MyClass {
     func observeText() {
         $text.addDidUniqueSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.observe(on: .main)
     }
 }
@@ -406,7 +460,7 @@ class MyClass {
     func observeText() {
         $text.addDidUniqueSet { changes in
             print(changes.new)
-            print(changes.old)
+            print(changes.old.value)
         }.observe(on: .main)
         .syncWhenInSameThread()
     }
