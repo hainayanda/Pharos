@@ -25,6 +25,7 @@ protocol RelayOperationHandler: RelayHandler {
 
 enum RelayOperationStatus {
     case relaying
+    case suspended
     case idle
 }
 
@@ -94,15 +95,7 @@ final class RelayChangeHandler<Value>: RelayOperationHandler {
         }
     }
     
-    private var _pendingTask: Task?
-    var pendingTask: Task? {
-        get {
-            locked { _pendingTask }
-        }
-        set {
-            locked { _pendingTask = newValue }
-        }
-    }
+    var pendingTask: Task?
     
     private var lock: NSLock = .init()
     
@@ -110,7 +103,7 @@ final class RelayChangeHandler<Value>: RelayOperationHandler {
     func relay(changes: Changes<Value>) -> Bool {
         guard canRelay else { return false }
         guard status == .idle else {
-            pendingTask = { [weak self] in
+            queuePendingTask { [weak self] in
                 self?.consume(changes: changes)
             }
             return true
@@ -146,17 +139,26 @@ final class RelayChangeHandler<Value>: RelayOperationHandler {
             status = .idle
             return
         }
+        status = .suspended
         (DispatchQueue.current ?? .main).asyncAfter(deadline: .now() + delay) { [weak self] in
             self?.status = .idle
         }
     }
     
-    private func dequeuePendingTask() -> Task? {
-        guard let pendingTask = self.pendingTask else {
-            return nil
+    private func queuePendingTask(_ task: @escaping Task) {
+        locked {
+            pendingTask = task
         }
-        self.pendingTask = nil
-        return pendingTask
+    }
+    
+    private func dequeuePendingTask() -> Task? {
+        locked {
+            guard let pendingTask = self.pendingTask else {
+                return nil
+            }
+            self.pendingTask = nil
+            return pendingTask
+        }
     }
     
     private func locked<Return>(_ closure: () -> Return) -> Return {
