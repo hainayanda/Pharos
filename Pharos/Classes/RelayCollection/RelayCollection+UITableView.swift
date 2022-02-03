@@ -13,129 +13,129 @@ public extension RelayCollection where Object: UITableView {
     
     // MARK: Two Way Relay
     
-    var dataSource: AssociativeTwoWayRelay<UITableViewDataSource?> {
-        .relay(of: underlyingObject, \.dataSource)
+    var dataSource: BindableRelay<UITableViewDataSource?> {
+        bindable(of:\.dataSource)
     }
     
-    var delegate: AssociativeTwoWayRelay<UITableViewDelegate?> {
-        .relay(of: underlyingObject, \.delegate)
+    var delegate: BindableRelay<UITableViewDelegate?> {
+        bindable(of:\.delegate)
     }
     
-    var prefetchDataSource: AssociativeTwoWayRelay<UITableViewDataSourcePrefetching?> {
-        .relay(of: underlyingObject, \.prefetchDataSource)
-    }
-    
-    @available(iOS 11.0, *)
-    var dragDelegate: AssociativeTwoWayRelay<UITableViewDragDelegate?> {
-        .relay(of: underlyingObject, \.dragDelegate)
+    var prefetchDataSource: BindableRelay<UITableViewDataSourcePrefetching?> {
+        bindable(of:\.prefetchDataSource)
     }
     
     @available(iOS 11.0, *)
-    var dropDelegate: AssociativeTwoWayRelay<UITableViewDropDelegate?> {
-        .relay(of: underlyingObject, \.dropDelegate)
-    }
-    
-    var rowHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.rowHeight)
-    }
-    
-    var sectionHeaderHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.sectionHeaderHeight)
-    }
-    
-    var sectionFooterHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.sectionFooterHeight)
-    }
-    
-    var estimatedRowHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.estimatedRowHeight)
-    }
-    
-    var estimatedSectionHeaderHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.estimatedSectionHeaderHeight)
-    }
-    
-    var estimatedSectionFooterHeight: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.estimatedSectionFooterHeight)
-    }
-    
-    var separatorInset: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.separatorInset)
-    }
-    
-    var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.backgroundView)
-    }
-    
-    var isEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEditing)
-    }
-    
-    var allowsSelection: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsSelection)
-    }
-    
-    var allowsMultipleSelection: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsMultipleSelection)
-    }
-    
-    var sectionIndexMinimumDisplayRowCount: AssociativeTwoWayRelay<Int> {
-        .relay(of: underlyingObject, \.sectionIndexMinimumDisplayRowCount)
-    }
-    
-    var sectionIndexColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.sectionIndexColor)
-    }
-    
-    var sectionIndexBackgroundColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.sectionIndexBackgroundColor)
-    }
-    
-    var sectionIndexTrackingBackgroundColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.sectionIndexTrackingBackgroundColor)
-    }
-    
-    var separatorStyle: AssociativeTwoWayRelay<UITableViewCell.SeparatorStyle> {
-        .relay(of: underlyingObject, \.separatorStyle)
-    }
-    
-    var separatorColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.separatorColor)
-    }
-    
-    var separatorEffect: AssociativeTwoWayRelay<UIVisualEffect?> {
-        .relay(of: underlyingObject, \.separatorEffect)
-    }
-    
-    var cellLayoutMarginsFollowReadableWidth: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.cellLayoutMarginsFollowReadableWidth)
+    var dragDelegate: BindableRelay<UITableViewDragDelegate?> {
+        bindable(of:\.dragDelegate)
     }
     
     @available(iOS 11.0, *)
-    var insetsContentViewsToSafeArea: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.insetsContentViewsToSafeArea)
+    var dropDelegate: BindableRelay<UITableViewDropDelegate?> {
+        bindable(of:\.dropDelegate)
     }
     
-    var tableHeaderView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.tableHeaderView)
+    var rowHeight: BindableRelay<CGFloat> {
+        bindable(of:\.rowHeight)
     }
     
-    var tableFooterView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.tableFooterView)
+    var sectionHeaderHeight: BindableRelay<CGFloat> {
+        bindable(of:\.sectionHeaderHeight)
     }
     
-    var remembersLastFocusedIndexPath: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.remembersLastFocusedIndexPath)
+    var sectionFooterHeight: BindableRelay<CGFloat> {
+        bindable(of:\.sectionFooterHeight)
+    }
+    
+    var estimatedRowHeight: BindableRelay<CGFloat> {
+        bindable(of:\.estimatedRowHeight)
+    }
+    
+    var estimatedSectionHeaderHeight: BindableRelay<CGFloat> {
+        bindable(of:\.estimatedSectionHeaderHeight)
+    }
+    
+    var estimatedSectionFooterHeight: BindableRelay<CGFloat> {
+        bindable(of:\.estimatedSectionFooterHeight)
+    }
+    
+    var separatorInset: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.separatorInset)
+    }
+    
+    var backgroundView: BindableRelay<UIView?> {
+        bindable(of:\.backgroundView)
+    }
+    
+    var isEditing: BindableRelay<Bool> {
+        bindable(of:\.isEditing)
+    }
+    
+    var allowsSelection: BindableRelay<Bool> {
+        bindable(of:\.allowsSelection)
+    }
+    
+    var allowsMultipleSelection: BindableRelay<Bool> {
+        bindable(of:\.allowsMultipleSelection)
+    }
+    
+    var sectionIndexMinimumDisplayRowCount: BindableRelay<Int> {
+        bindable(of:\.sectionIndexMinimumDisplayRowCount)
+    }
+    
+    var sectionIndexColor: BindableRelay<UIColor?> {
+        bindable(of:\.sectionIndexColor)
+    }
+    
+    var sectionIndexBackgroundColor: BindableRelay<UIColor?> {
+        bindable(of:\.sectionIndexBackgroundColor)
+    }
+    
+    var sectionIndexTrackingBackgroundColor: BindableRelay<UIColor?> {
+        bindable(of:\.sectionIndexTrackingBackgroundColor)
+    }
+    
+    var separatorStyle: BindableRelay<UITableViewCell.SeparatorStyle> {
+        bindable(of:\.separatorStyle)
+    }
+    
+    var separatorColor: BindableRelay<UIColor?> {
+        bindable(of:\.separatorColor)
+    }
+    
+    var separatorEffect: BindableRelay<UIVisualEffect?> {
+        bindable(of:\.separatorEffect)
+    }
+    
+    var cellLayoutMarginsFollowReadableWidth: BindableRelay<Bool> {
+        bindable(of:\.cellLayoutMarginsFollowReadableWidth)
+    }
+    
+    @available(iOS 11.0, *)
+    var insetsContentViewsToSafeArea: BindableRelay<Bool> {
+        bindable(of:\.insetsContentViewsToSafeArea)
+    }
+    
+    var tableHeaderView: BindableRelay<UIView?> {
+        bindable(of:\.tableHeaderView)
+    }
+    
+    var tableFooterView: BindableRelay<UIView?> {
+        bindable(of:\.tableFooterView)
+    }
+    
+    var remembersLastFocusedIndexPath: BindableRelay<Bool> {
+        bindable(of:\.remembersLastFocusedIndexPath)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.selectionFollowsFocus)
+    var selectionFollowsFocus: BindableRelay<Bool> {
+        bindable(of:\.selectionFollowsFocus)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.dragInteractionEnabled)
+    var dragInteractionEnabled: BindableRelay<Bool> {
+        bindable(of:\.dragInteractionEnabled)
     }
     
 }

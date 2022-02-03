@@ -13,103 +13,103 @@ public extension RelayCollection where Object: UIView {
     
     // MARK: Two Way Relay
 
-    var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isUserInteractionEnabled)
+    var isUserInteractionEnabled: BindableRelay<Bool> {
+        bindable(of:\.isUserInteractionEnabled)
     }
     
-    var tag: AssociativeTwoWayRelay<Int> {
-        .relay(of: underlyingObject, \.tag)
+    var tag: BindableRelay<Int> {
+        bindable(of:\.tag)
     }
     
     @available(iOS 14.0, *)
-    var focusGroupIdentifier: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.focusGroupIdentifier)
+    var focusGroupIdentifier: BindableRelay<String?> {
+        bindable(of:\.focusGroupIdentifier)
     }
     
-    var frame: AssociativeTwoWayRelay<CGRect> {
-        .relay(of: underlyingObject, \.frame)
+    var frame: BindableRelay<CGRect> {
+        bindable(of:\.frame)
     }
     
-    var bounds: AssociativeTwoWayRelay<CGRect> {
-        .relay(of: underlyingObject, \.bounds)
+    var bounds: BindableRelay<CGRect> {
+        bindable(of:\.bounds)
     }
     
-    var center: AssociativeTwoWayRelay<CGPoint> {
-        .relay(of: underlyingObject, \.center)
+    var center: BindableRelay<CGPoint> {
+        bindable(of:\.center)
     }
     
-    var contentScaleFactor: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.contentScaleFactor)
+    var contentScaleFactor: BindableRelay<CGFloat> {
+        bindable(of:\.contentScaleFactor)
     }
     
-    var isMultipleTouchEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isMultipleTouchEnabled)
+    var isMultipleTouchEnabled: BindableRelay<Bool> {
+        bindable(of:\.isMultipleTouchEnabled)
     }
     
-    var isExclusiveTouch: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isExclusiveTouch)
+    var isExclusiveTouch: BindableRelay<Bool> {
+        bindable(of:\.isExclusiveTouch)
     }
 
-    var autoresizesSubviews: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.autoresizesSubviews)
+    var autoresizesSubviews: BindableRelay<Bool> {
+        bindable(of:\.autoresizesSubviews)
     }
     
-    var layoutMargins: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.layoutMargins)
-    }
-    
-    @available(iOS 11.0, *)
-    var directionalLayoutMargins: AssociativeTwoWayRelay<NSDirectionalEdgeInsets> {
-        .relay(of: underlyingObject, \.directionalLayoutMargins)
-    }
-    
-    var preservesSuperviewLayoutMargins: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.preservesSuperviewLayoutMargins)
+    var layoutMargins: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.layoutMargins)
     }
     
     @available(iOS 11.0, *)
-    var insetsLayoutMarginsFromSafeArea: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.insetsLayoutMarginsFromSafeArea)
+    var directionalLayoutMargins: BindableRelay<NSDirectionalEdgeInsets> {
+        bindable(of:\.directionalLayoutMargins)
     }
     
-    var clipsToBounds: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.clipsToBounds)
+    var preservesSuperviewLayoutMargins: BindableRelay<Bool> {
+        bindable(of:\.preservesSuperviewLayoutMargins)
     }
     
-    var backgroundColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.backgroundColor)
+    @available(iOS 11.0, *)
+    var insetsLayoutMarginsFromSafeArea: BindableRelay<Bool> {
+        bindable(of:\.insetsLayoutMarginsFromSafeArea)
     }
     
-    var alpha: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.alpha)
+    var clipsToBounds: BindableRelay<Bool> {
+        bindable(of:\.clipsToBounds)
     }
     
-    var isOpaque: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isOpaque)
+    var backgroundColor: BindableRelay<UIColor?> {
+        bindable(of:\.backgroundColor)
     }
     
-    var clearsContextBeforeDrawing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.clearsContextBeforeDrawing)
+    var alpha: BindableRelay<CGFloat> {
+        bindable(of:\.alpha)
     }
     
-    var isHidden: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isHidden)
+    var isOpaque: BindableRelay<Bool> {
+        bindable(of:\.isOpaque)
     }
     
-    var mask: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.mask)
+    var clearsContextBeforeDrawing: BindableRelay<Bool> {
+        bindable(of:\.clearsContextBeforeDrawing)
     }
     
-    var tintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.tintColor)
+    var isHidden: BindableRelay<Bool> {
+        bindable(of:\.isHidden)
     }
     
-    var translatesAutoresizingMaskIntoConstraints: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.translatesAutoresizingMaskIntoConstraints)
+    var mask: BindableRelay<UIView?> {
+        bindable(of:\.mask)
     }
     
-    var restorationIdentifier: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.restorationIdentifier)
+    var tintColor: BindableRelay<UIColor?> {
+        bindable(of:\.tintColor)
+    }
+    
+    var translatesAutoresizingMaskIntoConstraints: BindableRelay<Bool> {
+        bindable(of:\.translatesAutoresizingMaskIntoConstraints)
+    }
+    
+    var restorationIdentifier: BindableRelay<String?> {
+        bindable(of:\.restorationIdentifier)
     }
     
 }

@@ -13,29 +13,29 @@ public extension RelayCollection where Object: UIControl {
     
     // MARK: Two Way Relay
     
-    var isEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEnabled)
+    var isEnabled: BindableRelay<Bool> {
+        bindable(of:\.isEnabled)
     }
     
-    var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isSelected)
+    var isSelected: BindableRelay<Bool> {
+        bindable(of:\.isSelected)
     }
     
-    var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isHighlighted)
+    var isHighlighted: BindableRelay<Bool> {
+        bindable(of:\.isHighlighted)
     }
     
-    var contentVerticalAlignment: AssociativeTwoWayRelay<UIControl.ContentVerticalAlignment> {
-        .relay(of: underlyingObject, \.contentVerticalAlignment)
+    var contentVerticalAlignment: BindableRelay<UIControl.ContentVerticalAlignment> {
+        bindable(of:\.contentVerticalAlignment)
     }
     
-    var contentHorizontalAlignment: AssociativeTwoWayRelay<UIControl.ContentHorizontalAlignment> {
-        .relay(of: underlyingObject, \.contentHorizontalAlignment)
+    var contentHorizontalAlignment: BindableRelay<UIControl.ContentHorizontalAlignment> {
+        bindable(of:\.contentHorizontalAlignment)
     }
     
     @available(iOS 14.0, *)
-    var showsMenuAsPrimaryAction: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsMenuAsPrimaryAction)
+    var showsMenuAsPrimaryAction: BindableRelay<Bool> {
+        bindable(of:\.showsMenuAsPrimaryAction)
     }
 }
 #endif

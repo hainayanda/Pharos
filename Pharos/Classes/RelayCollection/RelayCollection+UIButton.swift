@@ -13,37 +13,37 @@ public extension RelayCollection where Object: UIButton {
     
     // MARK: Two Way Relay
     
-    var contentEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.contentEdgeInsets)
+    var contentEdgeInsets: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.contentEdgeInsets)
     }
     
-    var titleEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.titleEdgeInsets)
+    var titleEdgeInsets: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.titleEdgeInsets)
     }
     
-    var reversesTitleShadowWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.reversesTitleShadowWhenHighlighted)
+    var reversesTitleShadowWhenHighlighted: BindableRelay<Bool> {
+        bindable(of:\.reversesTitleShadowWhenHighlighted)
     }
     
-    var imageEdgeInsets: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.imageEdgeInsets)
+    var imageEdgeInsets: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.imageEdgeInsets)
     }
     
-    var adjustsImageWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.adjustsImageWhenHighlighted)
+    var adjustsImageWhenHighlighted: BindableRelay<Bool> {
+        bindable(of:\.adjustsImageWhenHighlighted)
     }
     
-    var adjustsImageWhenDisabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.adjustsImageWhenDisabled)
+    var adjustsImageWhenDisabled: BindableRelay<Bool> {
+        bindable(of:\.adjustsImageWhenDisabled)
     }
     
-    var showsTouchWhenHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsTouchWhenHighlighted)
+    var showsTouchWhenHighlighted: BindableRelay<Bool> {
+        bindable(of:\.showsTouchWhenHighlighted)
     }
     
     @available(iOS 13.4, *)
-    var isPointerInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isPointerInteractionEnabled)
+    var isPointerInteractionEnabled: BindableRelay<Bool> {
+        bindable(of:\.isPointerInteractionEnabled)
     }
     
 }

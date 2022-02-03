@@ -13,24 +13,24 @@ public extension RelayCollection where Object: UISwitch {
     
     // MARK: Two Way Relay
     
-    var onTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.onTintColor)
+    var onTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.onTintColor)
     }
     
-    var thumbTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.thumbTintColor)
+    var thumbTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.thumbTintColor)
     }
     
-    var onImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.onImage)
+    var onImage: BindableRelay<UIImage?> {
+        bindable(of:\.onImage)
     }
     
-    var offImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.offImage)
+    var offImage: BindableRelay<UIImage?> {
+        bindable(of:\.offImage)
     }
     
-    var isOn: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isOn)
+    var isOn: BindableRelay<Bool> {
+        bindable(of:\.isOn)
     }
     
 }

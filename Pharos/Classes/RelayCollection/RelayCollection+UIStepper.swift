@@ -13,32 +13,32 @@ public extension RelayCollection where Object: UIStepper {
     
     // MARK: Two Way Relay
     
-    var isContinuous: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isContinuous)
+    var isContinuous: BindableRelay<Bool> {
+        bindable(of:\.isContinuous)
     }
     
-    var autorepeat: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.autorepeat)
+    var autorepeat: BindableRelay<Bool> {
+        bindable(of:\.autorepeat)
     }
     
-    var wraps: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.wraps)
+    var wraps: BindableRelay<Bool> {
+        bindable(of:\.wraps)
     }
     
-    var value: AssociativeTwoWayRelay<Double> {
-        .relay(of: underlyingObject, \.value)
+    var value: BindableRelay<Double> {
+        bindable(of:\.value)
     }
     
-    var minimumValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: underlyingObject, \.minimumValue)
+    var minimumValue: BindableRelay<Double> {
+        bindable(of:\.minimumValue)
     }
     
-    var maximumValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: underlyingObject, \.maximumValue)
+    var maximumValue: BindableRelay<Double> {
+        bindable(of:\.maximumValue)
     }
     
-    var stepValue: AssociativeTwoWayRelay<Double> {
-        .relay(of: underlyingObject, \.stepValue)
+    var stepValue: BindableRelay<Double> {
+        bindable(of:\.stepValue)
     }
 }
 #endif

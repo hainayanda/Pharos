@@ -13,64 +13,64 @@ public extension RelayCollection where Object: UICollectionView {
     
     // MARK: Two Way Relay
     
-    var collectionViewLayout: AssociativeTwoWayRelay<UICollectionViewLayout> {
-        .relay(of: underlyingObject, \.collectionViewLayout)
+    var collectionViewLayout: BindableRelay<UICollectionViewLayout> {
+        bindable(of:\.collectionViewLayout)
     }
     
-    var delegate: AssociativeTwoWayRelay<UICollectionViewDelegate?> {
-        .relay(of: underlyingObject, \.delegate)
+    var delegate: BindableRelay<UICollectionViewDelegate?> {
+        bindable(of:\.delegate)
     }
     
-    var dataSource: AssociativeTwoWayRelay<UICollectionViewDataSource?> {
-        .relay(of: underlyingObject, \.dataSource)
+    var dataSource: BindableRelay<UICollectionViewDataSource?> {
+        bindable(of:\.dataSource)
     }
     
-    var prefetchDataSource: AssociativeTwoWayRelay<UICollectionViewDataSourcePrefetching?> {
-        .relay(of: underlyingObject, \.prefetchDataSource)
+    var prefetchDataSource: BindableRelay<UICollectionViewDataSourcePrefetching?> {
+        bindable(of:\.prefetchDataSource)
     }
     
-    var isPrefetchingEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isPrefetchingEnabled)
-    }
-    
-    @available(iOS 11.0, *)
-    var dragDelegate: AssociativeTwoWayRelay<UICollectionViewDragDelegate?> {
-        .relay(of: underlyingObject, \.dragDelegate)
-    }
-    @available(iOS 11.0, *)
-    var dropDelegate: AssociativeTwoWayRelay<UICollectionViewDropDelegate?> {
-        .relay(of: underlyingObject, \.dropDelegate)
+    var isPrefetchingEnabled: BindableRelay<Bool> {
+        bindable(of:\.isPrefetchingEnabled)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.dragInteractionEnabled)
+    var dragDelegate: BindableRelay<UICollectionViewDragDelegate?> {
+        bindable(of:\.dragDelegate)
+    }
+    @available(iOS 11.0, *)
+    var dropDelegate: BindableRelay<UICollectionViewDropDelegate?> {
+        bindable(of:\.dropDelegate)
     }
     
-    var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.backgroundView)
+    @available(iOS 11.0, *)
+    var dragInteractionEnabled: BindableRelay<Bool> {
+        bindable(of:\.dragInteractionEnabled)
     }
     
-    var allowsSelection: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsSelection)
+    var backgroundView: BindableRelay<UIView?> {
+        bindable(of:\.backgroundView)
     }
     
-    var allowsMultipleSelection: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsMultipleSelection)
+    var allowsSelection: BindableRelay<Bool> {
+        bindable(of:\.allowsSelection)
     }
     
-    var remembersLastFocusedIndexPath: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.remembersLastFocusedIndexPath)
+    var allowsMultipleSelection: BindableRelay<Bool> {
+        bindable(of:\.allowsMultipleSelection)
+    }
+    
+    var remembersLastFocusedIndexPath: BindableRelay<Bool> {
+        bindable(of:\.remembersLastFocusedIndexPath)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.selectionFollowsFocus)
+    var selectionFollowsFocus: BindableRelay<Bool> {
+        bindable(of:\.selectionFollowsFocus)
     }
     
     @available(iOS 14.0, *)
-    var isEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEditing)
+    var isEditing: BindableRelay<Bool> {
+        bindable(of:\.isEditing)
     }
     
 }

@@ -13,40 +13,40 @@ public extension RelayCollection where Object: UISlider {
     
     // MARK: Two Way Relay
     
-    var value: AssociativeTwoWayRelay<Float> {
-        .relay(of: underlyingObject, \.value)
+    var value: BindableRelay<Float> {
+        bindable(of:\.value)
     }
     
-    var minimumValue: AssociativeTwoWayRelay<Float> {
-        .relay(of: underlyingObject, \.minimumValue)
+    var minimumValue: BindableRelay<Float> {
+        bindable(of:\.minimumValue)
     }
     
-    var maximumValue: AssociativeTwoWayRelay<Float> {
-        .relay(of: underlyingObject, \.maximumValue)
+    var maximumValue: BindableRelay<Float> {
+        bindable(of:\.maximumValue)
     }
     
-    var minimumValueImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.minimumValueImage)
+    var minimumValueImage: BindableRelay<UIImage?> {
+        bindable(of:\.minimumValueImage)
     }
     
-    var maximumValueImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.maximumValueImage)
+    var maximumValueImage: BindableRelay<UIImage?> {
+        bindable(of:\.maximumValueImage)
     }
     
-    var isContinuous: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isContinuous)
+    var isContinuous: BindableRelay<Bool> {
+        bindable(of:\.isContinuous)
     }
     
-    var minimumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.minimumTrackTintColor)
+    var minimumTrackTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.minimumTrackTintColor)
     }
     
-    var maximumTrackTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.maximumTrackTintColor)
+    var maximumTrackTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.maximumTrackTintColor)
     }
     
-    var thumbTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.thumbTintColor)
+    var thumbTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.thumbTintColor)
     }
     
 }

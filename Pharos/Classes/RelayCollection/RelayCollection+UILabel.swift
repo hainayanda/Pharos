@@ -13,64 +13,64 @@ public extension RelayCollection where Object: UILabel {
     
     // MARK: Two Way Relay
     
-    var text: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.text)
+    var text: BindableRelay<String?> {
+        bindable(of:\.text)
     }
 
-    var font: AssociativeTwoWayRelay<UIFont?> {
-        .relay(of: underlyingObject, \.font)
+    var font: BindableRelay<UIFont?> {
+        bindable(of:\.font)
     }
 
-    var textColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.textColor)
+    var textColor: BindableRelay<UIColor?> {
+        bindable(of:\.textColor)
     }
 
-    var shadowColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.shadowColor)
+    var shadowColor: BindableRelay<UIColor?> {
+        bindable(of:\.shadowColor)
     }
 
-    var shadowOffset: AssociativeTwoWayRelay<CGSize> {
-        .relay(of: underlyingObject, \.shadowOffset)
+    var shadowOffset: BindableRelay<CGSize> {
+        bindable(of:\.shadowOffset)
     }
     
-    var attributedText: AssociativeTwoWayRelay<NSAttributedString?> {
-        .relay(of: underlyingObject, \.attributedText)
+    var attributedText: BindableRelay<NSAttributedString?> {
+        bindable(of:\.attributedText)
     }
     
-    var highlightedTextColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.highlightedTextColor)
+    var highlightedTextColor: BindableRelay<UIColor?> {
+        bindable(of:\.highlightedTextColor)
     }
 
-    var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isHighlighted)
+    var isHighlighted: BindableRelay<Bool> {
+        bindable(of:\.isHighlighted)
     }
 
-    var isUserInteractionEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isUserInteractionEnabled)
+    var isUserInteractionEnabled: BindableRelay<Bool> {
+        bindable(of:\.isUserInteractionEnabled)
     }
 
-    var isEnabled: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEnabled)
+    var isEnabled: BindableRelay<Bool> {
+        bindable(of:\.isEnabled)
     }
     
-    var numberOfLines: AssociativeTwoWayRelay<Int> {
-        .relay(of: underlyingObject, \.numberOfLines)
+    var numberOfLines: BindableRelay<Int> {
+        bindable(of:\.numberOfLines)
     }
     
-    var adjustsFontSizeToFitWidth: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.adjustsFontSizeToFitWidth)
+    var adjustsFontSizeToFitWidth: BindableRelay<Bool> {
+        bindable(of:\.adjustsFontSizeToFitWidth)
     }
     
-    var minimumScaleFactor: TwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.minimumScaleFactor)
+    var minimumScaleFactor: BindableRelay<CGFloat> {
+        bindable(of:\.minimumScaleFactor)
     }
     
-    var allowsDefaultTighteningForTruncation: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsDefaultTighteningForTruncation)
+    var allowsDefaultTighteningForTruncation: BindableRelay<Bool> {
+        bindable(of:\.allowsDefaultTighteningForTruncation)
     }
     
-    var preferredMaxLayoutWidth: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.preferredMaxLayoutWidth)
+    var preferredMaxLayoutWidth: BindableRelay<CGFloat> {
+        bindable(of:\.preferredMaxLayoutWidth)
     }
     
 }

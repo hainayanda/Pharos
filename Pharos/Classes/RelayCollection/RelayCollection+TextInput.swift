@@ -15,61 +15,61 @@ public extension RelayCollection where Object: UITextView {
     
     // MARK: Two Way Relay
     
-    var text: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.text)
+    var text: BindableRelay<String?> {
+        bindable(of:\.text)
     }
 
-    var font: AssociativeTwoWayRelay<UIFont?> {
-        .relay(of: underlyingObject, \.font)
+    var font: BindableRelay<UIFont?> {
+        bindable(of:\.font)
     }
 
-    var textColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.textColor)
+    var textColor: BindableRelay<UIColor?> {
+        bindable(of:\.textColor)
     }
 
-    var textAlignment: AssociativeTwoWayRelay<NSTextAlignment> {
-        .relay(of: underlyingObject, \.textAlignment)
+    var textAlignment: BindableRelay<NSTextAlignment> {
+        bindable(of:\.textAlignment)
     }
 
-    var selectedRange: AssociativeTwoWayRelay<NSRange> {
-        .relay(of: underlyingObject, \.selectedRange)
+    var selectedRange: BindableRelay<NSRange> {
+        bindable(of:\.selectedRange)
     }
 
-    var isEditable: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEditable)
+    var isEditable: BindableRelay<Bool> {
+        bindable(of:\.isEditable)
     }
 
-    var isSelectable: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isSelectable)
+    var isSelectable: BindableRelay<Bool> {
+        bindable(of:\.isSelectable)
     }
     
-    var allowsEditingTextAttributes: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsEditingTextAttributes)
+    var allowsEditingTextAttributes: BindableRelay<Bool> {
+        bindable(of:\.allowsEditingTextAttributes)
     }
     
-    var attributedText: AssociativeTwoWayRelay<NSAttributedString> {
-        .relay(of: underlyingObject, \.attributedText)
+    var attributedText: BindableRelay<NSAttributedString> {
+        bindable(of:\.attributedText)
     }
     
-    var inputView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.inputView)
+    var inputView: BindableRelay<UIView?> {
+        bindable(of:\.inputView)
     }
 
-    var inputAccessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.inputAccessoryView)
+    var inputAccessoryView: BindableRelay<UIView?> {
+        bindable(of:\.inputAccessoryView)
     }
     
-    var clearsOnInsertion: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.clearsOnInsertion)
+    var clearsOnInsertion: BindableRelay<Bool> {
+        bindable(of:\.clearsOnInsertion)
     }
     
-    var textContainerInset: AssociativeTwoWayRelay<UIEdgeInsets> {
-        .relay(of: underlyingObject, \.textContainerInset)
+    var textContainerInset: BindableRelay<UIEdgeInsets> {
+        bindable(of:\.textContainerInset)
     }
     
     @available(iOS 13.0, *)
-    var usesStandardTextScaling: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.usesStandardTextScaling)
+    var usesStandardTextScaling: BindableRelay<Bool> {
+        bindable(of:\.usesStandardTextScaling)
     }
 }
 
@@ -79,64 +79,64 @@ public extension RelayCollection where Object: UITextField {
     
     // MARK: Two Way Relay
     
-    var text: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.text)
+    var text: BindableRelay<String?> {
+        bindable(of:\.text)
     }
     
-    var attributedText: AssociativeTwoWayRelay<NSAttributedString?> {
-        .relay(of: underlyingObject, \.attributedText)
+    var attributedText: BindableRelay<NSAttributedString?> {
+        bindable(of:\.attributedText)
     }
     
-    var textColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.textColor)
+    var textColor: BindableRelay<UIColor?> {
+        bindable(of:\.textColor)
     }
     
-    var font: AssociativeTwoWayRelay<UIFont?> {
-        .relay(of: underlyingObject, \.font)
+    var font: BindableRelay<UIFont?> {
+        bindable(of:\.font)
     }
     
-    var placeholder: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.placeholder)
+    var placeholder: BindableRelay<String?> {
+        bindable(of:\.placeholder)
     }
 
-    var adjustsFontSizeToFitWidth: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.adjustsFontSizeToFitWidth)
+    var adjustsFontSizeToFitWidth: BindableRelay<Bool> {
+        bindable(of:\.adjustsFontSizeToFitWidth)
     }
 
-    var delegate: AssociativeTwoWayRelay<UITextFieldDelegate?> {
-        .relay(of: underlyingObject, \.delegate)
+    var delegate: BindableRelay<UITextFieldDelegate?> {
+        bindable(of:\.delegate)
     }
     
-    var disabledBackground: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.disabledBackground)
+    var disabledBackground: BindableRelay<UIImage?> {
+        bindable(of:\.disabledBackground)
     }
     
-    var allowsEditingTextAttributes: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.allowsEditingTextAttributes)
+    var allowsEditingTextAttributes: BindableRelay<Bool> {
+        bindable(of:\.allowsEditingTextAttributes)
     }
     
-    var leftView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.leftView)
+    var leftView: BindableRelay<UIView?> {
+        bindable(of:\.leftView)
     }
     
-    var rightView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.rightView)
+    var rightView: BindableRelay<UIView?> {
+        bindable(of:\.rightView)
     }
 
-    var rightViewMode: AssociativeTwoWayRelay<UITextField.ViewMode> {
-        .relay(of: underlyingObject, \.rightViewMode)
+    var rightViewMode: BindableRelay<UITextField.ViewMode> {
+        bindable(of:\.rightViewMode)
     }
     
-    var inputView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.inputView)
+    var inputView: BindableRelay<UIView?> {
+        bindable(of:\.inputView)
     }
 
-    var inputAccessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.inputAccessoryView)
+    var inputAccessoryView: BindableRelay<UIView?> {
+        bindable(of:\.inputAccessoryView)
     }
     
-    var clearsOnInsertion: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.clearsOnInsertion)
+    var clearsOnInsertion: BindableRelay<Bool> {
+        bindable(of:\.clearsOnInsertion)
     }
     
 }
@@ -147,60 +147,60 @@ public extension RelayCollection where Object: UISearchBar {
     
     // MARK: Two Way Relay
 
-    var delegate: AssociativeTwoWayRelay<UISearchBarDelegate?> {
-        .relay(of: underlyingObject, \.delegate)
+    var delegate: BindableRelay<UISearchBarDelegate?> {
+        bindable(of:\.delegate)
     }
 
-    var text: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.text)
+    var text: BindableRelay<String?> {
+        bindable(of:\.text)
     }
 
-    var prompt: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.prompt)
+    var prompt: BindableRelay<String?> {
+        bindable(of:\.prompt)
     }
 
-    var placeholder: AssociativeTwoWayRelay<String?> {
-        .relay(of: underlyingObject, \.placeholder)
+    var placeholder: BindableRelay<String?> {
+        bindable(of:\.placeholder)
     }
 
-    var showsBookmarkButton: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsBookmarkButton)
+    var showsBookmarkButton: BindableRelay<Bool> {
+        bindable(of:\.showsBookmarkButton)
     }
     
-    var showsCancelButton: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsCancelButton)
+    var showsCancelButton: BindableRelay<Bool> {
+        bindable(of:\.showsCancelButton)
     }
     
-    var showsSearchResultsButton: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsSearchResultsButton)
+    var showsSearchResultsButton: BindableRelay<Bool> {
+        bindable(of:\.showsSearchResultsButton)
     }
     
-    var isSearchResultsButtonSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isSearchResultsButtonSelected)
+    var isSearchResultsButtonSelected: BindableRelay<Bool> {
+        bindable(of:\.isSearchResultsButtonSelected)
     }
     
-    var barTintColor: AssociativeTwoWayRelay<UIColor?> {
-        .relay(of: underlyingObject, \.barTintColor)
+    var barTintColor: BindableRelay<UIColor?> {
+        bindable(of:\.barTintColor)
     }
     
-    var isTranslucent: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isTranslucent)
+    var isTranslucent: BindableRelay<Bool> {
+        bindable(of:\.isTranslucent)
     }
     
-    var inputAccessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.inputAccessoryView)
+    var inputAccessoryView: BindableRelay<UIView?> {
+        bindable(of:\.inputAccessoryView)
     }
     
-    var backgroundImage: AssociativeTwoWayRelay<UIImage?> {
-        .relay(of: underlyingObject, \.backgroundImage)
+    var backgroundImage: BindableRelay<UIImage?> {
+        bindable(of:\.backgroundImage)
     }
     
-    var searchFieldBackgroundPositionAdjustment: AssociativeTwoWayRelay<UIOffset> {
-        .relay(of: underlyingObject, \.searchFieldBackgroundPositionAdjustment)
+    var searchFieldBackgroundPositionAdjustment: BindableRelay<UIOffset> {
+        bindable(of:\.searchFieldBackgroundPositionAdjustment)
     }
     
-    var searchTextPositionAdjustment: AssociativeTwoWayRelay<UIOffset> {
-        .relay(of: underlyingObject, \.searchTextPositionAdjustment)
+    var searchTextPositionAdjustment: BindableRelay<UIOffset> {
+        bindable(of:\.searchTextPositionAdjustment)
     }
     
 }

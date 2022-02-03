@@ -15,66 +15,66 @@ public extension RelayCollection where Object: UITableViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.automaticallyUpdatesContentConfiguration)
+    var automaticallyUpdatesContentConfiguration: BindableRelay<Bool> {
+        bindable(of:\.automaticallyUpdatesContentConfiguration)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.automaticallyUpdatesBackgroundConfiguration)
+    var automaticallyUpdatesBackgroundConfiguration: BindableRelay<Bool> {
+        bindable(of:\.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.backgroundView)
+    var backgroundView: BindableRelay<UIView?> {
+        bindable(of:\.backgroundView)
     }
     
-    var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.selectedBackgroundView)
+    var selectedBackgroundView: BindableRelay<UIView?> {
+        bindable(of:\.selectedBackgroundView)
     }
     
-    var multipleSelectionBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.multipleSelectionBackgroundView)
+    var multipleSelectionBackgroundView: BindableRelay<UIView?> {
+        bindable(of:\.multipleSelectionBackgroundView)
     }
     
-    var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isSelected)
+    var isSelected: BindableRelay<Bool> {
+        bindable(of:\.isSelected)
     }
     
-    var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isHighlighted)
+    var isHighlighted: BindableRelay<Bool> {
+        bindable(of:\.isHighlighted)
     }
     
-    var showsReorderControl: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.showsReorderControl)
+    var showsReorderControl: BindableRelay<Bool> {
+        bindable(of:\.showsReorderControl)
     }
     
-    var shouldIndentWhileEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.shouldIndentWhileEditing)
+    var shouldIndentWhileEditing: BindableRelay<Bool> {
+        bindable(of:\.shouldIndentWhileEditing)
     }
     
-    var accessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.accessoryView)
+    var accessoryView: BindableRelay<UIView?> {
+        bindable(of:\.accessoryView)
     }
     
-    var editingAccessoryView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.editingAccessoryView)
+    var editingAccessoryView: BindableRelay<UIView?> {
+        bindable(of:\.editingAccessoryView)
     }
     
-    var indentationLevel: AssociativeTwoWayRelay<Int> {
-        .relay(of: underlyingObject, \.indentationLevel)
+    var indentationLevel: BindableRelay<Int> {
+        bindable(of:\.indentationLevel)
     }
     
-    var indentationWidth: AssociativeTwoWayRelay<CGFloat> {
-        .relay(of: underlyingObject, \.indentationWidth)
+    var indentationWidth: BindableRelay<CGFloat> {
+        bindable(of:\.indentationWidth)
     }
     
-    var isEditing: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isEditing)
+    var isEditing: BindableRelay<Bool> {
+        bindable(of:\.isEditing)
     }
     
     @available(iOS 11.0, *)
-    var userInteractionEnabledWhileDragging: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.userInteractionEnabledWhileDragging)
+    var userInteractionEnabledWhileDragging: BindableRelay<Bool> {
+        bindable(of:\.userInteractionEnabledWhileDragging)
     }
 }
 
@@ -85,29 +85,29 @@ public extension RelayCollection where Object: UICollectionViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.automaticallyUpdatesContentConfiguration)
+    var automaticallyUpdatesContentConfiguration: BindableRelay<Bool> {
+        bindable(of:\.automaticallyUpdatesContentConfiguration)
     }
     
-    var isSelected: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isSelected)
+    var isSelected: BindableRelay<Bool> {
+        bindable(of:\.isSelected)
     }
     
-    var isHighlighted: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.isHighlighted)
+    var isHighlighted: BindableRelay<Bool> {
+        bindable(of:\.isHighlighted)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: AssociativeTwoWayRelay<Bool> {
-        .relay(of: underlyingObject, \.automaticallyUpdatesBackgroundConfiguration)
+    var automaticallyUpdatesBackgroundConfiguration: BindableRelay<Bool> {
+        bindable(of:\.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.backgroundView)
+    var backgroundView: BindableRelay<UIView?> {
+        bindable(of:\.backgroundView)
     }
     
-    var selectedBackgroundView: AssociativeTwoWayRelay<UIView?> {
-        .relay(of: underlyingObject, \.selectedBackgroundView)
+    var selectedBackgroundView: BindableRelay<UIView?> {
+        bindable(of:\.selectedBackgroundView)
     }
     
 }
