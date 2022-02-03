@@ -13,31 +13,31 @@ public extension RelayCollection where Object: UIStepper {
     
     // MARK: Two Way Relay
     
-    var isContinuous: BindableRelay<Bool> {
+    var isContinuous: BindableObservable<Bool> {
         bindable(of:\.isContinuous)
     }
     
-    var autorepeat: BindableRelay<Bool> {
+    var autorepeat: BindableObservable<Bool> {
         bindable(of:\.autorepeat)
     }
     
-    var wraps: BindableRelay<Bool> {
+    var wraps: BindableObservable<Bool> {
         bindable(of:\.wraps)
     }
     
-    var value: BindableRelay<Double> {
+    var value: BindableObservable<Double> {
         bindable(of:\.value)
     }
     
-    var minimumValue: BindableRelay<Double> {
+    var minimumValue: BindableObservable<Double> {
         bindable(of:\.minimumValue)
     }
     
-    var maximumValue: BindableRelay<Double> {
+    var maximumValue: BindableObservable<Double> {
         bindable(of:\.maximumValue)
     }
     
-    var stepValue: BindableRelay<Double> {
+    var stepValue: BindableObservable<Double> {
         bindable(of:\.stepValue)
     }
 }

@@ -13,15 +13,15 @@ public extension RelayCollection where Object: UIStackView {
     
     // MARK: Two Way Relay
     
-    var spacing: BindableRelay<CGFloat> {
+    var spacing: BindableObservable<CGFloat> {
         bindable(of:\.spacing)
     }
     
-    var isBaselineRelativeArrangement: BindableRelay<Bool> {
+    var isBaselineRelativeArrangement: BindableObservable<Bool> {
         bindable(of:\.isBaselineRelativeArrangement)
     }
     
-    var isLayoutMarginsRelativeArrangement: BindableRelay<Bool> {
+    var isLayoutMarginsRelativeArrangement: BindableObservable<Bool> {
         bindable(of:\.isLayoutMarginsRelativeArrangement)
     }
     

@@ -1,36 +1,92 @@
 //
-//  Observable.swift
+//  ObservableRelay.swift
 //  Pharos
 //
-//  Created by Nayanda Haberty on 15/04/21.
+//  Created by Nayanda Haberty on 03/02/22.
 //
 
 import Foundation
 
-@propertyWrapper
-public class Observable<Observed>: BindableRelay<Observed> {
+open class Observable<State>: ChangeObservable {
+    lazy var temporaryRetainer: Retainer = Retainer()
+    lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
+    var recentState: State? { nil }
     
-    var _wrappedValue: Observed
-    public var wrappedValue: Observed {
-        get {
-            _wrappedValue
-        }
-        set {
-            let oldValue = _wrappedValue
-            _wrappedValue = newValue
-            relay(changes: Changes(old: oldValue, new: newValue, source: self))
-        }
+    open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
+        let observed = Observed(source: self, observer: work)
+        temporaryRetainer.retain(observed)
+        return observed
     }
     
-    override var recentValue: Observed? {
-        _wrappedValue
+    // MARK: Mappable
+    
+    open func compactMapped<Mapped>(_ mapper: @escaping (State) throws -> Mapped?) -> Observable<Mapped> {
+        let observed = MappedObservable(source: self, mapper: mapper)
+        temporaryRetainer.retain(observed)
+        return observed
+        
     }
     
-    public init(wrappedValue: Observed) {
-        self._wrappedValue = wrappedValue
-        super.init()
-        self.callBack = { [weak self] changes in
-            self?._wrappedValue = changes.new
+    // MARK: Filterable
+    
+    open func ignore(when shouldIgnore: @escaping (Changes<State>) -> Bool) -> Observable<State> {
+        let observed = FilteredObservable(source: self, filter: shouldIgnore)
+        temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    // MARK: Combinable
+    
+    open func combine<State1>(with relay: Observable<State1>) -> Observable<(State?, State1?)> {
+        let observed = BiCastObservable(source1: self, source2: relay)
+        temporaryRetainer.retain(observed)
+        relay.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    open func combine<State1, State2>(
+        with relay1: Observable<State1>, _ relay2: Observable<State2>
+    ) -> Observable<(State?, State1?, State2?)> {
+        let observed = TriCastObservable(source1: self, source2: relay1, source3: relay2)
+        temporaryRetainer.retain(observed)
+        relay1.temporaryRetainer.retain(observed)
+        relay2.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    open func combine<State1, State2, State3>(
+        with relay1: Observable<State1>, _ relay2: Observable<State2>, _ relay3: Observable<State3>
+    ) -> Observable<(State?, State1?, State2?, State3?)> {
+        let observed = QuadCastObservable(source1: self, source2: relay1, source3: relay2, source4: relay3)
+        temporaryRetainer.retain(observed)
+        relay1.temporaryRetainer.retain(observed)
+        relay2.temporaryRetainer.retain(observed)
+        relay3.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    // MARK: Mergable
+    
+    open func merge(with relays: Observable<State>...) -> Observable<State> {
+        var merged = relays
+        merged.insert(self, at: 0)
+        let observed = MergedObservable(observables: merged)
+        for relay in merged {
+            relay.temporaryRetainer.retain(observed)
         }
+        return observed
+    }
+    
+    // MARK: Retain
+    
+    func retain<Child: StateRelay>(relay: Child) where Child.RelayedState == State {
+        temporaryRetainer.discard(relay)
+        relayGroup.addToGroup(relay)
+    }
+    
+    func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where Child.RelayedState == State {
+        temporaryRetainer.discard(relay)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: relay))
+        retainer.retain(relay)
     }
 }

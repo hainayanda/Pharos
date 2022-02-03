@@ -13,97 +13,97 @@ public extension RelayCollection where Object: UIScrollView {
     
     // MARK: Two Way Relay
     
-    var contentOffset: BindableRelay<CGPoint> {
+    var contentOffset: BindableObservable<CGPoint> {
         bindable(of:\.contentOffset)
     }
     
-    var contentSize: BindableRelay<CGSize> {
+    var contentSize: BindableObservable<CGSize> {
         bindable(of:\.contentSize)
     }
     
-    var contentInset: BindableRelay<UIEdgeInsets> {
+    var contentInset: BindableObservable<UIEdgeInsets> {
         bindable(of:\.contentInset)
     }
     
-    var delegate: BindableRelay<UIScrollViewDelegate?> {
+    var delegate: BindableObservable<UIScrollViewDelegate?> {
         bindable(of:\.delegate)
     }
     
-    var isDirectionalLockEnabled: BindableRelay<Bool> {
+    var isDirectionalLockEnabled: BindableObservable<Bool> {
         bindable(of:\.isDirectionalLockEnabled)
     }
     
-    var bounces: BindableRelay<Bool> {
+    var bounces: BindableObservable<Bool> {
         bindable(of:\.bounces)
     }
     
-    var alwaysBounceVertical: BindableRelay<Bool> {
+    var alwaysBounceVertical: BindableObservable<Bool> {
         bindable(of:\.alwaysBounceVertical)
     }
     
-    var alwaysBounceHorizontal: BindableRelay<Bool> {
+    var alwaysBounceHorizontal: BindableObservable<Bool> {
         bindable(of:\.alwaysBounceHorizontal)
     }
     
-    var isPagingEnabled: BindableRelay<Bool> {
+    var isPagingEnabled: BindableObservable<Bool> {
         bindable(of:\.isPagingEnabled)
     }
     
-    var isScrollEnabled: BindableRelay<Bool> {
+    var isScrollEnabled: BindableObservable<Bool> {
         bindable(of:\.isScrollEnabled)
     }
     
-    var showsVerticalScrollIndicator: BindableRelay<Bool> {
+    var showsVerticalScrollIndicator: BindableObservable<Bool> {
         bindable(of:\.showsVerticalScrollIndicator)
     }
     
-    var showsHorizontalScrollIndicator: BindableRelay<Bool> {
+    var showsHorizontalScrollIndicator: BindableObservable<Bool> {
         bindable(of:\.showsHorizontalScrollIndicator)
     }
     
     @available(iOS 11.1, *)
-    var verticalScrollIndicatorInsets: BindableRelay<UIEdgeInsets> {
+    var verticalScrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.verticalScrollIndicatorInsets)
     }
     
     @available(iOS 11.1, *)
-    var horizontalScrollIndicatorInsets: BindableRelay<UIEdgeInsets> {
+    var horizontalScrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.horizontalScrollIndicatorInsets)
     }
     
-    var scrollIndicatorInsets: BindableRelay<UIEdgeInsets> {
+    var scrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.scrollIndicatorInsets)
     }
     
-    var delaysContentTouches: BindableRelay<Bool> {
+    var delaysContentTouches: BindableObservable<Bool> {
         bindable(of:\.delaysContentTouches)
     }
     
-    var canCancelContentTouches: BindableRelay<Bool> {
+    var canCancelContentTouches: BindableObservable<Bool> {
         bindable(of:\.canCancelContentTouches)
     }
     
-    var minimumZoomScale: BindableRelay<CGFloat> {
+    var minimumZoomScale: BindableObservable<CGFloat> {
         bindable(of:\.minimumZoomScale)
     }
     
-    var maximumZoomScale: BindableRelay<CGFloat> {
+    var maximumZoomScale: BindableObservable<CGFloat> {
         bindable(of:\.maximumZoomScale)
     }
     
-    var zoomScale: BindableRelay<CGFloat> {
+    var zoomScale: BindableObservable<CGFloat> {
         bindable(of:\.zoomScale)
     }
     
-    var bouncesZoom: BindableRelay<Bool> {
+    var bouncesZoom: BindableObservable<Bool> {
         bindable(of:\.bouncesZoom)
     }
     
-    var scrollsToTop: BindableRelay<Bool> {
+    var scrollsToTop: BindableObservable<Bool> {
         bindable(of:\.scrollsToTop)
     }
     
-    var refreshControl: BindableRelay<UIRefreshControl?> {
+    var refreshControl: BindableObservable<UIRefreshControl?> {
         bindable(of:\.refreshControl)
     }
     

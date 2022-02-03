@@ -10,7 +10,7 @@ class ObservableStateSpec: QuickSpec {
     override func spec() {
         describe("observable state property wrapper") {
             var initialValue: String?
-            var observables: Observable<String?>!
+            var observables: Subject<String?>!
             var object: Dummy!
 #if canImport(UIKit)
             var label: UILabel!
@@ -82,7 +82,7 @@ class ObservableStateSpec: QuickSpec {
                 let number = Int.random(in: 0..<100)
                 var didSetCount: Int = 0
                 var latestChanges: Changes<(String?, Int)> = .init(old: (initialValue, number), new: (initialValue, number), source: self)
-                let observables2: Observable<Int> = .init(wrappedValue: number)
+                let observables2: Subject<Int> = .init(wrappedValue: number)
                 observables.compactCombine(with: observables2)
                     .whenDidSet { changes in
                         latestChanges = changes
@@ -108,8 +108,8 @@ class ObservableStateSpec: QuickSpec {
                 let double = Double.random(in: 0..<10)
                 var didSetCount: Int = 0
                 var latestChanges: Changes<(String?, Int, Double)> = .init(old: (initialValue, int, double), new: (initialValue, int, double), source: self)
-                let observables2: Observable<Int> = .init(wrappedValue: int)
-                let observables3: Observable<Double> = .init(wrappedValue: double)
+                let observables2: Subject<Int> = .init(wrappedValue: int)
+                let observables3: Subject<Double> = .init(wrappedValue: double)
                 observables.compactCombine(with: observables2, observables3)
                     .whenDidSet { changes in
                         latestChanges = changes
@@ -149,9 +149,9 @@ class ObservableStateSpec: QuickSpec {
                 let bool = Bool.random()
                 var didSetCount: Int = 0
                 var latestChanges: Changes<(String?, Int, Double, Bool)> = .init(old: (initialValue, int, double, bool), new: (initialValue, int, double, bool), source: self)
-                let observables2: Observable<Int> = .init(wrappedValue: int)
-                let observables3: Observable<Double> = .init(wrappedValue: double)
-                let observables4: Observable<Bool> = .init(wrappedValue: bool)
+                let observables2: Subject<Int> = .init(wrappedValue: int)
+                let observables3: Subject<Double> = .init(wrappedValue: double)
+                let observables4: Subject<Bool> = .init(wrappedValue: bool)
                 observables.compactCombine(with: observables2, observables3, observables4)
                     .whenDidSet { changes in
                         latestChanges = changes
@@ -220,7 +220,7 @@ class ObservableStateSpec: QuickSpec {
                 let fromState = String.randomString()
                 observables.wrappedValue = fromState
                 expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
+                expect(source as? Subject<String?>).toNot(beNil())
                 expect(didSetCount).to(equal(2))
             }
 #endif
@@ -243,13 +243,13 @@ class ObservableStateSpec: QuickSpec {
                 let fromState = String.randomString()
                 observables.wrappedValue = fromState
                 expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
+                expect(source as? Subject<String?>).toNot(beNil())
                 expect(didSetCount).to(equal(1))
             }
             it("should auto dereference relay when AutoDereferencer is dereferenced") {
                 let retainer: Retainer = .init()
                 var didSetCount: Int = 0
-                var relay: ObservedRelay<String?>? = observables
+                var relay: Observed<String?>? = observables
                     .whenDidSet { changes in
                         didSetCount += 1
                     }

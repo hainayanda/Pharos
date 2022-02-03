@@ -22,10 +22,10 @@ public final class RelayCollection<Object: NSObject> {
         self.underlyingObject = object
     }
     
-    func bindable<Observed>(of keyPath: ReferenceWritableKeyPath<Object, Observed>) -> BindableRelay<Observed> {
+    func bindable<State>(of keyPath: ReferenceWritableKeyPath<Object, State>) -> BindableObservable<State> {
         let key = String(keyPath.hashValue)
-        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableRelay<Observed> else {
-            let newRelay = KVORelay(object: underlyingObject, keyPath: keyPath)
+        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableObservable<State> else {
+            let newRelay = BindableKVOObservable(object: underlyingObject, keyPath: keyPath)
             objc_setAssociatedObject(underlyingObject, key, newRelay, .OBJC_ASSOCIATION_RETAIN)
             return newRelay
         }
@@ -52,17 +52,17 @@ public final class AutoRelayCollection<Object: NSObject> {
         self.underlyingObject = object
     }
     
-    func relayable<Observed>(of keyPath: ReferenceWritableKeyPath<Object, Observed>) -> BindableRelay<Observed> {
+    func relayable<Observed>(of keyPath: ReferenceWritableKeyPath<Object, Observed>) -> BindableObservable<Observed> {
         let key = String(keyPath.hashValue)
-        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableRelay<Observed> else {
-            let newRelay = KVORelay(object: underlyingObject, keyPath: keyPath)
+        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableObservable<Observed> else {
+            let newRelay = BindableKVOObservable(object: underlyingObject, keyPath: keyPath)
             objc_setAssociatedObject(underlyingObject, key, newRelay, .OBJC_ASSOCIATION_RETAIN)
             return newRelay
         }
         return relay
     }
     
-    public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> BindableRelay<Property> {
+    public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> BindableObservable<Property> {
         relayable(of: member)
     }
 }

@@ -13,36 +13,36 @@ public extension RelayCollection where Object: UIButton {
     
     // MARK: Two Way Relay
     
-    var contentEdgeInsets: BindableRelay<UIEdgeInsets> {
+    var contentEdgeInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.contentEdgeInsets)
     }
     
-    var titleEdgeInsets: BindableRelay<UIEdgeInsets> {
+    var titleEdgeInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.titleEdgeInsets)
     }
     
-    var reversesTitleShadowWhenHighlighted: BindableRelay<Bool> {
+    var reversesTitleShadowWhenHighlighted: BindableObservable<Bool> {
         bindable(of:\.reversesTitleShadowWhenHighlighted)
     }
     
-    var imageEdgeInsets: BindableRelay<UIEdgeInsets> {
+    var imageEdgeInsets: BindableObservable<UIEdgeInsets> {
         bindable(of:\.imageEdgeInsets)
     }
     
-    var adjustsImageWhenHighlighted: BindableRelay<Bool> {
+    var adjustsImageWhenHighlighted: BindableObservable<Bool> {
         bindable(of:\.adjustsImageWhenHighlighted)
     }
     
-    var adjustsImageWhenDisabled: BindableRelay<Bool> {
+    var adjustsImageWhenDisabled: BindableObservable<Bool> {
         bindable(of:\.adjustsImageWhenDisabled)
     }
     
-    var showsTouchWhenHighlighted: BindableRelay<Bool> {
+    var showsTouchWhenHighlighted: BindableObservable<Bool> {
         bindable(of:\.showsTouchWhenHighlighted)
     }
     
     @available(iOS 13.4, *)
-    var isPointerInteractionEnabled: BindableRelay<Bool> {
+    var isPointerInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.isPointerInteractionEnabled)
     }
     

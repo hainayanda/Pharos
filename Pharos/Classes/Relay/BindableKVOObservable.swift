@@ -1,5 +1,5 @@
 //
-//  KVORelay.swift
+//  BindableKVO.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 16/04/21.
@@ -16,14 +16,14 @@ public enum KVOSource {
     case none
 }
 
-final public class KVORelay<Object: NSObject, Observed>: BindableRelay<Observed> {
+final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservable<Observed> {
     var token: NSObjectProtocol?
     var recentSource: KVOSource = .none
     var latestValue: Observed?
     weak var object: Object?
     let keyPath: ReferenceWritableKeyPath<Object, Observed>
     
-    override var recentValue: Observed? {
+    override var recentState: Observed? {
         object?[keyPath: keyPath]
     }
     
@@ -39,13 +39,13 @@ final public class KVORelay<Object: NSObject, Observed>: BindableRelay<Observed>
         kvoBind(with: object, keyPath: keyPath)
     }
     
-    public override func relay(changes: Changes<Observed>) {
+    override func relay(changes: Changes<Observed>) {
         recentSource = changes.source as? Object === object ? .property : .external
         callRelayIfNeeded(for: changes)
         callCallbackIfNeeded(for: changes)
     }
     
-    override func callRelayIfNeeded(for changes: Changes<Observed>, skip: AnyRelay? = nil) {
+    override func callRelayIfNeeded(for changes: Changes<Observed>, skip: AnyStateRelay? = nil) {
         switch recentSource {
         case .property, .external:
             super.callRelayIfNeeded(for: changes, skip: skip)
@@ -99,7 +99,7 @@ final public class KVORelay<Object: NSObject, Observed>: BindableRelay<Observed>
         let notificationName: NSNotification.Name = textInput is UITextField ?
         UITextField.textDidChangeNotification : UITextView.textDidChangeNotification
         if let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
-           let latestValue = textInput.text(in: textRange) as? Observed {
+           let latestValue = textInput.text(in: textRange) as? State {
             self.latestValue = latestValue
         }
         NotificationCenter.default.addObserver(
@@ -113,7 +113,7 @@ final public class KVORelay<Object: NSObject, Observed>: BindableRelay<Observed>
     @objc func textNotification(_ notification: Notification) {
         guard let textInput = notification.object as? UITextInput,
               let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
-              let new = textInput.text(in: textRange) as? Observed else {
+              let new = textInput.text(in: textRange) as? State else {
                   return
               }
         let old = latestValue

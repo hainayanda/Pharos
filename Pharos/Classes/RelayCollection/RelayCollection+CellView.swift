@@ -15,65 +15,65 @@ public extension RelayCollection where Object: UITableViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: BindableRelay<Bool> {
+    var automaticallyUpdatesContentConfiguration: BindableObservable<Bool> {
         bindable(of:\.automaticallyUpdatesContentConfiguration)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: BindableRelay<Bool> {
+    var automaticallyUpdatesBackgroundConfiguration: BindableObservable<Bool> {
         bindable(of:\.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: BindableRelay<UIView?> {
+    var backgroundView: BindableObservable<UIView?> {
         bindable(of:\.backgroundView)
     }
     
-    var selectedBackgroundView: BindableRelay<UIView?> {
+    var selectedBackgroundView: BindableObservable<UIView?> {
         bindable(of:\.selectedBackgroundView)
     }
     
-    var multipleSelectionBackgroundView: BindableRelay<UIView?> {
+    var multipleSelectionBackgroundView: BindableObservable<UIView?> {
         bindable(of:\.multipleSelectionBackgroundView)
     }
     
-    var isSelected: BindableRelay<Bool> {
+    var isSelected: BindableObservable<Bool> {
         bindable(of:\.isSelected)
     }
     
-    var isHighlighted: BindableRelay<Bool> {
+    var isHighlighted: BindableObservable<Bool> {
         bindable(of:\.isHighlighted)
     }
     
-    var showsReorderControl: BindableRelay<Bool> {
+    var showsReorderControl: BindableObservable<Bool> {
         bindable(of:\.showsReorderControl)
     }
     
-    var shouldIndentWhileEditing: BindableRelay<Bool> {
+    var shouldIndentWhileEditing: BindableObservable<Bool> {
         bindable(of:\.shouldIndentWhileEditing)
     }
     
-    var accessoryView: BindableRelay<UIView?> {
+    var accessoryView: BindableObservable<UIView?> {
         bindable(of:\.accessoryView)
     }
     
-    var editingAccessoryView: BindableRelay<UIView?> {
+    var editingAccessoryView: BindableObservable<UIView?> {
         bindable(of:\.editingAccessoryView)
     }
     
-    var indentationLevel: BindableRelay<Int> {
+    var indentationLevel: BindableObservable<Int> {
         bindable(of:\.indentationLevel)
     }
     
-    var indentationWidth: BindableRelay<CGFloat> {
+    var indentationWidth: BindableObservable<CGFloat> {
         bindable(of:\.indentationWidth)
     }
     
-    var isEditing: BindableRelay<Bool> {
+    var isEditing: BindableObservable<Bool> {
         bindable(of:\.isEditing)
     }
     
     @available(iOS 11.0, *)
-    var userInteractionEnabledWhileDragging: BindableRelay<Bool> {
+    var userInteractionEnabledWhileDragging: BindableObservable<Bool> {
         bindable(of:\.userInteractionEnabledWhileDragging)
     }
 }
@@ -85,28 +85,28 @@ public extension RelayCollection where Object: UICollectionViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: BindableRelay<Bool> {
+    var automaticallyUpdatesContentConfiguration: BindableObservable<Bool> {
         bindable(of:\.automaticallyUpdatesContentConfiguration)
     }
     
-    var isSelected: BindableRelay<Bool> {
+    var isSelected: BindableObservable<Bool> {
         bindable(of:\.isSelected)
     }
     
-    var isHighlighted: BindableRelay<Bool> {
+    var isHighlighted: BindableObservable<Bool> {
         bindable(of:\.isHighlighted)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: BindableRelay<Bool> {
+    var automaticallyUpdatesBackgroundConfiguration: BindableObservable<Bool> {
         bindable(of:\.automaticallyUpdatesBackgroundConfiguration)
     }
     
-    var backgroundView: BindableRelay<UIView?> {
+    var backgroundView: BindableObservable<UIView?> {
         bindable(of:\.backgroundView)
     }
     
-    var selectedBackgroundView: BindableRelay<UIView?> {
+    var selectedBackgroundView: BindableObservable<UIView?> {
         bindable(of:\.selectedBackgroundView)
     }
     

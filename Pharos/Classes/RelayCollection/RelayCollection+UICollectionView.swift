@@ -13,63 +13,63 @@ public extension RelayCollection where Object: UICollectionView {
     
     // MARK: Two Way Relay
     
-    var collectionViewLayout: BindableRelay<UICollectionViewLayout> {
+    var collectionViewLayout: BindableObservable<UICollectionViewLayout> {
         bindable(of:\.collectionViewLayout)
     }
     
-    var delegate: BindableRelay<UICollectionViewDelegate?> {
+    var delegate: BindableObservable<UICollectionViewDelegate?> {
         bindable(of:\.delegate)
     }
     
-    var dataSource: BindableRelay<UICollectionViewDataSource?> {
+    var dataSource: BindableObservable<UICollectionViewDataSource?> {
         bindable(of:\.dataSource)
     }
     
-    var prefetchDataSource: BindableRelay<UICollectionViewDataSourcePrefetching?> {
+    var prefetchDataSource: BindableObservable<UICollectionViewDataSourcePrefetching?> {
         bindable(of:\.prefetchDataSource)
     }
     
-    var isPrefetchingEnabled: BindableRelay<Bool> {
+    var isPrefetchingEnabled: BindableObservable<Bool> {
         bindable(of:\.isPrefetchingEnabled)
     }
     
     @available(iOS 11.0, *)
-    var dragDelegate: BindableRelay<UICollectionViewDragDelegate?> {
+    var dragDelegate: BindableObservable<UICollectionViewDragDelegate?> {
         bindable(of:\.dragDelegate)
     }
     @available(iOS 11.0, *)
-    var dropDelegate: BindableRelay<UICollectionViewDropDelegate?> {
+    var dropDelegate: BindableObservable<UICollectionViewDropDelegate?> {
         bindable(of:\.dropDelegate)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: BindableRelay<Bool> {
+    var dragInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.dragInteractionEnabled)
     }
     
-    var backgroundView: BindableRelay<UIView?> {
+    var backgroundView: BindableObservable<UIView?> {
         bindable(of:\.backgroundView)
     }
     
-    var allowsSelection: BindableRelay<Bool> {
+    var allowsSelection: BindableObservable<Bool> {
         bindable(of:\.allowsSelection)
     }
     
-    var allowsMultipleSelection: BindableRelay<Bool> {
+    var allowsMultipleSelection: BindableObservable<Bool> {
         bindable(of:\.allowsMultipleSelection)
     }
     
-    var remembersLastFocusedIndexPath: BindableRelay<Bool> {
+    var remembersLastFocusedIndexPath: BindableObservable<Bool> {
         bindable(of:\.remembersLastFocusedIndexPath)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: BindableRelay<Bool> {
+    var selectionFollowsFocus: BindableObservable<Bool> {
         bindable(of:\.selectionFollowsFocus)
     }
     
     @available(iOS 14.0, *)
-    var isEditing: BindableRelay<Bool> {
+    var isEditing: BindableObservable<Bool> {
         bindable(of:\.isEditing)
     }
     

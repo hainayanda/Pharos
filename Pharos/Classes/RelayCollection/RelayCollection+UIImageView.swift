@@ -13,35 +13,35 @@ public extension RelayCollection where Object: UIImageView {
     
     // MARK: Two Way Relay
     
-    var image: BindableRelay<UIImage?> {
+    var image: BindableObservable<UIImage?> {
         bindable(of:\.image)
     }
     
-    var highlightedImage: BindableRelay<UIImage?> {
+    var highlightedImage: BindableObservable<UIImage?> {
         bindable(of:\.highlightedImage)
     }
 
-    var isUserInteractionEnabled: BindableRelay<Bool> {
+    var isUserInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.isUserInteractionEnabled)
     }
     
-    var isHighlighted: BindableRelay<Bool> {
+    var isHighlighted: BindableObservable<Bool> {
         bindable(of:\.isHighlighted)
     }
     
-    var animationImages: BindableRelay<[UIImage]?> {
+    var animationImages: BindableObservable<[UIImage]?> {
         bindable(of:\.animationImages)
     }
 
-    var highlightedAnimationImages: BindableRelay<[UIImage]?> {
+    var highlightedAnimationImages: BindableObservable<[UIImage]?> {
         bindable(of:\.highlightedAnimationImages)
     }
     
-    var animationDuration: BindableRelay<TimeInterval> {
+    var animationDuration: BindableObservable<TimeInterval> {
         bindable(of:\.animationDuration)
     }
 
-    var animationRepeatCount: BindableRelay<Int> {
+    var animationRepeatCount: BindableObservable<Int> {
         bindable(of:\.animationRepeatCount)
     }
     

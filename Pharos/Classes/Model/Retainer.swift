@@ -28,18 +28,18 @@ final public class Retainer {
 }
 
 final class WeakObservableRetainer<Observed> {
-    weak var wrapped: ObservableValue<Observed>?
+    weak var wrapped: Observable<Observed>?
     
-    init(wrapped: ObservableValue<Observed>) {
+    init(wrapped: Observable<Observed>) {
         self.wrapped = wrapped
     }
 }
 
-final class WeakRelayRetainer<Relayed>: Relay {
+final class WeakRelayRetainer<Relayed>: StateRelay {
     
-    weak var wrapped: AnyRelay?
+    weak var wrapped: AnyStateRelay?
     
-    init<Wrapped: Relay>(wrapped: Wrapped) {
+    init<Wrapped: StateRelay>(wrapped: Wrapped) {
         self.wrapped = wrapped
     }
     
@@ -47,14 +47,14 @@ final class WeakRelayRetainer<Relayed>: Relay {
         self.wrapped?.tryRelay(changes: changes)
     }
     
-    func relay(changes: Changes<Relayed>, skip: AnyRelay) {
+    func relay(changes: Changes<Relayed>, skip: AnyStateRelay) {
         guard let wrapped = self.wrapped, !wrapped.isSameRelay(with: skip) else {
             return
         }
         relay(changes: changes)
     }
     
-    func isSameRelay(with anotherRelay: AnyRelay) -> Bool {
+    func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
         guard anotherRelay === self else {
             guard let wrapped = wrapped else {
                 return false
@@ -71,9 +71,9 @@ final class WeakRelayRetainer<Relayed>: Relay {
     }
 }
 
-final class RelayRetainerGroup<Relayed>: Relay {
+final class RelayRetainerGroup<Relayed>: StateRelay {
     
-    @Atomic var relays: [AnyRelay] = []
+    @Atomic var relays: [AnyStateRelay] = []
     
     func relay(changes: Changes<Relayed>) {
         let copy = relays
@@ -82,14 +82,14 @@ final class RelayRetainerGroup<Relayed>: Relay {
         }
     }
     
-    func relay(changes: Changes<Relayed>, skip: AnyRelay) {
+    func relay(changes: Changes<Relayed>, skip: AnyStateRelay) {
         let copy = relays
         for relay in copy where !relay.isSameRelay(with: skip) {
             relay.tryRelay(changes: changes)
         }
     }
     
-    func addToGroup(_ relay: AnyRelay) {
+    func addToGroup(_ relay: AnyStateRelay) {
         remove(relay)
         relays.append(relay)
     }
@@ -99,7 +99,7 @@ final class RelayRetainerGroup<Relayed>: Relay {
     }
     
     @discardableResult
-    func remove(_ relay: AnyRelay) -> Bool {
+    func remove(_ relay: AnyStateRelay) -> Bool {
         var found = false
         relays.removeAll {
             let sameRelay = $0.isSameRelay(with: relay)
@@ -109,7 +109,7 @@ final class RelayRetainerGroup<Relayed>: Relay {
         return found
     }
     
-    func isSameRelay(with anotherRelay: AnyRelay) -> Bool {
+    func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
         guard let group = anotherRelay as? RelayRetainerGroup<Relayed> else {
             return false
         }

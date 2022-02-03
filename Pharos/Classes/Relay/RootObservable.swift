@@ -7,23 +7,23 @@
 
 import Foundation
 
-open class RootObservableRelay<Observed>: ObservableValue<Observed>, Relay {
+open class RootObservable<Observed>: Observable<Observed>, StateRelay {
     
-    typealias Relayed = Observed
+    typealias RelayedState = Observed
     private var _recentValue: Observed?
-    override var recentValue: Observed? { _recentValue }
+    override var recentState: Observed? { _recentValue }
     
-    func relay(changes: Changes<Relayed>) {
+    func relay(changes: Changes<RelayedState>) {
         _recentValue = changes.new
         relayGroup.relay(changes: changes)
     }
     
-    func relay(changes: Changes<Relayed>, skip: AnyRelay) {
+    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
         _recentValue = changes.new
         relayGroup.relay(changes: changes, skip: skip)
     }
     
-    func isSameRelay(with anotherRelay: AnyRelay) -> Bool {
+    func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
         self === anotherRelay
     }
 }

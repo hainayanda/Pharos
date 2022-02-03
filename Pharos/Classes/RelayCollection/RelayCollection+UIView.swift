@@ -13,102 +13,102 @@ public extension RelayCollection where Object: UIView {
     
     // MARK: Two Way Relay
 
-    var isUserInteractionEnabled: BindableRelay<Bool> {
+    var isUserInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.isUserInteractionEnabled)
     }
     
-    var tag: BindableRelay<Int> {
+    var tag: BindableObservable<Int> {
         bindable(of:\.tag)
     }
     
     @available(iOS 14.0, *)
-    var focusGroupIdentifier: BindableRelay<String?> {
+    var focusGroupIdentifier: BindableObservable<String?> {
         bindable(of:\.focusGroupIdentifier)
     }
     
-    var frame: BindableRelay<CGRect> {
+    var frame: BindableObservable<CGRect> {
         bindable(of:\.frame)
     }
     
-    var bounds: BindableRelay<CGRect> {
+    var bounds: BindableObservable<CGRect> {
         bindable(of:\.bounds)
     }
     
-    var center: BindableRelay<CGPoint> {
+    var center: BindableObservable<CGPoint> {
         bindable(of:\.center)
     }
     
-    var contentScaleFactor: BindableRelay<CGFloat> {
+    var contentScaleFactor: BindableObservable<CGFloat> {
         bindable(of:\.contentScaleFactor)
     }
     
-    var isMultipleTouchEnabled: BindableRelay<Bool> {
+    var isMultipleTouchEnabled: BindableObservable<Bool> {
         bindable(of:\.isMultipleTouchEnabled)
     }
     
-    var isExclusiveTouch: BindableRelay<Bool> {
+    var isExclusiveTouch: BindableObservable<Bool> {
         bindable(of:\.isExclusiveTouch)
     }
 
-    var autoresizesSubviews: BindableRelay<Bool> {
+    var autoresizesSubviews: BindableObservable<Bool> {
         bindable(of:\.autoresizesSubviews)
     }
     
-    var layoutMargins: BindableRelay<UIEdgeInsets> {
+    var layoutMargins: BindableObservable<UIEdgeInsets> {
         bindable(of:\.layoutMargins)
     }
     
     @available(iOS 11.0, *)
-    var directionalLayoutMargins: BindableRelay<NSDirectionalEdgeInsets> {
+    var directionalLayoutMargins: BindableObservable<NSDirectionalEdgeInsets> {
         bindable(of:\.directionalLayoutMargins)
     }
     
-    var preservesSuperviewLayoutMargins: BindableRelay<Bool> {
+    var preservesSuperviewLayoutMargins: BindableObservable<Bool> {
         bindable(of:\.preservesSuperviewLayoutMargins)
     }
     
     @available(iOS 11.0, *)
-    var insetsLayoutMarginsFromSafeArea: BindableRelay<Bool> {
+    var insetsLayoutMarginsFromSafeArea: BindableObservable<Bool> {
         bindable(of:\.insetsLayoutMarginsFromSafeArea)
     }
     
-    var clipsToBounds: BindableRelay<Bool> {
+    var clipsToBounds: BindableObservable<Bool> {
         bindable(of:\.clipsToBounds)
     }
     
-    var backgroundColor: BindableRelay<UIColor?> {
+    var backgroundColor: BindableObservable<UIColor?> {
         bindable(of:\.backgroundColor)
     }
     
-    var alpha: BindableRelay<CGFloat> {
+    var alpha: BindableObservable<CGFloat> {
         bindable(of:\.alpha)
     }
     
-    var isOpaque: BindableRelay<Bool> {
+    var isOpaque: BindableObservable<Bool> {
         bindable(of:\.isOpaque)
     }
     
-    var clearsContextBeforeDrawing: BindableRelay<Bool> {
+    var clearsContextBeforeDrawing: BindableObservable<Bool> {
         bindable(of:\.clearsContextBeforeDrawing)
     }
     
-    var isHidden: BindableRelay<Bool> {
+    var isHidden: BindableObservable<Bool> {
         bindable(of:\.isHidden)
     }
     
-    var mask: BindableRelay<UIView?> {
+    var mask: BindableObservable<UIView?> {
         bindable(of:\.mask)
     }
     
-    var tintColor: BindableRelay<UIColor?> {
+    var tintColor: BindableObservable<UIColor?> {
         bindable(of:\.tintColor)
     }
     
-    var translatesAutoresizingMaskIntoConstraints: BindableRelay<Bool> {
+    var translatesAutoresizingMaskIntoConstraints: BindableObservable<Bool> {
         bindable(of:\.translatesAutoresizingMaskIntoConstraints)
     }
     
-    var restorationIdentifier: BindableRelay<String?> {
+    var restorationIdentifier: BindableObservable<String?> {
         bindable(of:\.restorationIdentifier)
     }
     

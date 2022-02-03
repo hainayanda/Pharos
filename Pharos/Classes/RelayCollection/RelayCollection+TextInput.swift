@@ -15,60 +15,60 @@ public extension RelayCollection where Object: UITextView {
     
     // MARK: Two Way Relay
     
-    var text: BindableRelay<String?> {
+    var text: BindableObservable<String?> {
         bindable(of:\.text)
     }
 
-    var font: BindableRelay<UIFont?> {
+    var font: BindableObservable<UIFont?> {
         bindable(of:\.font)
     }
 
-    var textColor: BindableRelay<UIColor?> {
+    var textColor: BindableObservable<UIColor?> {
         bindable(of:\.textColor)
     }
 
-    var textAlignment: BindableRelay<NSTextAlignment> {
+    var textAlignment: BindableObservable<NSTextAlignment> {
         bindable(of:\.textAlignment)
     }
 
-    var selectedRange: BindableRelay<NSRange> {
+    var selectedRange: BindableObservable<NSRange> {
         bindable(of:\.selectedRange)
     }
 
-    var isEditable: BindableRelay<Bool> {
+    var isEditable: BindableObservable<Bool> {
         bindable(of:\.isEditable)
     }
 
-    var isSelectable: BindableRelay<Bool> {
+    var isSelectable: BindableObservable<Bool> {
         bindable(of:\.isSelectable)
     }
     
-    var allowsEditingTextAttributes: BindableRelay<Bool> {
+    var allowsEditingTextAttributes: BindableObservable<Bool> {
         bindable(of:\.allowsEditingTextAttributes)
     }
     
-    var attributedText: BindableRelay<NSAttributedString> {
+    var attributedText: BindableObservable<NSAttributedString> {
         bindable(of:\.attributedText)
     }
     
-    var inputView: BindableRelay<UIView?> {
+    var inputView: BindableObservable<UIView?> {
         bindable(of:\.inputView)
     }
 
-    var inputAccessoryView: BindableRelay<UIView?> {
+    var inputAccessoryView: BindableObservable<UIView?> {
         bindable(of:\.inputAccessoryView)
     }
     
-    var clearsOnInsertion: BindableRelay<Bool> {
+    var clearsOnInsertion: BindableObservable<Bool> {
         bindable(of:\.clearsOnInsertion)
     }
     
-    var textContainerInset: BindableRelay<UIEdgeInsets> {
+    var textContainerInset: BindableObservable<UIEdgeInsets> {
         bindable(of:\.textContainerInset)
     }
     
     @available(iOS 13.0, *)
-    var usesStandardTextScaling: BindableRelay<Bool> {
+    var usesStandardTextScaling: BindableObservable<Bool> {
         bindable(of:\.usesStandardTextScaling)
     }
 }
@@ -79,63 +79,63 @@ public extension RelayCollection where Object: UITextField {
     
     // MARK: Two Way Relay
     
-    var text: BindableRelay<String?> {
+    var text: BindableObservable<String?> {
         bindable(of:\.text)
     }
     
-    var attributedText: BindableRelay<NSAttributedString?> {
+    var attributedText: BindableObservable<NSAttributedString?> {
         bindable(of:\.attributedText)
     }
     
-    var textColor: BindableRelay<UIColor?> {
+    var textColor: BindableObservable<UIColor?> {
         bindable(of:\.textColor)
     }
     
-    var font: BindableRelay<UIFont?> {
+    var font: BindableObservable<UIFont?> {
         bindable(of:\.font)
     }
     
-    var placeholder: BindableRelay<String?> {
+    var placeholder: BindableObservable<String?> {
         bindable(of:\.placeholder)
     }
 
-    var adjustsFontSizeToFitWidth: BindableRelay<Bool> {
+    var adjustsFontSizeToFitWidth: BindableObservable<Bool> {
         bindable(of:\.adjustsFontSizeToFitWidth)
     }
 
-    var delegate: BindableRelay<UITextFieldDelegate?> {
+    var delegate: BindableObservable<UITextFieldDelegate?> {
         bindable(of:\.delegate)
     }
     
-    var disabledBackground: BindableRelay<UIImage?> {
+    var disabledBackground: BindableObservable<UIImage?> {
         bindable(of:\.disabledBackground)
     }
     
-    var allowsEditingTextAttributes: BindableRelay<Bool> {
+    var allowsEditingTextAttributes: BindableObservable<Bool> {
         bindable(of:\.allowsEditingTextAttributes)
     }
     
-    var leftView: BindableRelay<UIView?> {
+    var leftView: BindableObservable<UIView?> {
         bindable(of:\.leftView)
     }
     
-    var rightView: BindableRelay<UIView?> {
+    var rightView: BindableObservable<UIView?> {
         bindable(of:\.rightView)
     }
 
-    var rightViewMode: BindableRelay<UITextField.ViewMode> {
+    var rightViewMode: BindableObservable<UITextField.ViewMode> {
         bindable(of:\.rightViewMode)
     }
     
-    var inputView: BindableRelay<UIView?> {
+    var inputView: BindableObservable<UIView?> {
         bindable(of:\.inputView)
     }
 
-    var inputAccessoryView: BindableRelay<UIView?> {
+    var inputAccessoryView: BindableObservable<UIView?> {
         bindable(of:\.inputAccessoryView)
     }
     
-    var clearsOnInsertion: BindableRelay<Bool> {
+    var clearsOnInsertion: BindableObservable<Bool> {
         bindable(of:\.clearsOnInsertion)
     }
     
@@ -147,59 +147,59 @@ public extension RelayCollection where Object: UISearchBar {
     
     // MARK: Two Way Relay
 
-    var delegate: BindableRelay<UISearchBarDelegate?> {
+    var delegate: BindableObservable<UISearchBarDelegate?> {
         bindable(of:\.delegate)
     }
 
-    var text: BindableRelay<String?> {
+    var text: BindableObservable<String?> {
         bindable(of:\.text)
     }
 
-    var prompt: BindableRelay<String?> {
+    var prompt: BindableObservable<String?> {
         bindable(of:\.prompt)
     }
 
-    var placeholder: BindableRelay<String?> {
+    var placeholder: BindableObservable<String?> {
         bindable(of:\.placeholder)
     }
 
-    var showsBookmarkButton: BindableRelay<Bool> {
+    var showsBookmarkButton: BindableObservable<Bool> {
         bindable(of:\.showsBookmarkButton)
     }
     
-    var showsCancelButton: BindableRelay<Bool> {
+    var showsCancelButton: BindableObservable<Bool> {
         bindable(of:\.showsCancelButton)
     }
     
-    var showsSearchResultsButton: BindableRelay<Bool> {
+    var showsSearchResultsButton: BindableObservable<Bool> {
         bindable(of:\.showsSearchResultsButton)
     }
     
-    var isSearchResultsButtonSelected: BindableRelay<Bool> {
+    var isSearchResultsButtonSelected: BindableObservable<Bool> {
         bindable(of:\.isSearchResultsButtonSelected)
     }
     
-    var barTintColor: BindableRelay<UIColor?> {
+    var barTintColor: BindableObservable<UIColor?> {
         bindable(of:\.barTintColor)
     }
     
-    var isTranslucent: BindableRelay<Bool> {
+    var isTranslucent: BindableObservable<Bool> {
         bindable(of:\.isTranslucent)
     }
     
-    var inputAccessoryView: BindableRelay<UIView?> {
+    var inputAccessoryView: BindableObservable<UIView?> {
         bindable(of:\.inputAccessoryView)
     }
     
-    var backgroundImage: BindableRelay<UIImage?> {
+    var backgroundImage: BindableObservable<UIImage?> {
         bindable(of:\.backgroundImage)
     }
     
-    var searchFieldBackgroundPositionAdjustment: BindableRelay<UIOffset> {
+    var searchFieldBackgroundPositionAdjustment: BindableObservable<UIOffset> {
         bindable(of:\.searchFieldBackgroundPositionAdjustment)
     }
     
-    var searchTextPositionAdjustment: BindableRelay<UIOffset> {
+    var searchTextPositionAdjustment: BindableObservable<UIOffset> {
         bindable(of:\.searchTextPositionAdjustment)
     }
     

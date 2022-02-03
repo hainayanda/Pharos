@@ -13,23 +13,23 @@ public extension RelayCollection where Object: UISwitch {
     
     // MARK: Two Way Relay
     
-    var onTintColor: BindableRelay<UIColor?> {
+    var onTintColor: BindableObservable<UIColor?> {
         bindable(of:\.onTintColor)
     }
     
-    var thumbTintColor: BindableRelay<UIColor?> {
+    var thumbTintColor: BindableObservable<UIColor?> {
         bindable(of:\.thumbTintColor)
     }
     
-    var onImage: BindableRelay<UIImage?> {
+    var onImage: BindableObservable<UIImage?> {
         bindable(of:\.onImage)
     }
     
-    var offImage: BindableRelay<UIImage?> {
+    var offImage: BindableObservable<UIImage?> {
         bindable(of:\.offImage)
     }
     
-    var isOn: BindableRelay<Bool> {
+    var isOn: BindableObservable<Bool> {
         bindable(of:\.isOn)
     }
     

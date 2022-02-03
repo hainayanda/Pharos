@@ -13,128 +13,128 @@ public extension RelayCollection where Object: UITableView {
     
     // MARK: Two Way Relay
     
-    var dataSource: BindableRelay<UITableViewDataSource?> {
+    var dataSource: BindableObservable<UITableViewDataSource?> {
         bindable(of:\.dataSource)
     }
     
-    var delegate: BindableRelay<UITableViewDelegate?> {
+    var delegate: BindableObservable<UITableViewDelegate?> {
         bindable(of:\.delegate)
     }
     
-    var prefetchDataSource: BindableRelay<UITableViewDataSourcePrefetching?> {
+    var prefetchDataSource: BindableObservable<UITableViewDataSourcePrefetching?> {
         bindable(of:\.prefetchDataSource)
     }
     
     @available(iOS 11.0, *)
-    var dragDelegate: BindableRelay<UITableViewDragDelegate?> {
+    var dragDelegate: BindableObservable<UITableViewDragDelegate?> {
         bindable(of:\.dragDelegate)
     }
     
     @available(iOS 11.0, *)
-    var dropDelegate: BindableRelay<UITableViewDropDelegate?> {
+    var dropDelegate: BindableObservable<UITableViewDropDelegate?> {
         bindable(of:\.dropDelegate)
     }
     
-    var rowHeight: BindableRelay<CGFloat> {
+    var rowHeight: BindableObservable<CGFloat> {
         bindable(of:\.rowHeight)
     }
     
-    var sectionHeaderHeight: BindableRelay<CGFloat> {
+    var sectionHeaderHeight: BindableObservable<CGFloat> {
         bindable(of:\.sectionHeaderHeight)
     }
     
-    var sectionFooterHeight: BindableRelay<CGFloat> {
+    var sectionFooterHeight: BindableObservable<CGFloat> {
         bindable(of:\.sectionFooterHeight)
     }
     
-    var estimatedRowHeight: BindableRelay<CGFloat> {
+    var estimatedRowHeight: BindableObservable<CGFloat> {
         bindable(of:\.estimatedRowHeight)
     }
     
-    var estimatedSectionHeaderHeight: BindableRelay<CGFloat> {
+    var estimatedSectionHeaderHeight: BindableObservable<CGFloat> {
         bindable(of:\.estimatedSectionHeaderHeight)
     }
     
-    var estimatedSectionFooterHeight: BindableRelay<CGFloat> {
+    var estimatedSectionFooterHeight: BindableObservable<CGFloat> {
         bindable(of:\.estimatedSectionFooterHeight)
     }
     
-    var separatorInset: BindableRelay<UIEdgeInsets> {
+    var separatorInset: BindableObservable<UIEdgeInsets> {
         bindable(of:\.separatorInset)
     }
     
-    var backgroundView: BindableRelay<UIView?> {
+    var backgroundView: BindableObservable<UIView?> {
         bindable(of:\.backgroundView)
     }
     
-    var isEditing: BindableRelay<Bool> {
+    var isEditing: BindableObservable<Bool> {
         bindable(of:\.isEditing)
     }
     
-    var allowsSelection: BindableRelay<Bool> {
+    var allowsSelection: BindableObservable<Bool> {
         bindable(of:\.allowsSelection)
     }
     
-    var allowsMultipleSelection: BindableRelay<Bool> {
+    var allowsMultipleSelection: BindableObservable<Bool> {
         bindable(of:\.allowsMultipleSelection)
     }
     
-    var sectionIndexMinimumDisplayRowCount: BindableRelay<Int> {
+    var sectionIndexMinimumDisplayRowCount: BindableObservable<Int> {
         bindable(of:\.sectionIndexMinimumDisplayRowCount)
     }
     
-    var sectionIndexColor: BindableRelay<UIColor?> {
+    var sectionIndexColor: BindableObservable<UIColor?> {
         bindable(of:\.sectionIndexColor)
     }
     
-    var sectionIndexBackgroundColor: BindableRelay<UIColor?> {
+    var sectionIndexBackgroundColor: BindableObservable<UIColor?> {
         bindable(of:\.sectionIndexBackgroundColor)
     }
     
-    var sectionIndexTrackingBackgroundColor: BindableRelay<UIColor?> {
+    var sectionIndexTrackingBackgroundColor: BindableObservable<UIColor?> {
         bindable(of:\.sectionIndexTrackingBackgroundColor)
     }
     
-    var separatorStyle: BindableRelay<UITableViewCell.SeparatorStyle> {
+    var separatorStyle: BindableObservable<UITableViewCell.SeparatorStyle> {
         bindable(of:\.separatorStyle)
     }
     
-    var separatorColor: BindableRelay<UIColor?> {
+    var separatorColor: BindableObservable<UIColor?> {
         bindable(of:\.separatorColor)
     }
     
-    var separatorEffect: BindableRelay<UIVisualEffect?> {
+    var separatorEffect: BindableObservable<UIVisualEffect?> {
         bindable(of:\.separatorEffect)
     }
     
-    var cellLayoutMarginsFollowReadableWidth: BindableRelay<Bool> {
+    var cellLayoutMarginsFollowReadableWidth: BindableObservable<Bool> {
         bindable(of:\.cellLayoutMarginsFollowReadableWidth)
     }
     
     @available(iOS 11.0, *)
-    var insetsContentViewsToSafeArea: BindableRelay<Bool> {
+    var insetsContentViewsToSafeArea: BindableObservable<Bool> {
         bindable(of:\.insetsContentViewsToSafeArea)
     }
     
-    var tableHeaderView: BindableRelay<UIView?> {
+    var tableHeaderView: BindableObservable<UIView?> {
         bindable(of:\.tableHeaderView)
     }
     
-    var tableFooterView: BindableRelay<UIView?> {
+    var tableFooterView: BindableObservable<UIView?> {
         bindable(of:\.tableFooterView)
     }
     
-    var remembersLastFocusedIndexPath: BindableRelay<Bool> {
+    var remembersLastFocusedIndexPath: BindableObservable<Bool> {
         bindable(of:\.remembersLastFocusedIndexPath)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: BindableRelay<Bool> {
+    var selectionFollowsFocus: BindableObservable<Bool> {
         bindable(of:\.selectionFollowsFocus)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: BindableRelay<Bool> {
+    var dragInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.dragInteractionEnabled)
     }
     

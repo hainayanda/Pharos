@@ -13,63 +13,63 @@ public extension RelayCollection where Object: UILabel {
     
     // MARK: Two Way Relay
     
-    var text: BindableRelay<String?> {
+    var text: BindableObservable<String?> {
         bindable(of:\.text)
     }
 
-    var font: BindableRelay<UIFont?> {
+    var font: BindableObservable<UIFont?> {
         bindable(of:\.font)
     }
 
-    var textColor: BindableRelay<UIColor?> {
+    var textColor: BindableObservable<UIColor?> {
         bindable(of:\.textColor)
     }
 
-    var shadowColor: BindableRelay<UIColor?> {
+    var shadowColor: BindableObservable<UIColor?> {
         bindable(of:\.shadowColor)
     }
 
-    var shadowOffset: BindableRelay<CGSize> {
+    var shadowOffset: BindableObservable<CGSize> {
         bindable(of:\.shadowOffset)
     }
     
-    var attributedText: BindableRelay<NSAttributedString?> {
+    var attributedText: BindableObservable<NSAttributedString?> {
         bindable(of:\.attributedText)
     }
     
-    var highlightedTextColor: BindableRelay<UIColor?> {
+    var highlightedTextColor: BindableObservable<UIColor?> {
         bindable(of:\.highlightedTextColor)
     }
 
-    var isHighlighted: BindableRelay<Bool> {
+    var isHighlighted: BindableObservable<Bool> {
         bindable(of:\.isHighlighted)
     }
 
-    var isUserInteractionEnabled: BindableRelay<Bool> {
+    var isUserInteractionEnabled: BindableObservable<Bool> {
         bindable(of:\.isUserInteractionEnabled)
     }
 
-    var isEnabled: BindableRelay<Bool> {
+    var isEnabled: BindableObservable<Bool> {
         bindable(of:\.isEnabled)
     }
     
-    var numberOfLines: BindableRelay<Int> {
+    var numberOfLines: BindableObservable<Int> {
         bindable(of:\.numberOfLines)
     }
     
-    var adjustsFontSizeToFitWidth: BindableRelay<Bool> {
+    var adjustsFontSizeToFitWidth: BindableObservable<Bool> {
         bindable(of:\.adjustsFontSizeToFitWidth)
     }
     
-    var minimumScaleFactor: BindableRelay<CGFloat> {
+    var minimumScaleFactor: BindableObservable<CGFloat> {
         bindable(of:\.minimumScaleFactor)
     }
     
-    var allowsDefaultTighteningForTruncation: BindableRelay<Bool> {
+    var allowsDefaultTighteningForTruncation: BindableObservable<Bool> {
         bindable(of:\.allowsDefaultTighteningForTruncation)
     }
     
-    var preferredMaxLayoutWidth: BindableRelay<CGFloat> {
+    var preferredMaxLayoutWidth: BindableObservable<CGFloat> {
         bindable(of:\.preferredMaxLayoutWidth)
     }
     

@@ -13,19 +13,19 @@ enum RelayOperationStatus {
     case idle
 }
 
-open class ObservedRelay<Observed>: ObservedObservable {
-    typealias Observer = (Changes<Observed>) -> Void
+open class Observed<State>: ObservedSubject {
+    typealias Observer = (Changes<State>) -> Void
     
     let observer: Observer
     
-    weak var source: ObservableValue<Observed>?
+    weak var source: Observable<State>?
     
     var queue: DispatchQueue?
     var preferSync: Bool = true
     var delay: TimeInterval?
     
     @Atomic var status: RelayOperationStatus = .idle
-    @Atomic var pendingChanges: Changes<Relayed>?
+    @Atomic var pendingChanges: Changes<RelayedState>?
     
     var canRelay: Bool {
         switch status {
@@ -36,7 +36,7 @@ open class ObservedRelay<Observed>: ObservedObservable {
         }
     }
     
-    init(source: ObservableValue<Observed>, observer: @escaping Observer) {
+    init(source: Observable<State>, observer: @escaping Observer) {
         self.source = source
         self.observer = observer
     }
@@ -69,9 +69,9 @@ open class ObservedRelay<Observed>: ObservedObservable {
     }
 }
 
-extension ObservedRelay: Relay {
-    typealias Relayed = Observed
-    func relay(changes: Changes<Relayed>) {
+extension Observed: StateRelay {
+    typealias RelayedState = State
+    func relay(changes: Changes<RelayedState>) {
         guard canRelay else {
             putInPending(for: changes)
             return
@@ -85,7 +85,7 @@ extension ObservedRelay: Relay {
         finishRelay()
     }
     
-    func relay(changes: Changes<Relayed>, skip: AnyRelay) {
+    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
         if self === skip { return }
         relay(changes: changes)
     }
@@ -104,7 +104,7 @@ extension ObservedRelay: Relay {
         }
     }
     
-    func relayAsync(for changes: Changes<Relayed>) {
+    func relayAsync(for changes: Changes<RelayedState>) {
         let observer = self.observer
         let queue = (self.queue ?? .current) ?? .main
         queue.async {
@@ -112,7 +112,7 @@ extension ObservedRelay: Relay {
         }
     }
     
-    func relaySync(for changes: Changes<Relayed>) {
+    func relaySync(for changes: Changes<RelayedState>) {
         let observer = self.observer
         guard let queue = self.queue else {
             observer(changes)
@@ -123,7 +123,7 @@ extension ObservedRelay: Relay {
         }
     }
     
-    func putInPending(for changes: Changes<Relayed>) {
+    func putInPending(for changes: Changes<RelayedState>) {
         let old = self.pendingChanges?.old ?? changes.old
         self.pendingChanges = Changes(
             old: old,
@@ -132,14 +132,14 @@ extension ObservedRelay: Relay {
         )
     }
     
-    func dequeuePendingChanges() -> Changes<Relayed>? {
+    func dequeuePendingChanges() -> Changes<RelayedState>? {
         defer {
             self.pendingChanges = nil
         }
         return pendingChanges
     }
     
-    func isSameRelay(with anotherRelay: AnyRelay) -> Bool {
+    func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
         self === anotherRelay
     }
 }

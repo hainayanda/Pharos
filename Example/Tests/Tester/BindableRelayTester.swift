@@ -15,7 +15,7 @@ import UIKit
 
 func testRelay<Object: NSObject, Property>(
     for underlyingObject: Object,
-    relay: BindableRelay<Property>,
+    relay: BindableObservable<Property>,
     keyPath: ReferenceWritableKeyPath<Object, Property>,
     with newValue: Property,
     test: @escaping (Changes<Property>, Property) -> Void) {
@@ -38,7 +38,7 @@ func testRelay<Object: NSObject, Property>(
 
 func testBoolRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<Bool>,
+    relay: BindableObservable<Bool>,
     keyPath: ReferenceWritableKeyPath<Object, Bool>) {
     let newValue: Bool = .random()
     testRelay(
@@ -53,7 +53,7 @@ func testBoolRelay<Object: NSObject>(
 
 func testBreakModeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSLineBreakMode>,
+    relay: BindableObservable<NSLineBreakMode>,
     keyPath: ReferenceWritableKeyPath<Object, NSLineBreakMode>) {
     let newValue: NSLineBreakMode = .byClipping
     testRelay(
@@ -68,7 +68,7 @@ func testBreakModeRelay<Object: NSObject>(
 
 func testBaselineRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIBaselineAdjustment>,
+    relay: BindableObservable<UIBaselineAdjustment>,
     keyPath: ReferenceWritableKeyPath<Object, UIBaselineAdjustment>) {
     let newValue: UIBaselineAdjustment = .alignBaselines
     testRelay(
@@ -83,7 +83,7 @@ func testBaselineRelay<Object: NSObject>(
 
 func testLineBreakRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSParagraphStyle.LineBreakStrategy>,
+    relay: BindableObservable<NSParagraphStyle.LineBreakStrategy>,
     keyPath: ReferenceWritableKeyPath<Object, NSParagraphStyle.LineBreakStrategy>) {
     let newValue: NSParagraphStyle.LineBreakStrategy = .pushOut
     testRelay(
@@ -98,7 +98,7 @@ func testLineBreakRelay<Object: NSObject>(
 
 func testArrayImageRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<[UIImage]?>,
+    relay: BindableObservable<[UIImage]?>,
     keyPath: ReferenceWritableKeyPath<Object, [UIImage]?>) {
     let newValue: [UIImage]? = [UIImage()]
     testRelay(
@@ -117,7 +117,7 @@ func testArrayImageRelay<Object: NSObject>(
 
 func testTextAlignementRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSTextAlignment>,
+    relay: BindableObservable<NSTextAlignment>,
     keyPath: ReferenceWritableKeyPath<Object, NSTextAlignment>) {
     let newValue: NSTextAlignment = .justified
     testRelay(
@@ -132,7 +132,7 @@ func testTextAlignementRelay<Object: NSObject>(
 
 func testOffsetRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIOffset>,
+    relay: BindableObservable<UIOffset>,
     keyPath: ReferenceWritableKeyPath<Object, UIOffset>) {
     let newValue: UIOffset = .init(horizontal: 123, vertical: 456)
     testRelay(
@@ -149,7 +149,7 @@ func testOffsetRelay<Object: NSObject>(
 
 func testBorderStyleRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UITextField.BorderStyle>,
+    relay: BindableObservable<UITextField.BorderStyle>,
     keyPath: ReferenceWritableKeyPath<Object, UITextField.BorderStyle>) {
     let newValue: UITextField.BorderStyle = .bezel
     testRelay(
@@ -164,7 +164,7 @@ func testBorderStyleRelay<Object: NSObject>(
 
 func testRangeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSRange>,
+    relay: BindableObservable<NSRange>,
     keyPath: ReferenceWritableKeyPath<Object, NSRange>) {
     let newValue: NSRange = NSRange(location: 0, length: 0)
     testRelay(
@@ -179,7 +179,7 @@ func testRangeRelay<Object: NSObject>(
 
 func testDataDetectorRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIDataDetectorTypes>,
+    relay: BindableObservable<UIDataDetectorTypes>,
     keyPath: ReferenceWritableKeyPath<Object, UIDataDetectorTypes>) {
     let newValue: UIDataDetectorTypes = .address
     testRelay(
@@ -194,7 +194,7 @@ func testDataDetectorRelay<Object: NSObject>(
 
 func testAttributedStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSAttributedString>,
+    relay: BindableObservable<NSAttributedString>,
     keyPath: ReferenceWritableKeyPath<Object, NSAttributedString>) {
     testRelay(
         for: underlyingObject,
@@ -208,7 +208,7 @@ func testAttributedStringRelay<Object: NSObject>(
 
 func testOptAttributedStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSAttributedString?>,
+    relay: BindableObservable<NSAttributedString?>,
     keyPath: ReferenceWritableKeyPath<Object, NSAttributedString?>) {
     testRelay(
         for: underlyingObject,
@@ -226,7 +226,7 @@ func testOptAttributedStringRelay<Object: NSObject>(
 
 func testFontRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIFont?>,
+    relay: BindableObservable<UIFont?>,
     keyPath: ReferenceWritableKeyPath<Object, UIFont?>) {
     let newValue: UIFont = UIFont.systemFont(ofSize: 123, weight: .medium)
     testRelay(
@@ -245,7 +245,7 @@ func testFontRelay<Object: NSObject>(
 
 func testViewModeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UITextField.ViewMode>,
+    relay: BindableObservable<UITextField.ViewMode>,
     keyPath: ReferenceWritableKeyPath<Object, UITextField.ViewMode>) {
     let newValue: UITextField.ViewMode = .always
     testRelay(
@@ -260,7 +260,7 @@ func testViewModeRelay<Object: NSObject>(
 
 func testImageRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIImage?>,
+    relay: BindableObservable<UIImage?>,
     keyPath: ReferenceWritableKeyPath<Object, UIImage?>) {
     let newValue: UIImage = UIImage()
     testRelay(
@@ -279,7 +279,7 @@ func testImageRelay<Object: NSObject>(
 
 func testStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<String?>,
+    relay: BindableObservable<String?>,
     keyPath: ReferenceWritableKeyPath<Object, String?>) {
     let newValue: String = "testing pharos"
     testRelay(
@@ -298,7 +298,7 @@ func testStringRelay<Object: NSObject>(
 
 func testColorRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIColor?>,
+    relay: BindableObservable<UIColor?>,
     keyPath: ReferenceWritableKeyPath<Object, UIColor?>) {
     let newValue: UIColor = .brown
     testRelay(
@@ -317,7 +317,7 @@ func testColorRelay<Object: NSObject>(
 
 func testVisualEffectRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIVisualEffect?>,
+    relay: BindableObservable<UIVisualEffect?>,
     keyPath: ReferenceWritableKeyPath<Object, UIVisualEffect?>) {
     let newValue: UIVisualEffect = UIVisualEffect()
     testRelay(
@@ -336,7 +336,7 @@ func testVisualEffectRelay<Object: NSObject>(
 
 func testAxisRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSLayoutConstraint.Axis>,
+    relay: BindableObservable<NSLayoutConstraint.Axis>,
     keyPath: ReferenceWritableKeyPath<Object, NSLayoutConstraint.Axis>) {
     let newValue: NSLayoutConstraint.Axis = .horizontal
     testRelay(
@@ -351,7 +351,7 @@ func testAxisRelay<Object: NSObject>(
 
 func testDistributionRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIStackView.Distribution>,
+    relay: BindableObservable<UIStackView.Distribution>,
     keyPath: ReferenceWritableKeyPath<Object, UIStackView.Distribution>) {
     let newValue: UIStackView.Distribution = .equalCentering
     testRelay(
@@ -366,7 +366,7 @@ func testDistributionRelay<Object: NSObject>(
 
 func testAlignmentRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIStackView.Alignment>,
+    relay: BindableObservable<UIStackView.Alignment>,
     keyPath: ReferenceWritableKeyPath<Object, UIStackView.Alignment>) {
     let newValue: UIStackView.Alignment = .center
     testRelay(
@@ -381,7 +381,7 @@ func testAlignmentRelay<Object: NSObject>(
 
 func testViewRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIView?>,
+    relay: BindableObservable<UIView?>,
     keyPath: ReferenceWritableKeyPath<Object, UIView?>) {
     let newValue: UIView = UIView()
     testRelay(
@@ -400,7 +400,7 @@ func testViewRelay<Object: NSObject>(
 
 func testRefreshRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIRefreshControl?>,
+    relay: BindableObservable<UIRefreshControl?>,
     keyPath: ReferenceWritableKeyPath<Object, UIRefreshControl?>) {
     let newValue: UIRefreshControl = UIRefreshControl()
     testRelay(
@@ -419,7 +419,7 @@ func testRefreshRelay<Object: NSObject>(
 
 func testIntRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<Int>,
+    relay: BindableObservable<Int>,
     keyPath: ReferenceWritableKeyPath<Object, Int>) {
     let newValue: Int = .random(in: -256..<256)
     testRelay(
@@ -434,7 +434,7 @@ func testIntRelay<Object: NSObject>(
 
 func testTimeIntervalRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<TimeInterval>,
+    relay: BindableObservable<TimeInterval>,
     keyPath: ReferenceWritableKeyPath<Object, TimeInterval>) {
     let newValue = TimeInterval.random(in: -1024..<1024)
     testRelay(
@@ -449,7 +449,7 @@ func testTimeIntervalRelay<Object: NSObject>(
 
 func testDoubleRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<Double>,
+    relay: BindableObservable<Double>,
     keyPath: ReferenceWritableKeyPath<Object, Double>) {
     let newValue = Double.random(in: -1024..<1024)
     testRelay(
@@ -464,7 +464,7 @@ func testDoubleRelay<Object: NSObject>(
 
 func testCGFloatRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<CGFloat>,
+    relay: BindableObservable<CGFloat>,
     keyPath: ReferenceWritableKeyPath<Object, CGFloat>) {
     let newValue = CGFloat.random(in: -1024..<1024)
     testRelay(
@@ -479,7 +479,7 @@ func testCGFloatRelay<Object: NSObject>(
 
 func testFloatRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<Float>,
+    relay: BindableObservable<Float>,
     keyPath: ReferenceWritableKeyPath<Object, Float>) {
     let newValue = Float.random(in: -1024..<1024)
     testRelay(
@@ -494,7 +494,7 @@ func testFloatRelay<Object: NSObject>(
 
 func testCGRectRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<CGRect>,
+    relay: BindableObservable<CGRect>,
     keyPath: ReferenceWritableKeyPath<Object, CGRect>) {
     let newValue = CGRect(
         x: CGFloat.random(in: -1024..<1024),
@@ -520,7 +520,7 @@ func testCGRectRelay<Object: NSObject>(
 
 func testCGPointRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<CGPoint>,
+    relay: BindableObservable<CGPoint>,
     keyPath: ReferenceWritableKeyPath<Object, CGPoint>) {
     let newValue = CGPoint(
         x: CGFloat.random(in: -1024..<1024),
@@ -540,7 +540,7 @@ func testCGPointRelay<Object: NSObject>(
 
 func testSizeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<CGSize>,
+    relay: BindableObservable<CGSize>,
     keyPath: ReferenceWritableKeyPath<Object, CGSize>) {
     let newValue = CGSize(
         width: CGFloat.random(in: 0..<1024),
@@ -560,7 +560,7 @@ func testSizeRelay<Object: NSObject>(
 
 func testInsetsRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<UIEdgeInsets>,
+    relay: BindableObservable<UIEdgeInsets>,
     keyPath: ReferenceWritableKeyPath<Object, UIEdgeInsets>) {
     let newValue = UIEdgeInsets(
         top: CGFloat.random(in: -1024..<1024),
@@ -587,7 +587,7 @@ func testInsetsRelay<Object: NSObject>(
 @available(iOS 11.0, *)
 func testDirectionalInsetsRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: BindableRelay<NSDirectionalEdgeInsets>,
+    relay: BindableObservable<NSDirectionalEdgeInsets>,
     keyPath: ReferenceWritableKeyPath<Object, NSDirectionalEdgeInsets>) {
     let newValue = NSDirectionalEdgeInsets(
         top: CGFloat.random(in: -1024..<1024),

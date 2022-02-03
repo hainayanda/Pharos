@@ -13,39 +13,39 @@ public extension RelayCollection where Object: UISlider {
     
     // MARK: Two Way Relay
     
-    var value: BindableRelay<Float> {
+    var value: BindableObservable<Float> {
         bindable(of:\.value)
     }
     
-    var minimumValue: BindableRelay<Float> {
+    var minimumValue: BindableObservable<Float> {
         bindable(of:\.minimumValue)
     }
     
-    var maximumValue: BindableRelay<Float> {
+    var maximumValue: BindableObservable<Float> {
         bindable(of:\.maximumValue)
     }
     
-    var minimumValueImage: BindableRelay<UIImage?> {
+    var minimumValueImage: BindableObservable<UIImage?> {
         bindable(of:\.minimumValueImage)
     }
     
-    var maximumValueImage: BindableRelay<UIImage?> {
+    var maximumValueImage: BindableObservable<UIImage?> {
         bindable(of:\.maximumValueImage)
     }
     
-    var isContinuous: BindableRelay<Bool> {
+    var isContinuous: BindableObservable<Bool> {
         bindable(of:\.isContinuous)
     }
     
-    var minimumTrackTintColor: BindableRelay<UIColor?> {
+    var minimumTrackTintColor: BindableObservable<UIColor?> {
         bindable(of:\.minimumTrackTintColor)
     }
     
-    var maximumTrackTintColor: BindableRelay<UIColor?> {
+    var maximumTrackTintColor: BindableObservable<UIColor?> {
         bindable(of:\.maximumTrackTintColor)
     }
     
-    var thumbTintColor: BindableRelay<UIColor?> {
+    var thumbTintColor: BindableObservable<UIColor?> {
         bindable(of:\.thumbTintColor)
     }
     

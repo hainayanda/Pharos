@@ -1,0 +1,155 @@
+//
+//  RelayProtocols.swift
+//  Pharos
+//
+//  Created by Nayanda Haberty on 15/04/21.
+//
+
+import Foundation
+
+// MARK: ChangeObservable
+
+public protocol ChangeObservable: MappableObservable, FilterableObservable, MergableObservable, CombinableObservable {
+    associatedtype State
+    
+    func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State>
+    func relayChanges(to relay: BindableObservable<State>) -> Observed<State>
+}
+
+extension ChangeObservable {
+    public func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
+        whenDidSet { [weak relay] changes in
+            guard let relay = relay else { return }
+            if let selfRelay = self as? AnyStateRelay {
+                relay.relay(changes: changes, skip: selfRelay)
+            } else {
+                relay.relay(changes: changes)
+            }
+        }
+    }
+}
+
+// MARK: MappableObservable
+
+public protocol MappableObservable {
+    associatedtype State
+    
+    func mapped<Mapped>(_ mapper: @escaping (State) -> Mapped) -> Observable<Mapped>
+    func compactMapped<Mapped>(_ mapper: @escaping (State) throws -> Mapped?) -> Observable<Mapped>
+}
+
+extension MappableObservable {
+    public func mapped<Mapped>(_ mapper: @escaping (State) -> Mapped) -> Observable<Mapped> {
+        compactMapped(mapper)
+    }
+}
+
+// MARK: FilterableObservable
+
+public protocol FilterableObservable {
+    associatedtype State
+    
+    func ignore(when shouldIgnore: @escaping (Changes<State>) -> Bool) -> Observable<State>
+    func onlyInclude(when shouldInclude: @escaping (Changes<State>) -> Bool) -> Observable<State>
+}
+
+extension FilterableObservable {
+    public func onlyInclude(when shouldInclude: @escaping (Changes<State>) -> Bool) -> Observable<State> {
+        ignore { changes in
+            !shouldInclude(changes)
+        }
+    }
+}
+
+public extension FilterableObservable where State: Equatable {
+    func ignoreSameValue() -> Observable<State> {
+        ignore { $0.isNotChanging }
+    }
+}
+
+// MARK: MergableObservable
+
+public protocol MergableObservable {
+    associatedtype State
+    
+    func merge(with relays: Observable<State>...) -> Observable<State>
+}
+
+// MARK: CombinableObservable
+
+public protocol CombinableObservable {
+    associatedtype State
+    
+    func combine<Observed1>(with relay: Observable<Observed1>) -> Observable<(State?, Observed1?)>
+    func combine<Observed1, Observed2>(
+        with relay1: Observable<Observed1>, _ relay2: Observable<Observed2>
+    ) -> Observable<(State?, Observed1?, Observed2?)>
+    func combine<Observed1, Observed2, Observed3>(
+        with relay1: Observable<Observed1>, _ relay2: Observable<Observed2>, _ relay3: Observable<Observed3>
+    ) -> Observable<(State?, Observed1?, Observed2?, Observed3?)>
+}
+
+public extension CombinableObservable {
+    func compactCombine<Observed1>(with relay: Observable<Observed1>) -> Observable<(State, Observed1)> {
+        combine(with: relay).compactMapped { combined in
+            guard let first = combined.0, let second = combined.1 else { return nil }
+            return (first, second)
+        }
+    }
+    
+    func compactCombine<Observed1, Observed2>(
+        with relay1: Observable<Observed1>, _ relay2: Observable<Observed2>
+    ) -> Observable<(State, Observed1, Observed2)> {
+        combine(with: relay1, relay2).compactMapped { combined in
+            guard let first = combined.0, let second = combined.1, let third = combined.2 else { return nil }
+            return (first, second, third)
+        }
+    }
+    
+    func compactCombine<Observed1, Observed2, Observed3>(
+        with relay1: Observable<Observed1>, _ relay2: Observable<Observed2>, _ relay3: Observable<Observed3>
+    ) -> Observable<(State, Observed1, Observed2, Observed3)> {
+        combine(with: relay1, relay2, relay3).compactMapped { combined in
+            guard let first = combined.0, let second = combined.1, let third = combined.2, let fourth = combined.3 else { return nil }
+            return (first, second, third, fourth)
+        }
+    }
+}
+
+// MARK: ObservedSubject
+
+public protocol ObservedSubject {
+    func multipleSetDelayed(by delay: TimeInterval) -> Self
+    func observe(on dispatcher: DispatchQueue) -> Self
+    func alwaysAsync() -> Self
+    @discardableResult
+    func retain() -> Invokable
+    @discardableResult
+    func retained(by retainer: Retainer) -> Invokable
+}
+
+// MARK: Invokable
+
+public protocol Invokable {
+    func tryInvokeWithRecent()
+}
+
+// MARK: Relay
+
+protocol AnyStateRelay: AnyObject {
+    func tryRelay<Value>(changes: Changes<Value>)
+    func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool
+}
+
+protocol StateRelay: AnyStateRelay {
+    associatedtype RelayedState
+    func relay(changes: Changes<RelayedState>)
+    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay)
+}
+
+extension StateRelay {
+    func tryRelay<Value>(changes: Changes<Value>) {
+        guard let mapped = changes.map({ $0 as? RelayedState }) else { return }
+        relay(changes: mapped)
+    }
+}

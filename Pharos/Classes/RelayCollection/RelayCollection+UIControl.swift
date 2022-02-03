@@ -13,28 +13,28 @@ public extension RelayCollection where Object: UIControl {
     
     // MARK: Two Way Relay
     
-    var isEnabled: BindableRelay<Bool> {
+    var isEnabled: BindableObservable<Bool> {
         bindable(of:\.isEnabled)
     }
     
-    var isSelected: BindableRelay<Bool> {
+    var isSelected: BindableObservable<Bool> {
         bindable(of:\.isSelected)
     }
     
-    var isHighlighted: BindableRelay<Bool> {
+    var isHighlighted: BindableObservable<Bool> {
         bindable(of:\.isHighlighted)
     }
     
-    var contentVerticalAlignment: BindableRelay<UIControl.ContentVerticalAlignment> {
+    var contentVerticalAlignment: BindableObservable<UIControl.ContentVerticalAlignment> {
         bindable(of:\.contentVerticalAlignment)
     }
     
-    var contentHorizontalAlignment: BindableRelay<UIControl.ContentHorizontalAlignment> {
+    var contentHorizontalAlignment: BindableObservable<UIControl.ContentHorizontalAlignment> {
         bindable(of:\.contentHorizontalAlignment)
     }
     
     @available(iOS 14.0, *)
-    var showsMenuAsPrimaryAction: BindableRelay<Bool> {
+    var showsMenuAsPrimaryAction: BindableObservable<Bool> {
         bindable(of:\.showsMenuAsPrimaryAction)
     }
 }

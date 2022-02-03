@@ -7,16 +7,16 @@
 
 import Foundation
 
-class RelayInvoker<Observed>: Invokable {
+class RelayInvoker<State>: Invokable {
     
-    let relay: ObservedRelay<Observed>
+    let relay: Observed<State>
     
-    init(relay: ObservedRelay<Observed>) {
+    init(relay: Observed<State>) {
         self.relay = relay
     }
     
     func tryInvokeWithRecent() {
-        guard let recent: Observed = self.relay.source?.recentValue else {
+        guard let recent: State = self.relay.source?.recentState else {
             return
         }
         self.relay.relay(changes: Changes(old: nil, new: recent, source: self))
