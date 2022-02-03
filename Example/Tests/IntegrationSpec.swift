@@ -12,85 +12,54 @@ class ObservableStateSpec: QuickSpec {
             var initialValue: String?
             var observables: Observable<String?>!
             var object: Dummy!
-            #if canImport(UIKit)
+#if canImport(UIKit)
             var label: UILabel!
-            #endif
+#endif
             beforeEach {
                 initialValue = .randomString(length: 9)
                 observables = .init(wrappedValue: initialValue)
                 object = Dummy()
-                #if canImport(UIKit)
+#if canImport(UIKit)
                 label = .init()
-                #endif
+#endif
             }
             it("should notify next observer on set") {
                 let new: String = .randomString()
                 var didSetCount: Int = 0
-                observables.relay.addDidSet { changes in
-                    expect(changes.old.value).to(equal(initialValue))
-                    expect(changes.new).to(equal(new))
-                    didSetCount += 1
-                }.addDidSet { changes in
-                    expect(changes.old.value).to(equal(initialValue))
-                    expect(changes.new).to(equal(new))
-                    didSetCount += 1
-                }.addDidSet { changes in
-                    expect(changes.old.value).to(equal(initialValue))
-                    expect(changes.new).to(equal(new))
-                    didSetCount += 1
+                for _ in 0 ..< 3 {
+                    observables.whenDidSet { changes in
+                        expect(changes.old).to(equal(initialValue))
+                        expect(changes.new).to(equal(new))
+                        didSetCount += 1
+                    }.retain()
                 }
                 observables.wrappedValue = new
                 expect(didSetCount).to(equal(3))
             }
-            it("should use getter and setter") {
-                var inRelay: String?
-                var didSetCount: Int = 0
-                observables.relay.whenDidSet { changes in
-                    inRelay = changes.new
-                    didSetCount += 1
-                }
-                var dummies: String?
-                expect(observables.wrappedValue).to(equal(initialValue))
-                expect(didSetCount).to(equal(0))
-                observables.mutator {
-                    dummies
-                } set: {
-                    dummies = $0
-                }
-                expect(observables.wrappedValue).to(beNil())
-                expect(dummies).to(beNil())
-                expect(didSetCount).to(equal(0))
-                let set = String.randomString()
-                observables.wrappedValue = set
-                expect(observables.wrappedValue).to(equal(set))
-                expect(dummies).to(equal(set))
-                expect(inRelay).to(equal(set))
-                expect(didSetCount).to(equal(1))
-            }
             it("should ignore") {
                 let ignored: String = .randomString(length: 5)
                 var didSetCount: Int = 0
-                observables.relay
-                    .addDidSet { changes in
-                        didSetCount += 1
-                    }.ignore { $0.new == ignored }
-                    .addDidSet { changes in
-                        didSetCount += 1
-                    }.addDidSet { changes in
-                        didSetCount += 1
+                observables
+                    .ignore {
+                        $0.new == ignored
                     }
+                    .whenDidSet {
+                        expect($0.new).toNot(equal(ignored))
+                        didSetCount += 1
+                    }.retain()
                 observables.wrappedValue = ignored
-                expect(didSetCount).to(equal(1))
+                expect(didSetCount).to(equal(0))
                 observables.wrappedValue = .randomString(length: 10)
-                expect(didSetCount).to(equal(4))
+                expect(didSetCount).to(equal(1))
             }
             it("should delayed") {
                 let newValue1: String = .randomString()
                 let newValue2: String = .randomString()
                 var didSetCount: Int = 0
-                observables.relay.whenDidSet { changes in
+                observables.whenDidSet { changes in
                     didSetCount += 1
                 }.multipleSetDelayed(by: 0.5)
+                    .retain()
                 observables.wrappedValue = newValue1
                 expect(didSetCount).to(equal(1))
                 observables.wrappedValue = newValue2
@@ -100,83 +69,81 @@ class ObservableStateSpec: QuickSpec {
             it("should mapped") {
                 let new: String = .randomString(length: 18)
                 var didSetCount: Int = 0
-                observables.relay.map { $0?.count ?? 0 }
-                    .addDidSet { changes in
-                        expect(changes.old.value).to(equal(9))
-                        expect(changes.new).to(equal(18))
-                        didSetCount += 1
-                    }.addDidSet { changes in
-                        expect(changes.old.value).to(equal(9))
-                        expect(changes.new).to(equal(18))
-                        didSetCount += 1
-                    }
+                observables.mapped { $0?.count ?? 0 }
+                .whenDidSet { changes in
+                    expect(changes.old).to(equal(9))
+                    expect(changes.new).to(equal(18))
+                    didSetCount += 1
+                }.retain()
                 observables.wrappedValue = new
-                expect(didSetCount).to(equal(2))
+                expect(didSetCount).to(equal(1))
             }
-            it("should merge 2 observables") {
+            it("should combine 2 observables") {
                 let number = Int.random(in: 0..<100)
                 var didSetCount: Int = 0
                 var latestChanges: Changes<(String?, Int)> = .init(old: (initialValue, number), new: (initialValue, number), source: self)
                 let observables2: Observable<Int> = .init(wrappedValue: number)
-                observables.relay.merge(with: observables2.relay).whenDidSet { changes in
-                    latestChanges = changes
-                    didSetCount += 1
-                }
+                observables.compactCombine(with: observables2)
+                    .whenDidSet { changes in
+                        latestChanges = changes
+                        didSetCount += 1
+                    }.retain()
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.value?.0).to(equal(initialValue))
+                expect(latestChanges.old?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(number))
+                expect(latestChanges.old?.1).to(equal(number))
                 expect(latestChanges.new.1).to(equal(number))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(number))
+                expect(latestChanges.old?.1).to(equal(number))
                 expect(latestChanges.new.1).to(equal(newInt))
             }
-            it("should merge 3 observables") {
+            it("should combine 3 observables") {
                 let int = Int.random(in: 0..<100)
                 let double = Double.random(in: 0..<10)
                 var didSetCount: Int = 0
                 var latestChanges: Changes<(String?, Int, Double)> = .init(old: (initialValue, int, double), new: (initialValue, int, double), source: self)
                 let observables2: Observable<Int> = .init(wrappedValue: int)
                 let observables3: Observable<Double> = .init(wrappedValue: double)
-                observables.relay.merge(with: observables2.relay, observables3.relay).whenDidSet { changes in
-                    latestChanges = changes
-                    didSetCount += 1
-                }
+                observables.compactCombine(with: observables2, observables3)
+                    .whenDidSet { changes in
+                        latestChanges = changes
+                        didSetCount += 1
+                    }.retain()
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.value?.0).to(equal(initialValue))
+                expect(latestChanges.old?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(int))
+                expect(latestChanges.old?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(int))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(int))
+                expect(latestChanges.old?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
                 let newDouble: Double = Double.random(in: 10..<20)
                 observables3.wrappedValue = newDouble
                 expect(didSetCount).to(equal(3))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(newInt))
+                expect(latestChanges.old?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(newDouble))
             }
-            it("should merge 4 observables") {
+            it("should combine 4 observables") {
                 let int = Int.random(in: 0..<100)
                 let double = Double.random(in: 0..<10)
                 let bool = Bool.random()
@@ -185,64 +152,66 @@ class ObservableStateSpec: QuickSpec {
                 let observables2: Observable<Int> = .init(wrappedValue: int)
                 let observables3: Observable<Double> = .init(wrappedValue: double)
                 let observables4: Observable<Bool> = .init(wrappedValue: bool)
-                observables.relay.merge(with: observables2.relay, observables3.relay, observables4.relay).whenDidSet { changes in
-                    latestChanges = changes
-                    didSetCount += 1
-                }
+                observables.compactCombine(with: observables2, observables3, observables4)
+                    .whenDidSet { changes in
+                        latestChanges = changes
+                        didSetCount += 1
+                    }.retain()
                 let newStr: String = .randomString()
                 observables.wrappedValue = newStr
                 expect(didSetCount).to(equal(1))
-                expect(latestChanges.old.value?.0).to(equal(initialValue))
+                expect(latestChanges.old?.0).to(equal(initialValue))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(int))
+                expect(latestChanges.old?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(int))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
-                expect(latestChanges.old.value?.3).to(equal(bool))
+                expect(latestChanges.old?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
                 let newInt: Int = Int.random(in: 100..<200)
                 observables2.wrappedValue = newInt
                 expect(didSetCount).to(equal(2))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(int))
+                expect(latestChanges.old?.1).to(equal(int))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(double))
-                expect(latestChanges.old.value?.3).to(equal(bool))
+                expect(latestChanges.old?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
                 let newDouble: Double = Double.random(in: 10..<20)
                 observables3.wrappedValue = newDouble
                 expect(didSetCount).to(equal(3))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(newInt))
+                expect(latestChanges.old?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.value?.2).to(equal(double))
+                expect(latestChanges.old?.2).to(equal(double))
                 expect(latestChanges.new.2).to(equal(newDouble))
-                expect(latestChanges.old.value?.3).to(equal(bool))
+                expect(latestChanges.old?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(bool))
-                let newBool: Bool = Bool.random()
+                let newBool: Bool = !bool
                 observables4.wrappedValue = newBool
                 expect(didSetCount).to(equal(4))
-                expect(latestChanges.old.value?.0).to(equal(newStr))
+                expect(latestChanges.old?.0).to(equal(newStr))
                 expect(latestChanges.new.0).to(equal(newStr))
-                expect(latestChanges.old.value?.1).to(equal(newInt))
+                expect(latestChanges.old?.1).to(equal(newInt))
                 expect(latestChanges.new.1).to(equal(newInt))
-                expect(latestChanges.old.value?.2).to(equal(newDouble))
+                expect(latestChanges.old?.2).to(equal(newDouble))
                 expect(latestChanges.new.2).to(equal(newDouble))
-                expect(latestChanges.old.value?.3).to(equal(bool))
+                expect(latestChanges.old?.3).to(equal(bool))
                 expect(latestChanges.new.3).to(equal(newBool))
             }
-            #if canImport(UIKit)
+#if canImport(UIKit)
             it("should bond with UIView") {
                 var source: Any = self
                 var didSetCount: Int = 0
-                observables.relay.bonding(with: .relay(of: label, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
+                observables.bind(with: label.bindables.text)
+                    .retain()
+                observables.whenDidSet { changes in
+                    source = changes.source
+                    didSetCount += 1
+                }.retain()
                 let fromLabel = String.randomString()
                 label.text = fromLabel
                 expect(observables.wrappedValue).to(equal(fromLabel))
@@ -254,98 +223,16 @@ class ObservableStateSpec: QuickSpec {
                 expect(source as? Observable<String?>).toNot(beNil())
                 expect(didSetCount).to(equal(2))
             }
-            it("should bond and apply to UIView") {
-                var source: Any = self
-                var didSetCount: Int = 0
-                observables.relay.bondAndApply(to: .relay(of: label, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
-                expect(label.text).to(equal(initialValue))
-                expect(didSetCount).to(equal(0))
-                let fromLabel = String.randomString()
-                label.text = fromLabel
-                expect(observables.wrappedValue).to(equal(fromLabel))
-                expect(source as? UILabel).to(equal(label))
-                expect(didSetCount).to(equal(1))
-                let fromState = String.randomString()
-                observables.wrappedValue = fromState
-                expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
-                expect(didSetCount).to(equal(2))
-            }
-            it("should bond and map from UIView") {
-                var source: Any = self
-                var didSetCount: Int = 0
-                label.text = .randomString()
-                observables.relay.bondAndMap(from: .relay(of: label, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
-                expect(observables.wrappedValue).to(equal(label.text))
-                expect(didSetCount).to(equal(0))
-                let fromLabel = String.randomString()
-                label.text = fromLabel
-                expect(observables.wrappedValue).to(equal(fromLabel))
-                expect(source as? UILabel).to(equal(label))
-                expect(didSetCount).to(equal(1))
-                let fromState = String.randomString()
-                observables.wrappedValue = fromState
-                expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
-                expect(didSetCount).to(equal(2))
-            }
-            #endif
-            it("should bond with NSObject") {
-                var source: Any = self
-                var didSetCount: Int = 0
-                observables.relay.bonding(with: .relay(of: object, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
-                let fromObject = String.randomString()
-                object.text = fromObject
-                expect(observables.wrappedValue).to(equal(fromObject))
-                expect(source as? Dummy).to(equal(object))
-                expect(didSetCount).to(equal(1))
-                let fromState = String.randomString()
-                observables.wrappedValue = fromState
-                expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
-                expect(didSetCount).to(equal(2))
-            }
-            it("should bond and apply to NSObject") {
-                var source: Any = self
-                var didSetCount: Int = 0
-                observables.relay.bondAndApply(to: .relay(of: object, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
-                expect(object.text).to(equal(initialValue))
-                expect(didSetCount).to(equal(0))
-                let fromObject = String.randomString()
-                object.text = fromObject
-                expect(observables.wrappedValue).to(equal(fromObject))
-                expect(source as? Dummy).to(equal(object))
-                expect(didSetCount).to(equal(1))
-                let fromState = String.randomString()
-                observables.wrappedValue = fromState
-                expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
-                expect(didSetCount).to(equal(2))
-            }
+#endif
             it("should bear data to NSObject") {
                 var source: Any = self
                 var didSetCount: Int = 0
-                observables.relay.relayValue(to: object.bearerRelays.text)
-                    .addDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
+                observables.relayChanges(to: object.relayables.text)
+                    .retain()
+                observables.whenDidSet { changes in
+                    source = changes.source
+                    didSetCount += 1
+                }.retain()
                 expect(object.text).to(beNil())
                 expect(didSetCount).to(equal(0))
                 let fromObject = String.randomString()
@@ -359,49 +246,23 @@ class ObservableStateSpec: QuickSpec {
                 expect(source as? Observable<String?>).toNot(beNil())
                 expect(didSetCount).to(equal(1))
             }
-            it("should bond and map from NSObject") {
-                var source: Any = self
-                var didSetCount: Int = 0
-                object.text = .randomString()
-                observables.relay.bondAndMap(from: .relay(of: object, \.text))
-                    .whenDidSet { changes in
-                        source = changes.source
-                        didSetCount += 1
-                    }
-                expect(observables.wrappedValue).to(equal(object.text))
-                expect(didSetCount).to(equal(0))
-                let fromObject = String.randomString()
-                object.text = fromObject
-                expect(observables.wrappedValue).to(equal(fromObject))
-                expect(source as? Dummy).to(equal(object))
-                expect(didSetCount).to(equal(1))
-                let fromState = String.randomString()
-                observables.wrappedValue = fromState
-                expect(observables.wrappedValue).to(equal(fromState))
-                expect(source as? Observable<String?>).toNot(beNil())
-                expect(didSetCount).to(equal(2))
-            }
             it("should auto dereference relay when AutoDereferencer is dereferenced") {
                 let retainer: Retainer = .init()
                 var didSetCount: Int = 0
-                weak var relay1 = observables.relay
-                    .addDidSet { changes in
+                var relay: ObservedRelay<String?>? = observables
+                    .whenDidSet { changes in
                         didSetCount += 1
                     }
-                    .retained(by: retainer)
-                weak var relay2 = relay1?
-                    .addDidSet { changes in
-                        didSetCount += 1
-                    }
+                relay?.retained(by: retainer)
+                weak var weakRelay = relay
+                relay = nil
                 observables.wrappedValue = .randomString()
-                expect(didSetCount).to(equal(2))
-                expect(relay1).toNot(beNil())
-                expect(relay2).toNot(beNil())
+                expect(didSetCount).to(equal(1))
+                expect(weakRelay).toNot(beNil())
                 retainer.discardAll()
                 observables.wrappedValue = .randomString()
-                expect(relay1).to(beNil())
-                expect(relay2).to(beNil())
-                expect(didSetCount).to(equal(2))
+                expect(weakRelay).to(beNil())
+                expect(didSetCount).to(equal(1))
             }
         }
     }
