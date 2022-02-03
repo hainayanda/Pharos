@@ -23,7 +23,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay delegate") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.delegate,
+                    relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
                 ) { changes, oldValue in
@@ -38,7 +38,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay dataSource") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dataSource,
+                    relay: view.bindables.dataSource,
                     keyPath: \.dataSource,
                     with: self
                 ) { changes, oldValue in
@@ -53,7 +53,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay prefetchDataSource") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.prefetchDataSource,
+                    relay: view.bindables.prefetchDataSource,
                     keyPath: \.prefetchDataSource,
                     with: self
                 ) { changes, oldValue in
@@ -69,7 +69,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 guard #available(iOS 11, *) else { return }
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dragDelegate,
+                    relay: view.bindables.dragDelegate,
                     keyPath: \.dragDelegate,
                     with: self
                 ) { changes, oldValue in
@@ -85,7 +85,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 guard #available(iOS 11, *) else { return }
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dropDelegate,
+                    relay: view.bindables.dropDelegate,
                     keyPath: \.dropDelegate,
                     with: self
                 ) { changes, oldValue in
@@ -101,7 +101,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.rowHeight,
+                    relay: view.bindables.rowHeight,
                     keyPath: \.rowHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -112,7 +112,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionHeaderHeight,
+                    relay: view.bindables.sectionHeaderHeight,
                     keyPath: \.sectionHeaderHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -123,7 +123,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionFooterHeight,
+                    relay: view.bindables.sectionFooterHeight,
                     keyPath: \.sectionFooterHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -134,7 +134,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.estimatedRowHeight,
+                    relay: view.bindables.estimatedRowHeight,
                     keyPath: \.estimatedRowHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -145,7 +145,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.estimatedSectionHeaderHeight,
+                    relay: view.bindables.estimatedSectionHeaderHeight,
                     keyPath: \.estimatedSectionHeaderHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -156,7 +156,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 let newValue = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.estimatedSectionFooterHeight,
+                    relay: view.bindables.estimatedSectionFooterHeight,
                     keyPath: \.estimatedSectionFooterHeight,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -166,7 +166,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay separatorInset") {
                 testInsetsRelay(
                     for: view,
-                    relay: view.bondableRelays.separatorInset,
+                    relay: view.bindables.separatorInset,
                     keyPath: \.separatorInset
                 )
             }
@@ -174,7 +174,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.dragInteractionEnabled,
+                        relay: view.bindables.dragInteractionEnabled,
                         keyPath: \.dragInteractionEnabled
                     )
                 }
@@ -182,28 +182,28 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay backgroundView") {
                 testViewRelay(
                     for: view,
-                    relay: view.bondableRelays.backgroundView,
+                    relay: view.bindables.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay allowsSelection") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.allowsSelection,
+                    relay: view.bindables.allowsSelection,
                     keyPath: \.allowsSelection
                 )
             }
             it("should relay allowsMultipleSelection") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.allowsMultipleSelection,
+                    relay: view.bindables.allowsMultipleSelection,
                     keyPath: \.allowsMultipleSelection
                 )
             }
             it("should relay remembersLastFocusedIndexPath") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.remembersLastFocusedIndexPath,
+                    relay: view.bindables.remembersLastFocusedIndexPath,
                     keyPath: \.remembersLastFocusedIndexPath
                 )
             }
@@ -211,7 +211,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 14.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.selectionFollowsFocus,
+                        relay: view.bindables.selectionFollowsFocus,
                         keyPath: \.selectionFollowsFocus
                     )
                 }
@@ -219,63 +219,63 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay isEditing") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isEditing,
+                    relay: view.bindables.isEditing,
                     keyPath: \.isEditing
                 )
             }
             it("should relay sectionIndexMinimumDisplayRowCount") {
                 testIntRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionIndexMinimumDisplayRowCount,
+                    relay: view.bindables.sectionIndexMinimumDisplayRowCount,
                     keyPath: \.sectionIndexMinimumDisplayRowCount
                 )
             }
             it("should relay sectionIndexColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionIndexColor,
+                    relay: view.bindables.sectionIndexColor,
                     keyPath: \.sectionIndexColor
                 )
             }
             it("should relay sectionIndexBackgroundColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionIndexBackgroundColor,
+                    relay: view.bindables.sectionIndexBackgroundColor,
                     keyPath: \.sectionIndexBackgroundColor
                 )
             }
             it("should relay sectionIndexTrackingBackgroundColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionIndexTrackingBackgroundColor,
+                    relay: view.bindables.sectionIndexTrackingBackgroundColor,
                     keyPath: \.sectionIndexTrackingBackgroundColor
                 )
             }
             it("should relay sectionIndexTrackingBackgroundColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.sectionIndexTrackingBackgroundColor,
+                    relay: view.bindables.sectionIndexTrackingBackgroundColor,
                     keyPath: \.sectionIndexTrackingBackgroundColor
                 )
             }
             it("should relay separatorColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.separatorColor,
+                    relay: view.bindables.separatorColor,
                     keyPath: \.separatorColor
                 )
             }
             it("should relay separatorEffect") {
                 testVisualEffectRelay(
                     for: view,
-                    relay: view.bondableRelays.separatorEffect,
+                    relay: view.bindables.separatorEffect,
                     keyPath: \.separatorEffect
                 )
             }
             it("should relay cellLayoutMarginsFollowReadableWidth") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.cellLayoutMarginsFollowReadableWidth,
+                    relay: view.bindables.cellLayoutMarginsFollowReadableWidth,
                     keyPath: \.cellLayoutMarginsFollowReadableWidth
                 )
             }
@@ -283,7 +283,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.insetsContentViewsToSafeArea,
+                        relay: view.bindables.insetsContentViewsToSafeArea,
                         keyPath: \.insetsContentViewsToSafeArea
                     )
                 }
@@ -291,33 +291,19 @@ class UITableViewRelayCollectionSpec: QuickSpec {
             it("should relay tableHeaderView") {
                 testViewRelay(
                     for: view,
-                    relay: view.bondableRelays.tableHeaderView,
+                    relay: view.bindables.tableHeaderView,
                     keyPath: \.tableHeaderView
                 )
             }
             it("should relay tableFooterView") {
                 testViewRelay(
                     for: view,
-                    relay: view.bondableRelays.tableFooterView,
+                    relay: view.bindables.tableFooterView,
                     keyPath: \.tableFooterView
                 )
             }
         }
     }
-}
-
-func - (_ lhs: RelayValue<CGFloat>, _ rhs: RelayValue<CGFloat>) -> CGFloat {
-    guard let lValue = lhs.value, let rValue = rhs.value else {
-        return .nan
-    }
-    return lValue - rValue
-}
-
-func - (_ lhs: RelayValue<CGFloat>, _ rhs: CGFloat) -> CGFloat {
-    guard let lValue = lhs.value else {
-        return .nan
-    }
-    return lValue - rhs
 }
 
 extension UITableViewRelayCollectionSpec:

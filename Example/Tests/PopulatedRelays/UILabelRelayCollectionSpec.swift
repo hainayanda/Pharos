@@ -23,98 +23,98 @@ class UILabelRelayCollectionSpec: QuickSpec {
             it("should relay text") {
                 testStringRelay(
                     for: view,
-                    relay: view.bondableRelays.text,
+                    relay: view.bindables.text,
                     keyPath: \.text
                 )
             }
             it("should relay font") {
                 testFontRelay(
                     for: view,
-                    relay: view.bondableRelays.font,
+                    relay: view.bindables.font,
                     keyPath: \.font
                 )
             }
             it("should relay textColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.textColor,
+                    relay: view.bindables.textColor,
                     keyPath: \.textColor
                 )
             }
             it("should relay shadowColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.shadowColor,
+                    relay: view.bindables.shadowColor,
                     keyPath: \.shadowColor
                 )
             }
             it("should relay shadowOffset") {
                 testSizeRelay(
                     for: view,
-                    relay: view.bondableRelays.shadowOffset,
+                    relay: view.bindables.shadowOffset,
                     keyPath: \.shadowOffset
                 )
             }
             it("should relay attributedText") {
                 testOptAttributedStringRelay(
                     for: view,
-                    relay: view.bondableRelays.attributedText,
+                    relay: view.bindables.attributedText,
                     keyPath: \.attributedText
                 )
             }
             it("should relay highlightedTextColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.highlightedTextColor,
+                    relay: view.bindables.highlightedTextColor,
                     keyPath: \.highlightedTextColor
                 )
             }
             it("should relay isHighlighted") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isHighlighted,
+                    relay: view.bindables.isHighlighted,
                     keyPath: \.isHighlighted
                 )
             }
             it("should relay isUserInteractionEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isUserInteractionEnabled,
+                    relay: view.bindables.isUserInteractionEnabled,
                     keyPath: \.isUserInteractionEnabled
                 )
             }
             it("should relay isEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isEnabled,
+                    relay: view.bindables.isEnabled,
                     keyPath: \.isEnabled
                 )
             }
             it("should relay numberOfLines") {
                 testIntRelay(
                     for: view,
-                    relay: view.bondableRelays.numberOfLines,
+                    relay: view.bindables.numberOfLines,
                     keyPath: \.numberOfLines
                 )
             }
             it("should relay adjustsFontSizeToFitWidth") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.adjustsFontSizeToFitWidth,
+                    relay: view.bindables.adjustsFontSizeToFitWidth,
                     keyPath: \.adjustsFontSizeToFitWidth
                 )
             }
             it("should relay allowsDefaultTighteningForTruncation") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.allowsDefaultTighteningForTruncation,
+                    relay: view.bindables.allowsDefaultTighteningForTruncation,
                     keyPath: \.allowsDefaultTighteningForTruncation
                 )
             }
             it("should relay preferredMaxLayoutWidth") {
                 testCGFloatRelay(
                     for: view,
-                    relay: view.bondableRelays.preferredMaxLayoutWidth,
+                    relay: view.bindables.preferredMaxLayoutWidth,
                     keyPath: \.preferredMaxLayoutWidth
                 )
             }

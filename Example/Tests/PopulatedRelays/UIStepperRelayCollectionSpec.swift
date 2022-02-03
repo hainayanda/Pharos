@@ -23,21 +23,21 @@ class UIStepperRelayCollectionSpec: QuickSpec {
             it("should relay isContinuous") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isContinuous,
+                    relay: view.bindables.isContinuous,
                     keyPath: \.isContinuous
                 )
             }
             it("should relay autorepeat") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.autorepeat,
+                    relay: view.bindables.autorepeat,
                     keyPath: \.autorepeat
                 )
             }
             it("should relay wraps") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.wraps,
+                    relay: view.bindables.wraps,
                     keyPath: \.wraps
                 )
             }
@@ -45,7 +45,7 @@ class UIStepperRelayCollectionSpec: QuickSpec {
                 let newValue = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.minimumValue,
+                    relay: view.bindables.minimumValue,
                     keyPath: \.minimumValue,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -56,7 +56,7 @@ class UIStepperRelayCollectionSpec: QuickSpec {
                 let newValue = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.maximumValue,
+                    relay: view.bindables.maximumValue,
                     keyPath: \.maximumValue,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -67,7 +67,7 @@ class UIStepperRelayCollectionSpec: QuickSpec {
                 let newValue = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.stepValue,
+                    relay: view.bindables.stepValue,
                     keyPath: \.stepValue,
                     with: newValue) { changes, oldValue in
                     expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
@@ -76,19 +76,5 @@ class UIStepperRelayCollectionSpec: QuickSpec {
             }
         }
     }
-}
-
-func - (_ lhs: RelayValue<Double>, _ rhs: RelayValue<Double>) -> Double {
-    guard let lValue = lhs.value, let rValue = rhs.value else {
-        return .nan
-    }
-    return lValue - rValue
-}
-
-func - (_ lhs: RelayValue<Double>, _ rhs: Double) -> Double {
-    guard let lValue = lhs.value else {
-        return .nan
-    }
-    return lValue - rhs
 }
 #endif

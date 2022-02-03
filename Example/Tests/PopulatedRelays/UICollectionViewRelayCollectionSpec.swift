@@ -23,7 +23,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             it("should relay delegate") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.delegate,
+                    relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
                 ) { changes, oldValue in
@@ -38,7 +38,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             it("should relay dataSource") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dataSource,
+                    relay: view.bindables.dataSource,
                     keyPath: \.dataSource,
                     with: self
                 ) { changes, oldValue in
@@ -54,7 +54,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 let layout = UICollectionViewLayout()
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.collectionViewLayout,
+                    relay: view.bindables.collectionViewLayout,
                     keyPath: \.collectionViewLayout,
                     with: layout
                 ) { changes, oldValue in
@@ -64,7 +64,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             it("should relay prefetchDataSource") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.prefetchDataSource,
+                    relay: view.bindables.prefetchDataSource,
                     keyPath: \.prefetchDataSource,
                     with: self
                 ) { changes, oldValue in
@@ -80,7 +80,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 guard #available(iOS 11, *) else { return }
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dragDelegate,
+                    relay: view.bindables.dragDelegate,
                     keyPath: \.dragDelegate,
                     with: self
                 ) { changes, oldValue in
@@ -96,7 +96,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 guard #available(iOS 11, *) else { return }
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.dropDelegate,
+                    relay: view.bindables.dropDelegate,
                     keyPath: \.dropDelegate,
                     with: self
                 ) { changes, oldValue in
@@ -111,7 +111,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             it("should relay isPrefetchingEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isPrefetchingEnabled,
+                    relay: view.bindables.isPrefetchingEnabled,
                     keyPath: \.isPrefetchingEnabled
                 )
             }
@@ -119,7 +119,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.dragInteractionEnabled,
+                        relay: view.bindables.dragInteractionEnabled,
                         keyPath: \.dragInteractionEnabled
                     )
                 }
@@ -127,28 +127,28 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
             it("should relay backgroundView") {
                 testViewRelay(
                     for: view,
-                    relay: view.bondableRelays.backgroundView,
+                    relay: view.bindables.backgroundView,
                     keyPath: \.backgroundView
                 )
             }
             it("should relay allowsSelection") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.allowsSelection,
+                    relay: view.bindables.allowsSelection,
                     keyPath: \.allowsSelection
                 )
             }
             it("should relay allowsMultipleSelection") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.allowsMultipleSelection,
+                    relay: view.bindables.allowsMultipleSelection,
                     keyPath: \.allowsMultipleSelection
                 )
             }
             it("should relay remembersLastFocusedIndexPath") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.remembersLastFocusedIndexPath,
+                    relay: view.bindables.remembersLastFocusedIndexPath,
                     keyPath: \.remembersLastFocusedIndexPath
                 )
             }
@@ -156,7 +156,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 14.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.selectionFollowsFocus,
+                        relay: view.bindables.selectionFollowsFocus,
                         keyPath: \.selectionFollowsFocus
                     )
                 }
@@ -165,7 +165,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 14.0, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.isEditing,
+                        relay: view.bindables.isEditing,
                         keyPath: \.isEditing
                     )
                 }

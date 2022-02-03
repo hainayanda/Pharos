@@ -15,7 +15,7 @@ import UIKit
 
 func testRelay<Object: NSObject, Property>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<Property>,
+    relay: BindableRelay<Property>,
     keyPath: ReferenceWritableKeyPath<Object, Property>,
     with newValue: Property,
     test: @escaping (Changes<Property>, Property) -> Void) {
@@ -26,11 +26,10 @@ func testRelay<Object: NSObject, Property>(
     let oldValue: Property = underlyingObject[keyPath: keyPath]
     waitUntil { done in
         relay
-            .addDidSet { changes in
+            .whenDidSet { changes in
                 test(changes, oldValue)
                 done()
             }
-            .syncWhenInSameThread()
             .retained(by: retainer)
         underlyingObject[keyPath: keyPath] = newValue
     }
@@ -39,7 +38,7 @@ func testRelay<Object: NSObject, Property>(
 
 func testBoolRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<Bool>,
+    relay: BindableRelay<Bool>,
     keyPath: ReferenceWritableKeyPath<Object, Bool>) {
     let newValue: Bool = .random()
     testRelay(
@@ -48,13 +47,13 @@ func testBoolRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testBreakModeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSLineBreakMode>,
+    relay: BindableRelay<NSLineBreakMode>,
     keyPath: ReferenceWritableKeyPath<Object, NSLineBreakMode>) {
     let newValue: NSLineBreakMode = .byClipping
     testRelay(
@@ -63,13 +62,13 @@ func testBreakModeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testBaselineRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIBaselineAdjustment>,
+    relay: BindableRelay<UIBaselineAdjustment>,
     keyPath: ReferenceWritableKeyPath<Object, UIBaselineAdjustment>) {
     let newValue: UIBaselineAdjustment = .alignBaselines
     testRelay(
@@ -78,13 +77,13 @@ func testBaselineRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testLineBreakRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSParagraphStyle.LineBreakStrategy>,
+    relay: BindableRelay<NSParagraphStyle.LineBreakStrategy>,
     keyPath: ReferenceWritableKeyPath<Object, NSParagraphStyle.LineBreakStrategy>) {
     let newValue: NSParagraphStyle.LineBreakStrategy = .pushOut
     testRelay(
@@ -93,13 +92,13 @@ func testLineBreakRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testArrayImageRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<[UIImage]?>,
+    relay: BindableRelay<[UIImage]?>,
     keyPath: ReferenceWritableKeyPath<Object, [UIImage]?>) {
     let newValue: [UIImage]? = [UIImage()]
     testRelay(
@@ -109,16 +108,16 @@ func testArrayImageRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? [UIImage]).to(beNil())
+            expect(changes.old as? [UIImage]).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testTextAlignementRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSTextAlignment>,
+    relay: BindableRelay<NSTextAlignment>,
     keyPath: ReferenceWritableKeyPath<Object, NSTextAlignment>) {
     let newValue: NSTextAlignment = .justified
     testRelay(
@@ -127,13 +126,13 @@ func testTextAlignementRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testOffsetRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIOffset>,
+    relay: BindableRelay<UIOffset>,
     keyPath: ReferenceWritableKeyPath<Object, UIOffset>) {
     let newValue: UIOffset = .init(horizontal: 123, vertical: 456)
     testRelay(
@@ -142,15 +141,15 @@ func testOffsetRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.horizontal - newValue.horizontal)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.horizontal - oldValue.horizontal)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.horizontal - oldValue.horizontal)).to(beLessThan(0.0001))
         expect(abs(changes.new.vertical - newValue.vertical)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.vertical - oldValue.vertical)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.vertical - oldValue.vertical)).to(beLessThan(0.0001))
     }
 }
 
 func testBorderStyleRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UITextField.BorderStyle>,
+    relay: BindableRelay<UITextField.BorderStyle>,
     keyPath: ReferenceWritableKeyPath<Object, UITextField.BorderStyle>) {
     let newValue: UITextField.BorderStyle = .bezel
     testRelay(
@@ -159,13 +158,13 @@ func testBorderStyleRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testRangeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSRange>,
+    relay: BindableRelay<NSRange>,
     keyPath: ReferenceWritableKeyPath<Object, NSRange>) {
     let newValue: NSRange = NSRange(location: 0, length: 0)
     testRelay(
@@ -174,13 +173,13 @@ func testRangeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testDataDetectorRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIDataDetectorTypes>,
+    relay: BindableRelay<UIDataDetectorTypes>,
     keyPath: ReferenceWritableKeyPath<Object, UIDataDetectorTypes>) {
     let newValue: UIDataDetectorTypes = .address
     testRelay(
@@ -189,13 +188,13 @@ func testDataDetectorRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testAttributedStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSAttributedString>,
+    relay: BindableRelay<NSAttributedString>,
     keyPath: ReferenceWritableKeyPath<Object, NSAttributedString>) {
     testRelay(
         for: underlyingObject,
@@ -203,13 +202,13 @@ func testAttributedStringRelay<Object: NSObject>(
         keyPath: keyPath,
         with: NSAttributedString(string: "test")) { changes, oldValue in
         expect(changes.new.string).to(equal("test"))
-        expect(changes.old.value?.string).to(equal(oldValue.string))
+        expect(changes.old?.string).to(equal(oldValue.string))
     }
 }
 
 func testOptAttributedStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSAttributedString?>,
+    relay: BindableRelay<NSAttributedString?>,
     keyPath: ReferenceWritableKeyPath<Object, NSAttributedString?>) {
     testRelay(
         for: underlyingObject,
@@ -218,16 +217,16 @@ func testOptAttributedStringRelay<Object: NSObject>(
         with: NSAttributedString(string: "test")) { changes, oldValue in
         expect(changes.new?.string).to(equal("test"))
         if oldValue?.string == nil {
-            expect(changes.old.value??.string).to(beNil())
+            expect(changes.old??.string).to(beNil())
         } else {
-            expect(changes.old.value??.string).to(equal(oldValue?.string))
+            expect(changes.old??.string).to(equal(oldValue?.string))
         }
     }
 }
 
 func testFontRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIFont?>,
+    relay: BindableRelay<UIFont?>,
     keyPath: ReferenceWritableKeyPath<Object, UIFont?>) {
     let newValue: UIFont = UIFont.systemFont(ofSize: 123, weight: .medium)
     testRelay(
@@ -237,16 +236,16 @@ func testFontRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIFont).to(beNil())
+            expect(changes.old as? UIFont).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testViewModeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UITextField.ViewMode>,
+    relay: BindableRelay<UITextField.ViewMode>,
     keyPath: ReferenceWritableKeyPath<Object, UITextField.ViewMode>) {
     let newValue: UITextField.ViewMode = .always
     testRelay(
@@ -255,13 +254,13 @@ func testViewModeRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testImageRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIImage?>,
+    relay: BindableRelay<UIImage?>,
     keyPath: ReferenceWritableKeyPath<Object, UIImage?>) {
     let newValue: UIImage = UIImage()
     testRelay(
@@ -271,16 +270,16 @@ func testImageRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIImage).to(beNil())
+            expect(changes.old as? UIImage).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testStringRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<String?>,
+    relay: BindableRelay<String?>,
     keyPath: ReferenceWritableKeyPath<Object, String?>) {
     let newValue: String = "testing pharos"
     testRelay(
@@ -290,16 +289,16 @@ func testStringRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? String).to(beNil())
+            expect(changes.old as? String).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testColorRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIColor?>,
+    relay: BindableRelay<UIColor?>,
     keyPath: ReferenceWritableKeyPath<Object, UIColor?>) {
     let newValue: UIColor = .brown
     testRelay(
@@ -309,16 +308,16 @@ func testColorRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIColor).to(beNil())
+            expect(changes.old as? UIColor).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testVisualEffectRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIVisualEffect?>,
+    relay: BindableRelay<UIVisualEffect?>,
     keyPath: ReferenceWritableKeyPath<Object, UIVisualEffect?>) {
     let newValue: UIVisualEffect = UIVisualEffect()
     testRelay(
@@ -328,16 +327,16 @@ func testVisualEffectRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIVisualEffect).to(beNil())
+            expect(changes.old as? UIVisualEffect).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testAxisRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSLayoutConstraint.Axis>,
+    relay: BindableRelay<NSLayoutConstraint.Axis>,
     keyPath: ReferenceWritableKeyPath<Object, NSLayoutConstraint.Axis>) {
     let newValue: NSLayoutConstraint.Axis = .horizontal
     testRelay(
@@ -346,13 +345,13 @@ func testAxisRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testDistributionRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIStackView.Distribution>,
+    relay: BindableRelay<UIStackView.Distribution>,
     keyPath: ReferenceWritableKeyPath<Object, UIStackView.Distribution>) {
     let newValue: UIStackView.Distribution = .equalCentering
     testRelay(
@@ -361,13 +360,13 @@ func testDistributionRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testAlignmentRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIStackView.Alignment>,
+    relay: BindableRelay<UIStackView.Alignment>,
     keyPath: ReferenceWritableKeyPath<Object, UIStackView.Alignment>) {
     let newValue: UIStackView.Alignment = .center
     testRelay(
@@ -376,13 +375,13 @@ func testAlignmentRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testViewRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIView?>,
+    relay: BindableRelay<UIView?>,
     keyPath: ReferenceWritableKeyPath<Object, UIView?>) {
     let newValue: UIView = UIView()
     testRelay(
@@ -392,16 +391,16 @@ func testViewRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIView).to(beNil())
+            expect(changes.old as? UIView).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testRefreshRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIRefreshControl?>,
+    relay: BindableRelay<UIRefreshControl?>,
     keyPath: ReferenceWritableKeyPath<Object, UIRefreshControl?>) {
     let newValue: UIRefreshControl = UIRefreshControl()
     testRelay(
@@ -411,16 +410,16 @@ func testRefreshRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
         if oldValue == nil {
-            expect(changes.old.value as? UIRefreshControl).to(beNil())
+            expect(changes.old as? UIRefreshControl).to(beNil())
         } else {
-            expect(changes.old.value).to(equal(oldValue))
+            expect(changes.old).to(equal(oldValue))
         }
     }
 }
 
 func testIntRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<Int>,
+    relay: BindableRelay<Int>,
     keyPath: ReferenceWritableKeyPath<Object, Int>) {
     let newValue: Int = .random(in: -256..<256)
     testRelay(
@@ -429,13 +428,13 @@ func testIntRelay<Object: NSObject>(
         keyPath: keyPath,
         with: newValue) { changes, oldValue in
         expect(changes.new).to(equal(newValue))
-        expect(changes.old.value).to(equal(oldValue))
+        expect(changes.old).to(equal(oldValue))
     }
 }
 
 func testTimeIntervalRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<TimeInterval>,
+    relay: BindableRelay<TimeInterval>,
     keyPath: ReferenceWritableKeyPath<Object, TimeInterval>) {
     let newValue = TimeInterval.random(in: -1024..<1024)
     testRelay(
@@ -450,7 +449,7 @@ func testTimeIntervalRelay<Object: NSObject>(
 
 func testDoubleRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<Double>,
+    relay: BindableRelay<Double>,
     keyPath: ReferenceWritableKeyPath<Object, Double>) {
     let newValue = Double.random(in: -1024..<1024)
     testRelay(
@@ -465,7 +464,7 @@ func testDoubleRelay<Object: NSObject>(
 
 func testCGFloatRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<CGFloat>,
+    relay: BindableRelay<CGFloat>,
     keyPath: ReferenceWritableKeyPath<Object, CGFloat>) {
     let newValue = CGFloat.random(in: -1024..<1024)
     testRelay(
@@ -480,7 +479,7 @@ func testCGFloatRelay<Object: NSObject>(
 
 func testFloatRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<Float>,
+    relay: BindableRelay<Float>,
     keyPath: ReferenceWritableKeyPath<Object, Float>) {
     let newValue = Float.random(in: -1024..<1024)
     testRelay(
@@ -495,7 +494,7 @@ func testFloatRelay<Object: NSObject>(
 
 func testCGRectRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<CGRect>,
+    relay: BindableRelay<CGRect>,
     keyPath: ReferenceWritableKeyPath<Object, CGRect>) {
     let newValue = CGRect(
         x: CGFloat.random(in: -1024..<1024),
@@ -512,16 +511,16 @@ func testCGRectRelay<Object: NSObject>(
         expect(abs(changes.new.origin.y - newValue.origin.y)).to(beLessThan(0.0001))
         expect(abs(changes.new.width - newValue.width)).to(beLessThan(0.0001))
         expect(abs(changes.new.height - newValue.height)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.origin.x - oldValue.origin.x)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.origin.y - oldValue.origin.y)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.width - oldValue.width)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.height - oldValue.height)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.origin.x - oldValue.origin.x)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.origin.y - oldValue.origin.y)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.width - oldValue.width)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.height - oldValue.height)).to(beLessThan(0.0001))
     }
 }
 
 func testCGPointRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<CGPoint>,
+    relay: BindableRelay<CGPoint>,
     keyPath: ReferenceWritableKeyPath<Object, CGPoint>) {
     let newValue = CGPoint(
         x: CGFloat.random(in: -1024..<1024),
@@ -534,14 +533,14 @@ func testCGPointRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.x - newValue.x)).to(beLessThan(0.0001))
         expect(abs(changes.new.y - newValue.y)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.x - oldValue.x)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.y - oldValue.y)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.x - oldValue.x)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.y - oldValue.y)).to(beLessThan(0.0001))
     }
 }
 
 func testSizeRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<CGSize>,
+    relay: BindableRelay<CGSize>,
     keyPath: ReferenceWritableKeyPath<Object, CGSize>) {
     let newValue = CGSize(
         width: CGFloat.random(in: 0..<1024),
@@ -554,14 +553,14 @@ func testSizeRelay<Object: NSObject>(
         with: newValue) { changes, oldValue in
         expect(abs(changes.new.width - newValue.width)).to(beLessThan(0.0001))
         expect(abs(changes.new.height - newValue.height)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.width - oldValue.width)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.height - oldValue.height)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.width - oldValue.width)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.height - oldValue.height)).to(beLessThan(0.0001))
     }
 }
 
 func testInsetsRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<UIEdgeInsets>,
+    relay: BindableRelay<UIEdgeInsets>,
     keyPath: ReferenceWritableKeyPath<Object, UIEdgeInsets>) {
     let newValue = UIEdgeInsets(
         top: CGFloat.random(in: -1024..<1024),
@@ -578,17 +577,17 @@ func testInsetsRelay<Object: NSObject>(
         expect(abs(changes.new.left - newValue.left)).to(beLessThan(0.0001))
         expect(abs(changes.new.bottom - newValue.bottom)).to(beLessThan(0.0001))
         expect(abs(changes.new.right - newValue.right)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.top - oldValue.top)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.left - oldValue.left)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.right - oldValue.right)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.top - oldValue.top)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.left - oldValue.left)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.right - oldValue.right)).to(beLessThan(0.0001))
     }
 }
 
 @available(iOS 11.0, *)
 func testDirectionalInsetsRelay<Object: NSObject>(
     for underlyingObject: Object,
-    relay: TwoWayRelay<NSDirectionalEdgeInsets>,
+    relay: BindableRelay<NSDirectionalEdgeInsets>,
     keyPath: ReferenceWritableKeyPath<Object, NSDirectionalEdgeInsets>) {
     let newValue = NSDirectionalEdgeInsets(
         top: CGFloat.random(in: -1024..<1024),
@@ -605,25 +604,11 @@ func testDirectionalInsetsRelay<Object: NSObject>(
         expect(abs(changes.new.leading - newValue.leading)).to(beLessThan(0.0001))
         expect(abs(changes.new.bottom - newValue.bottom)).to(beLessThan(0.0001))
         expect(abs(changes.new.trailing - newValue.trailing)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.top - oldValue.top)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.leading - oldValue.leading)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
-        expect(abs(changes.old.value?.trailing - oldValue.trailing)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.top - oldValue.top)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.leading - oldValue.leading)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.bottom - oldValue.bottom)).to(beLessThan(0.0001))
+        expect(abs(changes.old?.trailing - oldValue.trailing)).to(beLessThan(0.0001))
     }
-}
-
-func - (_ lhs: RelayValue<Float>, _ rhs: RelayValue<Float>) -> Float {
-    guard let lValue = lhs.value, let rValue = rhs.value else {
-        return .nan
-    }
-    return lValue - rValue
-}
-
-func - (_ lhs: RelayValue<Float>, _ rhs: Float) -> Float {
-    guard let lValue = lhs.value else {
-        return .nan
-    }
-    return lValue - rhs
 }
 
 func - (_ lhs: Float?, _ rhs: Float) -> Float {

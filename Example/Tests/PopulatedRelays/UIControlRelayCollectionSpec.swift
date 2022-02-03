@@ -23,21 +23,21 @@ class UIControlRelayCollectionSpec: QuickSpec {
             it("should relay isEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isEnabled,
+                    relay: view.bindables.isEnabled,
                     keyPath: \.isEnabled
                 )
             }
             it("should relay isSelected") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isSelected,
+                    relay: view.bindables.isSelected,
                     keyPath: \.isSelected
                 )
             }
             it("should relay isHighlighted") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isHighlighted,
+                    relay: view.bindables.isHighlighted,
                     keyPath: \.isHighlighted
                 )
             }

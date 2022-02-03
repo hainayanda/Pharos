@@ -23,7 +23,7 @@ class UIImageViewRelayCollectionSpec: QuickSpec {
             it("should relay image") {
                 testImageRelay(
                     for: view,
-                    relay: view.bondableRelays.image,
+                    relay: view.bindables.image,
                     keyPath: \.image
                 )
             }
@@ -31,7 +31,7 @@ class UIImageViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 14, *) {
                     testImageRelay(
                         for: view,
-                        relay: view.bondableRelays.highlightedImage,
+                        relay: view.bindables.highlightedImage,
                         keyPath: \.highlightedImage
                     )
                 }
@@ -39,42 +39,42 @@ class UIImageViewRelayCollectionSpec: QuickSpec {
             it("should relay isUserInteractionEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isUserInteractionEnabled,
+                    relay: view.bindables.isUserInteractionEnabled,
                     keyPath: \.isUserInteractionEnabled
                 )
             }
             it("should relay isHighlighted") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isHighlighted,
+                    relay: view.bindables.isHighlighted,
                     keyPath: \.isHighlighted
                 )
             }
             it("should relay animationImages") {
                 testArrayImageRelay(
                     for: view,
-                    relay: view.bondableRelays.animationImages,
+                    relay: view.bindables.animationImages,
                     keyPath: \.animationImages
                 )
             }
             it("should relay highlightedAnimationImages") {
                 testArrayImageRelay(
                     for: view,
-                    relay: view.bondableRelays.highlightedAnimationImages,
+                    relay: view.bindables.highlightedAnimationImages,
                     keyPath: \.highlightedAnimationImages
                 )
             }
             it("should relay animationDuration") {
                 testTimeIntervalRelay(
                     for: view,
-                    relay: view.bondableRelays.animationDuration,
+                    relay: view.bindables.animationDuration,
                     keyPath: \.animationDuration
                 )
             }
             it("should relay animationRepeatCount") {
                 testIntRelay(
                     for: view,
-                    relay: view.bondableRelays.animationRepeatCount,
+                    relay: view.bindables.animationRepeatCount,
                     keyPath: \.animationRepeatCount
                 )
             }
