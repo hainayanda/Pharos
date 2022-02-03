@@ -1,6 +1,6 @@
 //
 //  DipatchQueue+Extensions.swift
-//  Ergo
+//  Pharos
 //
 //  Copied and edited from https://stackoverflow.com/questions/17475002/get-current-dispatch-queue
 //
@@ -10,13 +10,26 @@ import Foundation
 /// - Parameters:
 ///   - dispatcher: DispatchQueue where task run
 ///   - work: Task to run
-public func runSyncIfPossible(on dispatcher: DispatchQueue, execute work: @escaping () -> Void) {
-    let currentQueue: DispatchQueue = .current ?? .main
-    guard currentQueue == dispatcher else {
-        dispatcher.async(execute: work)
+public func syncIfPossible(on queue: DispatchQueue? = nil, execute work: @escaping () -> Void) {
+    let dispatchQueue = (queue ?? .current) ?? .main
+    guard dispatchQueue != .main else {
+        syncOnMainIfPossible(execute: work)
         return
     }
-    work()
+    guard DispatchQueue.current != queue else {
+        work()
+        return
+    }
+    queue?.async(execute: work)
+}
+
+public func syncOnMainIfPossible(execute work: @escaping () -> Void) {
+    if Thread.isMainThread
+        || DispatchQueue.current == .main {
+        work()
+        return
+    }
+    DispatchQueue.main.async(execute: work)
 }
 
 extension DispatchQueue {
@@ -55,5 +68,7 @@ public extension DispatchQueue {
     }
     
     static var currentQueueLabel: String? { current?.label }
-    static var current: DispatchQueue? { getSpecific(key: key)?.queue }
+    static var current: DispatchQueue? {
+        getSpecific(key: key)?.queue ?? OperationQueue.current?.underlyingQueue
+    }
 }

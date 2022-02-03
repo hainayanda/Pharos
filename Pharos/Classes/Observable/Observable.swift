@@ -8,104 +8,29 @@
 import Foundation
 
 @propertyWrapper
-public final class Observable<Wrapped>: StateObservable {
-    public typealias Getter = () -> Wrapped
-    typealias OptionalGetter = () -> Wrapped?
-    public typealias Setter = (Wrapped) -> Void
-    var getter: OptionalGetter?
-    var setter: Setter?
-    lazy public internal(set) var relay: BondableRelay<Wrapped> = {
-        let relay = BondableRelay<Wrapped>(currentValue: safeValue)
-        relay.relayBackConsumer { [weak self] changes in
-            guard let self = self else { return }
-            self.setAndInformToRelay(with: changes)
-        }
-        return relay
-    }()
-    var _wrappedValue: Wrapped?
-    public var wrappedValue: Wrapped {
+public class Observable<Observed>: BindableRelay<Observed> {
+    
+    var _wrappedValue: Observed
+    public var wrappedValue: Observed {
         get {
-            getter?() ?? _wrappedValue!
+            _wrappedValue
         }
         set {
-            setAndInformToRelay(with: Changes(old: safeValue, new: newValue, source: self))
+            let oldValue = _wrappedValue
+            _wrappedValue = newValue
+            relay(changes: Changes(old: oldValue, new: newValue, source: self))
         }
     }
     
-    public var safeValue: RelayValue<Wrapped> {
-        if let value = _wrappedValue {
-            return .value(value)
-        } else {
-            return .none
-        }
+    override var recentValue: Observed? {
+        _wrappedValue
     }
     
-    public init() {
-        self._wrappedValue = nil
-    }
-    
-    public init(wrappedValue: Wrapped) {
+    public init(wrappedValue: Observed) {
         self._wrappedValue = wrappedValue
-    }
-    
-    public init(get getter: @escaping Getter, set setter: @escaping Setter) {
-        self._wrappedValue = getter()
-        mutator(get: getter, set: setter)
-    }
-    
-    public init<Object: AnyObject>(
-        of object: Object,
-        get getter: @escaping (Object) -> Getter,
-        set setter: @escaping (Object) -> Setter) {
-        self._wrappedValue = getter(object)()
-        mutator(of: object, get: getter, set: setter)
-    }
-    
-    public var projectedValue: BondableRelay<Wrapped> {
-        relay
-    }
-    
-    public func mutator(get getter: @escaping Getter, set setter: @escaping Setter) {
-        self.getter = getter
-        self.setter = setter
-    }
-    
-    public func mutator<Object: AnyObject>(
-        of object: Object,
-        get getter: @escaping (Object) -> Getter,
-        set setter: @escaping (Object) -> Setter) {
-        self.getter = { [weak self, weak object] in
-            guard let object = object else {
-                return self?._wrappedValue
-            }
-            return getter(object)()
+        super.init()
+        self.callBack = { [weak self] changes in
+            self?._wrappedValue = changes.new
         }
-        self.setter = { [weak object] value in
-            guard let object = object else { return }
-            setter(object)(value)
-        }
-    }
-    
-    public func invokeRelayWithCurrent() {
-        guard let value = _wrappedValue else { return }
-        informDidSetToRelay(with: .init(old: safeValue, new: value, invokedManually: true, source: self))
-    }
-    
-    public func removeBond() {
-        relay.bondingRelay = nil
-    }
-    
-    public func removeAllRelay() {
-        relay.removeAllNextRelays()
-    }
-    
-    func setAndInformToRelay(with changes: Changes<Wrapped>) {
-        setter?(changes.new)
-        _wrappedValue = changes.new
-        informDidSetToRelay(with: changes)
-    }
-    
-    func informDidSetToRelay(with changes: Changes<Wrapped>) {
-        relay.relay(changes: changes)
     }
 }
