@@ -69,6 +69,7 @@ open class Observed<State>: ObservedSubject {
         return RelayInvoker(relay: self)
     }
     
+    @discardableResult
     open func retain(for timeInterval: TimeInterval) -> Invokable {
         let invokable = retain()
         (DispatchQueue.current ?? .main).asyncAfter(deadline: .now() + timeInterval) { [weak self] in
@@ -78,7 +79,8 @@ open class Observed<State>: ObservedSubject {
         return invokable
     }
     
-    public func retainUntil(lastStateMatch: @escaping (Changes<State>) -> Bool) -> Invokable {
+    @discardableResult
+    open func retainUntil(lastStateMatch: @escaping (Changes<State>) -> Bool) -> Invokable {
         shouldDiscardSelf = lastStateMatch
         return retain()
     }

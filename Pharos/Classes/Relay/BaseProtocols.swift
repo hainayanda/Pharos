@@ -136,6 +136,7 @@ public protocol ObservedSubject {
 
 extension ObservedSubject {
     
+    @discardableResult
     func retainUntil(nextEventCount maxCount: Int) -> Invokable {
         var currentCount: Int = 0
         return retainUntil { _ in
@@ -144,6 +145,7 @@ extension ObservedSubject {
         }
     }
     
+    @discardableResult
     func retainUntilNextState() -> Invokable {
         retainUntil(nextEventCount: 1)
     }

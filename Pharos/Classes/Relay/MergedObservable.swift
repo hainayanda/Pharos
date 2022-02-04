@@ -28,8 +28,9 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
     }
     
     func relay(changes: Changes<RelayedState>) {
+        let oldValue = _recentValue ?? changes.old
         _recentValue = changes.new
-        relayGroup.relay(changes: changes)
+        relayGroup.relay(changes: Changes(old: oldValue, new: changes.new, source: changes.source))
     }
     
     func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {

@@ -10,9 +10,9 @@ import Foundation
 public struct Changes<Value> {
     public let old: Value?
     public let new: Value
-    public let source: Any
+    public let source: AnyObject
     
-    init(old: Value?, new: Value, source: Any) {
+    init(old: Value?, new: Value, source: AnyObject) {
         self.old = old
         self.new = new
         self.source = source
@@ -44,6 +44,6 @@ extension Changes: Equatable where Value: Equatable {
         !isNotChanging
     }
     public static func == (lhs: Changes<Value>, rhs: Changes<Value>) -> Bool {
-        lhs.new == rhs.new && lhs.old == rhs.old
+        lhs.new == rhs.new && lhs.old == rhs.old && lhs.source === rhs.source
     }
 }
