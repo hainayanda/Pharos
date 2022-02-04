@@ -102,6 +102,26 @@ class ObservableSpec: QuickSpec {
                 setCount: 1
             )
         }
+        it("should retain subscriber for given timeinterval") {
+            let newState: String = .randomString(length: 18)
+            let expectedChanges = Changes(old: intialState, new: newState, source: subject)
+            let changeWrapper = listenDidSet(for: subject, retainUntil: 0.5)
+            subject.wrappedValue = newState
+            thenAssert(
+                changeWrapper,
+                shouldSimilarWith: expectedChanges,
+                setCount: 1
+            )
+            waitUntil { done in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: done)
+            }
+            subject.wrappedValue = .randomString(length: 18)
+            thenAssert(
+                changeWrapper,
+                shouldSimilarWith: expectedChanges,
+                setCount: 1
+            )
+        }
         it("should ignore state") {
             let changeWrapper = listenDidSet(for: subject.ignore(when: { _ in true }))
             subject.wrappedValue = .randomString(length: 18)
@@ -196,6 +216,15 @@ fileprivate func listenDidSet<State: Equatable>(for subject: Observable<State>, 
         .whenDidSet { changes in
             changeWrapper.changes = changes
         }.retainUntil { $0 == changes }
+    return changeWrapper
+}
+
+fileprivate func listenDidSet<State>(for subject: Observable<State>, retainUntil timeInterval: TimeInterval) -> ChangesClassWrapper<State> {
+    let changeWrapper = ChangesClassWrapper<State>()
+    subject
+        .whenDidSet { changes in
+            changeWrapper.changes = changes
+        }.retain(for: 0.5)
     return changeWrapper
 }
 
