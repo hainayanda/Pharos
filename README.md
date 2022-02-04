@@ -17,12 +17,12 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Requirements
 
 - Swift 5.0 or higher (or 5.5 when using Swift Package Manager)
-- iOS 11.0 or higher
+- iOS 12.0 or higher
 
 ### Only Swift Package Manager
 
-- macOS 11 or higher
-- tvOS 11 or higher
+- macOS 12.0 or higher
+- tvOS 12.0 or higher
 
 ## Installation
 

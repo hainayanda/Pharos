@@ -6,9 +6,9 @@ import PackageDescription
 let package = Package(
     name: "Pharos",
     platforms: [
-        .iOS(.v11),
-        .macOS(.v11),
-        .tvOS(.v11)
+        .iOS(.v12),
+        .macOS(.v12),
+        .tvOS(.v12)
     ],
     products: [
         .library(
