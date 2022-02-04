@@ -23,6 +23,7 @@ open class Observed<State>: ObservedSubject {
     var queue: DispatchQueue?
     var preferSync: Bool = true
     var delay: TimeInterval?
+    var shouldDiscardSelf: (Changes<State>) -> Bool = { _ in false }
     
     @Atomic var status: RelayOperationStatus = .idle
     @Atomic var pendingChanges: Changes<RelayedState>?
@@ -67,6 +68,25 @@ open class Observed<State>: ObservedSubject {
         source?.retainWeakly(relay: self, managedBy: retainer)
         return RelayInvoker(relay: self)
     }
+    
+    open func retain(for timeInterval: TimeInterval) -> Invokable {
+        let invokable = retain()
+        (DispatchQueue.current ?? .main).asyncAfter(deadline: .now() + timeInterval) { [weak self] in
+            guard let self = self else { return }
+            self.discardSelf()
+        }
+        return invokable
+    }
+    
+    public func retainUntil(lastStateMatch: @escaping (Changes<State>) -> Bool) -> Invokable {
+        shouldDiscardSelf = lastStateMatch
+        return retain()
+    }
+    
+    func discardSelf() {
+        self.source?.temporaryRetainer.discard(self)
+        self.source?.relayGroup.remove(self)
+    }
 }
 
 extension Observed: StateRelay {
@@ -90,7 +110,12 @@ extension Observed: StateRelay {
         relay(changes: changes)
     }
     
-    func finishRelay() {
+    func finishRelay(for changes: Changes<RelayedState>) {
+        guard !shouldDiscardSelf(changes) else {
+            self.status = .idle
+            discardSelf()
+            return
+        }
         guard let delay = self.delay else {
             self.status = .idle
             return

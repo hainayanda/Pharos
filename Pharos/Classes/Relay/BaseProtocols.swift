@@ -126,6 +126,25 @@ public protocol ObservedSubject {
     func retain() -> Invokable
     @discardableResult
     func retained(by retainer: Retainer) -> Invokable
+    @discardableResult
+    func retainUntil(lastStateMatch: @escaping (Changes<State>) -> Bool) -> Invokable
+    @discardableResult
+    func retain(for timeInterval: TimeInterval) -> Invokable
+}
+
+extension ObservedSubject {
+    
+    func retainUntil(nextEventCount maxCount: Int) -> Invokable {
+        var currentCount: Int = 0
+        return retainUntil { _ in
+            currentCount += 1
+            return currentCount >= maxCount
+        }
+    }
+    
+    func retainUntilNextState() -> Invokable {
+        retainUntil(nextEventCount: 1)
+    }
 }
 
 // MARK: Invokable
