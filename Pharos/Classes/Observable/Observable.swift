@@ -7,105 +7,88 @@
 
 import Foundation
 
-@propertyWrapper
-public final class Observable<Wrapped>: StateObservable {
-    public typealias Getter = () -> Wrapped
-    typealias OptionalGetter = () -> Wrapped?
-    public typealias Setter = (Wrapped) -> Void
-    var getter: OptionalGetter?
-    var setter: Setter?
-    lazy public internal(set) var relay: BondableRelay<Wrapped> = {
-        let relay = BondableRelay<Wrapped>(currentValue: safeValue)
-        relay.relayBackConsumer { [weak self] changes in
-            guard let self = self else { return }
-            self.setAndInformToRelay(with: changes)
+open class Observable<State>: ChangeObservable {
+    lazy var temporaryRetainer: Retainer = Retainer()
+    lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
+    var recentState: State? { nil }
+    
+    public init() { }
+    
+    open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
+        let observed = Observed(source: self, observer: work)
+        temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    // MARK: Mappable
+    
+    open func compactMapped<Mapped>(_ mapper: @escaping (State) throws -> Mapped?) -> Observable<Mapped> {
+        let observed = MappedObservable(source: self, mapper: mapper)
+        temporaryRetainer.retain(observed)
+        return observed
+        
+    }
+    
+    // MARK: Filterable
+    
+    open func ignore(when shouldIgnore: @escaping (Changes<State>) -> Bool) -> Observable<State> {
+        let observed = FilteredObservable(source: self, filter: shouldIgnore)
+        temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    // MARK: Combinable
+    
+    open func combine<State1>(with relay: Observable<State1>) -> Observable<(State?, State1?)> {
+        let observed = BiCastObservable(source1: self, source2: relay)
+        temporaryRetainer.retain(observed)
+        relay.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    open func combine<State1, State2>(
+        with relay1: Observable<State1>, _ relay2: Observable<State2>
+    ) -> Observable<(State?, State1?, State2?)> {
+        let observed = TriCastObservable(source1: self, source2: relay1, source3: relay2)
+        temporaryRetainer.retain(observed)
+        relay1.temporaryRetainer.retain(observed)
+        relay2.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    open func combine<State1, State2, State3>(
+        with relay1: Observable<State1>, _ relay2: Observable<State2>, _ relay3: Observable<State3>
+    ) -> Observable<(State?, State1?, State2?, State3?)> {
+        let observed = QuadCastObservable(source1: self, source2: relay1, source3: relay2, source4: relay3)
+        temporaryRetainer.retain(observed)
+        relay1.temporaryRetainer.retain(observed)
+        relay2.temporaryRetainer.retain(observed)
+        relay3.temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    // MARK: Mergable
+    
+    open func merge(with relays: Observable<State>...) -> Observable<State> {
+        var merged = relays
+        merged.insert(self, at: 0)
+        let observed = MergedObservable(observables: merged)
+        for relay in merged {
+            relay.temporaryRetainer.retain(observed)
         }
-        return relay
-    }()
-    var _wrappedValue: Wrapped?
-    public var wrappedValue: Wrapped {
-        get {
-            getter?() ?? _wrappedValue!
-        }
-        set {
-            setAndInformToRelay(with: Changes(old: safeValue, new: newValue, source: self))
-        }
+        return observed
     }
     
-    public var safeValue: RelayValue<Wrapped> {
-        if let value = _wrappedValue {
-            return .value(value)
-        } else {
-            return .none
-        }
+    // MARK: Retain
+    
+    func retain<Child: StateRelay>(relay: Child) where Child.RelayedState == State {
+        temporaryRetainer.discard(relay)
+        relayGroup.addToGroup(relay)
     }
     
-    public init() {
-        self._wrappedValue = nil
-    }
-    
-    public init(wrappedValue: Wrapped) {
-        self._wrappedValue = wrappedValue
-    }
-    
-    public init(get getter: @escaping Getter, set setter: @escaping Setter) {
-        self._wrappedValue = getter()
-        mutator(get: getter, set: setter)
-    }
-    
-    public init<Object: AnyObject>(
-        of object: Object,
-        get getter: @escaping (Object) -> Getter,
-        set setter: @escaping (Object) -> Setter) {
-        self._wrappedValue = getter(object)()
-        mutator(of: object, get: getter, set: setter)
-    }
-    
-    public var projectedValue: BondableRelay<Wrapped> {
-        relay
-    }
-    
-    public func mutator(get getter: @escaping Getter, set setter: @escaping Setter) {
-        self.getter = getter
-        self.setter = setter
-    }
-    
-    public func mutator<Object: AnyObject>(
-        of object: Object,
-        get getter: @escaping (Object) -> Getter,
-        set setter: @escaping (Object) -> Setter) {
-        self.getter = { [weak self, weak object] in
-            guard let object = object else {
-                return self?._wrappedValue
-            }
-            return getter(object)()
-        }
-        self.setter = { [weak object] value in
-            guard let object = object else { return }
-            setter(object)(value)
-        }
-    }
-    
-    public func invokeRelayWithCurrent() {
-        guard let value = _wrappedValue else { return }
-        informDidSetToRelay(with: .init(old: safeValue, new: value, invokedManually: true, source: self))
-    }
-    
-    public func removeBond() {
-        relay.bondingRelay = nil
-    }
-    
-    public func removeAllRelay() {
-        relay.removeAllNextRelays()
-    }
-    
-    func setAndInformToRelay(with changes: Changes<Wrapped>) {
-        setter?(changes.new)
-        _wrappedValue = changes.new
-        informDidSetToRelay(with: changes)
-    }
-    
-    func informDidSetToRelay(with changes: Changes<Wrapped>) {
-        relay.relay(changes: changes)
+    func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where Child.RelayedState == State {
+        temporaryRetainer.discard(relay)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: relay))
+        retainer.retain(relay)
     }
 }

@@ -23,21 +23,21 @@ class UIScrollViewRelayCollectionSpec: QuickSpec {
             it("should relay contentSize") {
                 testSizeRelay(
                     for: view,
-                    relay: view.bondableRelays.contentSize,
+                    relay: view.bindables.contentSize,
                     keyPath: \.contentSize
                 )
             }
             it("should relay contentInset") {
                 testInsetsRelay(
                     for: view,
-                    relay: view.bondableRelays.contentInset,
+                    relay: view.bindables.contentInset,
                     keyPath: \.contentInset
                 )
             }
             it("should relay delegate") {
                 testRelay(
                     for: view,
-                    relay: view.bondableRelays.delegate,
+                    relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
                 ) { changes, oldValue in
@@ -52,119 +52,119 @@ class UIScrollViewRelayCollectionSpec: QuickSpec {
             it("should relay isDirectionalLockEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isDirectionalLockEnabled,
+                    relay: view.bindables.isDirectionalLockEnabled,
                     keyPath: \.isDirectionalLockEnabled
                 )
             }
             it("should relay bounces") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.bounces,
+                    relay: view.bindables.bounces,
                     keyPath: \.bounces
                 )
             }
             it("should relay alwaysBounceVertical") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.alwaysBounceVertical,
+                    relay: view.bindables.alwaysBounceVertical,
                     keyPath: \.alwaysBounceVertical
                 )
             }
             it("should relay alwaysBounceHorizontal") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.alwaysBounceHorizontal,
+                    relay: view.bindables.alwaysBounceHorizontal,
                     keyPath: \.alwaysBounceHorizontal
                 )
             }
             it("should relay isPagingEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isPagingEnabled,
+                    relay: view.bindables.isPagingEnabled,
                     keyPath: \.isPagingEnabled
                 )
             }
             it("should relay isUserInteractionEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isUserInteractionEnabled,
+                    relay: view.bindables.isUserInteractionEnabled,
                     keyPath: \.isUserInteractionEnabled
                 )
             }
             it("should relay isScrollEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isScrollEnabled,
+                    relay: view.bindables.isScrollEnabled,
                     keyPath: \.isScrollEnabled
                 )
             }
             it("should relay showsVerticalScrollIndicator") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.showsVerticalScrollIndicator,
+                    relay: view.bindables.showsVerticalScrollIndicator,
                     keyPath: \.showsVerticalScrollIndicator
                 )
             }
             it("should relay showsHorizontalScrollIndicator") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.showsHorizontalScrollIndicator,
+                    relay: view.bindables.showsHorizontalScrollIndicator,
                     keyPath: \.showsHorizontalScrollIndicator
                 )
             }
             it("should relay scrollIndicatorInsets") {
                 testInsetsRelay(
                     for: view,
-                    relay: view.bondableRelays.scrollIndicatorInsets,
+                    relay: view.bindables.scrollIndicatorInsets,
                     keyPath: \.scrollIndicatorInsets
                 )
             }
             it("should relay delaysContentTouches") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.delaysContentTouches,
+                    relay: view.bindables.delaysContentTouches,
                     keyPath: \.delaysContentTouches
                 )
             }
             it("should relay canCancelContentTouches") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.canCancelContentTouches,
+                    relay: view.bindables.canCancelContentTouches,
                     keyPath: \.canCancelContentTouches
                 )
             }
             it("should relay minimumZoomScale") {
                 testCGFloatRelay(
                     for: view,
-                    relay: view.bondableRelays.minimumZoomScale,
+                    relay: view.bindables.minimumZoomScale,
                     keyPath: \.minimumZoomScale
                 )
             }
             it("should relay maximumZoomScale") {
                 testCGFloatRelay(
                     for: view,
-                    relay: view.bondableRelays.maximumZoomScale,
+                    relay: view.bindables.maximumZoomScale,
                     keyPath: \.maximumZoomScale
                 )
             }
             it("should relay bouncesZoom") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.bouncesZoom,
+                    relay: view.bindables.bouncesZoom,
                     keyPath: \.bouncesZoom
                 )
             }
             it("should relay scrollsToTop") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.scrollsToTop,
+                    relay: view.bindables.scrollsToTop,
                     keyPath: \.scrollsToTop
                 )
             }
             it("should relay refreshControl") {
                 testRefreshRelay(
                     for: view,
-                    relay: view.bondableRelays.refreshControl,
+                    relay: view.bindables.refreshControl,
                     keyPath: \.refreshControl
                 )
             }
@@ -172,7 +172,7 @@ class UIScrollViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11.1, *) {
                     testInsetsRelay(
                         for: view,
-                        relay: view.bondableRelays.verticalScrollIndicatorInsets,
+                        relay: view.bindables.verticalScrollIndicatorInsets,
                         keyPath: \.verticalScrollIndicatorInsets
                     )
                 }
@@ -181,7 +181,7 @@ class UIScrollViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11.1, *) {
                     testInsetsRelay(
                         for: view,
-                        relay: view.bondableRelays.horizontalScrollIndicatorInsets,
+                        relay: view.bindables.horizontalScrollIndicatorInsets,
                         keyPath: \.horizontalScrollIndicatorInsets
                     )
                 }

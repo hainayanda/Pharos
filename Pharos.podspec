@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Pharos'
-  s.version          = '1.3.2'
+  s.version          = '2.0.0'
   s.summary          = 'Pharos is Observer pattern framework for Swift that utilize `propertyWrapper'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/hainayanda/Pharos.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'Pharos/Classes/**/*'
   
@@ -39,5 +39,5 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
-  s.swift_version = '5.1'
+  s.swift_version = '5.5'
 end

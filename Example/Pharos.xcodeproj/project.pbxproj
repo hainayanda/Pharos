@@ -7,49 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */; };
 		6637C15102A6B68C6B7D8486 /* Pods_Pharos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */; };
-		BB6128B4267D8EA400D1670D /* TextInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */; };
-		BB6128BA267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */; };
-		BB6128BC267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */; };
-		BB6128C2267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */; };
-		BB6128C4267E20FF00D1670D /* UIControlRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */; };
-		BB6128C6267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */; };
-		BB6128C8267E23DD00D1670D /* UILabelRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */; };
-		BB6128CA267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */; };
-		BB6128CC267E29CC00D1670D /* UISliderRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */; };
-		BB6128CE267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */; };
-		BB6128D0267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */; };
-		BB6128D2267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */; };
-		BB6128D4267E300200D1670D /* UITableViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */; };
-		BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */; };
-		BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */; };
+		BB0EDCCC27ACF66800EB5D2C /* ObservableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDCCB27ACF66800EB5D2C /* ObservableSpec.swift */; };
+		BB0EDCCE27AD24E600EB5D2C /* CombineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDCCD27AD24E600EB5D2C /* CombineSpec.swift */; };
+		BB0EDCD127AD258400EB5D2C /* ChangeClassWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDCD027AD258400EB5D2C /* ChangeClassWrapper.swift */; };
+		BB0EDCD427AD260900EB5D2C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDCD327AD260900EB5D2C /* Extensions.swift */; };
+		BB0EDCD627AD597400EB5D2C /* PublisherSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0EDCD527AD597400EB5D2C /* PublisherSpec.swift */; };
+		BB94D14E27AC34DF00B17ED9 /* BindSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D14D27AC34DF00B17ED9 /* BindSpec.swift */; };
+		BB94D15D27AC64C500B17ED9 /* UIImageViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D14F27AC64C500B17ED9 /* UIImageViewRelayCollectionSpec.swift */; };
+		BB94D15E27AC64C500B17ED9 /* TextInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15027AC64C500B17ED9 /* TextInputRelayCollectionSpec.swift */; };
+		BB94D15F27AC64C500B17ED9 /* UILabelRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15127AC64C500B17ED9 /* UILabelRelayCollectionSpec.swift */; };
+		BB94D16027AC64C500B17ED9 /* UITableViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15227AC64C500B17ED9 /* UITableViewRelayCollectionSpec.swift */; };
+		BB94D16127AC64C500B17ED9 /* UIControlRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15327AC64C500B17ED9 /* UIControlRelayCollectionSpec.swift */; };
+		BB94D16227AC64C500B17ED9 /* UIScrollViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15427AC64C500B17ED9 /* UIScrollViewRelayCollectionSpec.swift */; };
+		BB94D16327AC64C500B17ED9 /* UISliderRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15527AC64C500B17ED9 /* UISliderRelayCollectionSpec.swift */; };
+		BB94D16427AC64C500B17ED9 /* UICollectionViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15627AC64C500B17ED9 /* UICollectionViewRelayCollectionSpec.swift */; };
+		BB94D16527AC64C500B17ED9 /* UIButtonRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15727AC64C500B17ED9 /* UIButtonRelayCollectionSpec.swift */; };
+		BB94D16627AC64C500B17ED9 /* UIStackViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15827AC64C500B17ED9 /* UIStackViewRelayCollectionSpec.swift */; };
+		BB94D16727AC64C500B17ED9 /* UISwitchRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15927AC64C500B17ED9 /* UISwitchRelayCollectionSpec.swift */; };
+		BB94D16827AC64C500B17ED9 /* CellInputRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15A27AC64C500B17ED9 /* CellInputRelayCollectionSpec.swift */; };
+		BB94D16927AC64C500B17ED9 /* UIStepperRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15B27AC64C500B17ED9 /* UIStepperRelayCollectionSpec.swift */; };
+		BB94D16A27AC64C500B17ED9 /* ViewRelayCollectionSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D15C27AC64C500B17ED9 /* ViewRelayCollectionSpec.swift */; };
+		BB94D16C27AC64D300B17ED9 /* BindableRelayTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D16B27AC64D300B17ED9 /* BindableRelayTester.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		607FACE51AFB9204008FA782 /* Pharos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Pharos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationSpec.swift; sourceTree = "<group>"; };
 		6455C0B2D43425514B643939 /* Pods-Pharos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pharos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Pharos_Tests/Pods-Pharos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8E4E92505E33F1AD20F8D48F /* Pods-Pharos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pharos_Tests.release.xcconfig"; path = "Target Support Files/Pods-Pharos_Tests/Pods-Pharos_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		96427FB076AEC3F72B8CFE14 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		98AD26FD81DCF3BA9A0512B3 /* Pods_Pharos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pharos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9E4AF481F13ADEA7D3697D /* Pharos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Pharos.podspec; path = ../Pharos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISliderRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStepperRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISwitchRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
-		BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayKVORelayTester.swift; sourceTree = "<group>"; };
+		BB0EDCCB27ACF66800EB5D2C /* ObservableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSpec.swift; sourceTree = "<group>"; };
+		BB0EDCCD27AD24E600EB5D2C /* CombineSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineSpec.swift; sourceTree = "<group>"; };
+		BB0EDCD027AD258400EB5D2C /* ChangeClassWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeClassWrapper.swift; sourceTree = "<group>"; };
+		BB0EDCD327AD260900EB5D2C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BB0EDCD527AD597400EB5D2C /* PublisherSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherSpec.swift; sourceTree = "<group>"; };
+		BB94D14C27AC34DF00B17ED9 /* Pharos_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pharos_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB94D14D27AC34DF00B17ED9 /* BindSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindSpec.swift; sourceTree = "<group>"; };
+		BB94D14F27AC64C500B17ED9 /* UIImageViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15027AC64C500B17ED9 /* TextInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15127AC64C500B17ED9 /* UILabelRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15227AC64C500B17ED9 /* UITableViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15327AC64C500B17ED9 /* UIControlRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControlRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15427AC64C500B17ED9 /* UIScrollViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScrollViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15527AC64C500B17ED9 /* UISliderRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISliderRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15627AC64C500B17ED9 /* UICollectionViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15727AC64C500B17ED9 /* UIButtonRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15827AC64C500B17ED9 /* UIStackViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStackViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15927AC64C500B17ED9 /* UISwitchRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISwitchRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15A27AC64C500B17ED9 /* CellInputRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellInputRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15B27AC64C500B17ED9 /* UIStepperRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStepperRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D15C27AC64C500B17ED9 /* ViewRelayCollectionSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewRelayCollectionSpec.swift; sourceTree = "<group>"; };
+		BB94D16B27AC64D300B17ED9 /* BindableRelayTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableRelayTester.swift; sourceTree = "<group>"; };
 		CDD394D6EBAB1D2D08A68AA7 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,10 +98,12 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BB0EDCD227AD25BB00EB5D2C /* BasicTest */,
+				BB0EDCCF27AD257300EB5D2C /* Helper */,
 				BB6128C0267E101400D1670D /* Tester */,
 				BB6128BE267E0FF800D1670D /* PopulatedRelays */,
-				607FACEB1AFB9204008FA782 /* IntegrationSpec.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				BB94D14C27AC34DF00B17ED9 /* Pharos_Tests-Bridging-Header.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -113,23 +126,43 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		BB0EDCCF27AD257300EB5D2C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				BB0EDCD027AD258400EB5D2C /* ChangeClassWrapper.swift */,
+				BB0EDCD327AD260900EB5D2C /* Extensions.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		BB0EDCD227AD25BB00EB5D2C /* BasicTest */ = {
+			isa = PBXGroup;
+			children = (
+				BB0EDCCB27ACF66800EB5D2C /* ObservableSpec.swift */,
+				BB0EDCCD27AD24E600EB5D2C /* CombineSpec.swift */,
+				BB94D14D27AC34DF00B17ED9 /* BindSpec.swift */,
+				BB0EDCD527AD597400EB5D2C /* PublisherSpec.swift */,
+			);
+			path = BasicTest;
+			sourceTree = "<group>";
+		};
 		BB6128BE267E0FF800D1670D /* PopulatedRelays */ = {
 			isa = PBXGroup;
 			children = (
-				BB6128B9267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift */,
-				BB6128B3267D8EA400D1670D /* TextInputRelayCollectionSpec.swift */,
-				BB6128BB267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift */,
-				BB6128C1267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift */,
-				BB6128C3267E20FF00D1670D /* UIControlRelayCollectionSpec.swift */,
-				BB6128C5267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift */,
-				BB6128C7267E23DD00D1670D /* UILabelRelayCollectionSpec.swift */,
-				BB6128C9267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift */,
-				BB6128CB267E29CC00D1670D /* UISliderRelayCollectionSpec.swift */,
-				BB6128CD267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift */,
-				BB6128CF267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift */,
-				BB6128D1267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift */,
-				BB6128D3267E300200D1670D /* UITableViewRelayCollectionSpec.swift */,
-				BBAB04CB2675E29600F3E7AB /* ViewRelayCollectionSpec.swift */,
+				BB94D15A27AC64C500B17ED9 /* CellInputRelayCollectionSpec.swift */,
+				BB94D15027AC64C500B17ED9 /* TextInputRelayCollectionSpec.swift */,
+				BB94D15727AC64C500B17ED9 /* UIButtonRelayCollectionSpec.swift */,
+				BB94D15627AC64C500B17ED9 /* UICollectionViewRelayCollectionSpec.swift */,
+				BB94D15327AC64C500B17ED9 /* UIControlRelayCollectionSpec.swift */,
+				BB94D14F27AC64C500B17ED9 /* UIImageViewRelayCollectionSpec.swift */,
+				BB94D15127AC64C500B17ED9 /* UILabelRelayCollectionSpec.swift */,
+				BB94D15427AC64C500B17ED9 /* UIScrollViewRelayCollectionSpec.swift */,
+				BB94D15527AC64C500B17ED9 /* UISliderRelayCollectionSpec.swift */,
+				BB94D15827AC64C500B17ED9 /* UIStackViewRelayCollectionSpec.swift */,
+				BB94D15B27AC64C500B17ED9 /* UIStepperRelayCollectionSpec.swift */,
+				BB94D15927AC64C500B17ED9 /* UISwitchRelayCollectionSpec.swift */,
+				BB94D15227AC64C500B17ED9 /* UITableViewRelayCollectionSpec.swift */,
+				BB94D15C27AC64C500B17ED9 /* ViewRelayCollectionSpec.swift */,
 			);
 			path = PopulatedRelays;
 			sourceTree = "<group>";
@@ -137,7 +170,7 @@
 		BB6128C0267E101400D1670D /* Tester */ = {
 			isa = PBXGroup;
 			children = (
-				BBAB04CD2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift */,
+				BB94D16B27AC64D300B17ED9 /* BindableRelayTester.swift */,
 			);
 			path = Tester;
 			sourceTree = "<group>";
@@ -188,12 +221,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -278,22 +311,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB6128C8267E23DD00D1670D /* UILabelRelayCollectionSpec.swift in Sources */,
-				BB6128C6267E22AE00D1670D /* UIImageViewRelayCollectionSpec.swift in Sources */,
-				BB6128D0267E2E5300D1670D /* UIStepperRelayCollectionSpec.swift in Sources */,
-				BB6128C4267E20FF00D1670D /* UIControlRelayCollectionSpec.swift in Sources */,
-				BB6128D4267E300200D1670D /* UITableViewRelayCollectionSpec.swift in Sources */,
-				BBAB04CC2675E29600F3E7AB /* ViewRelayCollectionSpec.swift in Sources */,
-				BB6128D2267E2F5500D1670D /* UISwitchRelayCollectionSpec.swift in Sources */,
-				BBAB04CE2675FC8E00F3E7AB /* TwoWayKVORelayTester.swift in Sources */,
-				BB6128CA267E26FD00D1670D /* UIScrollViewRelayCollectionSpec.swift in Sources */,
-				BB6128B4267D8EA400D1670D /* TextInputRelayCollectionSpec.swift in Sources */,
-				BB6128CC267E29CC00D1670D /* UISliderRelayCollectionSpec.swift in Sources */,
-				BB6128CE267E2B5B00D1670D /* UIStackViewRelayCollectionSpec.swift in Sources */,
-				607FACEC1AFB9204008FA782 /* IntegrationSpec.swift in Sources */,
-				BB6128C2267E11F900D1670D /* UICollectionViewRelayCollectionSpec.swift in Sources */,
-				BB6128BA267E0ABC00D1670D /* CellInputRelayCollectionSpec.swift in Sources */,
-				BB6128BC267E0FCB00D1670D /* UIButtonRelayCollectionSpec.swift in Sources */,
+				BB0EDCCC27ACF66800EB5D2C /* ObservableSpec.swift in Sources */,
+				BB94D14E27AC34DF00B17ED9 /* BindSpec.swift in Sources */,
+				BB94D15D27AC64C500B17ED9 /* UIImageViewRelayCollectionSpec.swift in Sources */,
+				BB94D16927AC64C500B17ED9 /* UIStepperRelayCollectionSpec.swift in Sources */,
+				BB0EDCCE27AD24E600EB5D2C /* CombineSpec.swift in Sources */,
+				BB94D16127AC64C500B17ED9 /* UIControlRelayCollectionSpec.swift in Sources */,
+				BB0EDCD627AD597400EB5D2C /* PublisherSpec.swift in Sources */,
+				BB94D16C27AC64D300B17ED9 /* BindableRelayTester.swift in Sources */,
+				BB94D16327AC64C500B17ED9 /* UISliderRelayCollectionSpec.swift in Sources */,
+				BB94D16A27AC64C500B17ED9 /* ViewRelayCollectionSpec.swift in Sources */,
+				BB94D16527AC64C500B17ED9 /* UIButtonRelayCollectionSpec.swift in Sources */,
+				BB94D15F27AC64C500B17ED9 /* UILabelRelayCollectionSpec.swift in Sources */,
+				BB94D16827AC64C500B17ED9 /* CellInputRelayCollectionSpec.swift in Sources */,
+				BB94D15E27AC64C500B17ED9 /* TextInputRelayCollectionSpec.swift in Sources */,
+				BB94D16027AC64C500B17ED9 /* UITableViewRelayCollectionSpec.swift in Sources */,
+				BB0EDCD127AD258400EB5D2C /* ChangeClassWrapper.swift in Sources */,
+				BB0EDCD427AD260900EB5D2C /* Extensions.swift in Sources */,
+				BB94D16727AC64C500B17ED9 /* UISwitchRelayCollectionSpec.swift in Sources */,
+				BB94D16627AC64C500B17ED9 /* UIStackViewRelayCollectionSpec.swift in Sources */,
+				BB94D16227AC64C500B17ED9 /* UIScrollViewRelayCollectionSpec.swift in Sources */,
+				BB94D16427AC64C500B17ED9 /* UICollectionViewRelayCollectionSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -312,14 +351,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -345,11 +387,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -357,6 +400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -365,14 +409,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -391,10 +438,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -403,6 +451,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6455C0B2D43425514B643939 /* Pods-Pharos_Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -415,9 +464,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Pharos_Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -425,6 +475,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8E4E92505E33F1AD20F8D48F /* Pods-Pharos_Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -433,9 +484,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Pharos_Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

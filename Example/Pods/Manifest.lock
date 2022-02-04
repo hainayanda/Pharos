@@ -1,10 +1,10 @@
 PODS:
-  - Nimble (9.2.0)
-  - Pharos (1.2.2)
+  - Nimble (9.2.1)
+  - Pharos (2.0.0)
   - Quick (4.0.0)
 
 DEPENDENCIES:
-  - Nimble (~> 9.2.0)
+  - Nimble (~> 9.2.1)
   - Pharos (from `../`)
   - Quick (~> 4.0.0)
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Nimble: 4f4a345c80b503b3ea13606a4f98405974ee4d0b
-  Pharos: 7c748b396d4c6eb87a8f73b292c6fb3b87460ccd
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  Pharos: 31f5e05c3322d2d3b237ab1d9e1f153fe29b672a
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
 
-PODFILE CHECKSUM: f9ac4a686a1c96573a2b9a13cae9ae1adba56e81
+PODFILE CHECKSUM: b3d7df2369eb2b2e695c16ea7a2ca39db9d210d8
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

@@ -23,14 +23,14 @@ class ViewRelayCollectionSpec: QuickSpec {
             it("should relay isUserInteractionEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isUserInteractionEnabled,
+                    relay: view.bindables.isUserInteractionEnabled,
                     keyPath: \.isUserInteractionEnabled
                 )
             }
             it("should relay tag") {
                 testIntRelay(
                     for: view,
-                    relay: view.bondableRelays.tag,
+                    relay: view.bindables.tag,
                     keyPath: \.tag
                 )
             }
@@ -38,7 +38,7 @@ class ViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 14, *) {
                     testStringRelay(
                         for: view,
-                        relay: view.bondableRelays.focusGroupIdentifier,
+                        relay: view.bindables.focusGroupIdentifier,
                         keyPath: \.focusGroupIdentifier
                     )
                 }
@@ -46,56 +46,56 @@ class ViewRelayCollectionSpec: QuickSpec {
             it("should relay frame") {
                 testCGRectRelay(
                     for: view,
-                    relay: view.bondableRelays.frame,
+                    relay: view.bindables.frame,
                     keyPath: \.frame
                 )
             }
             it("should relay bounds") {
                 testCGRectRelay(
                     for: view,
-                    relay: view.bondableRelays.bounds,
+                    relay: view.bindables.bounds,
                     keyPath: \.bounds
                 )
             }
             it("should relay center") {
                 testCGPointRelay(
                     for: view,
-                    relay: view.bondableRelays.center,
+                    relay: view.bindables.center,
                     keyPath: \.center
                 )
             }
             it("should relay contentScaleFactor") {
                 testCGFloatRelay(
                     for: view,
-                    relay: view.bondableRelays.contentScaleFactor,
+                    relay: view.bindables.contentScaleFactor,
                     keyPath: \.contentScaleFactor
                 )
             }
             it("should relay isMultipleTouchEnabled") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isMultipleTouchEnabled,
+                    relay: view.bindables.isMultipleTouchEnabled,
                     keyPath: \.isMultipleTouchEnabled
                 )
             }
             it("should relay isExclusiveTouch") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isExclusiveTouch,
+                    relay: view.bindables.isExclusiveTouch,
                     keyPath: \.isExclusiveTouch
                 )
             }
             it("should relay autoresizesSubviews") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.autoresizesSubviews,
+                    relay: view.bindables.autoresizesSubviews,
                     keyPath: \.autoresizesSubviews
                 )
             }
             it("should relay layoutMargins") {
                 testInsetsRelay(
                     for: view,
-                    relay: view.bondableRelays.layoutMargins,
+                    relay: view.bindables.layoutMargins,
                     keyPath: \.layoutMargins
                 )
             }
@@ -103,7 +103,7 @@ class ViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11, *) {
                     testDirectionalInsetsRelay(
                         for: view,
-                        relay: view.bondableRelays.directionalLayoutMargins,
+                        relay: view.bindables.directionalLayoutMargins,
                         keyPath: \.directionalLayoutMargins
                     )
                 }
@@ -112,7 +112,7 @@ class ViewRelayCollectionSpec: QuickSpec {
                 if #available(iOS 11, *) {
                     testBoolRelay(
                         for: view,
-                        relay: view.bondableRelays.insetsLayoutMarginsFromSafeArea,
+                        relay: view.bindables.insetsLayoutMarginsFromSafeArea,
                         keyPath: \.insetsLayoutMarginsFromSafeArea
                     )
                 }
@@ -120,77 +120,77 @@ class ViewRelayCollectionSpec: QuickSpec {
             it("should relay preservesSuperviewLayoutMargins") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.preservesSuperviewLayoutMargins,
+                    relay: view.bindables.preservesSuperviewLayoutMargins,
                     keyPath: \.preservesSuperviewLayoutMargins
                 )
             }
             it("should relay clipsToBounds") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.clipsToBounds,
+                    relay: view.bindables.clipsToBounds,
                     keyPath: \.clipsToBounds
                 )
             }
             it("should relay backgroundColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.backgroundColor,
+                    relay: view.bindables.backgroundColor,
                     keyPath: \.backgroundColor
                 )
             }
             it("should relay alpha") {
                 testCGFloatRelay(
                     for: view,
-                    relay: view.bondableRelays.alpha,
+                    relay: view.bindables.alpha,
                     keyPath: \.alpha
                 )
             }
             it("should relay isOpaque") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isOpaque,
+                    relay: view.bindables.isOpaque,
                     keyPath: \.isOpaque
                 )
             }
             it("should relay clearsContextBeforeDrawing") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.clearsContextBeforeDrawing,
+                    relay: view.bindables.clearsContextBeforeDrawing,
                     keyPath: \.clearsContextBeforeDrawing
                 )
             }
             it("should relay isHidden") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.isHidden,
+                    relay: view.bindables.isHidden,
                     keyPath: \.isHidden
                 )
             }
             it("should relay mask") {
                 testViewRelay(
                     for: view,
-                    relay: view.bondableRelays.mask,
+                    relay: view.bindables.mask,
                     keyPath: \.mask
                 )
             }
             it("should relay tintColor") {
                 testColorRelay(
                     for: view,
-                    relay: view.bondableRelays.tintColor,
+                    relay: view.bindables.tintColor,
                     keyPath: \.tintColor
                 )
             }
             it("should relay translatesAutoresizingMaskIntoConstraints") {
                 testBoolRelay(
                     for: view,
-                    relay: view.bondableRelays.translatesAutoresizingMaskIntoConstraints,
+                    relay: view.bindables.translatesAutoresizingMaskIntoConstraints,
                     keyPath: \.translatesAutoresizingMaskIntoConstraints
                 )
             }
             it("should relay restorationIdentifier") {
                 testStringRelay(
                     for: view,
-                    relay: view.bondableRelays.restorationIdentifier,
+                    relay: view.bindables.restorationIdentifier,
                     keyPath: \.restorationIdentifier
                 )
             }
