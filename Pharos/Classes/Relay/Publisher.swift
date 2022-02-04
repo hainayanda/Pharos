@@ -7,11 +7,11 @@
 
 import Foundation
 
-final public class Publisher<Observed>: RootObservable<Observed> {
+open class Publisher<Observed>: RootObservable<Observed> {
     
     public override init() { }
     
-    public func publish(value: Observed) {
+    open func publish(value: Observed) {
         relay(changes: Changes(old: recentState, new: value, source: self))
     }
 }

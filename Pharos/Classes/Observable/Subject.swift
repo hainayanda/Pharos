@@ -8,10 +8,10 @@
 import Foundation
 
 @propertyWrapper
-public class Subject<Observed>: BindableObservable<Observed> {
+public final class Subject<Wrapped>: BindableObservable<Wrapped> {
     
-    var _wrappedValue: Observed
-    public var wrappedValue: Observed {
+    var _wrappedValue: Wrapped
+    public var wrappedValue: Wrapped {
         get {
             _wrappedValue
         }
@@ -22,11 +22,15 @@ public class Subject<Observed>: BindableObservable<Observed> {
         }
     }
     
-    override var recentState: Observed? {
+    public var projectedValue: Observable<Wrapped> {
+        self
+    }
+    
+    override var recentState: Wrapped? {
         _wrappedValue
     }
     
-    public init(wrappedValue: Observed) {
+    public init(wrappedValue: Wrapped) {
         self._wrappedValue = wrappedValue
         super.init()
         self.callBack = { [weak self] changes in

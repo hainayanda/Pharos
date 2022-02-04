@@ -1,5 +1,5 @@
 //
-//  RelayRetainer.swift
+//  Retainer.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 15/04/21.
@@ -55,14 +55,15 @@ final class WeakRelayRetainer<Relayed>: StateRelay {
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
-        guard anotherRelay === self else {
-            guard let wrapped = wrapped else {
-                return false
-            }
-            if wrapped.isSameRelay(with: anotherRelay) {
-                return true
-            } else if let weakRelay = anotherRelay as? WeakRelayRetainer<Relayed>,
-                        let otherWrapped = weakRelay.wrapped {
+        if anotherRelay === self {
+            return true
+        }
+        guard let wrapped = wrapped else {
+            return false
+        }
+        guard wrapped.isSameRelay(with: anotherRelay) else {
+            if let weakRelay = anotherRelay as? WeakRelayRetainer<Relayed>,
+                      let otherWrapped = weakRelay.wrapped {
                 return wrapped.isSameRelay(with: otherWrapped)
             }
             return false

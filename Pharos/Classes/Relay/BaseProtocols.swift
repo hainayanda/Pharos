@@ -119,9 +119,11 @@ public extension CombinableObservable {
 // MARK: ObservedSubject
 
 public protocol ObservedSubject {
+    associatedtype State
+    
     func multipleSetDelayed(by delay: TimeInterval) -> Self
     func observe(on dispatcher: DispatchQueue) -> Self
-    func alwaysAsync() -> Self
+    func asynchronously() -> Self
     @discardableResult
     func retain() -> Invokable
     @discardableResult

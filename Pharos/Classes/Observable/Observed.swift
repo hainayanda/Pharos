@@ -21,7 +21,7 @@ open class Observed<State>: ObservedSubject {
     weak var source: Observable<State>?
     
     var queue: DispatchQueue?
-    var preferSync: Bool = true
+    var preferAsync: Bool = false
     var delay: TimeInterval?
     var shouldDiscardSelf: (Changes<State>) -> Bool = { _ in false }
     
@@ -52,8 +52,8 @@ open class Observed<State>: ObservedSubject {
         return self
     }
     
-    open func alwaysAsync() -> Self {
-        preferSync = false
+    open func asynchronously() -> Self {
+        preferAsync = true
         return self
     }
     
@@ -97,12 +97,12 @@ extension Observed: StateRelay {
             return
         }
         self.status = .relaying
-        if preferSync {
-            relaySync(for: changes)
-        } else {
+        if preferAsync {
             relayAsync(for: changes)
+        } else {
+            relaySync(for: changes)
         }
-        finishRelay()
+        finishRelay(for: changes)
     }
     
     func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {

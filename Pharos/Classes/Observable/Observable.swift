@@ -1,8 +1,8 @@
 //
-//  ObservableRelay.swift
+//  Observable.swift
 //  Pharos
 //
-//  Created by Nayanda Haberty on 03/02/22.
+//  Created by Nayanda Haberty on 15/04/21.
 //
 
 import Foundation

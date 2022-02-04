@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RelayInvoker<State>: Invokable {
+final class RelayInvoker<State>: Invokable {
     
     let relay: Observed<State>
     

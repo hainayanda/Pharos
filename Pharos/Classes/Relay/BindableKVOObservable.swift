@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 #endif
 
-public enum KVOSource {
+enum KVOSource {
     case property
     case external
     case none

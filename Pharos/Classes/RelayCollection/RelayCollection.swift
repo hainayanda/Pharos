@@ -16,7 +16,7 @@ public extension PopulatedRelays where Self: UIView {
 }
 
 public final class RelayCollection<Object: NSObject> {
-    public let underlyingObject: Object
+    let underlyingObject: Object
 
     init(object: Object) {
         self.underlyingObject = object
@@ -46,7 +46,7 @@ public extension PopulatedRelays {
 
 @dynamicMemberLookup
 public final class AutoRelayCollection<Object: NSObject> {
-    public let underlyingObject: Object
+    let underlyingObject: Object
     
     init(object: Object) {
         self.underlyingObject = object

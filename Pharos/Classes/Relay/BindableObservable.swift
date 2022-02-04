@@ -9,12 +9,12 @@ import Foundation
 
 open class BindableObservable<State>: RootObservable<State> {
     
+    public typealias CallBack = (Changes<State>) -> Void
     typealias Relayed = State
-    typealias CallBack = (Changes<State>) -> Void
     
     var callBack: CallBack
     
-    init(callBack: @escaping CallBack = { _ in }) {
+    public init(callBack: @escaping CallBack = { _ in }) {
         self.callBack = callBack
     }
     
