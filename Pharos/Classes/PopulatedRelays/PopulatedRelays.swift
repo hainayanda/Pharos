@@ -1,5 +1,5 @@
 //
-//  RelayCollection.swift
+//  PopulatedRelays.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 12/06/21.
@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 public extension PopulatedRelays where Self: UIView {
-    var bindables: RelayCollection<Self> {
+    var bindables: BindableCollection<Self> {
         .init(object: self)
     }
 }
 
-public final class RelayCollection<Object: NSObject> {
+public final class BindableCollection<Object: NSObject> {
     let underlyingObject: Object
 
     init(object: Object) {
@@ -39,13 +39,13 @@ public protocol PopulatedRelays: NSObject { }
 extension NSObject: PopulatedRelays { }
 
 public extension PopulatedRelays {
-    var relayables: AutoRelayCollection<Self> {
+    var relayables: RelayableCollection<Self> {
         .init(object: self)
     }
 }
 
 @dynamicMemberLookup
-public final class AutoRelayCollection<Object: NSObject> {
+public final class RelayableCollection<Object: NSObject> {
     let underlyingObject: Object
     
     init(object: Object) {

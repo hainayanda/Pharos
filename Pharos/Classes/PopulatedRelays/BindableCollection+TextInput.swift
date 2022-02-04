@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: UITextView
 
-public extension RelayCollection where Object: UITextView {
+public extension BindableCollection where Object: UITextView {
     
     // MARK: Two Way Relay
     
@@ -75,7 +75,7 @@ public extension RelayCollection where Object: UITextView {
 
 // MARK: UITextField
 
-public extension RelayCollection where Object: UITextField {
+public extension BindableCollection where Object: UITextField {
     
     // MARK: Two Way Relay
     
@@ -143,7 +143,7 @@ public extension RelayCollection where Object: UITextField {
 
 // MARK: UISearchBar
 
-public extension RelayCollection where Object: UISearchBar {
+public extension BindableCollection where Object: UISearchBar {
     
     // MARK: Two Way Relay
 

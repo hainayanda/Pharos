@@ -1,5 +1,5 @@
 //
-//  RelayCollection+CellView.swift
+//  BindableCollection+CellView.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 13/06/21.
@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: UITableViewCell
 
-public extension RelayCollection where Object: UITableViewCell {
+public extension BindableCollection where Object: UITableViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
@@ -80,7 +80,7 @@ public extension RelayCollection where Object: UITableViewCell {
 
 // MARK: UICollectionViewCell
 
-public extension RelayCollection where Object: UICollectionViewCell {
+public extension BindableCollection where Object: UICollectionViewCell {
     
     // MARK: Two Way Relay
     

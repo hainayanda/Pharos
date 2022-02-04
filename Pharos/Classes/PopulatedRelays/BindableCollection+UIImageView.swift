@@ -1,5 +1,5 @@
 //
-//  RelayCollection+UIImageView.swift
+//  BindableCollection+UIImageView.swift
 //  Pharos
 //
 //  Created by Nayanda Haberty on 12/06/21.
@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public extension RelayCollection where Object: UIImageView {
+public extension BindableCollection where Object: UIImageView {
     
     // MARK: Two Way Relay
     

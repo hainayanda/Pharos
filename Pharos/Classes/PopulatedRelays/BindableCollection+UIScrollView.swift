@@ -9,7 +9,7 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-public extension RelayCollection where Object: UIScrollView {
+public extension BindableCollection where Object: UIScrollView {
     
     // MARK: Two Way Relay
     

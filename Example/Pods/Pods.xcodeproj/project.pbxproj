@@ -104,21 +104,21 @@
 		BB94D12827AB913200B17ED9 /* MergedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12727AB913200B17ED9 /* MergedObservable.swift */; };
 		BB94D12A27AB9A9B00B17ED9 /* MulticastObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12927AB9A9B00B17ED9 /* MulticastObservable.swift */; };
 		BB94D12C27AC05D300B17ED9 /* RelayInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12B27AC05D300B17ED9 /* RelayInvoker.swift */; };
-		BB94D13D27AC245300B17ED9 /* RelayCollection+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12E27AC245200B17ED9 /* RelayCollection+UIButton.swift */; };
-		BB94D13E27AC245300B17ED9 /* RelayCollection+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12F27AC245200B17ED9 /* RelayCollection+UIScrollView.swift */; };
-		BB94D13F27AC245300B17ED9 /* RelayCollection+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13027AC245200B17ED9 /* RelayCollection+UICollectionView.swift */; };
-		BB94D14027AC245300B17ED9 /* RelayCollection+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13127AC245300B17ED9 /* RelayCollection+UIView.swift */; };
-		BB94D14127AC245300B17ED9 /* RelayCollection+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13227AC245300B17ED9 /* RelayCollection+UIImageView.swift */; };
-		BB94D14227AC245300B17ED9 /* RelayCollection+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13327AC245300B17ED9 /* RelayCollection+UITableView.swift */; };
-		BB94D14327AC245300B17ED9 /* RelayCollection+CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13427AC245300B17ED9 /* RelayCollection+CellView.swift */; };
-		BB94D14427AC245300B17ED9 /* RelayCollection+TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13527AC245300B17ED9 /* RelayCollection+TextInput.swift */; };
-		BB94D14527AC245300B17ED9 /* RelayCollection+UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13627AC245300B17ED9 /* RelayCollection+UISlider.swift */; };
-		BB94D14627AC245300B17ED9 /* RelayCollection+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13727AC245300B17ED9 /* RelayCollection+UIStackView.swift */; };
-		BB94D14727AC245300B17ED9 /* RelayCollection+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13827AC245300B17ED9 /* RelayCollection+UIControl.swift */; };
-		BB94D14827AC245300B17ED9 /* RelayCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13927AC245300B17ED9 /* RelayCollection.swift */; };
-		BB94D14927AC245300B17ED9 /* RelayCollection+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13A27AC245300B17ED9 /* RelayCollection+UILabel.swift */; };
-		BB94D14A27AC245300B17ED9 /* RelayCollection+UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13B27AC245300B17ED9 /* RelayCollection+UISwitch.swift */; };
-		BB94D14B27AC245300B17ED9 /* RelayCollection+UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13C27AC245300B17ED9 /* RelayCollection+UIStepper.swift */; };
+		BB94D13D27AC245300B17ED9 /* BindableCollection+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12E27AC245200B17ED9 /* BindableCollection+UIButton.swift */; };
+		BB94D13E27AC245300B17ED9 /* BindableCollection+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D12F27AC245200B17ED9 /* BindableCollection+UIScrollView.swift */; };
+		BB94D13F27AC245300B17ED9 /* BindableCollection+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13027AC245200B17ED9 /* BindableCollection+UICollectionView.swift */; };
+		BB94D14027AC245300B17ED9 /* BindableCollection+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13127AC245300B17ED9 /* BindableCollection+UIView.swift */; };
+		BB94D14127AC245300B17ED9 /* BindableCollection+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13227AC245300B17ED9 /* BindableCollection+UIImageView.swift */; };
+		BB94D14227AC245300B17ED9 /* BindableCollection+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13327AC245300B17ED9 /* BindableCollection+UITableView.swift */; };
+		BB94D14327AC245300B17ED9 /* BindableCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13427AC245300B17ED9 /* BindableCollectionCellView.swift */; };
+		BB94D14427AC245300B17ED9 /* BindableCollection+TextInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13527AC245300B17ED9 /* BindableCollection+TextInput.swift */; };
+		BB94D14527AC245300B17ED9 /* BindableCollection+UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13627AC245300B17ED9 /* BindableCollection+UISlider.swift */; };
+		BB94D14627AC245300B17ED9 /* BindableCollection+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13727AC245300B17ED9 /* BindableCollection+UIStackView.swift */; };
+		BB94D14727AC245300B17ED9 /* BindableCollection+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13827AC245300B17ED9 /* BindableCollection+UIControl.swift */; };
+		BB94D14827AC245300B17ED9 /* PopulatedRelays.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13927AC245300B17ED9 /* PopulatedRelays.swift */; };
+		BB94D14927AC245300B17ED9 /* BindableCollection+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13A27AC245300B17ED9 /* BindableCollection+UILabel.swift */; };
+		BB94D14A27AC245300B17ED9 /* BindableCollection+UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13B27AC245300B17ED9 /* BindableCollection+UISwitch.swift */; };
+		BB94D14B27AC245300B17ED9 /* BindableCollection+UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D13C27AC245300B17ED9 /* BindableCollection+UIStepper.swift */; };
 		BB94D16E27AC6BFF00B17ED9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB94D16D27AC6BFF00B17ED9 /* Observable.swift */; };
 		C0D3EDC5F8D2546D5B5CB583230606B7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9D232917B7F9161AD32800BD7188F6 /* Errors.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		C12A5EDA29052D6AB6B5C08EB827147F /* mach_excServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B2EF8A720D0EAA49000115560DF7BBC /* mach_excServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -299,21 +299,21 @@
 		BB94D12727AB913200B17ED9 /* MergedObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergedObservable.swift; sourceTree = "<group>"; };
 		BB94D12927AB9A9B00B17ED9 /* MulticastObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastObservable.swift; sourceTree = "<group>"; };
 		BB94D12B27AC05D300B17ED9 /* RelayInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayInvoker.swift; sourceTree = "<group>"; };
-		BB94D12E27AC245200B17ED9 /* RelayCollection+UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIButton.swift"; sourceTree = "<group>"; };
-		BB94D12F27AC245200B17ED9 /* RelayCollection+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIScrollView.swift"; sourceTree = "<group>"; };
-		BB94D13027AC245200B17ED9 /* RelayCollection+UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UICollectionView.swift"; sourceTree = "<group>"; };
-		BB94D13127AC245300B17ED9 /* RelayCollection+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIView.swift"; sourceTree = "<group>"; };
-		BB94D13227AC245300B17ED9 /* RelayCollection+UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIImageView.swift"; sourceTree = "<group>"; };
-		BB94D13327AC245300B17ED9 /* RelayCollection+UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UITableView.swift"; sourceTree = "<group>"; };
-		BB94D13427AC245300B17ED9 /* RelayCollection+CellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+CellView.swift"; sourceTree = "<group>"; };
-		BB94D13527AC245300B17ED9 /* RelayCollection+TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+TextInput.swift"; sourceTree = "<group>"; };
-		BB94D13627AC245300B17ED9 /* RelayCollection+UISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UISlider.swift"; sourceTree = "<group>"; };
-		BB94D13727AC245300B17ED9 /* RelayCollection+UIStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIStackView.swift"; sourceTree = "<group>"; };
-		BB94D13827AC245300B17ED9 /* RelayCollection+UIControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIControl.swift"; sourceTree = "<group>"; };
-		BB94D13927AC245300B17ED9 /* RelayCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelayCollection.swift; sourceTree = "<group>"; };
-		BB94D13A27AC245300B17ED9 /* RelayCollection+UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UILabel.swift"; sourceTree = "<group>"; };
-		BB94D13B27AC245300B17ED9 /* RelayCollection+UISwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UISwitch.swift"; sourceTree = "<group>"; };
-		BB94D13C27AC245300B17ED9 /* RelayCollection+UIStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RelayCollection+UIStepper.swift"; sourceTree = "<group>"; };
+		BB94D12E27AC245200B17ED9 /* BindableCollection+UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIButton.swift"; sourceTree = "<group>"; };
+		BB94D12F27AC245200B17ED9 /* BindableCollection+UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIScrollView.swift"; sourceTree = "<group>"; };
+		BB94D13027AC245200B17ED9 /* BindableCollection+UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UICollectionView.swift"; sourceTree = "<group>"; };
+		BB94D13127AC245300B17ED9 /* BindableCollection+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIView.swift"; sourceTree = "<group>"; };
+		BB94D13227AC245300B17ED9 /* BindableCollection+UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIImageView.swift"; sourceTree = "<group>"; };
+		BB94D13327AC245300B17ED9 /* BindableCollection+UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UITableView.swift"; sourceTree = "<group>"; };
+		BB94D13427AC245300B17ED9 /* BindableCollectionCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindableCollectionCellView.swift; sourceTree = "<group>"; };
+		BB94D13527AC245300B17ED9 /* BindableCollection+TextInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+TextInput.swift"; sourceTree = "<group>"; };
+		BB94D13627AC245300B17ED9 /* BindableCollection+UISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UISlider.swift"; sourceTree = "<group>"; };
+		BB94D13727AC245300B17ED9 /* BindableCollection+UIStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIStackView.swift"; sourceTree = "<group>"; };
+		BB94D13827AC245300B17ED9 /* BindableCollection+UIControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIControl.swift"; sourceTree = "<group>"; };
+		BB94D13927AC245300B17ED9 /* PopulatedRelays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopulatedRelays.swift; sourceTree = "<group>"; };
+		BB94D13A27AC245300B17ED9 /* BindableCollection+UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UILabel.swift"; sourceTree = "<group>"; };
+		BB94D13B27AC245300B17ED9 /* BindableCollection+UISwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UISwitch.swift"; sourceTree = "<group>"; };
+		BB94D13C27AC245300B17ED9 /* BindableCollection+UIStepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BindableCollection+UIStepper.swift"; sourceTree = "<group>"; };
 		BB94D16D27AC6BFF00B17ED9 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		BDCD413122228AE78B16A8E31B6CE4D8 /* Pods-Pharos_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Pharos_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BEE0135D5FDA5A4415EADADB336B9246 /* FailureMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FailureMessage.swift; path = Sources/Nimble/FailureMessage.swift; sourceTree = "<group>"; };
@@ -619,7 +619,7 @@
 		BB94D10227AA778A00B17ED9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				BB94D12D27AC241600B17ED9 /* RelayCollection */,
+				BB94D12D27AC241600B17ED9 /* PopulatedRelays */,
 				BB94D12427AB851200B17ED9 /* Relay */,
 				BB94D12227AB84AE00B17ED9 /* Utils */,
 				BB94D12127AB848700B17ED9 /* Observable */,
@@ -674,26 +674,26 @@
 			path = Relay;
 			sourceTree = "<group>";
 		};
-		BB94D12D27AC241600B17ED9 /* RelayCollection */ = {
+		BB94D12D27AC241600B17ED9 /* PopulatedRelays */ = {
 			isa = PBXGroup;
 			children = (
-				BB94D13927AC245300B17ED9 /* RelayCollection.swift */,
-				BB94D13427AC245300B17ED9 /* RelayCollection+CellView.swift */,
-				BB94D13527AC245300B17ED9 /* RelayCollection+TextInput.swift */,
-				BB94D12E27AC245200B17ED9 /* RelayCollection+UIButton.swift */,
-				BB94D13027AC245200B17ED9 /* RelayCollection+UICollectionView.swift */,
-				BB94D13827AC245300B17ED9 /* RelayCollection+UIControl.swift */,
-				BB94D13227AC245300B17ED9 /* RelayCollection+UIImageView.swift */,
-				BB94D13A27AC245300B17ED9 /* RelayCollection+UILabel.swift */,
-				BB94D12F27AC245200B17ED9 /* RelayCollection+UIScrollView.swift */,
-				BB94D13627AC245300B17ED9 /* RelayCollection+UISlider.swift */,
-				BB94D13727AC245300B17ED9 /* RelayCollection+UIStackView.swift */,
-				BB94D13C27AC245300B17ED9 /* RelayCollection+UIStepper.swift */,
-				BB94D13B27AC245300B17ED9 /* RelayCollection+UISwitch.swift */,
-				BB94D13327AC245300B17ED9 /* RelayCollection+UITableView.swift */,
-				BB94D13127AC245300B17ED9 /* RelayCollection+UIView.swift */,
+				BB94D13927AC245300B17ED9 /* PopulatedRelays.swift */,
+				BB94D13427AC245300B17ED9 /* BindableCollectionCellView.swift */,
+				BB94D13527AC245300B17ED9 /* BindableCollection+TextInput.swift */,
+				BB94D12E27AC245200B17ED9 /* BindableCollection+UIButton.swift */,
+				BB94D13027AC245200B17ED9 /* BindableCollection+UICollectionView.swift */,
+				BB94D13827AC245300B17ED9 /* BindableCollection+UIControl.swift */,
+				BB94D13227AC245300B17ED9 /* BindableCollection+UIImageView.swift */,
+				BB94D13A27AC245300B17ED9 /* BindableCollection+UILabel.swift */,
+				BB94D12F27AC245200B17ED9 /* BindableCollection+UIScrollView.swift */,
+				BB94D13627AC245300B17ED9 /* BindableCollection+UISlider.swift */,
+				BB94D13727AC245300B17ED9 /* BindableCollection+UIStackView.swift */,
+				BB94D13C27AC245300B17ED9 /* BindableCollection+UIStepper.swift */,
+				BB94D13B27AC245300B17ED9 /* BindableCollection+UISwitch.swift */,
+				BB94D13327AC245300B17ED9 /* BindableCollection+UITableView.swift */,
+				BB94D13127AC245300B17ED9 /* BindableCollection+UIView.swift */,
 			);
-			path = RelayCollection;
+			path = PopulatedRelays;
 			sourceTree = "<group>";
 		};
 		C64487E1F065ABD72E4F6785A6B43125 /* Development Pods */ = {
@@ -943,39 +943,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB94D14027AC245300B17ED9 /* RelayCollection+UIView.swift in Sources */,
-				BB94D14627AC245300B17ED9 /* RelayCollection+UIStackView.swift in Sources */,
+				BB94D14027AC245300B17ED9 /* BindableCollection+UIView.swift in Sources */,
+				BB94D14627AC245300B17ED9 /* BindableCollection+UIStackView.swift in Sources */,
 				BB94D12627AB87F200B17ED9 /* FilteredObservable.swift in Sources */,
-				BB94D13E27AC245300B17ED9 /* RelayCollection+UIScrollView.swift in Sources */,
-				BB94D14B27AC245300B17ED9 /* RelayCollection+UIStepper.swift in Sources */,
-				BB94D14127AC245300B17ED9 /* RelayCollection+UIImageView.swift in Sources */,
+				BB94D13E27AC245300B17ED9 /* BindableCollection+UIScrollView.swift in Sources */,
+				BB94D14B27AC245300B17ED9 /* BindableCollection+UIStepper.swift in Sources */,
+				BB94D14127AC245300B17ED9 /* BindableCollection+UIImageView.swift in Sources */,
 				BB94D10427AA796A00B17ED9 /* BaseProtocols.swift in Sources */,
 				BB94D10E27AAF33E00B17ED9 /* Observed.swift in Sources */,
-				BB94D14327AC245300B17ED9 /* RelayCollection+CellView.swift in Sources */,
+				BB94D14327AC245300B17ED9 /* BindableCollectionCellView.swift in Sources */,
 				BB94D11627AB0AB400B17ED9 /* MappedObservable.swift in Sources */,
 				BB94D11227AAF66C00B17ED9 /* Retainer.swift in Sources */,
-				BB94D14427AC245300B17ED9 /* RelayCollection+TextInput.swift in Sources */,
+				BB94D14427AC245300B17ED9 /* BindableCollection+TextInput.swift in Sources */,
 				BB94D11827AB0AD800B17ED9 /* BindableObservable.swift in Sources */,
 				BB94D12C27AC05D300B17ED9 /* RelayInvoker.swift in Sources */,
-				BB94D13F27AC245300B17ED9 /* RelayCollection+UICollectionView.swift in Sources */,
+				BB94D13F27AC245300B17ED9 /* BindableCollection+UICollectionView.swift in Sources */,
 				BB94D12A27AB9A9B00B17ED9 /* MulticastObservable.swift in Sources */,
-				BB94D14827AC245300B17ED9 /* RelayCollection.swift in Sources */,
+				BB94D14827AC245300B17ED9 /* PopulatedRelays.swift in Sources */,
 				BB94D16E27AC6BFF00B17ED9 /* Observable.swift in Sources */,
 				BB94D11027AAF39B00B17ED9 /* Subject.swift in Sources */,
 				BB94D11E27AB7C9200B17ED9 /* Publisher.swift in Sources */,
-				BB94D14927AC245300B17ED9 /* RelayCollection+UILabel.swift in Sources */,
+				BB94D14927AC245300B17ED9 /* BindableCollection+UILabel.swift in Sources */,
 				7445F5C252551BC25A984BD2FB230FE9 /* Pharos-dummy.m in Sources */,
 				BB94D10627AAAA0A00B17ED9 /* Changes.swift in Sources */,
 				BB94D11A27AB0AF200B17ED9 /* BindableKVOObservable.swift in Sources */,
 				BB94D11427AB066000B17ED9 /* RootObservable.swift in Sources */,
-				BB94D13D27AC245300B17ED9 /* RelayCollection+UIButton.swift in Sources */,
-				BB94D14227AC245300B17ED9 /* RelayCollection+UITableView.swift in Sources */,
+				BB94D13D27AC245300B17ED9 /* BindableCollection+UIButton.swift in Sources */,
+				BB94D14227AC245300B17ED9 /* BindableCollection+UITableView.swift in Sources */,
 				BB94D12827AB913200B17ED9 /* MergedObservable.swift in Sources */,
-				BB94D14727AC245300B17ED9 /* RelayCollection+UIControl.swift in Sources */,
+				BB94D14727AC245300B17ED9 /* BindableCollection+UIControl.swift in Sources */,
 				BB94D10A27AAB8E700B17ED9 /* DispatchQueue+Extensions.swift in Sources */,
-				BB94D14A27AC245300B17ED9 /* RelayCollection+UISwitch.swift in Sources */,
+				BB94D14A27AC245300B17ED9 /* BindableCollection+UISwitch.swift in Sources */,
 				BB94D10C27AAF1B400B17ED9 /* Atomic.swift in Sources */,
-				BB94D14527AC245300B17ED9 /* RelayCollection+UISlider.swift in Sources */,
+				BB94D14527AC245300B17ED9 /* BindableCollection+UISlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
