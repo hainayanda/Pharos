@@ -2,7 +2,7 @@
 
 Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming
 
-[![codebeat badge](https://codebeat.co/badges/e4784f82-ff10-45cf-92e2-93497bb6b1a4)](https://codebeat.co/projects/github-com-hainayanda-pharos-main)
+[![codebeat badge](https://codebeat.co/badges/0c30bd1d-542d-4d72-bfd3-c6ab9e88db46)](https://codebeat.co/projects/github-com-hainayanda-pharos-main)
 ![build](https://github.com/hainayanda/Pharos/workflows/build/badge.svg)
 ![test](https://github.com/hainayanda/Pharos/workflows/test/badge.svg)
 [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
