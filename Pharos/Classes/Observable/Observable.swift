@@ -12,6 +12,8 @@ open class Observable<State>: ChangeObservable {
     lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
     var recentState: State? { nil }
     
+    public init() { }
+    
     open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
         let observed = Observed(source: self, observer: work)
         temporaryRetainer.retain(observed)

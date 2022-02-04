@@ -15,7 +15,7 @@ final class RelayInvoker<State>: Invokable {
         self.relay = relay
     }
     
-    func tryInvokeWithRecent() {
+    func notifyWithCurrentValue() {
         guard let recent: State = self.relay.source?.recentState else {
             return
         }

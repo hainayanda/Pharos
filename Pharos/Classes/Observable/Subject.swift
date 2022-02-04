@@ -22,7 +22,7 @@ public final class Subject<Wrapped>: BindableObservable<Wrapped> {
         }
     }
     
-    public var projectedValue: Observable<Wrapped> {
+    public var projectedValue: BindableObservable<Wrapped> {
         self
     }
     

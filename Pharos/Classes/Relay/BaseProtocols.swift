@@ -154,7 +154,7 @@ extension ObservedSubject {
 // MARK: Invokable
 
 public protocol Invokable {
-    func tryInvokeWithRecent()
+    func notifyWithCurrentValue()
 }
 
 // MARK: Relay

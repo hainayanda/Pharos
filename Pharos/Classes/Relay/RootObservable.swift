@@ -8,10 +8,14 @@
 import Foundation
 
 open class RootObservable<Observed>: Observable<Observed>, StateRelay {
-    
     typealias RelayedState = Observed
+    
     private var _recentValue: Observed?
     override var recentState: Observed? { _recentValue }
+    
+    public override init() {
+        super.init()
+    }
     
     func relay(changes: Changes<RelayedState>) {
         _recentValue = changes.new
