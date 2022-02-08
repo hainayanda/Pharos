@@ -127,7 +127,7 @@ public protocol ObservedSubject {
     @discardableResult
     func retain() -> Invokable
     @discardableResult
-    func retained(by retainer: Retainer) -> Invokable
+    func retained(by retainer: ObjectRetainer) -> Invokable
     @discardableResult
     func retainUntil(lastStateMatch: @escaping (Changes<State>) -> Bool) -> Invokable
     @discardableResult

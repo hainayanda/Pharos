@@ -45,7 +45,7 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
         }
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where Observed == Child.RelayedState {
+    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Observed == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         for source in sources {
             source.wrapped?.retainWeakly(relay: self, managedBy: retainer)
