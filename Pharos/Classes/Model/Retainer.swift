@@ -7,13 +7,13 @@
 
 import Foundation
 
-final public class Retainer {
+final public class Retainer: ObjectRetainer {
     
     @Atomic var retained: [AnyObject] = []
     
     public init() { }
     
-    func retain(_ object: AnyObject) {
+    public func retain(_ object: AnyObject) {
         guard !retained.contains(where: { $0 === object }) else { return }
         retained.append(object)
     }

@@ -92,7 +92,7 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
         source2?.relayGroup.addToGroup(subcast2)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where RelayedState == Child.RelayedState {
+    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         source1?.temporaryRetainer.discard(self)
         source2?.temporaryRetainer.discard(self)
@@ -185,7 +185,7 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
         source3?.relayGroup.addToGroup(subcast3)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where RelayedState == Child.RelayedState {
+    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         source1?.temporaryRetainer.discard(self)
         source2?.temporaryRetainer.discard(self)
@@ -292,7 +292,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
         source4?.relayGroup.addToGroup(subcast4)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where RelayedState == Child.RelayedState {
+    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         source1?.temporaryRetainer.discard(self)
         source2?.temporaryRetainer.discard(self)

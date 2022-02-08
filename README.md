@@ -73,7 +73,7 @@ Pharos is available under the MIT license. See the LICENSE file for more info.
 
 ## Basic Usage
 
-Basically, all you need is a property that you want to observe and add `@Observable` propertyWrapper at it:
+All you need is a property that you want to observe and add `@Observable` propertyWrapper at it:
 
 ```swift
 class MyClass {
@@ -96,8 +96,8 @@ class MyClass {
 }
 ```
 
-every time any set happens in text, it will call the closure with its changes which including old value and new value.
-You could ignore any set that not changing the value as long the value is `Equatable`
+every time any set happens in text, it will call the closure with its changes which include old value and new value.
+You could ignore any set that does not changing the value as long the value is `Equatable`
 
 ```swift
 class MyClass {
@@ -143,7 +143,7 @@ class MyClass {
 
 ## Control Subscriber Retaining
 
-By default, if you observing Observable and end it with `retain()`. The closure will be retained by the Observable itself. It will automatically removed by `ARC` if the Observable is removed by `ARC`.
+By default, if you observe Observable and end it with `retain()`. The closure will be retained by the Observable itself. It will automatically be removed by `ARC` if the Observable is removed by `ARC`.
 If you want to handle the retaining manually, you could always use `Retainer` to retain the observer:
 
 ```swift
@@ -176,6 +176,23 @@ There are many ways to discard the subscriber managed by `Retainer`:
 - call `discardAll()` from subscriber's retainer
 - replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed subscribers by default.
 - doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed subscribers by default.
+
+If you don't want to bother creating a Retainer, you can make your object implement `ObjectRetainer` and so it will act as a `Retainer`:
+
+```swift
+class MyClass: ObjectRetainer {
+    @Observable var text: String?
+   
+    func observeText() {
+        $text.whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }
+        .retained(by: self)
+    }
+   
+}
+```
 
 You can always control how long you want to retain by using various retain methods:
 
@@ -240,7 +257,7 @@ class MyClass {
 }
 ```
 
-you can always bind two subject to notify each others as long its types is `BindableObservable`:
+you can always bind two subjects to notify each other as long its type is `BindableObservable`:
 
 ```swift
 class MyClass {
@@ -254,7 +271,7 @@ class MyClass {
 }
 ```
 
-At the example above, every time `text` is set, it will automatically set the `textField.text`, and when  `textField.text` is set it will automatically set the `text`.
+At the example above, every time `text` is set, it will automatically set the `textField.text`, and when `textField.text` is set it will automatically set the `text`.
 
 ## Filtering Subscription
 
@@ -274,9 +291,9 @@ class MyClass {
 }
 ```
 
-At the example above, whenDidSet closure will not run when the new value is empty
+At the example above, `whenDidSet` closure will not run when the new value is empty
 
-The oppposite of ignore is `onlyInclude`
+The opposite of ignore is `onlyInclude`
 
 ```swift
 class MyClass {
@@ -330,7 +347,7 @@ class MyClass {
 }
 ```
 
-It will always run the subscriber in the same `DispatchQueue` given. If it already in the same `DispatchQueue`, it will run synchronously. Otherwise it will run asynchronously.
+It will always run the subscriber in the same `DispatchQueue` given. If it is already in the same `DispatchQueue`, it will run synchronously. Otherwise, it will run asynchronously.
 
 You could always make sure the closure will always run asynchronously if needed:
 
@@ -351,7 +368,7 @@ class MyClass {
 
 ## Mapping Value
 
-You could map the value from your `Subject` to another type by using mapping. Mapping will creating a new Observable with mapped type:
+You could map the value from your `Subject` to another type by using mapping. Mapping will create a new Observable with mapped type:
 
 ```swift
 class MyClass {
@@ -366,7 +383,7 @@ class MyClass {
 }
 ```
 
-You could always map and ignore error or nil during mapping. Did set closure will always be called when mapping is succeed:
+You could always map and ignore errors or nil during mapping. Did set closure will always be called when mapping is successful:
 
 ```swift
 class MyClass {
@@ -400,7 +417,7 @@ class MyClass {
 }
 ```
 
-You can always relay value to Any NSObject Bearer Observables by accessing `relayables`. Its using `dynamicMemberLookup`, so all of the object writable properties will available there:
+You can always relay value to Any NSObject Bearer Observables by accessing `relayables`. Its using `dynamicMemberLookup`, so all of the object writable properties will be available there:
 
 ```swift
 class MyClass {
@@ -416,7 +433,7 @@ class MyClass {
 
 ## Merge Observable
 
-You can merge as much observables as long their type subject type is the same:
+You can merge as many observables as long their type subject type is the same:
 
 ```swift
 class MyClass {
@@ -464,4 +481,4 @@ class MyClass {
 
 ## Contribute
 
-You know how. Just clone and do pull request
+You know-how. Just clone and do pull request

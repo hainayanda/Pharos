@@ -86,7 +86,7 @@ open class Observable<State>: ChangeObservable {
         relayGroup.addToGroup(relay)
     }
     
-    func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where Child.RelayedState == State {
+    func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Child.RelayedState == State {
         temporaryRetainer.discard(relay)
         relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: relay))
         retainer.retain(relay)

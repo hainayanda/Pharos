@@ -64,7 +64,7 @@ open class Observed<State>: ObservedSubject {
     }
     
     @discardableResult
-    open func retained(by retainer: Retainer) -> Invokable {
+    open func retained(by retainer: ObjectRetainer) -> Invokable {
         source?.retainWeakly(relay: self, managedBy: retainer)
         return RelayInvoker(relay: self)
     }

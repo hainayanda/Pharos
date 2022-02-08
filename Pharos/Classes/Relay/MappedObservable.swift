@@ -47,7 +47,7 @@ final class MappedObservable<Original, Mapped>: Observable<Mapped>, StateRelay {
         source?.retain(relay: self)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: Retainer) where Mapped == Child.RelayedState {
+    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Mapped == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         source?.retainWeakly(relay: self, managedBy: retainer)
     }
