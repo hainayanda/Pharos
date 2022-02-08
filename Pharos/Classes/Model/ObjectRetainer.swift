@@ -13,37 +13,29 @@ public protocol ObjectRetainer: AnyObject {
     func discard(_ object: AnyObject)
 }
 
-var retainKeysAssicatedKeys = "Pharos_retain_keys"
+var retainedObjectsAssicatedKeys = "Pharos_retain_objects"
 
 public extension ObjectRetainer {
     
-    internal var retainKeys: [String] {
-        (objc_getAssociatedObject(self, &retainKeysAssicatedKeys) as? NSArray)?
-            .compactMap { $0 as? String } ?? []
+    internal var retainedObjects: [AnyObject] {
+        (objc_getAssociatedObject(self, &retainedObjectsAssicatedKeys) as? NSArray)?
+            .compactMap { $0 as AnyObject } ?? []
     }
     
     func retain(_ object: AnyObject) {
-        var keys = retainKeys
-        let objectKey = String(ObjectIdentifier(object).hashValue)
-        guard !keys.contains(objectKey) else { return }
-        keys.append(objectKey)
-        objc_setAssociatedObject(self, &retainKeysAssicatedKeys, NSArray(array: keys), .OBJC_ASSOCIATION_RETAIN)
-        objc_setAssociatedObject(self, objectKey, object, .OBJC_ASSOCIATION_RETAIN)
+        var objects = retainedObjects
+        guard !objects.contains(where: { object === $0 }) else { return }
+        objects.append(object)
+        objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, NSArray(array: objects), .OBJC_ASSOCIATION_RETAIN)
     }
     
     func discardAll() {
-        let keys = retainKeys
-        for key in keys {
-            objc_setAssociatedObject(self, key, nil, .OBJC_ASSOCIATION_RETAIN)
-        }
-        objc_setAssociatedObject(self, &retainKeysAssicatedKeys, NSArray(), .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, nil, .OBJC_ASSOCIATION_RETAIN)
     }
     
     func discard(_ object: AnyObject) {
-        var keys = retainKeys
-        let objectKey = String(ObjectIdentifier(object).hashValue)
-        keys.removeAll { $0 == objectKey }
-        objc_setAssociatedObject(self, objectKey, nil, .OBJC_ASSOCIATION_RETAIN)
-        objc_setAssociatedObject(self, &retainKeysAssicatedKeys, NSArray(array: keys), .OBJC_ASSOCIATION_RETAIN)
+        var objects = retainedObjects
+        objects.removeAll(where: { object === $0 })
+        objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, NSArray(array: objects), .OBJC_ASSOCIATION_RETAIN)
     }
 }
