@@ -9,7 +9,7 @@ import Foundation
 
 public protocol ObjectRetainer: AnyObject {
     func retain(_ object: AnyObject)
-    func discardAll()
+    func discardAllRetained()
     func discard(_ object: AnyObject)
 }
 
@@ -29,7 +29,7 @@ public extension ObjectRetainer {
         objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, NSArray(array: objects), .OBJC_ASSOCIATION_RETAIN)
     }
     
-    func discardAll() {
+    func discardAllRetained() {
         objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, nil, .OBJC_ASSOCIATION_RETAIN)
     }
     

@@ -21,7 +21,7 @@ func testRelay<Object: NSObject, Property>(
     test: @escaping (Changes<Property>, Property) -> Void) {
     let retainer: Retainer = Retainer()
     defer {
-        retainer.discardAll()
+        retainer.discardAllRetained()
     }
     let oldValue: Property = underlyingObject[keyPath: keyPath]
     waitUntil { done in
@@ -33,7 +33,7 @@ func testRelay<Object: NSObject, Property>(
             .retained(by: retainer)
         underlyingObject[keyPath: keyPath] = newValue
     }
-    retainer.discardAll()
+    retainer.discardAllRetained()
 }
 
 func testBoolRelay<Object: NSObject>(
