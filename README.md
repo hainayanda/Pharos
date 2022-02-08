@@ -39,7 +39,7 @@ pod 'Pharos'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Pharos.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **2.0.0** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **2.1.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -48,7 +48,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "2.0.0"))
+    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "2.1.0"))
 ]
 ```
 
@@ -161,7 +161,7 @@ class MyClass {
     }
     
     func discardManually() {
-        retainer.discardAll()
+        retainer.discardAllRetained()
     }
     
     func discardByCreateNewRetainer() {
@@ -173,7 +173,7 @@ class MyClass {
 
 There are many ways to discard the subscriber managed by `Retainer`:
 
-- call `discardAll()` from subscriber's retainer
+- call `discardAllRetained()` from subscriber's retainer
 - replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed subscribers by default.
 - doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed subscribers by default.
 
