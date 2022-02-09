@@ -73,11 +73,11 @@ Pharos is available under the MIT license. See the LICENSE file for more info.
 
 ## Basic Usage
 
-All you need is a property that you want to observe and add `@Observable` propertyWrapper at it:
+All you need is a property that you want to observe and add `@Subject` propertyWrapper at it:
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
 }
 ```
 
@@ -85,7 +85,7 @@ to observe any changes that happen in the text, use its `projectedValue` to get 
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.whenDidSet { changes in
@@ -101,7 +101,7 @@ You could ignore any set that does not changing the value as long the value is `
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.ignoreSameValue()
@@ -117,7 +117,7 @@ if you want the observer to run using the current value, just invoke it:
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.whenDidSet { changes in
@@ -133,7 +133,7 @@ you can always check the current value by accessing the observable property:
 
 ```swift
 class MyClass {
-    @Observable var text: String = "my text"
+    @Subject var text: String = "my text"
     
     func printCurrentText() {
         print(text)
@@ -148,7 +148,7 @@ If you want to handle the retaining manually, you could always use `Retainer` to
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     var retainer: Retainer = .init()
     
@@ -181,7 +181,7 @@ If you don't want to bother creating a Retainer, you can make your object implem
 
 ```swift
 class MyClass: ObjectRetainer {
-    @Observable var text: String?
+    @Subject var text: String?
    
     func observeText() {
         $text.whenDidSet { changes in
@@ -199,7 +199,7 @@ You can always control how long you want to retain by using various retain metho
 ```swift
 class MyClass {
 
-    @Observable var text: String?
+    @Subject var text: String?
     
     var retainer: Retainer = .init()
     
@@ -262,7 +262,7 @@ you can always bind two subjects to notify each other as long its type is `Binda
 ```swift
 class MyClass {
     var textField: UITextField = .init()
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.bind(with: textField.bindables.text)
@@ -279,7 +279,7 @@ You can ignore set to observable by passing a closure that returning `Bool` valu
 
 ```swift
 class MyClass {
-    @Observable var text: String
+    @Subject var text: String
     
     func observeText() {
         $text.ignore { $0.new.isEmpty }
@@ -297,7 +297,7 @@ The opposite of ignore is `onlyInclude`
 
 ```swift
 class MyClass {
-    @Observable var text: String
+    @Subject var text: String
     
     func observeText() {
         $text.onlyInclude { $0.new.count > 5 }
@@ -317,7 +317,7 @@ Sometimes you just want to delay some observing because if the value is coming t
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.whenDidSet { changes in
@@ -335,7 +335,7 @@ You could add `DispatchQueue` to make sure your observable is run on the right t
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.whenDidSet { changes in
@@ -353,7 +353,7 @@ You could always make sure the closure will always run asynchronously if needed:
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.whenDidSet { changes in
@@ -372,7 +372,7 @@ You could map the value from your `Subject` to another type by using mapping. Ma
 
 ```swift
 class MyClass {
-    @Observable var text: String
+    @Subject var text: String
     
     func observeText() {
         $text.mapped { $0.count }
@@ -387,7 +387,7 @@ You could always map and ignore errors or nil during mapping. Did set closure wi
 
 ```swift
 class MyClass {
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.compactMap { $0?.count }
@@ -405,9 +405,9 @@ You can relay value from any Observable to another Observable as long as the typ
 
 ```swift
 class MyClass {
-    @Observable var text: String?
-    @Observable var count: Int = 0
-    @Observable var empty: Bool = true
+    @Subject var text: String?
+    @Subject var count: Int = 0
+    @Subject var empty: Bool = true
     
     func observeText() {
         $text.compactMap { $0?.count }
@@ -422,7 +422,7 @@ You can always relay value to Any NSObject Bearer Observables by accessing `rela
 ```swift
 class MyClass {
     var label: UILabel = UILabel()
-    @Observable var text: String?
+    @Subject var text: String?
     
     func observeText() {
         $text.relayChanges(to: label.relayables.text)
@@ -437,10 +437,10 @@ You can merge as many observables as long their type subject type is the same:
 
 ```swift
 class MyClass {
-    @Observable var subject1: String = ""
-    @Observable var subject2: String = ""
-    @Observable var subject3: String = ""
-    @Observable var subject4: String = ""
+    @Subject var subject1: String = ""
+    @Subject var subject2: String = ""
+    @Subject var subject3: String = ""
+    @Subject var subject4: String = ""
     
     func observeText() {
         $subject1.merge(with: $subject2, $subject3, $subject4)
@@ -458,10 +458,10 @@ You can combine up to 4 observables as one and observe if any of those observabl
 
 ```swift
 class MyClass {
-    @Observable var userName: String = ""
-    @Observable var fullName: String = ""
-    @Observable var password: String = ""
-    @Observable var user: User = User()
+    @Subject var userName: String = ""
+    @Subject var fullName: String = ""
+    @Subject var password: String = ""
+    @Subject var user: User = User()
     
     func observeText() {
         $userName.combine(with: $fullName, $password)
