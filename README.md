@@ -471,7 +471,7 @@ class MyClass {
                     fullName: $0.new.1, 
                     password: $0.new.2
                 )
-            }.observableValue(to: $user)
+            }.relayChanges(to: $user)
             .retain()
     }
 }
