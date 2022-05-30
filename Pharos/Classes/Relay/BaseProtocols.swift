@@ -176,3 +176,9 @@ extension StateRelay {
         relay(changes: mapped)
     }
 }
+
+// MARK: ChildObservable
+
+protocol ChildObservable {
+    var parent: AnyObject? { get }
+}

@@ -13,12 +13,13 @@ enum RelayOperationStatus {
     case idle
 }
 
-open class Observed<State>: ObservedSubject {
+open class Observed<State>: ObservedSubject, ChildObservable {
     typealias Observer = (Changes<State>) -> Void
     
     let observer: Observer
     
     weak var source: Observable<State>?
+    var parent: AnyObject? { (source as? ChildObservable)?.parent ?? source }
     
     var queue: DispatchQueue?
     var preferAsync: Bool = false
@@ -92,7 +93,7 @@ open class Observed<State>: ObservedSubject {
 }
 
 extension Observed: StateRelay {
-    typealias RelayedState = State
+    public typealias RelayedState = State
     func relay(changes: Changes<RelayedState>) {
         guard canRelay else {
             putInPending(for: changes)

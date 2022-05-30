@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class MappedObservable<Original, Mapped>: Observable<Mapped>, StateRelay {
+final class MappedObservable<Original, Mapped>: Observable<Mapped>, StateRelay, ChildObservable {
     
     typealias RelayedState = Original
     typealias Mapper = (Original) throws -> Mapped?
     
     weak var source: Observable<RelayedState>?
+    var parent: AnyObject? { (source as? ChildObservable)?.parent ?? source }
     
     override var recentState: State? {
         guard let recentValue = source?.recentState else {
