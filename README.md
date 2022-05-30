@@ -272,6 +272,45 @@ class MyClass {
 ```
 
 At the example above, every time `text` is set, it will automatically set the `textField.text`, and when `textField.text` is set it will automatically set the `text`.
+To observe only changes from binding, you can use `onlyFromBinding()` before call `whenDidSet(thenDo:)` or use `onlyFromSet()` before call `whenDidSet(thenDo:)` for the opposite:
+
+```swift
+class MyClass {
+    var textField: UITextField = .init()
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.bind(with: textField.bindables.text)
+            .retain()
+    }
+
+    func observeFromTextField() {
+        // option 1
+        $text.onlyFromBinding().whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }.retain()
+        // option 2
+        $text.whenBindingDidChange { changes in
+            print(changes.new)
+            print(changes.old)
+        }.retain()
+    }
+
+    func observeFromPropertySet() {
+        // option 1
+        $text.onlyFromSet().whenDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }.retain()
+        // option 2
+        $text.whenPropertyDidSet { changes in
+            print(changes.new)
+            print(changes.old)
+        }.retain()
+    }
+}
+```
 
 ## Filtering Subscription
 
