@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class FilteredObservable<Observed>: Observable<Observed>, StateRelay {
+final class FilteredObservable<Observed>: Observable<Observed>, StateRelay, ChildObservable {
     
     typealias RelayedState = Observed
     typealias Filter = (Changes<Observed>) -> Bool
     
     weak var source: Observable<RelayedState>?
+    var parent: AnyObject? { (source as? ChildObservable)?.parent ?? source }
     
     override var recentState: Observed? {
         guard let recent = source?.recentState,

@@ -61,6 +61,38 @@ extension FilterableObservable {
     }
 }
 
+extension FilterableObservable where Self: AnyObject {
+    public func onlyFromBinding() -> Observable<State> {
+        ignore { [weak self] changes in
+            guard let self = self else { return true }
+            if let child = self as? ChildObservable {
+                return changes.source === child.parent
+            } else {
+                return changes.source === self
+            }
+        }
+    }
+    
+    public func onlyFromSet() -> Observable<State> {
+        ignore { [weak self] changes in
+            guard let self = self else { return true }
+            if let child = self as? ChildObservable {
+                return !(changes.source === child.parent)
+            } else {
+                return !(changes.source === self)
+            }
+        }
+    }
+    
+    public func whenBindingDidChange(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
+        onlyFromBinding().whenDidSet(thenDo: work)
+    }
+    
+    public func whenPropertyDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
+        onlyFromBinding().whenDidSet(thenDo: work)
+    }
+}
+
 public extension FilterableObservable where State: Equatable {
     func ignoreSameValue() -> Observable<State> {
         ignore { $0.isNotChanging }
@@ -175,4 +207,10 @@ extension StateRelay {
         guard let mapped = changes.map({ $0 as? RelayedState }) else { return }
         relay(changes: mapped)
     }
+}
+
+// MARK: ChildObservable
+
+protocol ChildObservable {
+    var parent: AnyObject? { get }
 }

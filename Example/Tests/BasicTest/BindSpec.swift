@@ -43,6 +43,47 @@ class BindSpec: QuickSpec {
             expect(source as? Subject<String?>).toNot(beNil())
             expect(didSetCount).to(equal(2))
         }
+        it("should ignore binding when binding with view") {
+            var source: Any = self
+            var didSetCount: Int = 0
+            observables.bind(with: label.bindables.text)
+                .retain()
+            observables.onlyFromSet()
+                .whenDidSet{ changes in
+                    source = changes.source
+                    didSetCount += 1
+                }.retain()
+            let fromLabel = String.randomString()
+            label.text = fromLabel
+            expect(observables.wrappedValue).to(equal(fromLabel))
+            expect(didSetCount).to(equal(0))
+            let fromState = String.randomString()
+            observables.wrappedValue = fromState
+            expect(observables.wrappedValue).to(equal(fromState))
+            expect(source as? Subject<String?>).toNot(beNil())
+            expect(didSetCount).to(equal(1))
+        }
+        it("should ignore set when binding with view") {
+            var source: Any = self
+            var didSetCount: Int = 0
+            observables.bind(with: label.bindables.text)
+                .retain()
+            observables.onlyFromBinding()
+                .whenDidSet{ changes in
+                    source = changes.source
+                    didSetCount += 1
+                }.retain()
+            let fromLabel = String.randomString()
+            label.text = fromLabel
+            expect(observables.wrappedValue).to(equal(fromLabel))
+            expect(source as? UILabel).to(equal(label))
+            expect(didSetCount).to(equal(1))
+            let fromState = String.randomString()
+            observables.wrappedValue = fromState
+            expect(observables.wrappedValue).to(equal(fromState))
+            expect(source as? UILabel).to(equal(label))
+            expect(didSetCount).to(equal(1))
+        }
         #endif
         it("should bear data to NSObject") {
             var source: Any = self
