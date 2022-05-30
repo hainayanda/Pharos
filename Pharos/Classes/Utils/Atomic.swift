@@ -8,23 +8,29 @@
 import Foundation
 
 @propertyWrapper
-struct Atomic<Wrapped> {
-    private var lock: NSLock = NSLock()
+class Atomic<Wrapped> {
+    private var dispatcher: DispatchQueue
     private var _wrappedValue: Wrapped
     var wrappedValue: Wrapped {
         get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _wrappedValue
+            dispatcher.safeSync {
+                _wrappedValue
+            }
         }
         set {
-            lock.lock()
-            defer { lock.unlock() }
-            _wrappedValue = newValue
+            dispatcher.safeSync {
+                _wrappedValue = newValue
+            }
         }
     }
     
     init(wrappedValue: Wrapped) {
+        self.dispatcher = DispatchQueue(label: "Pharos_atomic_\(UUID().uuidString)")
+        self._wrappedValue = wrappedValue
+    }
+    
+    init(_ dispatcher: DispatchQueue, wrappedValue: Wrapped) {
+        self.dispatcher = dispatcher
         self._wrappedValue = wrappedValue
     }
     

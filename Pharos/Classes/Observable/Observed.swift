@@ -102,7 +102,7 @@ extension Observed: StateRelay {
         if preferAsync {
             relayAsync(for: changes)
         } else {
-            relaySync(for: changes)
+            relaySyncIfCould(for: changes)
         }
         finishRelay(for: changes)
     }
@@ -139,13 +139,13 @@ extension Observed: StateRelay {
         }
     }
     
-    func relaySync(for changes: Changes<RelayedState>) {
+    func relaySyncIfCould(for changes: Changes<RelayedState>) {
         let observer = self.observer
         guard let queue = self.queue else {
             observer(changes)
             return
         }
-        syncIfPossible(on: queue) {
+        queue.asyncIfInDifferentQueue {
             observer(changes)
         }
     }
