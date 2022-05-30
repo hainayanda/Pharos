@@ -24,25 +24,25 @@ open class BindableObservable<State>: RootObservable<State> {
         return relay.relayChanges(to: self)
     }
     
-    override func relay(changes: Changes<State>) {
-        callRelayIfNeeded(for: changes)
-        callCallbackIfNeeded(for: changes)
+    override func relay(changes: Changes<State>, context: PharosContext) {
+        superRelay(changes, context)
+        callCallback(changes)
     }
     
-    override func relay(changes: Changes<State>, skip: AnyStateRelay) {
-        callRelayIfNeeded(for: changes, skip: skip)
-        callCallbackIfNeeded(for: changes)
-    }
-    
-    func callRelayIfNeeded(for changes: Changes<State>, skip: AnyStateRelay? = nil) {
-        guard let skip = skip else {
-            super.relay(changes: changes)
-            return
+    public override func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
+        let observed = Observed(source: self) { [weak relay] changes, context in
+            guard let relay = relay else { return }
+            relay.relay(changes: changes, context: context)
         }
-        super.relay(changes: changes, skip: skip)
+        temporaryRetainer.retain(observed)
+        return observed
     }
     
-    func callCallbackIfNeeded(for changes: Changes<State>) {
+    func superRelay(_ changes: Changes<State>, _ context: PharosContext) {
+        super.relay(changes: changes, context: context)
+    }
+    
+    func callCallback(_ changes: Changes<State>) {
         callBack(changes)
     }
 }

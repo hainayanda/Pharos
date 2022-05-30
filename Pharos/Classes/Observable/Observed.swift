@@ -14,7 +14,7 @@ enum RelayOperationStatus {
 }
 
 open class Observed<State>: ObservedSubject, ChildObservable {
-    typealias Observer = (Changes<State>) -> Void
+    typealias Observer = (Changes<State>, PharosContext) -> Void
     
     let observer: Observer
     
@@ -26,7 +26,16 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     var delay: TimeInterval?
     var shouldDiscardSelf: (Changes<State>) -> Bool = { _ in false }
     
-    @Atomic var status: RelayOperationStatus = .idle
+    @Atomic var status: RelayOperationStatus = .idle {
+        didSet {
+            switch status {
+            case .idle:
+                relayPendingChanges()
+            default:
+                return
+            }
+        }
+    }
     @Atomic var pendingChanges: Changes<RelayedState>?
     
     var canRelay: Bool {
@@ -94,23 +103,20 @@ open class Observed<State>: ObservedSubject, ChildObservable {
 
 extension Observed: StateRelay {
     public typealias RelayedState = State
-    func relay(changes: Changes<RelayedState>) {
-        guard canRelay else {
-            putInPending(for: changes)
-            return
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            guard canRelay else {
+                putInPending(for: changes)
+                return
+            }
+            self.status = .relaying
+            if preferAsync {
+                relayAsync(for: changes, context: context)
+            } else {
+                relaySyncIfCould(for: changes, context: context)
+            }
+            finishRelay(for: changes)
         }
-        self.status = .relaying
-        if preferAsync {
-            relayAsync(for: changes)
-        } else {
-            relaySyncIfCould(for: changes)
-        }
-        finishRelay(for: changes)
-    }
-    
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
-        if self === skip { return }
-        relay(changes: changes)
     }
     
     func finishRelay(for changes: Changes<RelayedState>) {
@@ -126,28 +132,31 @@ extension Observed: StateRelay {
         self.status = .suspended
         let queue = (self.queue ?? .current) ?? .main
         queue.asyncAfter(deadline: .now() + delay) { [weak self] in
-            guard let self = self, let pending = self.dequeuePendingChanges() else { return }
-            self.status = .idle
-            self.relay(changes: pending)
+            self?.status = .idle
         }
     }
     
-    func relayAsync(for changes: Changes<RelayedState>) {
+    func relayPendingChanges() {
+        guard let pending = dequeuePendingChanges() else { return }
+        self.relay(changes: pending, context: PharosContext())
+    }
+    
+    func relayAsync(for changes: Changes<RelayedState>, context: PharosContext) {
         let observer = self.observer
         let queue = (self.queue ?? .current) ?? .main
         queue.async {
-            observer(changes)
+            observer(changes, context)
         }
     }
     
-    func relaySyncIfCould(for changes: Changes<RelayedState>) {
+    func relaySyncIfCould(for changes: Changes<RelayedState>, context: PharosContext) {
         let observer = self.observer
         guard let queue = self.queue else {
-            observer(changes)
+            observer(changes, context)
             return
         }
         queue.asyncIfInDifferentQueue {
-            observer(changes)
+            observer(changes, context)
         }
     }
     

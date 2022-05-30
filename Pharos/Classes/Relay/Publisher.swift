@@ -14,6 +14,9 @@ open class Publisher<Observed>: RootObservable<Observed> {
     }
     
     open func publish(value: Observed) {
-        relay(changes: Changes(old: recentState, new: value, source: self))
+        relay(
+            changes: Changes(old: recentState, new: value, source: self),
+            context: PharosContext()
+        )
     }
 }

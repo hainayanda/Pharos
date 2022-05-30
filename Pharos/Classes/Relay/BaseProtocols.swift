@@ -16,19 +16,6 @@ public protocol ChangeObservable: MappableObservable, FilterableObservable, Merg
     func relayChanges(to relay: BindableObservable<State>) -> Observed<State>
 }
 
-extension ChangeObservable {
-    public func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
-        whenDidSet { [weak relay] changes in
-            guard let relay = relay else { return }
-            if let selfRelay = self as? AnyStateRelay {
-                relay.relay(changes: changes, skip: selfRelay)
-            } else {
-                relay.relay(changes: changes)
-            }
-        }
-    }
-}
-
 // MARK: MappableObservable
 
 public protocol MappableObservable {
@@ -192,20 +179,19 @@ public protocol Invokable {
 // MARK: Relay
 
 protocol AnyStateRelay: AnyObject {
-    func tryRelay<Value>(changes: Changes<Value>)
+    func tryRelay<Value>(changes: Changes<Value>, context: PharosContext)
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool
 }
 
 protocol StateRelay: AnyStateRelay {
     associatedtype RelayedState
-    func relay(changes: Changes<RelayedState>)
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay)
+    func relay(changes: Changes<RelayedState>, context: PharosContext)
 }
 
 extension StateRelay {
-    func tryRelay<Value>(changes: Changes<Value>) {
+    func tryRelay<Value>(changes: Changes<Value>, context: PharosContext) {
         guard let mapped = changes.map({ $0 as? RelayedState }) else { return }
-        relay(changes: mapped)
+        relay(changes: mapped, context: context)
     }
 }
 

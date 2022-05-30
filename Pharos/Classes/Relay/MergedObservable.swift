@@ -25,22 +25,26 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
     init(observables: [Observable<Observed>]) {
         sources = observables.map { WeakObservableRetainer(wrapped: $0) }
         super.init()
+        for observable in observables {
+            temporaryRetainer.retain(observable)
+        }
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        let oldValue = _recentValue ?? changes.old
-        _recentValue = changes.new
-        relayGroup.relay(changes: Changes(old: oldValue, new: changes.new, source: changes.source))
-    }
-    
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
-        _recentValue = changes.new
-        relayGroup.relay(changes: changes, skip: skip)
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            let oldValue = _recentValue ?? changes.old
+            _recentValue = changes.new
+            relayGroup.relay(
+                changes: Changes(old: oldValue, new: changes.new, source: changes.source),
+                context: context
+            )
+        }
     }
     
     override func retain<Child>(relay: Child) where Observed == Child.RelayedState, Child : StateRelay {
         super.retain(relay: relay)
         for source in sources {
+            temporaryRetainer.discard(source)
             source.wrapped?.retain(relay: self)
         }
     }
@@ -48,6 +52,7 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
     override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Observed == Child.RelayedState {
         super.retainWeakly(relay: relay, managedBy: retainer)
         for source in sources {
+            temporaryRetainer.discard(source)
             source.wrapped?.retainWeakly(relay: self, managedBy: retainer)
         }
     }

@@ -39,28 +39,17 @@ final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservabl
         kvoBind(with: object, keyPath: keyPath)
     }
     
-    override func relay(changes: Changes<Observed>) {
+    override func relay(changes: Changes<Observed>, context: PharosContext) {
         recentSource = changes.source as? Object === object ? .property : .external
-        callRelayIfNeeded(for: changes)
-        callCallbackIfNeeded(for: changes)
-    }
-    
-    override func callRelayIfNeeded(for changes: Changes<Observed>, skip: AnyStateRelay? = nil) {
         switch recentSource {
-        case .property, .external:
-            super.callRelayIfNeeded(for: changes, skip: skip)
+        case .property:
+            super.superRelay(changes, context)
+            self.recentSource = .none
+        case .external:
+            super.superRelay(changes, context)
+            super.callCallback(changes)
         case .none:
             return
-        }
-    }
-    
-    override func callCallbackIfNeeded(for changes: Changes<Observed>) {
-        switch recentSource {
-        case .property, .none:
-            self.recentSource = .none
-            return
-        case .external:
-            super.callCallbackIfNeeded(for: changes)
         }
     }
     
@@ -89,7 +78,10 @@ final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservabl
                 return
             case .none:
                 guard let source = self.object else { return }
-                self.relay(changes: Changes(old: old, new: new, source: source))
+                self.relay(
+                    changes: Changes(old: old, new: new, source: source),
+                    context: PharosContext()
+                )
             }
         }
     }
@@ -124,7 +116,10 @@ final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservabl
             return
         case .none:
             guard let source = self.object else { return }
-            self.relay(changes: Changes(old: old, new: new, source: source))
+            self.relay(
+                changes: Changes(old: old, new: new, source: source),
+                context: PharosContext()
+            )
         }
     }
 #endif

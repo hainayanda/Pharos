@@ -19,6 +19,9 @@ final class RelayInvoker<State>: Invokable {
         guard let recent: State = self.relay.source?.recentState else {
             return
         }
-        self.relay.relay(changes: Changes(old: nil, new: recent, source: self))
+        self.relay.relay(
+            changes: Changes(old: nil, new: recent, source: self),
+            context: PharosContext()
+        )
     }
 }
