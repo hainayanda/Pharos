@@ -9,40 +9,49 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
+fileprivate var imageKey: String = "imageKey"
+fileprivate var highlightedImageKey: String = "highlightedImageKey"
+fileprivate var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
+fileprivate var isHighlightedKey: String = "isHighlightedKey"
+fileprivate var animationImagesKey: String = "animationImagesKey"
+fileprivate var highlightedAnimationImagesKey: String = "highlightedAnimationImagesKey"
+fileprivate var animationDurationKey: String = "animationDurationKey"
+fileprivate var animationRepeatCountKey: String = "animationDurationKey"
+
 public extension BindableCollection where Object: UIImageView {
     
     // MARK: Two Way Relay
     
     var image: BindableObservable<UIImage?> {
-        bindable(of:\.image)
+        bindable(of: \.image, key: &imageKey)
     }
     
     var highlightedImage: BindableObservable<UIImage?> {
-        bindable(of:\.highlightedImage)
+        bindable(of: \.highlightedImage, key: &highlightedImageKey)
     }
 
     var isUserInteractionEnabled: BindableObservable<Bool> {
-        bindable(of:\.isUserInteractionEnabled)
+        bindable(of: \.isUserInteractionEnabled, key: &isUserInteractionEnabledKey)
     }
     
     var isHighlighted: BindableObservable<Bool> {
-        bindable(of:\.isHighlighted)
+        bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
     
     var animationImages: BindableObservable<[UIImage]?> {
-        bindable(of:\.animationImages)
+        bindable(of: \.animationImages, key: &animationImagesKey)
     }
 
     var highlightedAnimationImages: BindableObservable<[UIImage]?> {
-        bindable(of:\.highlightedAnimationImages)
+        bindable(of: \.highlightedAnimationImages, key: &highlightedAnimationImagesKey)
     }
     
     var animationDuration: BindableObservable<TimeInterval> {
-        bindable(of:\.animationDuration)
+        bindable(of: \.animationDuration, key: &animationDurationKey)
     }
 
     var animationRepeatCount: BindableObservable<Int> {
-        bindable(of:\.animationRepeatCount)
+        bindable(of: \.animationRepeatCount, key: &animationRepeatCountKey)
     }
     
 }

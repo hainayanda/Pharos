@@ -22,8 +22,7 @@ public final class BindableCollection<Object: NSObject> {
         self.underlyingObject = object
     }
     
-    func bindable<State>(of keyPath: ReferenceWritableKeyPath<Object, State>) -> BindableObservable<State> {
-        let key = String(ObjectIdentifier(keyPath).hashValue)
+    func bindable<State>(of keyPath: ReferenceWritableKeyPath<Object, State>, key: UnsafeRawPointer) -> BindableObservable<State> {
         guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableObservable<State> else {
             let newRelay = BindableKVOObservable(object: underlyingObject, keyPath: keyPath)
             objc_setAssociatedObject(underlyingObject, key, newRelay, .OBJC_ASSOCIATION_RETAIN)
