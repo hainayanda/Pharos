@@ -18,7 +18,10 @@ public final class Subject<Wrapped>: BindableObservable<Wrapped> {
         set {
             let oldValue = _wrappedValue
             _wrappedValue = newValue
-            relay(changes: Changes(old: oldValue, new: newValue, source: self))
+            relay(
+                changes: Changes(old: oldValue, new: newValue, source: self),
+                context: PharosContext()
+            )
         }
     }
     

@@ -43,15 +43,11 @@ final class WeakRelayRetainer<Relayed>: StateRelay {
         self.wrapped = wrapped
     }
     
-    func relay(changes: Changes<Relayed>) {
-        self.wrapped?.tryRelay(changes: changes)
-    }
-    
-    func relay(changes: Changes<Relayed>, skip: AnyStateRelay) {
-        guard let wrapped = self.wrapped, !wrapped.isSameRelay(with: skip) else {
+    func relay(changes: Changes<Relayed>, context: PharosContext) {
+        guard let wrapped = wrapped else {
             return
         }
-        relay(changes: changes)
+        wrapped.tryRelay(changes: changes, context: context)
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
@@ -76,17 +72,12 @@ final class RelayRetainerGroup<Relayed>: StateRelay {
     
     @Atomic var relays: [AnyStateRelay] = []
     
-    func relay(changes: Changes<Relayed>) {
-        let copy = relays
-        for relay in copy {
-            relay.tryRelay(changes: changes)
-        }
-    }
-    
-    func relay(changes: Changes<Relayed>, skip: AnyStateRelay) {
-        let copy = relays
-        for relay in copy where !relay.isSameRelay(with: skip) {
-            relay.tryRelay(changes: changes)
+    func relay(changes: Changes<Relayed>, context: PharosContext) {
+        context.safeRun(for: self) {
+            let copy = relays
+            for relay in copy {
+                relay.tryRelay(changes: changes, context: context)
+            }
         }
     }
     

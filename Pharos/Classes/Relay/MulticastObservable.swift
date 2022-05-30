@@ -12,7 +12,7 @@ import Foundation
 final class SubCastObservable<State>: Observable<State>, StateRelay {
     
     typealias RelayedState = State
-    typealias CastConsumer = (Changes<RelayedState>) -> Void
+    typealias CastConsumer = (Changes<RelayedState>, PharosContext) -> Void
     
     let castConsumer: CastConsumer
     
@@ -20,14 +20,11 @@ final class SubCastObservable<State>: Observable<State>, StateRelay {
         self.castConsumer = castConsumer
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        castConsumer(changes)
-        relayGroup.relay(changes: changes)
-    }
-    
-    func relay(changes: Changes<State>, skip: AnyStateRelay) {
-        castConsumer(changes)
-        relayGroup.relay(changes: changes, skip: skip)
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            castConsumer(changes, context)
+            relayGroup.relay(changes: changes, context: context)
+        }
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
@@ -40,7 +37,7 @@ final class SubCastObservable<State>: Observable<State>, StateRelay {
 final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, StateRelay {
     typealias RelayedState = State
     
-    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes in
+    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (changes.old, self.recentState?.1)
         let new = (changes.new, self.recentState?.1)
@@ -49,11 +46,11 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
-    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes in
+    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (self.recentState?.0, changes.old)
         let new = (self.recentState?.0, changes.new)
@@ -62,7 +59,7 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
@@ -78,12 +75,10 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
         super.init()
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        relayGroup.relay(changes: changes)
-    }
-    
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
-        relayGroup.relay(changes: changes, skip: skip)
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            relayGroup.relay(changes: changes, context: context)
+        }
     }
     
     override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {
@@ -111,7 +106,7 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
     typealias RelayedState = State
     
     var subcast1: SubCastObservable<State1> {
-        .init { [weak self] changes in
+        .init { [weak self] changes, context  in
             guard let self = self else { return }
             let old = (changes.old, self.recentState?.1, self.recentState?.2)
             let new = (changes.new, self.recentState?.1, self.recentState?.2)
@@ -120,13 +115,13 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
                     old: old,
                     new: new,
                     source: changes.source
-                )
+                ), context: context
             )
         }
     }
     
     var subcast2: SubCastObservable<State2> {
-        .init { [weak self] changes in
+        .init { [weak self] changes, context  in
             guard let self = self else { return }
             let old = (self.recentState?.0, changes.old, self.recentState?.2)
             let new = (self.recentState?.0, changes.new, self.recentState?.2)
@@ -135,13 +130,13 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
                     old: old,
                     new: new,
                     source: changes.source
-                )
+                ), context: context
             )
         }
     }
     
     var subcast3: SubCastObservable<State3> {
-        .init { [weak self] changes in
+        .init { [weak self] changes, context  in
             guard let self = self else { return }
             let old = (self.recentState?.0, self.recentState?.1, changes.old)
             let new = (self.recentState?.0, self.recentState?.1, changes.new)
@@ -150,7 +145,7 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
                     old: old,
                     new: new,
                     source: changes.source
-                )
+                ), context: context
             )
         }
     }
@@ -170,12 +165,10 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
         super.init()
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        relayGroup.relay(changes: changes)
-    }
-    
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
-        relayGroup.relay(changes: changes, skip: skip)
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            relayGroup.relay(changes: changes, context: context)
+        }
     }
     
     override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {
@@ -206,7 +199,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
 : Observable<(State1?, State2?, State3?, State4?)>, StateRelay {
     typealias RelayedState = State
     
-    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes in
+    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (changes.old, self.recentState?.1, self.recentState?.2, self.recentState?.3)
         let new = (changes.new, self.recentState?.1, self.recentState?.2, self.recentState?.3)
@@ -215,11 +208,11 @@ final class QuadCastObservable<State1, State2, State3, State4>
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
-    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes in
+    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (self.recentState?.0, changes.old, self.recentState?.2, self.recentState?.3)
         let new = (self.recentState?.0, changes.new, self.recentState?.2, self.recentState?.3)
@@ -228,11 +221,11 @@ final class QuadCastObservable<State1, State2, State3, State4>
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
-    lazy var subcast3: SubCastObservable<State3> = .init { [weak self] changes in
+    lazy var subcast3: SubCastObservable<State3> = .init { [weak self] changes, context in
         guard let self = self else { return }
         let old = (self.recentState?.0, self.recentState?.1, changes.old, self.recentState?.3)
         let new = (self.recentState?.0, self.recentState?.1, changes.new, self.recentState?.3)
@@ -241,11 +234,11 @@ final class QuadCastObservable<State1, State2, State3, State4>
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
-    lazy var subcast4: SubCastObservable<State4> = .init { [weak self] changes in
+    lazy var subcast4: SubCastObservable<State4> = .init { [weak self] changes, context in
         guard let self = self else { return }
         let old = (self.recentState?.0, self.recentState?.1, self.recentState?.2, changes.old)
         let new = (self.recentState?.0, self.recentState?.1, self.recentState?.2, changes.new)
@@ -254,7 +247,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
                 old: old,
                 new: new,
                 source: changes.source
-            )
+            ), context: context
         )
     }
     
@@ -276,12 +269,10 @@ final class QuadCastObservable<State1, State2, State3, State4>
         super.init()
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        relayGroup.relay(changes: changes)
-    }
-    
-    func relay(changes: Changes<RelayedState>, skip: AnyStateRelay) {
-        relayGroup.relay(changes: changes, skip: skip)
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            relayGroup.relay(changes: changes, context: context)
+        }
     }
     
     override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {

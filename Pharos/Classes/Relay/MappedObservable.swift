@@ -29,18 +29,11 @@ final class MappedObservable<Original, Mapped>: Observable<Mapped>, StateRelay, 
         self.mapper = mapper
     }
     
-    func relay(changes: Changes<Original>) {
+    func relay(changes: Changes<Original>, context: PharosContext) {
         guard let mappedChanges = changes.map(mapper) else {
             return
         }
-        relayGroup.relay(changes: mappedChanges)
-    }
-    
-    func relay(changes: Changes<Original>, skip: AnyStateRelay) {
-        guard let mappedChanges = changes.map(mapper) else {
-            return
-        }
-        relayGroup.relay(changes: mappedChanges, skip: skip)
+        relayGroup.relay(changes: mappedChanges, context: context)
     }
     
     override func retain<Child>(relay: Child) where Mapped == Child.RelayedState, Child : StateRelay {

@@ -15,7 +15,18 @@ open class Observable<State>: ChangeObservable {
     public init() { }
     
     open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
-        let observed = Observed(source: self, observer: work)
+        let observed = Observed(source: self) { changes, _ in
+            work(changes)
+        }
+        temporaryRetainer.retain(observed)
+        return observed
+    }
+    
+    public func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
+        let observed = Observed(source: self) { [weak relay] changes, context in
+            guard let relay = relay else { return }
+            relay.relay(changes: changes, context: context)
+        }
         temporaryRetainer.retain(observed)
         return observed
     }

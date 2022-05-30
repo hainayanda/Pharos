@@ -30,18 +30,13 @@ final class FilteredObservable<Observed>: Observable<Observed>, StateRelay, Chil
         self.filter = filter
     }
     
-    func relay(changes: Changes<RelayedState>) {
-        guard !filter(changes) else {
-            return
+    func relay(changes: Changes<RelayedState>, context: PharosContext) {
+        context.safeRun(for: self) {
+            guard !filter(changes) else {
+                return
+            }
+            relayGroup.relay(changes: changes, context: context)
         }
-        relayGroup.relay(changes: changes)
-    }
-    
-    func relay(changes: Changes<Observed>, skip: AnyStateRelay) {
-        guard !filter(changes) else {
-            return
-        }
-        relayGroup.relay(changes: changes, skip: skip)
     }
     
     override func retain<Child>(relay: Child) where Observed == Child.RelayedState, Child : StateRelay {
