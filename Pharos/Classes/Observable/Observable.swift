@@ -12,7 +12,7 @@ open class Observable<State>: ChangeObservable {
     lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
     var recentState: State? { nil }
     
-    init(retainer: ContextRetainer) {
+    public init(retainer: ContextRetainer) {
         self.contextRetainer = retainer
     }
     

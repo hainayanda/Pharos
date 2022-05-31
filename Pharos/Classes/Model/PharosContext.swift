@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PharosContext {
+public final class PharosContext {
     @Atomic var notifiedRelay: [ObjectIdentifier: AnyStateRelay] = [:]
     
     func alreadyNotified(for relay: AnyStateRelay) -> Bool {

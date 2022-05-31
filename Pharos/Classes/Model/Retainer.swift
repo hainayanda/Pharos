@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ContextRetainer {
+final public class ContextRetainer {
     var retained: [ObjectIdentifier: AnyObject]
     
     public init(retained: [ObjectIdentifier: AnyObject]) {

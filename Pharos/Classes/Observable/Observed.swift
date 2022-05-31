@@ -15,7 +15,7 @@ enum RelayOperationStatus {
 }
 
 open class Observed<State>: ObservedSubject, ChildObservable {
-    typealias Observer = (Changes<State>, PharosContext) -> Void
+    public typealias Observer = (Changes<State>, PharosContext) -> Void
     
     let observer: Observer
     
@@ -53,7 +53,7 @@ open class Observed<State>: ObservedSubject, ChildObservable {
         }
     }
     
-    init(source: Observable<State>, retainer: ContextRetainer, observer: @escaping Observer) {
+    public init(source: Observable<State>, retainer: ContextRetainer, observer: @escaping Observer) {
         self.source = source
         self.observer = observer
         self.contextRetainer = retainer
