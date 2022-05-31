@@ -123,6 +123,7 @@
 		B055890DFBA9B1C8958BE6775AAA71C8 /* MappedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07D147B317D682896D49AF98140F937 /* MappedObservable.swift */; };
 		B93F3526A95D7F43EEBFEE5E453E4795 /* BeLessThan.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5F8634034723707BA489895B2AC37A /* BeLessThan.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BA6BFE43334966284AB24400BB1BA477 /* MergedObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67D797FDC8D042DAECDB6E3A15E9BE9 /* MergedObservable.swift */; };
+		BB1C60792846775500534ED5 /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1C60782846775500534ED5 /* Dictionary+Extensions.swift */; };
 		BBE6352E28454EDB00BA7BE7 /* PharosContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE6352D28454EDB00BA7BE7 /* PharosContext.swift */; };
 		BD3ABAC28025564DCF2E6C12009435DF /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6A8AE2D5EF989F29A4FFB4EB7D52A8 /* CwlMachBadInstructionHandler.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BF62525E5628A9F7604BA8479691318C /* BeLogical.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4E2AF01C07390467B2A032C1081912 /* BeLogical.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -310,6 +311,7 @@
 		B534FC537F198D4CB2269C659A93783F /* BeAnInstanceOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeAnInstanceOf.swift; path = Sources/Nimble/Matchers/BeAnInstanceOf.swift; sourceTree = "<group>"; };
 		B8A926F47AE84E7574B706FD66811D37 /* Pharos.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Pharos.modulemap; sourceTree = "<group>"; };
 		BAE263041362D074978BB3B577DF0A05 /* Nimble */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nimble; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB1C60782846775500534ED5 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		BB5D7CE0E6246798ABFD9DAAE4915E71 /* Nimble-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Nimble-Info.plist"; sourceTree = "<group>"; };
 		BBA4F4C4573FD9589D1CA0CA3DD18A0C /* BeResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeResult.swift; path = Sources/Nimble/Matchers/BeResult.swift; sourceTree = "<group>"; };
 		BBE6352D28454EDB00BA7BE7 /* PharosContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharosContext.swift; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 				520894D6248E937CBD69832A9C752925 /* Atomic.swift */,
 				F40A664492D65D4EEEA0105E763CEB49 /* DispatchQueue+Extensions.swift */,
 				79F4738FB7F1766DD8BB71B0DF88DC4D /* RelayInvoker.swift */,
+				BB1C60782846775500534ED5 /* Dictionary+Extensions.swift */,
 			);
 			name = Utils;
 			path = Pharos/Classes/Utils;
@@ -1039,6 +1042,7 @@
 				54DBF88F0696E760C02324088C0C5075 /* BindableKVOObservable.swift in Sources */,
 				75237CBC64C0395E59202F01DEBDDCDA /* BindableObservable.swift in Sources */,
 				826E31B86A72CCE2F852BFD4F2976477 /* Changes.swift in Sources */,
+				BB1C60792846775500534ED5 /* Dictionary+Extensions.swift in Sources */,
 				3C2907CB47EEFEA6C88C9E622B40D531 /* DispatchQueue+Extensions.swift in Sources */,
 				76E1B090D752513D0AF8B57FFB184F83 /* FilteredObservable.swift in Sources */,
 				B055890DFBA9B1C8958BE6775AAA71C8 /* MappedObservable.swift in Sources */,

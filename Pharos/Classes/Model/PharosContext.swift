@@ -8,10 +8,10 @@
 import Foundation
 
 class PharosContext {
-    @Atomic var notifiedRelay: [AnyStateRelay] = []
+    @Atomic var notifiedRelay: [ObjectIdentifier: AnyStateRelay] = [:]
     
     func alreadyNotified(for relay: AnyStateRelay) -> Bool {
-        notifiedRelay.contains { $0 === relay }
+        notifiedRelay.contains(relay)
     }
     
     func safeRun(for relay: AnyStateRelay, runner: () -> Void) {
