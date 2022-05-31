@@ -8,6 +8,7 @@
 import Foundation
 
 enum RelayOperationStatus {
+    case discarded
     case relaying
     case suspended
     case idle
@@ -29,6 +30,10 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     
     @Atomic var status: RelayOperationStatus = .idle {
         didSet {
+            if oldValue == .discarded {
+                status = .discarded
+                return
+            }
             switch status {
             case .idle:
                 relayPendingChanges()
