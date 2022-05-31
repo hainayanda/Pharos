@@ -30,7 +30,7 @@ final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservabl
     init(object: Object, keyPath: ReferenceWritableKeyPath<Object, Observed>) {
         self.keyPath = keyPath
         self.object = object
-        super.init { [weak object] changes in
+        super.init(retainer: ContextRetainer()) { [weak object] changes in
             guard let object = object else {
                 return
             }

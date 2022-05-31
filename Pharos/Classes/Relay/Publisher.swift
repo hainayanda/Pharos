@@ -9,8 +9,8 @@ import Foundation
 
 open class Publisher<Observed>: RootObservable<Observed> {
     
-    public override init() {
-        super.init()
+    public init() {
+        super.init(retainer: ContextRetainer())
     }
     
     open func publish(value: Observed) {

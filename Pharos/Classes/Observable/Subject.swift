@@ -35,7 +35,7 @@ public final class Subject<Wrapped>: BindableObservable<Wrapped> {
     
     public init(wrappedValue: Wrapped) {
         self._wrappedValue = wrappedValue
-        super.init()
+        super.init(retainer: ContextRetainer())
         self.callBack = { [weak self] changes in
             self?._wrappedValue = changes.new
         }

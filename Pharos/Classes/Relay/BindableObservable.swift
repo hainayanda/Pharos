@@ -14,14 +14,16 @@ open class BindableObservable<State>: RootObservable<State> {
     
     var callBack: CallBack
     
-    public init(callBack: @escaping CallBack = { _ in }) {
+    public init(retainer: ContextRetainer, callBack: @escaping CallBack = { _ in }) {
         self.callBack = callBack
+        super.init(retainer: retainer)
     }
     
     open func bind(with relay: BindableObservable<State>) -> Observed<State> {
-        relayChanges(to: relay)
-            .retained(by: temporaryRetainer)
-        return relay.relayChanges(to: self)
+        let myRelay = relayChanges(to: relay)
+        let theirRelay = relay.relayChanges(to: self)
+        myRelay.contextRetainer.retained.append(theirRelay)
+        return myRelay
     }
     
     override func relay(changes: Changes<State>, context: PharosContext) {
@@ -30,11 +32,11 @@ open class BindableObservable<State>: RootObservable<State> {
     }
     
     public override func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
-        let observed = Observed(source: self) { [weak relay] changes, context in
+        let observed = Observed(source: self, retainer: self.contextRetainer.added(with: self)) { [weak relay] changes, context in
             guard let relay = relay else { return }
             relay.relay(changes: changes, context: context)
         }
-        temporaryRetainer.retain(observed)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
         return observed
     }
     

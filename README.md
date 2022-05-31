@@ -113,7 +113,7 @@ class MyClass {
 }
 ```
 
-if you want the observer to run using the current value, just invoke it:
+if you want the observer to run using the current value, just fire it:
 
 ```swift
 class MyClass {
@@ -124,7 +124,7 @@ class MyClass {
             print(changes.new)
             print(changes.old)
         }.retain()
-        .notifyWithCurrentValue()
+        .fire()
     }
 }
 ```
