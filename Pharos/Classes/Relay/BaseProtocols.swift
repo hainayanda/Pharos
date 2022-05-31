@@ -173,7 +173,9 @@ extension ObservedSubject {
 // MARK: Invokable
 
 public protocol Invokable {
+    @available(*, deprecated, renamed: "fire")
     func notifyWithCurrentValue()
+    func fire()
 }
 
 // MARK: Relay
