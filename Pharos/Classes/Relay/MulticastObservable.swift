@@ -16,8 +16,9 @@ final class SubCastObservable<State>: Observable<State>, StateRelay {
     
     let castConsumer: CastConsumer
     
-    init(castConsumer: @escaping CastConsumer) {
+    init(retainer: ContextRetainer, castConsumer: @escaping CastConsumer) {
         self.castConsumer = castConsumer
+        super.init(retainer: retainer)
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -37,7 +38,7 @@ final class SubCastObservable<State>: Observable<State>, StateRelay {
 final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, StateRelay {
     typealias RelayedState = State
     
-    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes, context  in
+    lazy var subcast1: SubCastObservable<State1> = .init(retainer: contextRetainer) { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (changes.old, self.recentState?.1)
         let new = (changes.new, self.recentState?.1)
@@ -50,7 +51,7 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
         )
     }
     
-    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes, context  in
+    lazy var subcast2: SubCastObservable<State2> = .init(retainer: contextRetainer) { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (self.recentState?.0, changes.old)
         let new = (self.recentState?.0, changes.new)
@@ -69,10 +70,12 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
         (source1?.recentState, source2?.recentState)
     }
     
-    init(source1: Observable<State1>, source2: Observable<State2>) {
+    init(source1: Observable<State1>, source2: Observable<State2>, retainer: ContextRetainer) {
         self.source1 = source1
         self.source2 = source2
-        super.init()
+        super.init(retainer: retainer.added(with: source1).added(with: source2))
+        source1.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
+        source2.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -81,19 +84,15 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
         }
     }
     
-    override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {
-        super.retain(relay: relay)
-        source1?.relayGroup.addToGroup(subcast1)
-        source2?.relayGroup.addToGroup(subcast2)
+    override func retain(retainer: ContextRetainer) {
+        source1?.retain(retainer: retainer)
+        source2?.retain(retainer: retainer)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
-        super.retainWeakly(relay: relay, managedBy: retainer)
-        retainer.retain(self)
-        source1?.temporaryRetainer.discard(self)
-        source2?.temporaryRetainer.discard(self)
-        source1?.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
-        source2?.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
+    override func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
+        source1?.discard(child: child)
+        source2?.discard(child: child)
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
@@ -106,49 +105,43 @@ final class BiCastObservable<State1, State2>: Observable<(State1?, State2?)>, St
 final class TriCastObservable<State1, State2, State3>: Observable<(State1?, State2?, State3?)>, StateRelay {
     typealias RelayedState = State
     
-    var subcast1: SubCastObservable<State1> {
-        .init { [weak self] changes, context  in
-            guard let self = self else { return }
-            let old = (changes.old, self.recentState?.1, self.recentState?.2)
-            let new = (changes.new, self.recentState?.1, self.recentState?.2)
-            self.relay(
-                changes: Changes(
-                    old: old,
-                    new: new,
-                    source: changes.source
-                ), context: context
-            )
-        }
+    lazy var subcast1: SubCastObservable<State1> = .init(retainer: contextRetainer) { [weak self] changes, context  in
+        guard let self = self else { return }
+        let old = (changes.old, self.recentState?.1, self.recentState?.2)
+        let new = (changes.new, self.recentState?.1, self.recentState?.2)
+        self.relay(
+            changes: Changes(
+                old: old,
+                new: new,
+                source: changes.source
+            ), context: context
+        )
     }
     
-    var subcast2: SubCastObservable<State2> {
-        .init { [weak self] changes, context  in
-            guard let self = self else { return }
-            let old = (self.recentState?.0, changes.old, self.recentState?.2)
-            let new = (self.recentState?.0, changes.new, self.recentState?.2)
-            self.relay(
-                changes: Changes(
-                    old: old,
-                    new: new,
-                    source: changes.source
-                ), context: context
-            )
-        }
+    lazy var subcast2: SubCastObservable<State2> = .init(retainer: contextRetainer) { [weak self] changes, context  in
+        guard let self = self else { return }
+        let old = (self.recentState?.0, changes.old, self.recentState?.2)
+        let new = (self.recentState?.0, changes.new, self.recentState?.2)
+        self.relay(
+            changes: Changes(
+                old: old,
+                new: new,
+                source: changes.source
+            ), context: context
+        )
     }
     
-    var subcast3: SubCastObservable<State3> {
-        .init { [weak self] changes, context  in
-            guard let self = self else { return }
-            let old = (self.recentState?.0, self.recentState?.1, changes.old)
-            let new = (self.recentState?.0, self.recentState?.1, changes.new)
-            self.relay(
-                changes: Changes(
-                    old: old,
-                    new: new,
-                    source: changes.source
-                ), context: context
-            )
-        }
+    lazy var subcast3: SubCastObservable<State3> = .init(retainer: contextRetainer) { [weak self] changes, context  in
+        guard let self = self else { return }
+        let old = (self.recentState?.0, self.recentState?.1, changes.old)
+        let new = (self.recentState?.0, self.recentState?.1, changes.new)
+        self.relay(
+            changes: Changes(
+                old: old,
+                new: new,
+                source: changes.source
+            ), context: context
+        )
     }
     
     weak var source1: Observable<State1>?
@@ -159,11 +152,14 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
         (source1?.recentState, source2?.recentState, source3?.recentState)
     }
     
-    init(source1: Observable<State1>, source2: Observable<State2>, source3: Observable<State3>) {
+    init(source1: Observable<State1>, source2: Observable<State2>, source3: Observable<State3>, retainer: ContextRetainer) {
         self.source1 = source1
         self.source2 = source2
         self.source3 = source3
-        super.init()
+        super.init(retainer: retainer.added(with: source1).added(with: source2).added(with: source3))
+        source1.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
+        source2.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
+        source3.relayGroup.addToGroup(WeakRelayRetainer<State3>(wrapped: subcast3))
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -172,22 +168,17 @@ final class TriCastObservable<State1, State2, State3>: Observable<(State1?, Stat
         }
     }
     
-    override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {
-        super.retain(relay: relay)
-        source1?.relayGroup.addToGroup(subcast1)
-        source2?.relayGroup.addToGroup(subcast2)
-        source3?.relayGroup.addToGroup(subcast3)
+    override func retain(retainer: ContextRetainer) {
+        source1?.retain(retainer: retainer)
+        source2?.retain(retainer: retainer)
+        source3?.retain(retainer: retainer)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
-        super.retainWeakly(relay: relay, managedBy: retainer)
-        retainer.retain(self)
-        source1?.temporaryRetainer.discard(self)
-        source2?.temporaryRetainer.discard(self)
-        source3?.temporaryRetainer.discard(self)
-        source1?.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
-        source2?.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
-        source3?.relayGroup.addToGroup(WeakRelayRetainer<State3>(wrapped: subcast3))
+    override func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
+        source1?.discard(child: child)
+        source2?.discard(child: child)
+        source3?.discard(child: child)
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
@@ -201,7 +192,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
 : Observable<(State1?, State2?, State3?, State4?)>, StateRelay {
     typealias RelayedState = State
     
-    lazy var subcast1: SubCastObservable<State1> = .init { [weak self] changes, context  in
+    lazy var subcast1: SubCastObservable<State1> = .init(retainer: contextRetainer) { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (changes.old, self.recentState?.1, self.recentState?.2, self.recentState?.3)
         let new = (changes.new, self.recentState?.1, self.recentState?.2, self.recentState?.3)
@@ -214,7 +205,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
         )
     }
     
-    lazy var subcast2: SubCastObservable<State2> = .init { [weak self] changes, context  in
+    lazy var subcast2: SubCastObservable<State2> = .init(retainer: contextRetainer) { [weak self] changes, context  in
         guard let self = self else { return }
         let old = (self.recentState?.0, changes.old, self.recentState?.2, self.recentState?.3)
         let new = (self.recentState?.0, changes.new, self.recentState?.2, self.recentState?.3)
@@ -227,7 +218,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
         )
     }
     
-    lazy var subcast3: SubCastObservable<State3> = .init { [weak self] changes, context in
+    lazy var subcast3: SubCastObservable<State3> = .init(retainer: contextRetainer) { [weak self] changes, context in
         guard let self = self else { return }
         let old = (self.recentState?.0, self.recentState?.1, changes.old, self.recentState?.3)
         let new = (self.recentState?.0, self.recentState?.1, changes.new, self.recentState?.3)
@@ -240,7 +231,7 @@ final class QuadCastObservable<State1, State2, State3, State4>
         )
     }
     
-    lazy var subcast4: SubCastObservable<State4> = .init { [weak self] changes, context in
+    lazy var subcast4: SubCastObservable<State4> = .init(retainer: contextRetainer) { [weak self] changes, context in
         guard let self = self else { return }
         let old = (self.recentState?.0, self.recentState?.1, self.recentState?.2, changes.old)
         let new = (self.recentState?.0, self.recentState?.1, self.recentState?.2, changes.new)
@@ -263,12 +254,22 @@ final class QuadCastObservable<State1, State2, State3, State4>
     }
     
     init(source1: Observable<State1>, source2: Observable<State2>,
-         source3: Observable<State3>, source4: Observable<State4>) {
+         source3: Observable<State3>, source4: Observable<State4>, retainer: ContextRetainer) {
         self.source1 = source1
         self.source2 = source2
         self.source3 = source3
         self.source4 = source4
-        super.init()
+        super.init(
+            retainer: retainer
+                .added(with: source1)
+                .added(with: source2)
+                .added(with: source3)
+                .added(with: source4)
+        )
+        source1.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
+        source2.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
+        source3.relayGroup.addToGroup(WeakRelayRetainer<State3>(wrapped: subcast3))
+        source4.relayGroup.addToGroup(WeakRelayRetainer<State4>(wrapped: subcast4))
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -277,25 +278,19 @@ final class QuadCastObservable<State1, State2, State3, State4>
         }
     }
     
-    override func retain<Child: StateRelay>(relay: Child) where RelayedState == Child.RelayedState {
-        super.retain(relay: relay)
-        source1?.relayGroup.addToGroup(subcast1)
-        source2?.relayGroup.addToGroup(subcast2)
-        source3?.relayGroup.addToGroup(subcast3)
-        source4?.relayGroup.addToGroup(subcast4)
+    override func retain(retainer: ContextRetainer) {
+        source1?.retain(retainer: retainer)
+        source2?.retain(retainer: retainer)
+        source3?.retain(retainer: retainer)
+        source4?.retain(retainer: retainer)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where RelayedState == Child.RelayedState {
-        super.retainWeakly(relay: relay, managedBy: retainer)
-        retainer.retain(self)
-        source1?.temporaryRetainer.discard(self)
-        source2?.temporaryRetainer.discard(self)
-        source3?.temporaryRetainer.discard(self)
-        source4?.temporaryRetainer.discard(self)
-        source1?.relayGroup.addToGroup(WeakRelayRetainer<State1>(wrapped: subcast1))
-        source2?.relayGroup.addToGroup(WeakRelayRetainer<State2>(wrapped: subcast2))
-        source3?.relayGroup.addToGroup(WeakRelayRetainer<State3>(wrapped: subcast3))
-        source4?.relayGroup.addToGroup(WeakRelayRetainer<State4>(wrapped: subcast4))
+    override func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
+        source1?.discard(child: child)
+        source2?.discard(child: child)
+        source3?.discard(child: child)
+        source4?.discard(child: child)
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {

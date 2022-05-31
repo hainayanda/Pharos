@@ -8,34 +8,36 @@
 import Foundation
 
 open class Observable<State>: ChangeObservable {
-    lazy var temporaryRetainer: Retainer = Retainer()
+    let contextRetainer: ContextRetainer
     lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
     var recentState: State? { nil }
     
-    public init() { }
+    init(retainer: ContextRetainer) {
+        self.contextRetainer = retainer
+    }
     
     open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
-        let observed = Observed(source: self) { changes, _ in
+        let observed = Observed(source: self, retainer: contextRetainer.added(with: self)) { changes, _ in
             work(changes)
         }
-        temporaryRetainer.retain(observed)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
         return observed
     }
     
     public func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
-        let observed = Observed(source: self) { [weak relay] changes, context in
+        let observed = Observed(source: self, retainer: contextRetainer.added(with: self)) { [weak relay] changes, context in
             guard let relay = relay else { return }
             relay.relay(changes: changes, context: context)
         }
-        temporaryRetainer.retain(observed)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
         return observed
     }
     
     // MARK: Mappable
     
     open func compactMapped<Mapped>(_ mapper: @escaping (State) throws -> Mapped?) -> Observable<Mapped> {
-        let observed = MappedObservable(source: self, mapper: mapper)
-        temporaryRetainer.retain(observed)
+        let observed = MappedObservable(source: self, retainer: contextRetainer.added(with: self), mapper: mapper)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
         return observed
         
     }
@@ -43,39 +45,27 @@ open class Observable<State>: ChangeObservable {
     // MARK: Filterable
     
     open func ignore(when shouldIgnore: @escaping (Changes<State>) -> Bool) -> Observable<State> {
-        let observed = FilteredObservable(source: self, filter: shouldIgnore)
-        temporaryRetainer.retain(observed)
+        let observed = FilteredObservable(source: self, retainer: contextRetainer.added(with: self), filter: shouldIgnore)
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
         return observed
     }
     
     // MARK: Combinable
     
     open func combine<State1>(with relay: Observable<State1>) -> Observable<(State?, State1?)> {
-        let observed = BiCastObservable(source1: self, source2: relay)
-        temporaryRetainer.retain(observed)
-        relay.temporaryRetainer.retain(observed)
-        return observed
+        BiCastObservable(source1: self, source2: relay, retainer: contextRetainer)
     }
     
     open func combine<State1, State2>(
         with relay1: Observable<State1>, _ relay2: Observable<State2>
     ) -> Observable<(State?, State1?, State2?)> {
-        let observed = TriCastObservable(source1: self, source2: relay1, source3: relay2)
-        temporaryRetainer.retain(observed)
-        relay1.temporaryRetainer.retain(observed)
-        relay2.temporaryRetainer.retain(observed)
-        return observed
+        TriCastObservable(source1: self, source2: relay1, source3: relay2, retainer: contextRetainer)
     }
     
     open func combine<State1, State2, State3>(
         with relay1: Observable<State1>, _ relay2: Observable<State2>, _ relay3: Observable<State3>
     ) -> Observable<(State?, State1?, State2?, State3?)> {
-        let observed = QuadCastObservable(source1: self, source2: relay1, source3: relay2, source4: relay3)
-        temporaryRetainer.retain(observed)
-        relay1.temporaryRetainer.retain(observed)
-        relay2.temporaryRetainer.retain(observed)
-        relay3.temporaryRetainer.retain(observed)
-        return observed
+        QuadCastObservable(source1: self, source2: relay1, source3: relay2, source4: relay3, retainer: contextRetainer)
     }
     
     // MARK: Mergable
@@ -83,23 +73,21 @@ open class Observable<State>: ChangeObservable {
     open func merge(with relays: Observable<State>...) -> Observable<State> {
         var merged = relays
         merged.insert(self, at: 0)
-        let observed = MergedObservable(observables: merged)
+        var retainer = contextRetainer
         for relay in merged {
-            relay.temporaryRetainer.retain(observed)
+            retainer = retainer.added(with: relay)
         }
-        return observed
+        return MergedObservable(observables: merged, retainer: retainer)
     }
     
     // MARK: Retain
     
-    func retain<Child: StateRelay>(relay: Child) where Child.RelayedState == State {
-        temporaryRetainer.discard(relay)
-        relayGroup.addToGroup(relay)
+    func retain(retainer: ContextRetainer) {
+        retainer.retained.remove(self)
+        self.contextRetainer.retained.append(retainer)
     }
     
-    func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Child.RelayedState == State {
-        temporaryRetainer.discard(relay)
-        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: relay))
-        retainer.retain(relay)
+    func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
     }
 }

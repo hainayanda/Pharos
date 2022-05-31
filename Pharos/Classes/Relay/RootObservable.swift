@@ -13,8 +13,8 @@ open class RootObservable<Observed>: Observable<Observed>, StateRelay {
     private var _recentValue: Observed?
     override var recentState: Observed? { _recentValue }
     
-    public override init() {
-        super.init()
+    public override init(retainer: ContextRetainer) {
+        super.init(retainer: retainer)
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -29,11 +29,11 @@ open class RootObservable<Observed>: Observable<Observed>, StateRelay {
     }
     
     public override func relayChanges(to relay: BindableObservable<State>) -> Pharos.Observed<Observed> {
-        let observed = Pharos.Observed(source: self) { [weak relay] changes, context in
+        let observed = Pharos.Observed(source: self, retainer: self.contextRetainer.added(with: self)) { [weak relay] changes, context in
             guard let relay = relay else { return }
             relay.relay(changes: changes, context: context)
         }
-        temporaryRetainer.retain(observed)
+        relayGroup.addToGroup(WeakRelayRetainer<Observed>(wrapped: observed))
         return observed
     }
 }

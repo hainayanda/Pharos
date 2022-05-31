@@ -22,11 +22,11 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
         return recent
     }
     
-    init(observables: [Observable<Observed>]) {
+    init(observables: [Observable<Observed>], retainer: ContextRetainer) {
         sources = observables.map { WeakObservableRetainer(wrapped: $0) }
-        super.init()
-        for observable in observables {
-            temporaryRetainer.retain(observable)
+        super.init(retainer: retainer)
+        observables.forEach {
+            $0.relayGroup.addToGroup(WeakRelayRetainer<Observed>(wrapped: self))
         }
     }
     
@@ -41,19 +41,16 @@ final class MergedObservable<Observed>: Observable<Observed>, StateRelay {
         }
     }
     
-    override func retain<Child>(relay: Child) where Observed == Child.RelayedState, Child : StateRelay {
-        super.retain(relay: relay)
+    override func retain(retainer: ContextRetainer) {
         for source in sources {
-            temporaryRetainer.discard(source)
-            source.wrapped?.retain(relay: self)
+            source.wrapped?.retain(retainer: retainer)
         }
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Observed == Child.RelayedState {
-        super.retainWeakly(relay: relay, managedBy: retainer)
+    override func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
         for source in sources {
-            temporaryRetainer.discard(source)
-            source.wrapped?.retainWeakly(relay: self, managedBy: retainer)
+            source.wrapped?.discard(child: child)
         }
     }
     

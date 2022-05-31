@@ -25,6 +25,7 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     var preferAsync: Bool = false
     var delay: TimeInterval?
     var shouldDiscardSelf: (Changes<State>) -> Bool = { _ in false }
+    let contextRetainer: ContextRetainer
     
     @Atomic var status: RelayOperationStatus = .idle {
         didSet {
@@ -47,9 +48,10 @@ open class Observed<State>: ObservedSubject, ChildObservable {
         }
     }
     
-    init(source: Observable<State>, observer: @escaping Observer) {
+    init(source: Observable<State>, retainer: ContextRetainer, observer: @escaping Observer) {
         self.source = source
         self.observer = observer
+        self.contextRetainer = retainer
     }
     
     open func multipleSetDelayed(by delay: TimeInterval) -> Self {
@@ -69,13 +71,13 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     
     @discardableResult
     open func retain() -> Invokable {
-        source?.retain(relay: self)
+        source?.retain(retainer: self.contextRetainer.added(with: self))
         return RelayInvoker(relay: self)
     }
     
     @discardableResult
     open func retained(by retainer: ObjectRetainer) -> Invokable {
-        source?.retainWeakly(relay: self, managedBy: retainer)
+        retainer.retain(self.contextRetainer.added(with: self))
         return RelayInvoker(relay: self)
     }
     
@@ -96,8 +98,9 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     }
     
     func discardSelf() {
-        self.source?.temporaryRetainer.discard(self)
-        self.source?.relayGroup.remove(self)
+        contextRetainer.discard(object: self)
+        self.source?.discard(child: self)
+        self.status = .discarded
     }
 }
 

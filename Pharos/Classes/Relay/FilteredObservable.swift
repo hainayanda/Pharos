@@ -25,9 +25,10 @@ final class FilteredObservable<Observed>: Observable<Observed>, StateRelay, Chil
     
     let filter: Filter
     
-    init(source: Observable<Observed>, filter: @escaping Filter) {
+    init(source: Observable<Observed>, retainer: ContextRetainer, filter: @escaping Filter) {
         self.source = source
         self.filter = filter
+        super.init(retainer: retainer)
     }
     
     func relay(changes: Changes<RelayedState>, context: PharosContext) {
@@ -39,14 +40,13 @@ final class FilteredObservable<Observed>: Observable<Observed>, StateRelay, Chil
         }
     }
     
-    override func retain<Child>(relay: Child) where Observed == Child.RelayedState, Child : StateRelay {
-        super.retain(relay: relay)
-        source?.retain(relay: self)
+    override func retain(retainer: ContextRetainer) {
+        source?.retain(retainer: retainer)
     }
     
-    override func retainWeakly<Child: StateRelay>(relay: Child, managedBy retainer: ObjectRetainer) where Observed == Child.RelayedState {
-        super.retainWeakly(relay: relay, managedBy: retainer)
-        source?.retainWeakly(relay: self, managedBy: retainer)
+    override func discard(child: AnyObject) {
+        contextRetainer.discard(object: child)
+        source?.discard(child: child)
     }
     
     func isSameRelay(with anotherRelay: AnyStateRelay) -> Bool {
