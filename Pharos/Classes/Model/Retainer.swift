@@ -7,6 +7,37 @@
 
 import Foundation
 
+public class ContextRetainer {
+    var retained: [ObjectIdentifier: AnyObject]
+    
+    public init(retained: [ObjectIdentifier: AnyObject]) {
+        self.retained = retained
+    }
+    
+    public init(root: AnyObject) {
+        retained = [ObjectIdentifier(root): root]
+    }
+    
+    public init() {
+        retained = [:]
+    }
+    
+    public func added(with object: AnyObject) -> ContextRetainer {
+        let newSelf = ContextRetainer(retained: retained)
+        newSelf.retained.append(object)
+        return newSelf
+    }
+    
+    public func discard(object: AnyObject) {
+        retained.remove(object)
+        for (_, object) in retained {
+            if let retainer = object as? ContextRetainer {
+                retainer.discard(object: object)
+            }
+        }
+    }
+}
+
 final public class Retainer: ObjectRetainer {
     
     @Atomic var retained: [ObjectIdentifier: AnyObject] = [:]
