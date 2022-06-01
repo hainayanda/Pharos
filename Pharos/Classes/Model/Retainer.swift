@@ -15,12 +15,14 @@ final public class ContextRetainer {
         self.retained = retained
     }
     
-    public init(root: AnyObject) {
-        retained = [ObjectIdentifier(root): root]
-    }
-    
     public init() {
         retained = [:]
+    }
+    
+    public func add(retainer: ContextRetainer) {
+        retainer.retained.forEach { (key, object) in
+            retained[key] = object
+        }
     }
     
     public func added(with object: AnyObject) -> ContextRetainer {
@@ -31,11 +33,6 @@ final public class ContextRetainer {
     
     public func discard(object: AnyObject) {
         retained.remove(object)
-        for (_, object) in retained {
-            if let retainer = object as? ContextRetainer {
-                retainer.discard(object: object)
-            }
-        }
     }
 }
 
