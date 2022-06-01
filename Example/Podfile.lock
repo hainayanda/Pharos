@@ -1,6 +1,8 @@
 PODS:
+  - Chary (1.0.1)
   - Nimble (10.0.0)
-  - Pharos (2.1.0)
+  - Pharos (2.2.2):
+    - Chary (~> 1.0.1)
   - Quick (5.0.1)
 
 DEPENDENCIES:
@@ -10,6 +12,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Chary
     - Nimble
     - Quick
 
@@ -18,8 +21,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  Chary: d776f18c773a8193988deaff7da4e0321c3555a7
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  Pharos: 42d15ba3c52f1ebe59d618e187382605cd243c3b
+  Pharos: 2463b80d8d79b62b940c274360d19bf91bfafc23
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
 
 PODFILE CHECKSUM: a197f19dd7f1889cac91733b328749546ef511f0

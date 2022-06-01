@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Chary
 
 enum RelayOperationStatus {
     case discarded
@@ -22,7 +23,11 @@ open class Observed<State>: ObservedSubject, ChildObservable {
     weak var source: Observable<State>?
     var parent: AnyObject? { (source as? ChildObservable)?.parent ?? source }
     
-    var queue: DispatchQueue?
+    var queue: DispatchQueue? {
+        didSet {
+            queue?.registerDetection()
+        }
+    }
     var preferAsync: Bool = false
     var delay: TimeInterval?
     var shouldDiscardSelf: (Changes<State>) -> Bool = { _ in false }
@@ -163,7 +168,7 @@ extension Observed: StateRelay {
             observer(changes, context)
             return
         }
-        queue.asyncIfInDifferentQueue {
+        queue.asyncIfNeeded {
             observer(changes, context)
         }
     }

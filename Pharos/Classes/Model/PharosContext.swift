@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Chary
 
 public final class PharosContext {
     @Atomic var notifiedRelay: [ObjectIdentifier: AnyStateRelay] = [:]
