@@ -438,6 +438,22 @@ class MyClass {
 }
 ```
 
+## Observable Block
+
+You can always create `Observable` from code block by using `ObservableBlock`:
+
+```swift
+let myObservableFromBlock = ObservableBlock { accept in
+    runSomethingAsync { result in
+        accept(result)
+    }
+}
+
+myObservableFromBlock.whenDidSet { changes in
+    print(changes)
+}.retain()
+```
+
 ## Relay value to another Observable
 
 You can relay value from any Observable to another Observable as long as the type is the same and the other observable is `BindableObservable`:
