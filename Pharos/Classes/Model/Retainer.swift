@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Chary
 
 final public class ContextRetainer {
     var retained: [ObjectIdentifier: AnyObject]
