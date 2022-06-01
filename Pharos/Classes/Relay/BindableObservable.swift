@@ -20,9 +20,16 @@ open class BindableObservable<State>: RootObservable<State> {
     }
     
     open func bind(with relay: BindableObservable<State>) -> Observed<State> {
-        let myRelay = relayChanges(to: relay)
         let theirRelay = relay.relayChanges(to: self)
-        myRelay.contextRetainer.retained.append(theirRelay)
+        let myRelay = Observed(
+            source: self,
+            retainer: self.contextRetainer.added(with: theirRelay).added(with: self)
+        ) {
+            [weak relay] changes, context in
+            guard let relay = relay else { return }
+            relay.relay(changes: changes, context: context)
+        }
+        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: myRelay))
         return myRelay
     }
     
