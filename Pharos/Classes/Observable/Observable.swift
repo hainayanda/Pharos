@@ -84,7 +84,7 @@ open class Observable<State>: ChangeObservable {
     
     func retain(retainer: ContextRetainer) {
         retainer.retained.remove(self)
-        self.contextRetainer.retained.append(retainer)
+        self.contextRetainer.add(retainer: retainer)
     }
     
     func discard(child: AnyObject) {
