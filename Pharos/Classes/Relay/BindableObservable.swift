@@ -34,8 +34,8 @@ open class BindableObservable<State>: RootObservable<State> {
     }
     
     override func relay(changes: Changes<State>, context: PharosContext) {
-        superRelay(changes, context)
         callCallback(changes)
+        superRelay(changes, context)
     }
     
     public override func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {

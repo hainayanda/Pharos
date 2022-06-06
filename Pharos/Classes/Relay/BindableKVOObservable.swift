@@ -46,8 +46,8 @@ final class BindableKVOObservable<Object: NSObject, Observed>: BindableObservabl
             super.superRelay(changes, context)
             self.recentSource = .none
         case .external:
-            super.superRelay(changes, context)
             super.callCallback(changes)
+            super.superRelay(changes, context)
         case .none:
             return
         }
