@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="256" height="256" src="Pharos.png"/>
+</p>
+
 # Pharos
 
 Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming. Under the hood, it utilize [Chary](https://github.com/hainayanda/Chary) as DispatchQueue utilities
