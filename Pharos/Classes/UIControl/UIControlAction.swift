@@ -7,6 +7,7 @@
 
 import Foundation
 #if canImport(UIKit)
+import UIKit
 
 class UIControlAction: NSObject {
     @UIControlSubject var lastEvent: UIControl.Event = .allEvents
