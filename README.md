@@ -244,6 +244,24 @@ class MyClass {
 }
 ```
 
+## UIControl
+
+You can observe event in `UIControl` as long as in iOS by call `whenDetectEvent`, or by using `whenDidTriggered(by:)` if you want to observe specific event or for more specific `whenDidTapped` for touchUpInside event:
+
+```swift
+myButton.whenDetectEvent { changes in
+  print("new event: \(changes.new) form old event: \(changes.old)")
+}.retain()
+
+myButton.whenDidTriggered(by: .touchDown) { _ in
+  print("someone touch down on this button")
+}.retain()
+
+myButton.whenDidTapped { _ in
+  print("someone touch up on this button")
+}.retain()
+```
+
 ## Bindable
 
 You can observe changes in supported `UIView` property by accessing its observables in `bindables`:
