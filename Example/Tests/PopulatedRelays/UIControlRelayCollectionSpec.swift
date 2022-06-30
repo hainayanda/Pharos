@@ -41,6 +41,56 @@ class UIControlRelayCollectionSpec: QuickSpec {
                     keyPath: \.isHighlighted
                 )
             }
+            it("should trigerred by event") {
+                var eventCount: Int = 0
+                var lastEvent: UIControl.Event?
+                view.whenDetectEvent {
+                    lastEvent = $0.new
+                    eventCount += 1
+                }.retain()
+                for (offset, event) in uiControlEvents.enumerated() {
+                    view.simulateEvent(event)
+                    expect(lastEvent).to(equal(event))
+                    expect(eventCount).to(equal(offset + 1))
+                }
+            }
+            it("should trigerred by tap") {
+                var eventCount: Int = 0
+                var lastEvent: UIControl.Event?
+                view.whenDidTapped {
+                    lastEvent = $0.new
+                    eventCount += 1
+                }.retain()
+                for event in uiControlEvents {
+                    view.simulateEvent(event)
+                    if event == .touchUpInside {
+                        expect(lastEvent).to(equal(.touchUpInside))
+                        expect(eventCount).to(equal(1))
+                    }
+                }
+                expect(eventCount).to(equal(1))
+            }
+        }
+    }
+}
+
+var uiControlEvents: [UIControl.Event] = [
+    .touchDown, .touchDownRepeat, .touchDragInside,
+    .touchDragOutside, .touchDragEnter, .touchDragExit,
+    .touchUpInside, .touchUpOutside, .touchCancel,
+    .valueChanged, .primaryActionTriggered, .editingDidBegin,
+    .editingChanged, .editingDidEnd, .editingDidEndOnExit
+]
+
+extension UIControl {
+    
+    func simulateEvent(_ event: UIControl.Event) {
+        for target in allTargets {
+            let target = target as NSObjectProtocol
+            for actionName in actions(forTarget: target, forControlEvent: event) ?? [] {
+                let selector = Selector(actionName)
+                target.perform(selector, with: self, with: event)
+            }
         }
     }
 }
