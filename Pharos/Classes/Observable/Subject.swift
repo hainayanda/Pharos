@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-public final class Subject<Wrapped>: BindableObservable<Wrapped> {
+public class Subject<Wrapped>: BindableObservable<Wrapped> {
     
     var _wrappedValue: Wrapped
     public var wrappedValue: Wrapped {

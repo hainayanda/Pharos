@@ -125,6 +125,9 @@
 		B93F3526A95D7F43EEBFEE5E453E4795 /* BeLessThan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D231BA828C6FFF76B52A9A60E4DB626 /* BeLessThan.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BA124B41AFBDD366F9962D08CB8FAD6A /* MulticastObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8117C6651B91CF213B6723841B7C7D4A /* MulticastObservable.swift */; };
 		BB077C162847BC3D00F83A76 /* ObservableBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB077C152847BC3D00F83A76 /* ObservableBlock.swift */; };
+		BB9C386F286D9D4F00C5548C /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C386E286D9D4F00C5548C /* UIControl+Extensions.swift */; };
+		BB9C3871286DB16400C5548C /* UIControlSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C3870286DB16400C5548C /* UIControlSubject.swift */; };
+		BB9C3873286DB19100C5548C /* UIControlAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C3872286DB19100C5548C /* UIControlAction.swift */; };
 		BD3ABAC28025564DCF2E6C12009435DF /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A1050D0A15E1085C4720F3EF7223F2F2 /* CwlMachBadInstructionHandler.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BF62525E5628A9F7604BA8479691318C /* BeLogical.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3EE749588F41E02FB974730BC4893E /* BeLogical.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BFB3326F3FB9B74A66EE567DEC0941C1 /* Chary-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 436D7EBBBCA411E9ADB0986578B8B1A7 /* Chary-dummy.m */; };
@@ -342,6 +345,9 @@
 		BAE263041362D074978BB3B577DF0A05 /* Nimble */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nimble; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF6684E2A88497CFD679D8CB1B8B2F9 /* Nimble-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-prefix.pch"; sourceTree = "<group>"; };
 		BB077C152847BC3D00F83A76 /* ObservableBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableBlock.swift; sourceTree = "<group>"; };
+		BB9C386E286D9D4F00C5548C /* UIControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
+		BB9C3870286DB16400C5548C /* UIControlSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlSubject.swift; sourceTree = "<group>"; };
+		BB9C3872286DB19100C5548C /* UIControlAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlAction.swift; sourceTree = "<group>"; };
 		BC4270E252548DD6EDB17B10FA8B0F4E /* QCKDSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QCKDSL.h; path = Sources/QuickObjectiveC/DSL/QCKDSL.h; sourceTree = "<group>"; };
 		BCB71FF88004D6FB9D3520F18A97259B /* CwlMachBadInstructionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CwlMachBadInstructionHandler.h; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/include/CwlMachBadInstructionHandler.h; sourceTree = "<group>"; };
 		BCDE97CAC52383C07AF3FB9A99489893 /* ToSucceed.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToSucceed.swift; path = Sources/Nimble/Matchers/ToSucceed.swift; sourceTree = "<group>"; };
@@ -548,6 +554,7 @@
 		679DEFDA076BEAE4831999A91E6AEC95 /* Pharos */ = {
 			isa = PBXGroup;
 			children = (
+				BB9C386D286D9D2E00C5548C /* UIControl */,
 				FB5930C6CAFC2AB866E113D9C6FC3F23 /* Model */,
 				A30A0134F6F13386050A6CBB24305106 /* Observable */,
 				6242BBC4F601C2E1F5ED5C5E4E852CEA /* Pod */,
@@ -697,6 +704,16 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Nimble";
+			sourceTree = "<group>";
+		};
+		BB9C386D286D9D2E00C5548C /* UIControl */ = {
+			isa = PBXGroup;
+			children = (
+				BB9C386E286D9D4F00C5548C /* UIControl+Extensions.swift */,
+				BB9C3870286DB16400C5548C /* UIControlSubject.swift */,
+				BB9C3872286DB19100C5548C /* UIControlAction.swift */,
+			);
+			path = UIControl;
 			sourceTree = "<group>";
 		};
 		C64487E1F065ABD72E4F6785A6B43125 /* Development Pods */ = {
@@ -1071,7 +1088,9 @@
 				893A73D0F7003D2ED7FD6B29410B1F2E /* BindableCollection+UIStepper.swift in Sources */,
 				7849CB03AD321DB6419324E26320BB42 /* BindableCollection+UISwitch.swift in Sources */,
 				094292F7B00776F52D4F9AACF023B241 /* BindableCollection+UITableView.swift in Sources */,
+				BB9C3873286DB19100C5548C /* UIControlAction.swift in Sources */,
 				BB077C162847BC3D00F83A76 /* ObservableBlock.swift in Sources */,
+				BB9C3871286DB16400C5548C /* UIControlSubject.swift in Sources */,
 				334234D24F2163566CF51EF71B9D1232 /* BindableCollection+UIView.swift in Sources */,
 				9BEE4E6B69D3A31BC3BD0FAD59D0CF10 /* BindableCollectionCellView.swift in Sources */,
 				FB05969B7691111326EF1680D502C9E0 /* BindableKVOObservable.swift in Sources */,
@@ -1085,6 +1104,7 @@
 				41A7EB60BA803228436F68C5F662F2A1 /* ObjectRetainer.swift in Sources */,
 				7C6AE1390ABA2BB089B2F3CEB9D2DE7E /* Observable.swift in Sources */,
 				7C1E4386559B1AEBC70579F2BF4BAF74 /* Observed.swift in Sources */,
+				BB9C386F286D9D4F00C5548C /* UIControl+Extensions.swift in Sources */,
 				4ED71C2666F06EA8E5D624804B4DD1A0 /* Pharos-dummy.m in Sources */,
 				236FB881AD10B4673699A270E307F4F3 /* PharosContext.swift in Sources */,
 				328CA9D1707741EB0902CE3082B83890 /* PopulatedRelays.swift in Sources */,
