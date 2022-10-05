@@ -20,7 +20,7 @@ extension MappableObservable where Self: ObservableProtocol, Self: ObserverParen
         succeeding(with: MappedObservable<Output, Mapped>(parent: self, mapper))
     }
     
-    public func mapped<Mapped>(_ mapper: @escaping (Output) -> Mapped) -> Observable<Mapped> {
+    @inlinable public func mapped<Mapped>(_ mapper: @escaping (Output) -> Mapped) -> Observable<Mapped> {
         compactMapped(mapper)
     }
 }
@@ -31,7 +31,7 @@ public protocol UnwrappableOptional {
 
 extension Optional: UnwrappableOptional {
     // swiftlint:disable:next syntactic_sugar
-    public func unwrap() -> Optional<Wrapped>? {
+    @inlinable public func unwrap() -> Optional<Wrapped>? {
         switch self {
         case .none:
             return nil
@@ -42,14 +42,14 @@ extension Optional: UnwrappableOptional {
 }
 
 extension MappableObservable where Output: UnwrappableOptional {
-    public func compact() -> Observable<Output> {
+    @inlinable public func compacted() -> Observable<Output> {
         compactMapped { $0.unwrap() }
     }
 }
 
 extension Observable: MappableObservable { }
 
-class MappedObservable<Input, Output>: SucceederObservable<Input, Output> {
+final class MappedObservable<Input, Output>: SucceederObservable<Input, Output> {
     
     let mapper: (Input) -> Output?
     
@@ -57,20 +57,20 @@ class MappedObservable<Input, Output>: SucceederObservable<Input, Output> {
         guard let unMapped = (parent as? Observable<Input>)?.recentState else { return nil }
         return mapper(unMapped)
     }()
-    override var recentState: Output? { _recentState }
+    @inlinable override var recentState: Output? { _recentState }
     
-    init(parent: ObserverParent, _ mapper: @escaping (Input) -> Output?) {
+    @inlinable init(parent: ObserverParent, _ mapper: @escaping (Input) -> Output?) {
         self.mapper = mapper
         super.init(parent: parent)
     }
     
-    override func accept(changes: Changes<Input>) {
+    @inlinable override func accept(changes: Changes<Input>) {
         guard let mapped = tryMap(changes: changes) else { return }
         super.sendIfNeeded(for: mapped)
         _recentState = mapped.new
     }
     
-    func tryMap(changes: Changes<Input>) -> Changes<Output>? {
+    @inlinable func tryMap(changes: Changes<Input>) -> Changes<Output>? {
         guard let newValue = mapper(changes.new) else {
             return nil
         }

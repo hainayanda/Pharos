@@ -7,22 +7,22 @@
 
 import Foundation
 
-class KVOObservable<Object: NSObject, Property>: Observable<Property> {
+final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
     weak var object: Object?
     let keyPath: KeyPath<Object, Property>
     var retainedContext: NSKeyValueObservation?
     var latestState: Property?
     var latestKeyPathSet: Changes<Property>?
-    override var recentState: Property? { object?[keyPath: keyPath] }
+    @inlinable override var recentState: Property? { object?[keyPath: keyPath] }
     
-    init(_ object: Object, _ keyPath: KeyPath<Object, Property>) {
+    @inlinable init(_ object: Object, _ keyPath: KeyPath<Object, Property>) {
         self.object = object
         self.keyPath = keyPath
         super.init()
         nsObjectObserve(object, keyPath)
     }
     
-    func nsObjectObserve(_ object: Object, _ keyPath: KeyPath<Object, Property>) {
+    @inlinable func nsObjectObserve(_ object: Object, _ keyPath: KeyPath<Object, Property>) {
 #if canImport(UIKit)
         if let field = object as? UITextInput,
            keyPath == \UITextView.text || keyPath == \UITextField.text {
@@ -34,7 +34,7 @@ class KVOObservable<Object: NSObject, Property>: Observable<Property> {
         observeChange(object: object, keyPath)
     }
     
-    func observeChange(object: Object, _ keyPath: KeyPath<Object, Property>) {
+    @inlinable func observeChange(object: Object, _ keyPath: KeyPath<Object, Property>) {
         self.retainedContext = object.observe(keyPath, options: [.old, .new]) { [weak self] _, kvoChanges in
             guard let self = self else { return }
             guard let newValue = kvoChanges.newValue else { return }
@@ -46,7 +46,7 @@ class KVOObservable<Object: NSObject, Property>: Observable<Property> {
     }
     
     @discardableResult
-    override func sendIfNeeded(for changes: Changes<Property>) -> Bool {
+    @inlinable override func sendIfNeeded(for changes: Changes<Property>) -> Bool {
         guard super.sendIfNeeded(for: changes) else { return false }
         guard let writableKeypath = keyPath as? WritableKeyPath<Object, Property> else {
             return true
@@ -57,7 +57,7 @@ class KVOObservable<Object: NSObject, Property>: Observable<Property> {
     }
     
 #if canImport(UIKit)
-    func observeText(of textInput: UITextInput) {
+    @inlinable func observeText(of textInput: UITextInput) {
         let notificationName: NSNotification.Name = textInput is UITextField ?
         UITextField.textDidChangeNotification : UITextView.textDidChangeNotification
         if let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
@@ -72,7 +72,7 @@ class KVOObservable<Object: NSObject, Property>: Observable<Property> {
         )
     }
     
-    @objc func textNotification(_ notification: Notification) {
+    @objc @inlinable func textNotification(_ notification: Notification) {
         guard let textInput = notification.object as? UITextInput,
               let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
               let new = textInput.text(in: textRange) as? Property else {
@@ -95,7 +95,7 @@ class KVOObservable<Object: NSObject, Property>: Observable<Property> {
 #if canImport(UIKit)
 extension UISearchBar {
     
-    var textField: UITextField {
+    @inlinable var textField: UITextField {
         if #available(iOS 13, *) {
             return searchTextField
         } else {

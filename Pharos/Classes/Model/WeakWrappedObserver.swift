@@ -7,16 +7,16 @@
 
 import Foundation
 
-class WeakWrappedObserver<Input>: Observing {
+final class WeakWrappedObserver<Input>: Observing {
     
     weak var wrapped: Observed<Input>?
-    var valid: Bool { wrapped != nil }
+    @inlinable var valid: Bool { wrapped != nil }
     
-    init(wrapped: Observed<Input>) {
+    @inlinable init(wrapped: Observed<Input>) {
         self.wrapped = wrapped
     }
     
-    func accept(changes: Changes<Input>) {
+    @inlinable func accept(changes: Changes<Input>) {
         wrapped?.accept(changes: changes)
     }
 }

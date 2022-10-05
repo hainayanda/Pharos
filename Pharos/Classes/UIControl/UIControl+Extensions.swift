@@ -12,7 +12,7 @@ import UIKit
 var controlActionAssociatedKey: String = "controlActionAssociatedKey"
 
 extension UIControl.Event: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    @inlinable public func hash(into hasher: inout Hasher) {
         hasher.combine(self.rawValue)
     }
 }
@@ -60,7 +60,7 @@ extension UIControl {
         }
     }
     
-    var allEvents: [UIControl.Event] {
+    @inlinable var allEvents: [UIControl.Event] {
         if #available(iOS 14.0, *) {
             return [
                 .touchDown,
@@ -101,7 +101,7 @@ extension UIControl {
         }
     }
     
-    var allTouchEvents: [UIControl.Event] {
+    @inlinable var allTouchEvents: [UIControl.Event] {
         [
             .touchDown,
             .touchDownRepeat,
@@ -115,7 +115,7 @@ extension UIControl {
         ]
     }
     
-    var allEditingEvents: [UIControl.Event] {
+    @inlinable var allEditingEvents: [UIControl.Event] {
         [
             .editingDidBegin,
             .editingChanged,
@@ -128,7 +128,7 @@ extension UIControl {
 extension UIControl {
     
     @available(*, deprecated, renamed: "observeChange")
-    public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    @inlinable public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
         observeEventChange(work)
     }
     
@@ -152,7 +152,7 @@ extension UIControl {
         }.observeChange(work)
     }
     
-    public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    @inlinable public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
         whenDidTriggered(by: .touchUpInside, thenDo: work)
     }
     

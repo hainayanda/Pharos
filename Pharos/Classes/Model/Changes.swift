@@ -44,19 +44,19 @@ extension Changes: Equatable where State: Equatable {
     public var isChanging: Bool { new == old }
     public var isNotChanging: Bool { !isChanging }
     
-    public static func == (lhs: Changes<State>, rhs: Changes<State>) -> Bool {
+    @inlinable public static func == (lhs: Changes<State>, rhs: Changes<State>) -> Bool {
         lhs.new == rhs.new && lhs.old == rhs.old
     }
 }
 
 extension Changes: Hashable where State: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    @inlinable public func hash(into hasher: inout Hasher) {
         hasher.combine(new)
         hasher.combine(old)
     }
 }
 
-public extension Changes where State: AnyObject {
-    var isSameInstance: Bool { new === old }
-    var isNewInstance: Bool { !isSameInstance }
+extension Changes where State: AnyObject {
+    @inlinable public var isSameInstance: Bool { new === old }
+    @inlinable public var isNewInstance: Bool { !isSameInstance }
 }

@@ -18,7 +18,7 @@ open class SucceederObservable<Input, Output>: Observable<Output>, ObservingObse
         self.parent = parent
     }
     
-    open func accept(changes: Changes<Input>) { }
+    @inlinable open func accept(changes: Changes<Input>) { }
     
     open override func fire() {
         parent?.fire()

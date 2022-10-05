@@ -7,12 +7,12 @@
 
 import Foundation
 
-class MergedObservable<Output>: Observable<Output> {
+final class MergedObservable<Output>: Observable<Output> {
     
     private var _recentState: Output?
-    override var recentState: Output? { _recentState }
+    @inlinable override var recentState: Output? { _recentState }
     
-    init(merged: [Observable<Output>]) {
+    @inlinable init(merged: [Observable<Output>]) {
         super.init()
         merged.forEach {
             $0.relayChanges(to: self).retain()
@@ -20,14 +20,14 @@ class MergedObservable<Output>: Observable<Output> {
         }
     }
     
-    override func send(changes: Changes<Output>) {
+    @inlinable override func send(changes: Changes<Output>) {
         super.send(changes: changes.with(old: recentState ?? changes.old))
         _recentState = changes.new
     }
 }
 
 extension Observable {
-    public func merged(with others: Observable<Output>...) -> Observable<Output> {
+    @inlinable public func merged(with others: Observable<Output>...) -> Observable<Output> {
         merged(with: others)
     }
     
@@ -39,7 +39,7 @@ extension Observable {
     }
     
     @available(*, deprecated, renamed: "merged")
-    public func merge(with others: Observable<Output>...) -> Observable<Output> {
+    @inlinable public func merge(with others: Observable<Output>...) -> Observable<Output> {
         merged(with: others)
     }
 }

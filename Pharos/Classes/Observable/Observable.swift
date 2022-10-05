@@ -10,7 +10,7 @@ import Foundation
 open class Observable<Output>: ObservableProtocol, ObserverParent {
     
     var observers: [WeakWrappedObserver<Output>] = []
-    public var recentState: Output? { return nil }
+    @inlinable public var recentState: Output? { return nil }
     
     open func observeChange(_ observer: @escaping (Changes<Output>) -> Void) -> Observed<Output> {
         let retainableListener = Observed(source: self) { changes in
@@ -50,5 +50,5 @@ open class Observable<Output>: ObservableProtocol, ObserverParent {
         return relayChanges(to: otherBox)
     }
     
-    open func fire() { }
+    @inlinable open func fire() { }
 }

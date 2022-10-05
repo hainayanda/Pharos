@@ -7,14 +7,14 @@
 
 import Foundation
 
-class ObservableBlock<Output>: Observable<Output> {
+public final class ObservableBlock<Output>: Observable<Output> {
     
-    typealias Acceptor = (Output) -> Void
+    public typealias Acceptor = (Output) -> Void
     
     private var _recentState: Output?
-    override var recentState: Output? { _recentState }
+    public override var recentState: Output? { _recentState }
     
-    init(_ block: @escaping (Acceptor) -> Void) {
+    public init(_ block: @escaping (Acceptor) -> Void) {
         super.init()
         block({ [weak self] output in
             guard let self = self else { return }

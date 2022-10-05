@@ -8,11 +8,11 @@
 import Foundation
 
 public protocol AnyObservable {
-    func toAnyObservable() -> Observable<Any>
+    func typeErasedObservable() -> Observable<Any>
 }
 
 extension AnyObservable where Self: MappableObservable {
-    public func toAnyObservable() -> Observable<Any> {
+    @inlinable public func typeErasedObservable() -> Observable<Any> {
         mapped { $0 }
     }
 }
@@ -25,11 +25,11 @@ public protocol ObservableProtocol: AnyObservable {
 
 public extension ObservableProtocol {
     @available(*, deprecated, renamed: "observeChange")
-    func whenDidSet(thenDo work: @escaping (Changes<Output>) -> Void) -> Observed<Output> {
+    @inlinable func whenDidSet(thenDo work: @escaping (Changes<Output>) -> Void) -> Observed<Output> {
         observeChange(work)
     }
     
-    func observe(_ observer: @escaping (Output) -> Void) -> Observed<Output> {
+    @inlinable func observe(_ observer: @escaping (Output) -> Void) -> Observed<Output> {
         observeChange { changes in
             observer(changes.new)
         }

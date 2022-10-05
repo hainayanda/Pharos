@@ -411,6 +411,40 @@ class MyClass {
 }
 ```
 
+If you want the queue only used by the last subscriber, use `observeOn` instead:
+
+```swift
+class MyClass {
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.observeChange { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+            .observeOn(.main)
+            .retain()
+    }
+}
+```
+
+To make sure it always run asynchronously:
+
+```swift
+class MyClass {
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.observeChange { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+            .observeOn(.main, asynchronously: true)
+            .retain()
+    }
+}
+```
+
 ## Mapping Value
 
 You could map the value from your `Subject` to another type by using mapping. Mapping will create a new Observable with mapped type:

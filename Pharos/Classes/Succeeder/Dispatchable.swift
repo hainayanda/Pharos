@@ -19,29 +19,29 @@ extension DispatchableObservable where Self: ObservableProtocol, Self: ObserverP
         succeeding(with: DispatchedObservable(parent: self, queue: queue, preferSync: syncPrefered))
     }
     
-    public func dispatchOnMain(preferSync: Bool = true) -> Observable<Output> {
+    @inlinable public func dispatchOnMain(preferSync: Bool = true) -> Observable<Output> {
         dispatch(on: .main, syncPrefered: preferSync)
     }
     
-    public func dispatchInBackground() -> Observable<Output> {
+    @inlinable public func dispatchInBackground() -> Observable<Output> {
         dispatch(on: .global(qos: .background), syncPrefered: false)
     }
 }
 
 extension Observable: DispatchableObservable { }
 
-class DispatchedObservable<Output>: SucceederObservable<Output, Output> {
+final class DispatchedObservable<Output>: SucceederObservable<Output, Output> {
     
     let preferSync: Bool
     let queue: DispatchQueue
     
-    init(parent: ObserverParent, queue: DispatchQueue, preferSync: Bool) {
+    @inlinable init(parent: ObserverParent, queue: DispatchQueue, preferSync: Bool) {
         self.queue = queue
         self.preferSync = preferSync
         super.init(parent: parent)
     }
     
-    override func accept(changes: Changes<Output>) {
+    @inlinable override func accept(changes: Changes<Output>) {
         let work = DispatchWorkItem { [weak self] in
             self?.sendIfNeeded(for: changes)
         }

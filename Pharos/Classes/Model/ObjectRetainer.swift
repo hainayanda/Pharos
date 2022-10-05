@@ -39,11 +39,11 @@ extension ObjectRetainer {
     }
     
     @available(*, deprecated, renamed: "discardAll")
-    public func discardAllRetained() {
+    @inlinable public func discardAllRetained() {
         discardAll()
     }
 }
 
-public class Retainer: ObjectRetainer {
+public final class Retainer: ObjectRetainer {
     public init() { }
 }

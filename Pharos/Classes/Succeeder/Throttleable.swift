@@ -7,6 +7,9 @@
 
 import Foundation
 import Chary
+#if canImport(UIKit)
+import UIKit
+#endif
 
 public protocol ThrottleableObservable: Invokable {
     associatedtype Output
@@ -19,15 +22,17 @@ extension ThrottleableObservable where Self: ObservableProtocol, Self: ObserverP
         succeeding(with: ThrottledObservable(parent: self, minimumInterval: minimumInterval))
     }
     
-    public func smoothThrottled() -> Observable<Output> {
+#if canImport(UIKit)
+    @inlinable public func smoothThrottled() -> Observable<Output> {
         let frequency = Double(UIScreen.main.maximumFramesPerSecond) * 2
         return throttled(by: 1/frequency)
     }
+#endif
 }
 
 extension Observable: ThrottleableObservable { }
 
-class ThrottledObservable<Output>: SucceederObservable<Output, Output> {
+final class ThrottledObservable<Output>: SucceederObservable<Output, Output> {
     
     let interval: TimeInterval
     lazy var syncQueue = DispatchQueue(label: UUID().uuidString)
@@ -35,16 +40,16 @@ class ThrottledObservable<Output>: SucceederObservable<Output, Output> {
     @Atomic var throttleTime: Date = .distantPast
     
     private lazy var _recentState: Output? = (parent as? Observable<Input>)?.recentState
-    override var recentState: Output? { _recentState }
+    @inlinable override var recentState: Output? { _recentState }
     
-    init(parent: ObserverParent, minimumInterval: TimeInterval) {
+    @inlinable init(parent: ObserverParent, minimumInterval: TimeInterval) {
         self.interval = minimumInterval
         super.init(parent: parent)
         $pending = syncQueue
         $throttleTime = syncQueue
     }
     
-    override func accept(changes: Changes<Output>) {
+    @inlinable override func accept(changes: Changes<Output>) {
         let currentQueue = (DispatchQueue.current ?? DispatchQueue.main)
         syncQueue.safeSync {
             guard abs(throttleTime.timeIntervalSinceNow) >= interval else {

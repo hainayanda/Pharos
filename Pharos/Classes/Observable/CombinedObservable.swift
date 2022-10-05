@@ -7,16 +7,16 @@
 
 import Foundation
 
-class BiCombinedObservable<Output1, Output2>: Observable<(Output1?, Output2?)> {
+final class BiCombinedObservable<Output1, Output2>: Observable<(Output1?, Output2?)> {
     
     private weak var observable1: Observable<Output1>?
     private weak var observable2: Observable<Output2>?
     
-    override var recentState: (Output1?, Output2?)? {
+    @inlinable override var recentState: (Output1?, Output2?)? {
         (observable1?.recentState, observable2?.recentState)
     }
     
-    init(observable1: Observable<Output1>, observable2: Observable<Output2>) {
+    @inlinable init(observable1: Observable<Output1>, observable2: Observable<Output2>) {
         super.init()
         
         self.observable1 = observable1
@@ -45,7 +45,7 @@ extension Observable {
         BiCombinedObservable(observable1: self, observable2: other)
     }
     
-    public func compactCombine<Output2>(
+    @inlinable public func compactCombine<Output2>(
         with other1: Observable<Output2>) -> Observable<(Output, Output2)> {
             combine(with: other1)
                 .compactMapped {
@@ -58,17 +58,17 @@ extension Observable {
         }
 }
 
-class TriCombinedObservable<Output1, Output2, Output3>: Observable<(Output1?, Output2?, Output3?)> {
+final class TriCombinedObservable<Output1, Output2, Output3>: Observable<(Output1?, Output2?, Output3?)> {
     
     private weak var observable1: Observable<Output1>?
     private weak var observable2: Observable<Output2>?
     private weak var observable3: Observable<Output3>?
     
-    override var recentState: (Output1?, Output2?, Output3?)? {
+    @inlinable override var recentState: (Output1?, Output2?, Output3?)? {
         (observable1?.recentState, observable2?.recentState, observable3?.recentState)
     }
     
-    init(
+    @inlinable init(
         observable1: Observable<Output1>,
         observable2: Observable<Output2>,
         observable3: Observable<Output3>) {
@@ -110,7 +110,7 @@ extension Observable {
             TriCombinedObservable(observable1: self, observable2: other1, observable3: other2)
         }
     
-    public func compactCombine<Output2, Output3>(
+    @inlinable public func compactCombine<Output2, Output3>(
         with other1: Observable<Output2>,
         _ other2: Observable<Output3>) -> Observable<(Output, Output2, Output3)> {
             combine(with: other1, other2)
@@ -125,18 +125,18 @@ extension Observable {
         }
 }
 
-class QuadCombinedObservable<Output1, Output2, Output3, Output4>: Observable<(Output1?, Output2?, Output3?, Output4?)> {
+final class QuadCombinedObservable<Output1, Output2, Output3, Output4>: Observable<(Output1?, Output2?, Output3?, Output4?)> {
     
     private weak var observable1: Observable<Output1>?
     private weak var observable2: Observable<Output2>?
     private weak var observable3: Observable<Output3>?
     private weak var observable4: Observable<Output4>?
     
-    override var recentState: (Output1?, Output2?, Output3?, Output4?)? {
+    @inlinable override var recentState: (Output1?, Output2?, Output3?, Output4?)? {
         (observable1?.recentState, observable2?.recentState, observable3?.recentState, observable4?.recentState)
     }
     
-    init(
+    @inlinable init(
         observable1: Observable<Output1>,
         observable2: Observable<Output2>,
         observable3: Observable<Output3>,
@@ -193,7 +193,7 @@ extension Observable {
             )
         }
     
-    public func compactCombine<Output2, Output3, Output4>(
+    @inlinable public func compactCombine<Output2, Output3, Output4>(
         with other1: Observable<Output2>,
         _ other2: Observable<Output3>,
         _ other3: Observable<Output4>) -> Observable<(Output, Output2, Output3, Output4)> {

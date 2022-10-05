@@ -20,7 +20,7 @@ public protocol Invokable: AnyObject {
 }
 
 extension Invokable {
-    func fire(after delay: TimeInterval) {
+    @inlinable func fire(after delay: TimeInterval) {
         (DispatchQueue.current ?? DispatchQueue.main)
             .asyncAfter(deadline: .now() + delay) { [weak self] in
                 self?.fire()

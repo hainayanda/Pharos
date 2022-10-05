@@ -8,9 +8,9 @@
 import Foundation
 
 @propertyWrapper
-public class Subject<Wrapped>: Observable<Wrapped> {
+public final class Subject<Wrapped>: Observable<Wrapped> {
     
-    public var projectedValue: Observable<Wrapped> { self }
+    @inlinable public var projectedValue: Observable<Wrapped> { self }
     
     private var _wrappedValue: Wrapped
     public var wrappedValue: Wrapped {

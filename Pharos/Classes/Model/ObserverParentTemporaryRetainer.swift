@@ -9,18 +9,18 @@ import Foundation
 
 public typealias ObserverParent = Invokable & ObjectRetainer
 
-class ObserverParentTemporaryRetainer {
+final class ObserverParentTemporaryRetainer {
     private weak var weakInstance: ObserverParent?
     private var _instance: ObserverParent?
-    var instance: ObserverParent? { weakInstance }
-    var retaining: Bool { _instance != nil }
+    @inlinable var instance: ObserverParent? { weakInstance }
+    @inlinable var retaining: Bool { _instance != nil }
     
-    init(instance: ObserverParent?) {
+    @inlinable init(instance: ObserverParent?) {
         self._instance = instance
         self.weakInstance = instance
     }
     
-    func releaseParent() {
+    @inlinable func releaseParent() {
         _instance = nil
     }
 }
