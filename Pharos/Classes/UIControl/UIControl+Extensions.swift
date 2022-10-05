@@ -127,8 +127,13 @@ extension UIControl {
 
 extension UIControl {
     
+    @available(*, deprecated, renamed: "observeChange")
     public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
-        getControlAction().eventObservable.whenDidSet(thenDo: work)
+        observeEventChange(work)
+    }
+    
+    public func observeEventChange(_ observer: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+        getControlAction().eventObservable.observeChange(observer)
     }
     
     public func whenDidTriggered(by event: UIControl.Event, thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
@@ -142,9 +147,9 @@ extension UIControl {
         } else {
             eventUsed = [event]
         }
-        return getControlAction().eventObservable.onlyInclude {
-            eventUsed.contains($0.new)
-        }.whenDidSet(thenDo: work)
+        return getControlAction().eventObservable.filter {
+            eventUsed.contains($0)
+        }.observeChange(work)
     }
     
     public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {

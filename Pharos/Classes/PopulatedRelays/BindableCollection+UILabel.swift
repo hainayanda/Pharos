@@ -9,83 +9,83 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var textKey: String = "textKey"
-fileprivate var fontKey: String = "fontKey"
-fileprivate var textColorKey: String = "textColorKey"
-fileprivate var shadowColorKey: String = "shadowColorKey"
-fileprivate var shadowOffsetKey: String = "shadowOffsetKey"
-fileprivate var attributedTextKey: String = "attributedTextKey"
-fileprivate var highlightedTextColorKey: String = "highlightedTextColorKey"
-fileprivate var isHighlightedKey: String = "isHighlightedKey"
-fileprivate var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
-fileprivate var isEnabledKey: String = "isEnabledKey"
-fileprivate var numberOfLinesKey: String = "numberOfLinesKey"
-fileprivate var adjustsFontSizeToFitWidthKey: String = "adjustsFontSizeToFitWidthKey"
-fileprivate var minimumScaleFactorKey: String = "minimumScaleFactorKey"
-fileprivate var allowsDefaultTighteningForTruncationKey: String = "allowsDefaultTighteningForTruncationKey"
-fileprivate var preferredMaxLayoutWidthKey: String = "preferredMaxLayoutWidthKey"
+private var textKey: String = "textKey"
+private var fontKey: String = "fontKey"
+private var textColorKey: String = "textColorKey"
+private var shadowColorKey: String = "shadowColorKey"
+private var shadowOffsetKey: String = "shadowOffsetKey"
+private var attributedTextKey: String = "attributedTextKey"
+private var highlightedTextColorKey: String = "highlightedTextColorKey"
+private var isHighlightedKey: String = "isHighlightedKey"
+private var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
+private var isEnabledKey: String = "isEnabledKey"
+private var numberOfLinesKey: String = "numberOfLinesKey"
+private var adjustsFontSizeToFitWidthKey: String = "adjustsFontSizeToFitWidthKey"
+private var minimumScaleFactorKey: String = "minimumScaleFactorKey"
+private var allowsDefaultTighteningForTruncationKey: String = "allowsDefaultTighteningForTruncationKey"
+private var preferredMaxLayoutWidthKey: String = "preferredMaxLayoutWidthKey"
 
 public extension BindableCollection where Object: UILabel {
     
     // MARK: Two Way Relay
     
-    var text: BindableObservable<String?> {
+    var text: Observable<String?> {
         bindable(of: \.text, key: &textKey)
     }
 
-    var font: BindableObservable<UIFont?> {
+    var font: Observable<UIFont?> {
         bindable(of: \.font, key: &fontKey)
     }
 
-    var textColor: BindableObservable<UIColor?> {
+    var textColor: Observable<UIColor?> {
         bindable(of: \.textColor, key: &textColorKey)
     }
 
-    var shadowColor: BindableObservable<UIColor?> {
+    var shadowColor: Observable<UIColor?> {
         bindable(of: \.shadowColor, key: &shadowColorKey)
     }
 
-    var shadowOffset: BindableObservable<CGSize> {
+    var shadowOffset: Observable<CGSize> {
         bindable(of: \.shadowOffset, key: &shadowOffsetKey)
     }
     
-    var attributedText: BindableObservable<NSAttributedString?> {
+    var attributedText: Observable<NSAttributedString?> {
         bindable(of: \.attributedText, key: &attributedTextKey)
     }
     
-    var highlightedTextColor: BindableObservable<UIColor?> {
+    var highlightedTextColor: Observable<UIColor?> {
         bindable(of: \.highlightedTextColor, key: &highlightedTextColorKey)
     }
 
-    var isHighlighted: BindableObservable<Bool> {
+    var isHighlighted: Observable<Bool> {
         bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
 
-    var isUserInteractionEnabled: BindableObservable<Bool> {
+    var isUserInteractionEnabled: Observable<Bool> {
         bindable(of: \.isUserInteractionEnabled, key: &isUserInteractionEnabledKey)
     }
 
-    var isEnabled: BindableObservable<Bool> {
+    var isEnabled: Observable<Bool> {
         bindable(of: \.isEnabled, key: &isEnabledKey)
     }
     
-    var numberOfLines: BindableObservable<Int> {
+    var numberOfLines: Observable<Int> {
         bindable(of: \.numberOfLines, key: &numberOfLinesKey)
     }
     
-    var adjustsFontSizeToFitWidth: BindableObservable<Bool> {
+    var adjustsFontSizeToFitWidth: Observable<Bool> {
         bindable(of: \.adjustsFontSizeToFitWidth, key: &adjustsFontSizeToFitWidthKey)
     }
     
-    var minimumScaleFactor: BindableObservable<CGFloat> {
+    var minimumScaleFactor: Observable<CGFloat> {
         bindable(of: \.minimumScaleFactor, key: &minimumScaleFactorKey)
     }
     
-    var allowsDefaultTighteningForTruncation: BindableObservable<Bool> {
+    var allowsDefaultTighteningForTruncation: Observable<Bool> {
         bindable(of: \.allowsDefaultTighteningForTruncation, key: &allowsDefaultTighteningForTruncationKey)
     }
     
-    var preferredMaxLayoutWidth: BindableObservable<CGFloat> {
+    var preferredMaxLayoutWidth: Observable<CGFloat> {
         bindable(of: \.preferredMaxLayoutWidth, key: &preferredMaxLayoutWidthKey)
     }
     

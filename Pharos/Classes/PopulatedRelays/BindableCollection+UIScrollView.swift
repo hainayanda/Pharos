@@ -9,126 +9,126 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var contentOffsetKey: String = "contentOffsetKey"
-fileprivate var contentSizeKey: String = "contentSizeKey"
-fileprivate var contentInsetKey: String = "contentInsetKey"
-fileprivate var isDirectionalLockEnabledKey: String = "isDirectionalLockEnabledKey"
-fileprivate var bouncesKey: String = "bouncesKey"
-fileprivate var alwaysBounceVerticalKey: String = "alwaysBounceVerticalKey"
-fileprivate var preferredMaxLayoutWidthKey: String = "preferredMaxLayoutWidthKey"
-fileprivate var delegateKey: String = "delegateKey"
-fileprivate var isPagingEnabledKey: String = "isPagingEnabledKey"
-fileprivate var alwaysBounceHorizontalKey: String = "alwaysBounceHorizontalKey"
-fileprivate var isScrollEnabledKey: String = "isScrollEnabledKey"
-fileprivate var showsVerticalScrollIndicatorKey: String = "showsVerticalScrollIndicatorKey"
-fileprivate var showsHorizontalScrollIndicatorKey: String = "showsHorizontalScrollIndicatorKey"
-fileprivate var verticalScrollIndicatorInsetsKey: String = "verticalScrollIndicatorInsetsKey"
-fileprivate var horizontalScrollIndicatorInsetsKey: String = "horizontalScrollIndicatorInsetsKey"
-fileprivate var scrollIndicatorInsetsKey: String = "scrollIndicatorInsetsKey"
-fileprivate var delaysContentTouchesKey: String = "delaysContentTouchesKey"
-fileprivate var canCancelContentTouchesKey: String = "canCancelContentTouchesKey"
-fileprivate var minimumZoomScaleKey: String = "minimumZoomScaleKey"
-fileprivate var zoomScaleKey: String = "zoomScaleKey"
-fileprivate var maximumZoomScaleKey: String = "maximumZoomScaleKey"
-fileprivate var bouncesZoomKey: String = "bouncesZoomKey"
-fileprivate var scrollsToTopKey: String = "scrollsToTopKey"
-fileprivate var refreshControlKey: String = "refreshControlKey"
+private var contentOffsetKey: String = "contentOffsetKey"
+private var contentSizeKey: String = "contentSizeKey"
+private var contentInsetKey: String = "contentInsetKey"
+private var isDirectionalLockEnabledKey: String = "isDirectionalLockEnabledKey"
+private var bouncesKey: String = "bouncesKey"
+private var alwaysBounceVerticalKey: String = "alwaysBounceVerticalKey"
+private var preferredMaxLayoutWidthKey: String = "preferredMaxLayoutWidthKey"
+private var delegateKey: String = "delegateKey"
+private var isPagingEnabledKey: String = "isPagingEnabledKey"
+private var alwaysBounceHorizontalKey: String = "alwaysBounceHorizontalKey"
+private var isScrollEnabledKey: String = "isScrollEnabledKey"
+private var showsVerticalScrollIndicatorKey: String = "showsVerticalScrollIndicatorKey"
+private var showsHorizontalScrollIndicatorKey: String = "showsHorizontalScrollIndicatorKey"
+private var verticalScrollIndicatorInsetsKey: String = "verticalScrollIndicatorInsetsKey"
+private var horizontalScrollIndicatorInsetsKey: String = "horizontalScrollIndicatorInsetsKey"
+private var scrollIndicatorInsetsKey: String = "scrollIndicatorInsetsKey"
+private var delaysContentTouchesKey: String = "delaysContentTouchesKey"
+private var canCancelContentTouchesKey: String = "canCancelContentTouchesKey"
+private var minimumZoomScaleKey: String = "minimumZoomScaleKey"
+private var zoomScaleKey: String = "zoomScaleKey"
+private var maximumZoomScaleKey: String = "maximumZoomScaleKey"
+private var bouncesZoomKey: String = "bouncesZoomKey"
+private var scrollsToTopKey: String = "scrollsToTopKey"
+private var refreshControlKey: String = "refreshControlKey"
 
 public extension BindableCollection where Object: UIScrollView {
     
     // MARK: Two Way Relay
     
-    var contentOffset: BindableObservable<CGPoint> {
+    var contentOffset: Observable<CGPoint> {
         bindable(of: \.contentOffset, key: &contentOffsetKey)
     }
     
-    var contentSize: BindableObservable<CGSize> {
+    var contentSize: Observable<CGSize> {
         bindable(of: \.contentSize, key: &contentSizeKey)
     }
     
-    var contentInset: BindableObservable<UIEdgeInsets> {
+    var contentInset: Observable<UIEdgeInsets> {
         bindable(of: \.contentInset, key: &contentInsetKey)
     }
     
-    var delegate: BindableObservable<UIScrollViewDelegate?> {
+    var delegate: Observable<UIScrollViewDelegate?> {
         bindable(of: \.delegate, key: &delegateKey)
     }
     
-    var isDirectionalLockEnabled: BindableObservable<Bool> {
+    var isDirectionalLockEnabled: Observable<Bool> {
         bindable(of: \.isDirectionalLockEnabled, key: &isDirectionalLockEnabledKey)
     }
     
-    var bounces: BindableObservable<Bool> {
+    var bounces: Observable<Bool> {
         bindable(of: \.bounces, key: &bouncesKey)
     }
     
-    var alwaysBounceVertical: BindableObservable<Bool> {
+    var alwaysBounceVertical: Observable<Bool> {
         bindable(of: \.alwaysBounceVertical, key: &alwaysBounceVerticalKey)
     }
     
-    var alwaysBounceHorizontal: BindableObservable<Bool> {
+    var alwaysBounceHorizontal: Observable<Bool> {
         bindable(of: \.alwaysBounceHorizontal, key: &alwaysBounceHorizontalKey)
     }
     
-    var isPagingEnabled: BindableObservable<Bool> {
+    var isPagingEnabled: Observable<Bool> {
         bindable(of: \.isPagingEnabled, key: &isPagingEnabledKey)
     }
     
-    var isScrollEnabled: BindableObservable<Bool> {
+    var isScrollEnabled: Observable<Bool> {
         bindable(of: \.isScrollEnabled, key: &isScrollEnabledKey)
     }
     
-    var showsVerticalScrollIndicator: BindableObservable<Bool> {
+    var showsVerticalScrollIndicator: Observable<Bool> {
         bindable(of: \.showsVerticalScrollIndicator, key: &showsVerticalScrollIndicatorKey)
     }
     
-    var showsHorizontalScrollIndicator: BindableObservable<Bool> {
+    var showsHorizontalScrollIndicator: Observable<Bool> {
         bindable(of: \.showsHorizontalScrollIndicator, key: &showsHorizontalScrollIndicatorKey)
     }
     
     @available(iOS 11.1, *)
-    var verticalScrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
+    var verticalScrollIndicatorInsets: Observable<UIEdgeInsets> {
         bindable(of: \.verticalScrollIndicatorInsets, key: &verticalScrollIndicatorInsetsKey)
     }
     
     @available(iOS 11.1, *)
-    var horizontalScrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
+    var horizontalScrollIndicatorInsets: Observable<UIEdgeInsets> {
         bindable(of: \.horizontalScrollIndicatorInsets, key: &horizontalScrollIndicatorInsetsKey)
     }
     
-    var scrollIndicatorInsets: BindableObservable<UIEdgeInsets> {
+    var scrollIndicatorInsets: Observable<UIEdgeInsets> {
         bindable(of: \.scrollIndicatorInsets, key: &scrollIndicatorInsetsKey)
     }
     
-    var delaysContentTouches: BindableObservable<Bool> {
+    var delaysContentTouches: Observable<Bool> {
         bindable(of: \.delaysContentTouches, key: &delaysContentTouchesKey)
     }
     
-    var canCancelContentTouches: BindableObservable<Bool> {
+    var canCancelContentTouches: Observable<Bool> {
         bindable(of: \.canCancelContentTouches, key: &canCancelContentTouchesKey)
     }
     
-    var minimumZoomScale: BindableObservable<CGFloat> {
+    var minimumZoomScale: Observable<CGFloat> {
         bindable(of: \.minimumZoomScale, key: &minimumZoomScaleKey)
     }
     
-    var maximumZoomScale: BindableObservable<CGFloat> {
+    var maximumZoomScale: Observable<CGFloat> {
         bindable(of: \.maximumZoomScale, key: &maximumZoomScaleKey)
     }
     
-    var zoomScale: BindableObservable<CGFloat> {
+    var zoomScale: Observable<CGFloat> {
         bindable(of: \.zoomScale, key: &zoomScaleKey)
     }
     
-    var bouncesZoom: BindableObservable<Bool> {
+    var bouncesZoom: Observable<Bool> {
         bindable(of: \.bouncesZoom, key: &bouncesZoomKey)
     }
     
-    var scrollsToTop: BindableObservable<Bool> {
+    var scrollsToTop: Observable<Bool> {
         bindable(of: \.scrollsToTop, key: &scrollsToTopKey)
     }
     
-    var refreshControl: BindableObservable<UIRefreshControl?> {
+    var refreshControl: Observable<UIRefreshControl?> {
         bindable(of: \.refreshControl, key: &refreshControlKey)
     }
     

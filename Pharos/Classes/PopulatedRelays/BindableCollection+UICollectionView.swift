@@ -9,83 +9,83 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var collectionViewLayoutKey: String = "collectionViewLayoutKey"
-fileprivate var delegateKey: String = "delegateKey"
-fileprivate var dataSourceKey: String = "dataSourceKey"
-fileprivate var prefetchDataSourceKey: String = "prefetchDataSourceKey"
-fileprivate var isPrefetchingEnabledKey: String = "isPrefetchingEnabledKey"
-fileprivate var dragDelegateKey: String = "dragDelegateKey"
-fileprivate var dropDelegateKey: String = "dropDelegateKey"
-fileprivate var dragInteractionEnabledKey: String = "dragInteractionEnabledKey"
-fileprivate var backgroundViewKey: String = "backgroundViewKey"
-fileprivate var allowsSelectionKey: String = "allowsSelectionKey"
-fileprivate var allowsMultipleSelectionKey: String = "allowsMultipleSelectionKey"
-fileprivate var remembersLastFocusedIndexPathKey: String = "remembersLastFocusedIndexPathKey"
-fileprivate var selectionFollowsFocusKey: String = "selectionFollowsFocusKey"
-fileprivate var isEditingKey: String = "isEditingKey"
+private var collectionViewLayoutKey: String = "collectionViewLayoutKey"
+private var delegateKey: String = "delegateKey"
+private var dataSourceKey: String = "dataSourceKey"
+private var prefetchDataSourceKey: String = "prefetchDataSourceKey"
+private var isPrefetchingEnabledKey: String = "isPrefetchingEnabledKey"
+private var dragDelegateKey: String = "dragDelegateKey"
+private var dropDelegateKey: String = "dropDelegateKey"
+private var dragInteractionEnabledKey: String = "dragInteractionEnabledKey"
+private var backgroundViewKey: String = "backgroundViewKey"
+private var allowsSelectionKey: String = "allowsSelectionKey"
+private var allowsMultipleSelectionKey: String = "allowsMultipleSelectionKey"
+private var remembersLastFocusedIndexPathKey: String = "remembersLastFocusedIndexPathKey"
+private var selectionFollowsFocusKey: String = "selectionFollowsFocusKey"
+private var isEditingKey: String = "isEditingKey"
 
 public extension BindableCollection where Object: UICollectionView {
     
     // MARK: Two Way Relay
     
-    var collectionViewLayout: BindableObservable<UICollectionViewLayout> {
-        bindable(of:\.collectionViewLayout, key: &collectionViewLayoutKey)
+    var collectionViewLayout: Observable<UICollectionViewLayout> {
+        bindable(of: \.collectionViewLayout, key: &collectionViewLayoutKey)
     }
     
-    var delegate: BindableObservable<UICollectionViewDelegate?> {
-        bindable(of:\.delegate, key: &delegateKey)
+    var delegate: Observable<UICollectionViewDelegate?> {
+        bindable(of: \.delegate, key: &delegateKey)
     }
     
-    var dataSource: BindableObservable<UICollectionViewDataSource?> {
-        bindable(of:\.dataSource, key: &dataSourceKey)
+    var dataSource: Observable<UICollectionViewDataSource?> {
+        bindable(of: \.dataSource, key: &dataSourceKey)
     }
     
-    var prefetchDataSource: BindableObservable<UICollectionViewDataSourcePrefetching?> {
-        bindable(of:\.prefetchDataSource, key: &prefetchDataSourceKey)
+    var prefetchDataSource: Observable<UICollectionViewDataSourcePrefetching?> {
+        bindable(of: \.prefetchDataSource, key: &prefetchDataSourceKey)
     }
     
-    var isPrefetchingEnabled: BindableObservable<Bool> {
-        bindable(of:\.isPrefetchingEnabled, key: &isPrefetchingEnabledKey)
-    }
-    
-    @available(iOS 11.0, *)
-    var dragDelegate: BindableObservable<UICollectionViewDragDelegate?> {
-        bindable(of:\.dragDelegate, key: &dragDelegateKey)
-    }
-    @available(iOS 11.0, *)
-    var dropDelegate: BindableObservable<UICollectionViewDropDelegate?> {
-        bindable(of:\.dropDelegate, key: &dropDelegateKey)
+    var isPrefetchingEnabled: Observable<Bool> {
+        bindable(of: \.isPrefetchingEnabled, key: &isPrefetchingEnabledKey)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: BindableObservable<Bool> {
-        bindable(of:\.dragInteractionEnabled, key: &dragInteractionEnabledKey)
+    var dragDelegate: Observable<UICollectionViewDragDelegate?> {
+        bindable(of: \.dragDelegate, key: &dragDelegateKey)
+    }
+    @available(iOS 11.0, *)
+    var dropDelegate: Observable<UICollectionViewDropDelegate?> {
+        bindable(of: \.dropDelegate, key: &dropDelegateKey)
     }
     
-    var backgroundView: BindableObservable<UIView?> {
-        bindable(of:\.backgroundView, key: &backgroundViewKey)
+    @available(iOS 11.0, *)
+    var dragInteractionEnabled: Observable<Bool> {
+        bindable(of: \.dragInteractionEnabled, key: &dragInteractionEnabledKey)
     }
     
-    var allowsSelection: BindableObservable<Bool> {
-        bindable(of:\.allowsSelection, key: &allowsSelectionKey)
+    var backgroundView: Observable<UIView?> {
+        bindable(of: \.backgroundView, key: &backgroundViewKey)
     }
     
-    var allowsMultipleSelection: BindableObservable<Bool> {
-        bindable(of:\.allowsMultipleSelection, key: &allowsMultipleSelectionKey)
+    var allowsSelection: Observable<Bool> {
+        bindable(of: \.allowsSelection, key: &allowsSelectionKey)
     }
     
-    var remembersLastFocusedIndexPath: BindableObservable<Bool> {
-        bindable(of:\.remembersLastFocusedIndexPath, key: &remembersLastFocusedIndexPathKey)
+    var allowsMultipleSelection: Observable<Bool> {
+        bindable(of: \.allowsMultipleSelection, key: &allowsMultipleSelectionKey)
+    }
+    
+    var remembersLastFocusedIndexPath: Observable<Bool> {
+        bindable(of: \.remembersLastFocusedIndexPath, key: &remembersLastFocusedIndexPathKey)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: BindableObservable<Bool> {
-        bindable(of:\.selectionFollowsFocus, key: &selectionFollowsFocusKey)
+    var selectionFollowsFocus: Observable<Bool> {
+        bindable(of: \.selectionFollowsFocus, key: &selectionFollowsFocusKey)
     }
     
     @available(iOS 14.0, *)
-    var isEditing: BindableObservable<Bool> {
-        bindable(of:\.isEditing, key: &isEditingKey)
+    var isEditing: Observable<Bool> {
+        bindable(of: \.isEditing, key: &isEditingKey)
     }
     
 }

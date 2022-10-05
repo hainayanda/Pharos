@@ -8,33 +8,42 @@
 import Foundation
 
 public protocol ObjectRetainer: AnyObject {
+    func findRetained(where match: (AnyObject) -> Bool) -> AnyObject?
     func retain(_ object: AnyObject)
-    func discardAllRetained()
+    func discardAll()
     func discard(_ object: AnyObject)
 }
 
-var retainedObjectsAssicatedKeys = "Pharos_retain_objects"
+var retainingKey: String = "retainingKey"
 
-public extension ObjectRetainer {
-    
-    internal var retainedObjects: [ObjectIdentifier: AnyObject] {
-        get {
-            (objc_getAssociatedObject(self, &retainedObjectsAssicatedKeys) as? [ObjectIdentifier: AnyObject]) ?? [:]
-        }
-        set {
-            objc_setAssociatedObject(self, &retainedObjectsAssicatedKeys, newValue, .OBJC_ASSOCIATION_RETAIN)
-        }
+extension ObjectRetainer {
+    public func retain(_ object: AnyObject) {
+        var retained = objc_getAssociatedObject(self, &retainingKey) as? [AnyObject] ?? []
+        retained.append(object)
+        objc_setAssociatedObject(self, &retainingKey, retained, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    func retain(_ object: AnyObject) {
-        retainedObjects.append(object)
+    public func discardAll() {
+        objc_setAssociatedObject(self, &retainingKey, [AnyObject](), .OBJC_ASSOCIATION_RETAIN)
     }
     
-    func discardAllRetained() {
-        retainedObjects = [:]
+    public func discard(_ object: AnyObject) {
+        var retained = objc_getAssociatedObject(self, &retainingKey) as? [AnyObject] ?? []
+        retained.removeAll { $0 === object }
+        objc_setAssociatedObject(self, &retainingKey, retained, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    func discard(_ object: AnyObject) {
-        retainedObjects.remove(object)
+    public func findRetained(where match: (AnyObject) -> Bool) -> AnyObject? {
+        let retained = objc_getAssociatedObject(self, &retainingKey) as? [AnyObject] ?? []
+        return retained.first(where: match)
     }
+    
+    @available(*, deprecated, renamed: "discardAll")
+    public func discardAllRetained() {
+        discardAll()
+    }
+}
+
+public class Retainer: ObjectRetainer {
+    public init() { }
 }

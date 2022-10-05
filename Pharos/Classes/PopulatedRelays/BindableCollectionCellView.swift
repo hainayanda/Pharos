@@ -11,85 +11,88 @@ import UIKit
 
 // MARK: UITableViewCell
 
-fileprivate var automaticallyUpdatesContentConfigurationKey: String = "automaticallyUpdatesContentConfigurationKey"
-fileprivate var automaticallyUpdatesBackgroundConfigurationKey: String = "automaticallyUpdatesBackgroundConfigurationKey"
-fileprivate var backgroundViewKey: String = "backgroundViewKey"
-fileprivate var selectedBackgroundViewKey: String = "selectedBackgroundViewKey"
-fileprivate var multipleSelectionBackgroundViewKey: String = "multipleSelectionBackgroundViewKey"
-fileprivate var isSelectedKey: String = "isSelectedKey"
-fileprivate var isHighlightedKey: String = "isHighlightedKey"
-fileprivate var showsReorderControlKey: String = "showsReorderControlKey"
-fileprivate var shouldIndentWhileEditingKey: String = "shouldIndentWhileEditingKey"
-fileprivate var accessoryViewKey: String = "accessoryViewKey"
-fileprivate var editingAccessoryViewKey: String = "editingAccessoryViewKey"
-fileprivate var indentationLevelKey: String = "indentationLevelKey"
-fileprivate var indentationWidthKey: String = "indentationWidthKey"
-fileprivate var isEditingKey: String = "isEditingKey"
-fileprivate var userInteractionEnabledWhileDraggingKey: String = "userInteractionEnabledWhileDraggingKey"
+// swiftlint:disable:next identifier_name
+private var automaticallyUpdatesContentConfigurationKey: String = "automaticallyUpdatesContentConfigurationKey"
+// swiftlint:disable:next identifier_name
+private var automaticallyUpdatesBackgroundConfigurationKey: String = "automaticallyUpdatesBackgroundConfigurationKey"
+private var backgroundViewKey: String = "backgroundViewKey"
+private var selectedBackgroundViewKey: String = "selectedBackgroundViewKey"
+private var multipleSelectionBackgroundViewKey: String = "multipleSelectionBackgroundViewKey"
+private var isSelectedKey: String = "isSelectedKey"
+private var isHighlightedKey: String = "isHighlightedKey"
+private var showsReorderControlKey: String = "showsReorderControlKey"
+private var shouldIndentWhileEditingKey: String = "shouldIndentWhileEditingKey"
+private var accessoryViewKey: String = "accessoryViewKey"
+private var editingAccessoryViewKey: String = "editingAccessoryViewKey"
+private var indentationLevelKey: String = "indentationLevelKey"
+private var indentationWidthKey: String = "indentationWidthKey"
+private var isEditingKey: String = "isEditingKey"
+private var userInteractionEnabledWhileDraggingKey: String = "userInteractionEnabledWhileDraggingKey"
 
 public extension BindableCollection where Object: UITableViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: BindableObservable<Bool> {
+    var automaticallyUpdatesContentConfiguration: Observable<Bool> {
         bindable(of: \.automaticallyUpdatesContentConfiguration, key: &automaticallyUpdatesContentConfigurationKey)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: BindableObservable<Bool> {
+    // swiftlint:disable:next identifier_name
+    var automaticallyUpdatesBackgroundConfiguration: Observable<Bool> {
         bindable(of: \.automaticallyUpdatesBackgroundConfiguration, key: &automaticallyUpdatesBackgroundConfigurationKey)
     }
     
-    var backgroundView: BindableObservable<UIView?> {
+    var backgroundView: Observable<UIView?> {
         bindable(of: \.backgroundView, key: &backgroundViewKey)
     }
     
-    var selectedBackgroundView: BindableObservable<UIView?> {
+    var selectedBackgroundView: Observable<UIView?> {
         bindable(of: \.selectedBackgroundView, key: &selectedBackgroundViewKey)
     }
     
-    var multipleSelectionBackgroundView: BindableObservable<UIView?> {
+    var multipleSelectionBackgroundView: Observable<UIView?> {
         bindable(of: \.multipleSelectionBackgroundView, key: &multipleSelectionBackgroundViewKey)
     }
     
-    var isSelected: BindableObservable<Bool> {
+    var isSelected: Observable<Bool> {
         bindable(of: \.isSelected, key: &isSelectedKey)
     }
     
-    var isHighlighted: BindableObservable<Bool> {
+    var isHighlighted: Observable<Bool> {
         bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
     
-    var showsReorderControl: BindableObservable<Bool> {
+    var showsReorderControl: Observable<Bool> {
         bindable(of: \.showsReorderControl, key: &showsReorderControlKey)
     }
     
-    var shouldIndentWhileEditing: BindableObservable<Bool> {
+    var shouldIndentWhileEditing: Observable<Bool> {
         bindable(of: \.shouldIndentWhileEditing, key: &shouldIndentWhileEditingKey)
     }
     
-    var accessoryView: BindableObservable<UIView?> {
+    var accessoryView: Observable<UIView?> {
         bindable(of: \.accessoryView, key: &accessoryViewKey)
     }
     
-    var editingAccessoryView: BindableObservable<UIView?> {
+    var editingAccessoryView: Observable<UIView?> {
         bindable(of: \.editingAccessoryView, key: &editingAccessoryViewKey)
     }
     
-    var indentationLevel: BindableObservable<Int> {
+    var indentationLevel: Observable<Int> {
         bindable(of: \.indentationLevel, key: &indentationLevelKey)
     }
     
-    var indentationWidth: BindableObservable<CGFloat> {
+    var indentationWidth: Observable<CGFloat> {
         bindable(of: \.indentationWidth, key: &indentationWidthKey)
     }
     
-    var isEditing: BindableObservable<Bool> {
+    var isEditing: Observable<Bool> {
         bindable(of: \.isEditing, key: &isEditingKey)
     }
     
     @available(iOS 11.0, *)
-    var userInteractionEnabledWhileDragging: BindableObservable<Bool> {
+    var userInteractionEnabledWhileDragging: Observable<Bool> {
         bindable(of: \.userInteractionEnabledWhileDragging, key: &userInteractionEnabledWhileDraggingKey)
     }
 }
@@ -101,31 +104,31 @@ public extension BindableCollection where Object: UICollectionViewCell {
     // MARK: Two Way Relay
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesContentConfiguration: BindableObservable<Bool> {
+    var automaticallyUpdatesContentConfiguration: Observable<Bool> {
         bindable(of: \.automaticallyUpdatesContentConfiguration, key: &automaticallyUpdatesContentConfigurationKey)
     }
     
-    var isSelected: BindableObservable<Bool> {
+    var isSelected: Observable<Bool> {
         bindable(of: \.isSelected, key: &isSelectedKey)
     }
     
-    var isHighlighted: BindableObservable<Bool> {
+    var isHighlighted: Observable<Bool> {
         bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
     
     @available(iOS 14.0, *)
-    var automaticallyUpdatesBackgroundConfiguration: BindableObservable<Bool> {
+    // swiftlint:disable:next identifier_name
+    var automaticallyUpdatesBackgroundConfiguration: Observable<Bool> {
         bindable(of: \.automaticallyUpdatesBackgroundConfiguration, key: &automaticallyUpdatesBackgroundConfigurationKey)
     }
     
-    var backgroundView: BindableObservable<UIView?> {
+    var backgroundView: Observable<UIView?> {
         bindable(of: \.backgroundView, key: &backgroundViewKey)
     }
     
-    var selectedBackgroundView: BindableObservable<UIView?> {
+    var selectedBackgroundView: Observable<UIView?> {
         bindable(of: \.selectedBackgroundView, key: &selectedBackgroundViewKey)
     }
     
 }
 #endif
-

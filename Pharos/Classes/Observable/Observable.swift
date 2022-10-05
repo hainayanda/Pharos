@@ -7,87 +7,48 @@
 
 import Foundation
 
-open class Observable<State>: ChangeObservable {
-    let contextRetainer: ContextRetainer
-    lazy var relayGroup: RelayRetainerGroup<State> = RelayRetainerGroup()
-    var recentState: State? { nil }
+open class Observable<Output>: ObservableProtocol, ObserverParent {
     
-    public init(retainer: ContextRetainer) {
-        self.contextRetainer = retainer
-    }
+    var observers: [WeakWrappedObserver<Output>] = []
+    public var recentState: Output? { return nil }
     
-    open func whenDidSet(thenDo work: @escaping (Changes<State>) -> Void) -> Observed<State> {
-        let observed = Observed(source: self, retainer: contextRetainer.added(with: self)) { changes, _ in
-            work(changes)
+    open func observeChange(_ observer: @escaping (Changes<Output>) -> Void) -> Observed<Output> {
+        let retainableListener = Observed(source: self) { changes in
+            observer(changes)
         }
-        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
-        return observed
+        observers.append(WeakWrappedObserver(wrapped: retainableListener))
+        return retainableListener
     }
     
-    public func relayChanges(to relay: BindableObservable<State>) -> Observed<State> {
-        let observed = Observed(source: self, retainer: contextRetainer.added(with: self)) { [weak relay] changes, context in
-            guard let relay = relay else { return }
-            relay.relay(changes: changes, context: context)
+    @discardableResult
+    /// Send changes to all valid observers if the changes is not already consumed by itself
+    /// - Parameter changes: changes to be sent
+    /// - Returns: True if changes are sent, otherwise it will be false
+    open func sendIfNeeded(for changes: Changes<Output>) -> Bool {
+        guard !changes.alreadyConsumed(by: self) else { return false }
+        send(changes: changes.consumed(by: self))
+        return true
+    }
+    
+    /// Send changes to all the valid observers no matter what
+    /// - Parameter changes: changes to be sent
+    open func send(changes: Changes<Output>) {
+        observers.lazy.filter { $0.valid }.forEach {
+            $0.accept(changes: changes)
         }
-        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
-        return observed
     }
     
-    // MARK: Mappable
-    
-    open func compactMapped<Mapped>(_ mapper: @escaping (State) throws -> Mapped?) -> Observable<Mapped> {
-        let observed = MappedObservable(source: self, retainer: contextRetainer.added(with: self), mapper: mapper)
-        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
-        return observed
-        
-    }
-    
-    // MARK: Filterable
-    
-    open func ignore(when shouldIgnore: @escaping (Changes<State>) -> Bool) -> Observable<State> {
-        let observed = FilteredObservable(source: self, retainer: contextRetainer.added(with: self), filter: shouldIgnore)
-        relayGroup.addToGroup(WeakRelayRetainer<State>(wrapped: observed))
-        return observed
-    }
-    
-    // MARK: Combinable
-    
-    open func combine<State1>(with relay: Observable<State1>) -> Observable<(State?, State1?)> {
-        BiCastObservable(source1: self, source2: relay, retainer: contextRetainer)
-    }
-    
-    open func combine<State1, State2>(
-        with relay1: Observable<State1>, _ relay2: Observable<State2>
-    ) -> Observable<(State?, State1?, State2?)> {
-        TriCastObservable(source1: self, source2: relay1, source3: relay2, retainer: contextRetainer)
-    }
-    
-    open func combine<State1, State2, State3>(
-        with relay1: Observable<State1>, _ relay2: Observable<State2>, _ relay3: Observable<State3>
-    ) -> Observable<(State?, State1?, State2?, State3?)> {
-        QuadCastObservable(source1: self, source2: relay1, source3: relay2, source4: relay3, retainer: contextRetainer)
-    }
-    
-    // MARK: Mergable
-    
-    open func merge(with relays: Observable<State>...) -> Observable<State> {
-        var merged = relays
-        merged.insert(self, at: 0)
-        var retainer = contextRetainer
-        for relay in merged {
-            retainer = retainer.added(with: relay)
+    public func relayChanges(to otherBox: Observable<Output>) -> Observed<Output> {
+        observeChange { [weak otherBox] changes in
+            guard let otherBox = otherBox else { return }
+            otherBox.sendIfNeeded(for: changes)
         }
-        return MergedObservable(observables: merged, retainer: retainer)
     }
     
-    // MARK: Retain
-    
-    func retain(retainer: ContextRetainer) {
-        retainer.retained.remove(self)
-        self.contextRetainer.add(retainer: retainer)
+    public func bind(with otherBox: Observable<Output>) -> Observed<Output> {
+        otherBox.relayChanges(to: self).retained(by: self)
+        return relayChanges(to: otherBox)
     }
     
-    func discard(child: AnyObject) {
-        contextRetainer.discard(object: child)
-    }
+    open func fire() { }
 }

@@ -9,131 +9,133 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
-fileprivate var focusGroupIdentifierKey: String = "focusGroupIdentifierKey"
-fileprivate var frameKey: String = "frameKey"
-fileprivate var boundsKey: String = "boundsKey"
-fileprivate var centerKey: String = "centerKey"
-fileprivate var contentScaleFactorKey: String = "contentScaleFactorKey"
-fileprivate var isMultipleTouchEnabledKey: String = "isMultipleTouchEnabledKey"
-fileprivate var isExclusiveTouchKey: String = "isExclusiveTouchKey"
-fileprivate var autoresizesSubviewsKey: String = "autoresizesSubviewsKey"
-fileprivate var directionalLayoutMarginsKey: String = "directionalLayoutMarginsKey"
-fileprivate var layoutMarginsKey: String = "layoutMarginsKey"
-fileprivate var tagKey: String = "tagKey"
-fileprivate var preservesSuperviewLayoutMarginsKey: String = "preservesSuperviewLayoutMarginsKey"
-fileprivate var insetsLayoutMarginsFromSafeAreaKey: String = "insetsLayoutMarginsFromSafeAreaKey"
-fileprivate var clipsToBoundsKey: String = "clipsToBoundsKey"
-fileprivate var alphaKey: String = "alphaKey"
-fileprivate var isOpaqueKey: String = "isOpaqueKey"
-fileprivate var clearsContextBeforeDrawingKey: String = "clearsContextBeforeDrawingKey"
-fileprivate var isHiddenKey: String = "isHiddenKey"
-fileprivate var backgroundColorKey: String = "backgroundColorKey"
-fileprivate var maskKey: String = "maskKey"
-fileprivate var tintColorKey: String = "tintColorKey"
-fileprivate var translatesAutoresizingMaskIntoConstraintsKey: String = "translatesAutoresizingMaskIntoConstraintsKey"
-fileprivate var restorationIdentifierKey: String = "restorationIdentifierKey"
+private var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
+private var focusGroupIdentifierKey: String = "focusGroupIdentifierKey"
+private var frameKey: String = "frameKey"
+private var boundsKey: String = "boundsKey"
+private var centerKey: String = "centerKey"
+private var contentScaleFactorKey: String = "contentScaleFactorKey"
+private var isMultipleTouchEnabledKey: String = "isMultipleTouchEnabledKey"
+private var isExclusiveTouchKey: String = "isExclusiveTouchKey"
+private var autoresizesSubviewsKey: String = "autoresizesSubviewsKey"
+private var directionalLayoutMarginsKey: String = "directionalLayoutMarginsKey"
+private var layoutMarginsKey: String = "layoutMarginsKey"
+private var tagKey: String = "tagKey"
+private var preservesSuperviewLayoutMarginsKey: String = "preservesSuperviewLayoutMarginsKey"
+private var insetsLayoutMarginsFromSafeAreaKey: String = "insetsLayoutMarginsFromSafeAreaKey"
+private var clipsToBoundsKey: String = "clipsToBoundsKey"
+private var alphaKey: String = "alphaKey"
+private var isOpaqueKey: String = "isOpaqueKey"
+private var clearsContextBeforeDrawingKey: String = "clearsContextBeforeDrawingKey"
+private var isHiddenKey: String = "isHiddenKey"
+private var backgroundColorKey: String = "backgroundColorKey"
+private var maskKey: String = "maskKey"
+private var tintColorKey: String = "tintColorKey"
+// swiftlint:disable:next identifier_name
+private var translatesAutoresizingMaskIntoConstraintsKey: String = "translatesAutoresizingMaskIntoConstraintsKey"
+private var restorationIdentifierKey: String = "restorationIdentifierKey"
 
 public extension BindableCollection where Object: UIView {
     
     // MARK: Two Way Relay
 
-    var isUserInteractionEnabled: BindableObservable<Bool> {
+    var isUserInteractionEnabled: Observable<Bool> {
         bindable(of: \.isUserInteractionEnabled, key: &isUserInteractionEnabledKey)
     }
     
-    var tag: BindableObservable<Int> {
+    var tag: Observable<Int> {
         bindable(of: \.tag, key: &tagKey)
     }
     
     @available(iOS 14.0, *)
-    var focusGroupIdentifier: BindableObservable<String?> {
+    var focusGroupIdentifier: Observable<String?> {
         bindable(of: \.focusGroupIdentifier, key: &focusGroupIdentifierKey)
     }
     
-    var frame: BindableObservable<CGRect> {
+    var frame: Observable<CGRect> {
         bindable(of: \.frame, key: &frameKey)
     }
     
-    var bounds: BindableObservable<CGRect> {
+    var bounds: Observable<CGRect> {
         bindable(of: \.bounds, key: &boundsKey)
     }
     
-    var center: BindableObservable<CGPoint> {
+    var center: Observable<CGPoint> {
         bindable(of: \.center, key: &centerKey)
     }
     
-    var contentScaleFactor: BindableObservable<CGFloat> {
+    var contentScaleFactor: Observable<CGFloat> {
         bindable(of: \.contentScaleFactor, key: &contentScaleFactorKey)
     }
     
-    var isMultipleTouchEnabled: BindableObservable<Bool> {
+    var isMultipleTouchEnabled: Observable<Bool> {
         bindable(of: \.isMultipleTouchEnabled, key: &isMultipleTouchEnabledKey)
     }
     
-    var isExclusiveTouch: BindableObservable<Bool> {
+    var isExclusiveTouch: Observable<Bool> {
         bindable(of: \.isExclusiveTouch, key: &isExclusiveTouchKey)
     }
 
-    var autoresizesSubviews: BindableObservable<Bool> {
+    var autoresizesSubviews: Observable<Bool> {
         bindable(of: \.autoresizesSubviews, key: &autoresizesSubviewsKey)
     }
     
-    var layoutMargins: BindableObservable<UIEdgeInsets> {
+    var layoutMargins: Observable<UIEdgeInsets> {
         bindable(of: \.layoutMargins, key: &layoutMarginsKey)
     }
     
     @available(iOS 11.0, *)
-    var directionalLayoutMargins: BindableObservable<NSDirectionalEdgeInsets> {
+    var directionalLayoutMargins: Observable<NSDirectionalEdgeInsets> {
         bindable(of: \.directionalLayoutMargins, key: &directionalLayoutMarginsKey)
     }
     
-    var preservesSuperviewLayoutMargins: BindableObservable<Bool> {
+    var preservesSuperviewLayoutMargins: Observable<Bool> {
         bindable(of: \.preservesSuperviewLayoutMargins, key: &preservesSuperviewLayoutMarginsKey)
     }
     
     @available(iOS 11.0, *)
-    var insetsLayoutMarginsFromSafeArea: BindableObservable<Bool> {
+    var insetsLayoutMarginsFromSafeArea: Observable<Bool> {
         bindable(of: \.insetsLayoutMarginsFromSafeArea, key: &insetsLayoutMarginsFromSafeAreaKey)
     }
     
-    var clipsToBounds: BindableObservable<Bool> {
+    var clipsToBounds: Observable<Bool> {
         bindable(of: \.clipsToBounds, key: &clipsToBoundsKey)
     }
     
-    var backgroundColor: BindableObservable<UIColor?> {
+    var backgroundColor: Observable<UIColor?> {
         bindable(of: \.backgroundColor, key: &backgroundColorKey)
     }
     
-    var alpha: BindableObservable<CGFloat> {
+    var alpha: Observable<CGFloat> {
         bindable(of: \.alpha, key: &alphaKey)
     }
     
-    var isOpaque: BindableObservable<Bool> {
+    var isOpaque: Observable<Bool> {
         bindable(of: \.isOpaque, key: &isOpaqueKey)
     }
     
-    var clearsContextBeforeDrawing: BindableObservable<Bool> {
+    var clearsContextBeforeDrawing: Observable<Bool> {
         bindable(of: \.clearsContextBeforeDrawing, key: &clearsContextBeforeDrawingKey)
     }
     
-    var isHidden: BindableObservable<Bool> {
+    var isHidden: Observable<Bool> {
         bindable(of: \.isHidden, key: &isHiddenKey)
     }
     
-    var mask: BindableObservable<UIView?> {
+    var mask: Observable<UIView?> {
         bindable(of: \.mask, key: &maskKey)
     }
     
-    var tintColor: BindableObservable<UIColor?> {
+    var tintColor: Observable<UIColor?> {
         bindable(of: \.tintColor, key: &tintColorKey)
     }
     
-    var translatesAutoresizingMaskIntoConstraints: BindableObservable<Bool> {
+    // swiftlint:disable:next identifier_name
+    var translatesAutoresizingMaskIntoConstraints: Observable<Bool> {
         bindable(of: \.translatesAutoresizingMaskIntoConstraints, key: &translatesAutoresizingMaskIntoConstraintsKey)
     }
     
-    var restorationIdentifier: BindableObservable<String?> {
+    var restorationIdentifier: Observable<String?> {
         bindable(of: \.restorationIdentifier, key: &restorationIdentifierKey)
     }
     

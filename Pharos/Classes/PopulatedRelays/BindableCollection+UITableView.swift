@@ -9,164 +9,164 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var rowHeightKey: String = "rowHeightKey"
-fileprivate var delegateKey: String = "delegateKey"
-fileprivate var dataSourceKey: String = "dataSourceKey"
-fileprivate var prefetchDataSourceKey: String = "prefetchDataSourceKey"
-fileprivate var isPrefetchingEnabledKey: String = "isPrefetchingEnabledKey"
-fileprivate var dragDelegateKey: String = "dragDelegateKey"
-fileprivate var dropDelegateKey: String = "dropDelegateKey"
-fileprivate var dragInteractionEnabledKey: String = "dragInteractionEnabledKey"
-fileprivate var backgroundViewKey: String = "backgroundViewKey"
-fileprivate var allowsSelectionKey: String = "allowsSelectionKey"
-fileprivate var allowsMultipleSelectionKey: String = "allowsMultipleSelectionKey"
-fileprivate var remembersLastFocusedIndexPathKey: String = "remembersLastFocusedIndexPathKey"
-fileprivate var selectionFollowsFocusKey: String = "selectionFollowsFocusKey"
-fileprivate var isEditingKey: String = "isEditingKey"
-fileprivate var sectionHeaderHeightKey: String = "sectionHeaderHeightKey"
-fileprivate var sectionFooterHeightKey: String = "sectionFooterHeightKey"
-fileprivate var estimatedRowHeightKey: String = "estimatedRowHeightKey"
-fileprivate var separatorInsetKey: String = "separatorInsetKey"
-fileprivate var sectionIndexMinimumDisplayRowCountKey: String = "sectionIndexMinimumDisplayRowCountKey"
-fileprivate var sectionIndexColorKey: String = "sectionIndexColorKey"
-fileprivate var sectionIndexBackgroundColorKey: String = "sectionIndexBackgroundColorKey"
-fileprivate var sectionIndexTrackingBackgroundColorKey: String = "sectionIndexTrackingBackgroundColorKey"
-fileprivate var separatorStyleKey: String = "separatorStyleKey"
-fileprivate var separatorEffectKey: String = "separatorEffectKey"
-fileprivate var separatorColorKey: String = "separatorColorKey"
-fileprivate var tableHeaderViewKey: String = "tableHeaderViewKey"
-fileprivate var estimatedSectionHeaderHeightKey: String = "estimatedSectionHeaderHeightKey"
-fileprivate var estimatedSectionFooterHeightKey: String = "estimatedSectionFooterHeightKey"
-fileprivate var cellLayoutMarginsFollowReadableWidthKey: String = "cellLayoutMarginsFollowReadableWidthKey"
-fileprivate var insetsContentViewsToSafeAreaKey: String = "insetsContentViewsToSafeAreaKey"
-fileprivate var tableFooterViewKey: String = "tableFooterViewKey"
+private var rowHeightKey: String = "rowHeightKey"
+private var delegateKey: String = "delegateKey"
+private var dataSourceKey: String = "dataSourceKey"
+private var prefetchDataSourceKey: String = "prefetchDataSourceKey"
+private var isPrefetchingEnabledKey: String = "isPrefetchingEnabledKey"
+private var dragDelegateKey: String = "dragDelegateKey"
+private var dropDelegateKey: String = "dropDelegateKey"
+private var dragInteractionEnabledKey: String = "dragInteractionEnabledKey"
+private var backgroundViewKey: String = "backgroundViewKey"
+private var allowsSelectionKey: String = "allowsSelectionKey"
+private var allowsMultipleSelectionKey: String = "allowsMultipleSelectionKey"
+private var remembersLastFocusedIndexPathKey: String = "remembersLastFocusedIndexPathKey"
+private var selectionFollowsFocusKey: String = "selectionFollowsFocusKey"
+private var isEditingKey: String = "isEditingKey"
+private var sectionHeaderHeightKey: String = "sectionHeaderHeightKey"
+private var sectionFooterHeightKey: String = "sectionFooterHeightKey"
+private var estimatedRowHeightKey: String = "estimatedRowHeightKey"
+private var separatorInsetKey: String = "separatorInsetKey"
+private var sectionIndexMinimumDisplayRowCountKey: String = "sectionIndexMinimumDisplayRowCountKey"
+private var sectionIndexColorKey: String = "sectionIndexColorKey"
+private var sectionIndexBackgroundColorKey: String = "sectionIndexBackgroundColorKey"
+private var sectionIndexTrackingBackgroundColorKey: String = "sectionIndexTrackingBackgroundColorKey"
+private var separatorStyleKey: String = "separatorStyleKey"
+private var separatorEffectKey: String = "separatorEffectKey"
+private var separatorColorKey: String = "separatorColorKey"
+private var tableHeaderViewKey: String = "tableHeaderViewKey"
+private var estimatedSectionHeaderHeightKey: String = "estimatedSectionHeaderHeightKey"
+private var estimatedSectionFooterHeightKey: String = "estimatedSectionFooterHeightKey"
+private var cellLayoutMarginsFollowReadableWidthKey: String = "cellLayoutMarginsFollowReadableWidthKey"
+private var insetsContentViewsToSafeAreaKey: String = "insetsContentViewsToSafeAreaKey"
+private var tableFooterViewKey: String = "tableFooterViewKey"
 
 public extension BindableCollection where Object: UITableView {
     
     // MARK: Two Way Relay
     
-    var dataSource: BindableObservable<UITableViewDataSource?> {
+    var dataSource: Observable<UITableViewDataSource?> {
         bindable(of: \.dataSource, key: &dataSourceKey)
     }
     
-    var delegate: BindableObservable<UITableViewDelegate?> {
+    var delegate: Observable<UITableViewDelegate?> {
         bindable(of: \.delegate, key: &delegateKey)
     }
     
-    var prefetchDataSource: BindableObservable<UITableViewDataSourcePrefetching?> {
+    var prefetchDataSource: Observable<UITableViewDataSourcePrefetching?> {
         bindable(of: \.prefetchDataSource, key: &prefetchDataSourceKey)
     }
     
     @available(iOS 11.0, *)
-    var dragDelegate: BindableObservable<UITableViewDragDelegate?> {
+    var dragDelegate: Observable<UITableViewDragDelegate?> {
         bindable(of: \.dragDelegate, key: &dragDelegateKey)
     }
     
     @available(iOS 11.0, *)
-    var dropDelegate: BindableObservable<UITableViewDropDelegate?> {
+    var dropDelegate: Observable<UITableViewDropDelegate?> {
         bindable(of: \.dropDelegate, key: &dropDelegateKey)
     }
     
-    var rowHeight: BindableObservable<CGFloat> {
+    var rowHeight: Observable<CGFloat> {
         bindable(of: \.rowHeight, key: &rowHeightKey)
     }
     
-    var sectionHeaderHeight: BindableObservable<CGFloat> {
+    var sectionHeaderHeight: Observable<CGFloat> {
         bindable(of: \.sectionHeaderHeight, key: &sectionHeaderHeightKey)
     }
     
-    var sectionFooterHeight: BindableObservable<CGFloat> {
+    var sectionFooterHeight: Observable<CGFloat> {
         bindable(of: \.sectionFooterHeight, key: &sectionFooterHeightKey)
     }
     
-    var estimatedRowHeight: BindableObservable<CGFloat> {
+    var estimatedRowHeight: Observable<CGFloat> {
         bindable(of: \.estimatedRowHeight, key: &estimatedRowHeightKey)
     }
     
-    var estimatedSectionHeaderHeight: BindableObservable<CGFloat> {
+    var estimatedSectionHeaderHeight: Observable<CGFloat> {
         bindable(of: \.estimatedSectionHeaderHeight, key: &estimatedSectionHeaderHeightKey)
     }
     
-    var estimatedSectionFooterHeight: BindableObservable<CGFloat> {
+    var estimatedSectionFooterHeight: Observable<CGFloat> {
         bindable(of: \.estimatedSectionFooterHeight, key: &estimatedSectionFooterHeightKey)
     }
     
-    var separatorInset: BindableObservable<UIEdgeInsets> {
+    var separatorInset: Observable<UIEdgeInsets> {
         bindable(of: \.separatorInset, key: &separatorInsetKey)
     }
     
-    var backgroundView: BindableObservable<UIView?> {
+    var backgroundView: Observable<UIView?> {
         bindable(of: \.backgroundView, key: &backgroundViewKey)
     }
     
-    var isEditing: BindableObservable<Bool> {
+    var isEditing: Observable<Bool> {
         bindable(of: \.isEditing, key: &isEditingKey)
     }
     
-    var allowsSelection: BindableObservable<Bool> {
+    var allowsSelection: Observable<Bool> {
         bindable(of: \.allowsSelection, key: &allowsSelectionKey)
     }
     
-    var allowsMultipleSelection: BindableObservable<Bool> {
+    var allowsMultipleSelection: Observable<Bool> {
         bindable(of: \.allowsMultipleSelection, key: &allowsMultipleSelectionKey)
     }
     
-    var sectionIndexMinimumDisplayRowCount: BindableObservable<Int> {
+    var sectionIndexMinimumDisplayRowCount: Observable<Int> {
         bindable(of: \.sectionIndexMinimumDisplayRowCount, key: &sectionIndexMinimumDisplayRowCountKey)
     }
     
-    var sectionIndexColor: BindableObservable<UIColor?> {
+    var sectionIndexColor: Observable<UIColor?> {
         bindable(of: \.sectionIndexColor, key: &sectionIndexColorKey)
     }
     
-    var sectionIndexBackgroundColor: BindableObservable<UIColor?> {
+    var sectionIndexBackgroundColor: Observable<UIColor?> {
         bindable(of: \.sectionIndexBackgroundColor, key: &sectionIndexBackgroundColorKey)
     }
     
-    var sectionIndexTrackingBackgroundColor: BindableObservable<UIColor?> {
+    var sectionIndexTrackingBackgroundColor: Observable<UIColor?> {
         bindable(of: \.sectionIndexTrackingBackgroundColor, key: &sectionIndexTrackingBackgroundColorKey)
     }
     
-    var separatorStyle: BindableObservable<UITableViewCell.SeparatorStyle> {
+    var separatorStyle: Observable<UITableViewCell.SeparatorStyle> {
         bindable(of: \.separatorStyle, key: &separatorStyleKey)
     }
     
-    var separatorColor: BindableObservable<UIColor?> {
+    var separatorColor: Observable<UIColor?> {
         bindable(of: \.separatorColor, key: &separatorColorKey)
     }
     
-    var separatorEffect: BindableObservable<UIVisualEffect?> {
+    var separatorEffect: Observable<UIVisualEffect?> {
         bindable(of: \.separatorEffect, key: &separatorEffectKey)
     }
     
-    var cellLayoutMarginsFollowReadableWidth: BindableObservable<Bool> {
+    var cellLayoutMarginsFollowReadableWidth: Observable<Bool> {
         bindable(of: \.cellLayoutMarginsFollowReadableWidth, key: &cellLayoutMarginsFollowReadableWidthKey)
     }
     
     @available(iOS 11.0, *)
-    var insetsContentViewsToSafeArea: BindableObservable<Bool> {
+    var insetsContentViewsToSafeArea: Observable<Bool> {
         bindable(of: \.insetsContentViewsToSafeArea, key: &insetsContentViewsToSafeAreaKey)
     }
     
-    var tableHeaderView: BindableObservable<UIView?> {
+    var tableHeaderView: Observable<UIView?> {
         bindable(of: \.tableHeaderView, key: &tableHeaderViewKey)
     }
     
-    var tableFooterView: BindableObservable<UIView?> {
+    var tableFooterView: Observable<UIView?> {
         bindable(of: \.tableFooterView, key: &tableFooterViewKey)
     }
     
-    var remembersLastFocusedIndexPath: BindableObservable<Bool> {
+    var remembersLastFocusedIndexPath: Observable<Bool> {
         bindable(of: \.remembersLastFocusedIndexPath, key: &remembersLastFocusedIndexPathKey)
     }
     
     @available(iOS 14.0, *)
-    var selectionFollowsFocus: BindableObservable<Bool> {
+    var selectionFollowsFocus: Observable<Bool> {
         bindable(of: \.selectionFollowsFocus, key: &selectionFollowsFocusKey)
     }
     
     @available(iOS 11.0, *)
-    var dragInteractionEnabled: BindableObservable<Bool> {
+    var dragInteractionEnabled: Observable<Bool> {
         bindable(of: \.dragInteractionEnabled, key: &dragInteractionEnabledKey)
     }
     
