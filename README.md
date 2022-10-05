@@ -43,7 +43,7 @@ pod 'Pharos'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Pharos.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **2.3.5** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **3.0.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -52,7 +52,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "2.3.5"))
+    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "3.0.0"))
 ]
 ```
 
@@ -92,7 +92,7 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }.retain()
@@ -108,8 +108,8 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.ignoreSameValue()
-            .whenDidSet { changes in
+        $text.distinct()
+            .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
             }.retain()
@@ -124,11 +124,25 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }.retain()
         .fire()
+    }
+}
+```
+
+if you want to ignore observing the old value, use `observe` instead:
+
+```swift
+class MyClass {
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.observe { newValue in
+            print(newValue)
+        }.retain()
     }
 }
 ```
@@ -157,7 +171,7 @@ class MyClass {
     var retainer: Retainer = .init()
     
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -181,14 +195,14 @@ There are many ways to discard the subscriber managed by `Retainer`:
 - replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed subscribers by default.
 - doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed subscribers by default.
 
-If you don't want to bother creating a Retainer, you can make your object implement `ObjectRetainer` and so it will act as a `Retainer`:
+If you don't want to bother creating a Retainer, you can alwas retained it to itself. Keep in mind it will only work for class instance:
 
 ```swift
-class MyClass: ObjectRetainer {
+class MyClass {
     @Subject var text: String?
    
     func observeText() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -208,7 +222,7 @@ class MyClass {
     var retainer: Retainer = .init()
     
     func observeTextOnce() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -216,7 +230,7 @@ class MyClass {
     }
     
     func observeTextTenTimes() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -224,7 +238,7 @@ class MyClass {
     }
     
     func observeTextForOneMinutes() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -232,7 +246,7 @@ class MyClass {
     }
     
     func observeTextUntilFoundMatches() {
-        $text.whenDidSet { changes in
+        $text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }
@@ -246,10 +260,10 @@ class MyClass {
 
 ## UIControl
 
-You can observe event in `UIControl` as long as in iOS by call `whenDetectEvent`, or by using `whenDidTriggered(by:)` if you want to observe specific event or for more specific `whenDidTapped` for touchUpInside event:
+You can observe event in `UIControl` as long as in iOS by call `observeEventChange`, or by using `whenDidTriggered(by:)` if you want to observe specific event or for more specific `whenDidTapped` for touchUpInside event:
 
 ```swift
-myButton.whenDetectEvent { changes in
+myButton.observeEventChange { changes in
   print("new event: \(changes.new) form old event: \(changes.old)")
 }.retain()
 
@@ -271,7 +285,7 @@ class MyClass {
     var textField: UITextField = .init()
     
     func observeText() {
-        textField.bindables.text.whenDidSet { changes in
+        textField.bindables.text.observeChange { changes in
             print(changes.new)
             print(changes.old)
         }.retain()
@@ -279,7 +293,7 @@ class MyClass {
 }
 ```
 
-you can always bind two subjects to notify each other as long its type is `BindableObservable`:
+you can always bind two Observables to notify each other:
 
 ```swift
 class MyClass {
@@ -294,49 +308,10 @@ class MyClass {
 ```
 
 At the example above, every time `text` is set, it will automatically set the `textField.text`, and when `textField.text` is set it will automatically set the `text`.
-To observe only changes from binding, you can use `onlyFromBinding()` before call `whenDidSet(thenDo:)` or use `onlyFromSet()` before call `whenDidSet(thenDo:)` for the opposite:
-
-```swift
-class MyClass {
-    var textField: UITextField = .init()
-    @Subject var text: String?
-    
-    func observeText() {
-        $text.bind(with: textField.bindables.text)
-            .retain()
-    }
-
-    func observeFromTextField() {
-        // option 1
-        $text.onlyFromBinding().whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.retain()
-        // option 2
-        $text.whenBindingDidChange { changes in
-            print(changes.new)
-            print(changes.old)
-        }.retain()
-    }
-
-    func observeFromPropertySet() {
-        // option 1
-        $text.onlyFromSet().whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.retain()
-        // option 2
-        $text.whenPropertyDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.retain()
-    }
-}
-```
 
 ## Filtering Subscription
 
-You can ignore set to observable by passing a closure that returning `Bool` value which indicated that value should be ignored:
+You can filter value by passing a closure that returning `Bool` value which indicated that value should be ignored:
 
 ```swift
 class MyClass {
@@ -344,7 +319,7 @@ class MyClass {
     
     func observeText() {
         $text.ignore { $0.new.isEmpty }
-            .whenDidSet { changes in
+            .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
             }.retain()
@@ -352,17 +327,17 @@ class MyClass {
 }
 ```
 
-At the example above, `whenDidSet` closure will not run when the new value is empty
+At the example above, `observeChange` closure will not run when the new value is empty
 
-The opposite of ignore is `onlyInclude`
+The opposite of ignore is `filter`
 
 ```swift
 class MyClass {
     @Subject var text: String
     
     func observeText() {
-        $text.onlyInclude { $0.new.count > 5 }
-            .whenDidSet { changes in
+        $text.filter { $0.new.count > 5 }
+            .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
             }.retain()
@@ -370,9 +345,9 @@ class MyClass {
 }
 ```
 
-At the example above, whenDidSet closure will only run when the new value is bigger than 5
+At the example above, observeChange closure will only run when the new value is bigger than 5
 
-## Delaying Multiple Set
+## Throttling
 
 Sometimes you just want to delay some observing because if the value is coming too fast, it could be bottleneck some of your business logic like when you call API or something. It will automatically use the latest value when the closure fire:
 
@@ -381,11 +356,19 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.multipleSetDelayed(by: 1)
-        .retain()
+        $text.throttled(by: 1)
+            .observeChange { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+            .retain()
+    }
+
+    func test() { 
+        text = "this will trigger the observable and block observer for next 1 second"
+        text = "this will be stored in pending but will be replaced by next set"
+        text = "this will be stored in pending but will be replaced by next set too"
+        text = "this will be stored in pending and be used at next 1 second"
     }
 }
 ```
@@ -399,30 +382,31 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.observe(on: .main)
-        .retain()
+        $text.dispatch(on: .main)
+            .observeChange { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+            .retain()
     }
 }
 ```
 
-It will always run the subscriber in the same `DispatchQueue` given. If it is already in the same `DispatchQueue`, it will run synchronously. Otherwise, it will run asynchronously.
+It will make all the subscriber after this dispatch call to be run asyncrhonously in the given `DispatchQueue`
 
-You could always make sure the closure will always run asynchronously if needed:
+You could make it synchronous if its already in the same `DispatchQueue` by adding `syncPrefered` flag:
 
 ```swift
 class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.whenDidSet { changes in
-            print(changes.new)
-            print(changes.old)
-        }.observe(on: .main)
-        .asynchronously()
-        .retain()
+        $text.dispatch(on: .main, syncPrefered: true)
+            .observeChange { changes in
+                print(changes.new)
+                print(changes.old)
+            }
+            .retain()
     }
 }
 ```
@@ -437,7 +421,7 @@ class MyClass {
     
     func observeText() {
         $text.mapped { $0.count }
-            .whenDidSet { changes in
+            .observeChange { changes in
                 print("text character count is \(changes.new)")
             }.retain()
     }
@@ -451,8 +435,8 @@ class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.compactMap { $0?.count }
-            .whenDidSet { changes in
+        $text.compactMapped { $0?.count }
+            .observeChange { changes in
                 // this will not run if text is nil
                 print("text character count is \(changes.new)")
             }.retain()
@@ -471,14 +455,14 @@ let myObservableFromBlock = ObservableBlock { accept in
     }
 }
 
-myObservableFromBlock.whenDidSet { changes in
+myObservableFromBlock.observeChange { changes in
     print(changes)
 }.retain()
 ```
 
 ## Relay value to another Observable
 
-You can relay value from any Observable to another Observable as long as the type is the same and the other observable is `BindableObservable`:
+You can relay value from any Observable to another Observable:
 
 ```swift
 class MyClass {
@@ -520,8 +504,8 @@ class MyClass {
     @Subject var subject4: String = ""
     
     func observeText() {
-        $subject1.merge(with: $subject2, $subject3, $subject4)
-            .whenDidSet { changes in
+        $subject1.merged(with: $subject2, $subject3, $subject4)
+            .observeChange { changes in
                 // this will run if any of merged observable is set
                 print(changes.new)
             }.retain()
@@ -542,7 +526,7 @@ class MyClass {
     
     func observeText() {
         $userName.combine(with: $fullName, $password)
-            .map { 
+            .mapped { 
                 User(
                     userName: $0.new.0, 
                     fullName: $0.new.1, 
