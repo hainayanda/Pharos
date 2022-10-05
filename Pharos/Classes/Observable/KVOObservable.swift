@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
     weak var object: Object?
