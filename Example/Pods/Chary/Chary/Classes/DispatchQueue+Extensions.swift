@@ -50,6 +50,15 @@ extension DispatchQueue {
     public func registerDetection() {
         self.setSpecific(key: detectionKey, value: QueueReference(queue: self))
     }
+    
+    /// Check is current queue is same as given queue.
+    /// It will automatically register detection for the queue, so it will be better than using == operator manually
+    /// - Parameter queue: Queue to check
+    /// - Returns: True if the current queue is the same as the given queue
+    public static func isCurrentQueue(is queue: DispatchQueue) -> Bool {
+        queue.registerDetection()
+        return current == queue
+    }
 }
 
 // MARK: SafeSync
@@ -59,11 +68,12 @@ extension DispatchQueue {
     /// Perform safe synchronous task. It will run the block right away if turns out its on the same queue as the target
     /// - Parameter block: The work item to be invoked on the queue.
     /// - returns the value returned by the work item.
-    public func safeSync<Return>(execute block: () -> Return) -> Return {
-        ifAtDifferentQueue {
-            sync(execute: block)
+    public func safeSync<Return>(
+        execute block: () throws -> Return) rethrows -> Return {
+        try ifAtDifferentQueue {
+            try sync(execute: block)
         } ifNot: {
-            block()
+            try block()
         }
     }
     
@@ -102,8 +112,10 @@ extension DispatchQueue {
     ///   - block: Block that will be run if current queue different than the target
     ///   - doElse: Block that will be run if current queue same than the target
     /// - Returns: The value returned by the block
-    public func ifAtDifferentQueue<Return>(do block: () -> Return, ifNot doElse: () -> Return) -> Return {
-        ifAtSameQueue(do: doElse, ifNot: block)
+    public func ifAtDifferentQueue<Return>(
+        do block: () throws -> Return,
+        ifNot doElse: () throws -> Return) rethrows -> Return {
+        try ifAtSameQueue(do: doElse, ifNot: block)
     }
     
     /// Perform queue check to determined if its in same queue or not. The it will run one of the block regarding of the current queue
@@ -111,11 +123,12 @@ extension DispatchQueue {
     ///   - block: Block that will be run if current queue same than the target
     ///   - doElse: Block that will be run if current queue different than the target
     /// - Returns: The value returned by the block
-    public func ifAtSameQueue<Return>(do block: () -> Return, ifNot doElse: () -> Return) -> Return {
-        registerDetection()
-        guard DispatchQueue.current != self else {
-            return block()
+    public func ifAtSameQueue<Return>(
+        do block: () throws -> Return,
+        ifNot doElse: () throws -> Return) rethrows -> Return {
+        guard DispatchQueue.isCurrentQueue(is: self) else {
+            return try doElse()
         }
-        return doElse()
+        return try block()
     }
 }
