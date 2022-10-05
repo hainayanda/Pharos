@@ -9,53 +9,53 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var valueKey: String = "valueKey"
-fileprivate var minimumValueKey: String = "minimumValueKey"
-fileprivate var maximumValueKey: String = "maximumValueKey"
-fileprivate var minimumValueImageKey: String = "minimumValueImageKey"
-fileprivate var maximumValueImageKey: String = "maximumValueImageKey"
-fileprivate var isContinuousKey: String = "isContinuousKey"
-fileprivate var minimumTrackTintColorKey: String = "minimumTrackTintColorKey"
-fileprivate var maximumTrackTintColorKey: String = "maximumTrackTintColorKey"
-fileprivate var thumbTintColorKey: String = "thumbTintColorKey"
+private var valueKey: String = "valueKey"
+private var minimumValueKey: String = "minimumValueKey"
+private var maximumValueKey: String = "maximumValueKey"
+private var minimumValueImageKey: String = "minimumValueImageKey"
+private var maximumValueImageKey: String = "maximumValueImageKey"
+private var isContinuousKey: String = "isContinuousKey"
+private var minimumTrackTintColorKey: String = "minimumTrackTintColorKey"
+private var maximumTrackTintColorKey: String = "maximumTrackTintColorKey"
+private var thumbTintColorKey: String = "thumbTintColorKey"
 
 public extension BindableCollection where Object: UISlider {
     
     // MARK: Two Way Relay
     
-    var value: BindableObservable<Float> {
+    var value: Observable<Float> {
         bindable(of: \.value, key: &valueKey)
     }
     
-    var minimumValue: BindableObservable<Float> {
+    var minimumValue: Observable<Float> {
         bindable(of: \.minimumValue, key: &minimumValueKey)
     }
     
-    var maximumValue: BindableObservable<Float> {
+    var maximumValue: Observable<Float> {
         bindable(of: \.maximumValue, key: &maximumValueKey)
     }
     
-    var minimumValueImage: BindableObservable<UIImage?> {
+    var minimumValueImage: Observable<UIImage?> {
         bindable(of: \.minimumValueImage, key: &minimumValueImageKey)
     }
     
-    var maximumValueImage: BindableObservable<UIImage?> {
+    var maximumValueImage: Observable<UIImage?> {
         bindable(of: \.maximumValueImage, key: &maximumValueImageKey)
     }
     
-    var isContinuous: BindableObservable<Bool> {
+    var isContinuous: Observable<Bool> {
         bindable(of: \.isContinuous, key: &isContinuousKey)
     }
     
-    var minimumTrackTintColor: BindableObservable<UIColor?> {
+    var minimumTrackTintColor: Observable<UIColor?> {
         bindable(of: \.minimumTrackTintColor, key: &minimumTrackTintColorKey)
     }
     
-    var maximumTrackTintColor: BindableObservable<UIColor?> {
+    var maximumTrackTintColor: Observable<UIColor?> {
         bindable(of: \.maximumTrackTintColor, key: &maximumTrackTintColorKey)
     }
     
-    var thumbTintColor: BindableObservable<UIColor?> {
+    var thumbTintColor: Observable<UIColor?> {
         bindable(of: \.thumbTintColor, key: &thumbTintColorKey)
     }
     

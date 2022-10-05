@@ -12,7 +12,7 @@ import UIKit
 var controlActionAssociatedKey: String = "controlActionAssociatedKey"
 
 extension UIControl.Event: Hashable {
-    public func hash(into hasher: inout Hasher) {
+    @inlinable public func hash(into hasher: inout Hasher) {
         hasher.combine(self.rawValue)
     }
 }
@@ -60,7 +60,7 @@ extension UIControl {
         }
     }
     
-    var allEvents: [UIControl.Event] {
+    @inlinable var allEvents: [UIControl.Event] {
         if #available(iOS 14.0, *) {
             return [
                 .touchDown,
@@ -101,7 +101,7 @@ extension UIControl {
         }
     }
     
-    var allTouchEvents: [UIControl.Event] {
+    @inlinable var allTouchEvents: [UIControl.Event] {
         [
             .touchDown,
             .touchDownRepeat,
@@ -115,7 +115,7 @@ extension UIControl {
         ]
     }
     
-    var allEditingEvents: [UIControl.Event] {
+    @inlinable var allEditingEvents: [UIControl.Event] {
         [
             .editingDidBegin,
             .editingChanged,
@@ -127,8 +127,13 @@ extension UIControl {
 
 extension UIControl {
     
-    public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
-        getControlAction().eventObservable.whenDidSet(thenDo: work)
+    @available(*, deprecated, renamed: "observeChange")
+    @inlinable public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+        observeEventChange(work)
+    }
+    
+    public func observeEventChange(_ observer: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+        getControlAction().eventObservable.observeChange(observer)
     }
     
     public func whenDidTriggered(by event: UIControl.Event, thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
@@ -142,12 +147,12 @@ extension UIControl {
         } else {
             eventUsed = [event]
         }
-        return getControlAction().eventObservable.onlyInclude {
-            eventUsed.contains($0.new)
-        }.whenDidSet(thenDo: work)
+        return getControlAction().eventObservable.filter {
+            eventUsed.contains($0)
+        }.observeChange(work)
     }
     
-    public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    @inlinable public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
         whenDidTriggered(by: .touchUpInside, thenDo: work)
     }
     

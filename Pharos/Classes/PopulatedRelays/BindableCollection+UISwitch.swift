@@ -9,36 +9,35 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var onTintColorKey: String = "onTintColorKey"
-fileprivate var thumbTintColorKey: String = "thumbTintColorKey"
-fileprivate var onImageKey: String = "onImageKey"
-fileprivate var offImageKey: String = "offImageKey"
-fileprivate var isOnKey: String = "isOnKey"
+private var onTintColorKey: String = "onTintColorKey"
+private var thumbTintColorKey: String = "thumbTintColorKey"
+private var onImageKey: String = "onImageKey"
+private var offImageKey: String = "offImageKey"
+private var isOnKey: String = "isOnKey"
 
 public extension BindableCollection where Object: UISwitch {
     
     // MARK: Two Way Relay
     
-    var onTintColor: BindableObservable<UIColor?> {
+    var onTintColor: Observable<UIColor?> {
         bindable(of: \.onTintColor, key: &onTintColorKey)
     }
     
-    var thumbTintColor: BindableObservable<UIColor?> {
+    var thumbTintColor: Observable<UIColor?> {
         bindable(of: \.thumbTintColor, key: &thumbTintColorKey)
     }
     
-    var onImage: BindableObservable<UIImage?> {
+    var onImage: Observable<UIImage?> {
         bindable(of: \.onImage, key: &onImageKey)
     }
     
-    var offImage: BindableObservable<UIImage?> {
+    var offImage: Observable<UIImage?> {
         bindable(of: \.offImage, key: &offImageKey)
     }
     
-    var isOn: BindableObservable<Bool> {
+    var isOn: Observable<Bool> {
         bindable(of: \.isOn, key: &isOnKey)
     }
     
 }
 #endif
-

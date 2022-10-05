@@ -17,7 +17,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/hainayanda/Chary.git", from: "1.0.2"),
+        .package(url: "https://github.com/hainayanda/Chary.git", from: "1.0.3"),
         // uncomment code below to run test
 //        .package(url: "https://github.com/Quick/Quick.git", from: "5.0.1"),
 //        .package(url: "https://github.com/Quick/Nimble.git", from: "10.0.0")

@@ -13,6 +13,7 @@ import Nimble
 import UIKit
 #endif
 @testable import Pharos
+// swiftlint:disable function_body_length
 
 class ObservableSpec: QuickSpec {
     
@@ -29,7 +30,7 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
         }
@@ -40,14 +41,14 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
             retainer = nil
             subject.wrappedValue = .randomString(length: 18)
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
         }
@@ -58,14 +59,14 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
             retainer = nil
             subject.wrappedValue = .randomString(length: 18)
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
         }
@@ -75,27 +76,29 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
             subject.wrappedValue = .randomString(length: 18)
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState, source: subject),
+                shouldSimilarWith: Changes(new: newState, old: intialState),
                 setCount: 1
             )
         }
         it("should retain subscriber until met condition") {
             let newState: String = .randomString(length: 18)
-            let expectedChanges = Changes(old: intialState, new: newState, source: subject)
-            let changeWrapper = listenDidSet(for: subject, retainUntilState: expectedChanges)
+            let triggeringState: String = .randomString(length: 18)
+            let stopChanges = Changes(new: triggeringState, old: newState)
+            let expectedChanges = Changes(new: newState, old: intialState)
+            let changeWrapper = listenDidSet(for: subject, retainUntilState: stopChanges)
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: expectedChanges,
                 setCount: 1
             )
-            subject.wrappedValue = .randomString(length: 18)
+            subject.wrappedValue = triggeringState
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: expectedChanges,
@@ -104,7 +107,7 @@ class ObservableSpec: QuickSpec {
         }
         it("should retain subscriber for given timeinterval") {
             let newState: String = .randomString(length: 18)
-            let expectedChanges = Changes(old: intialState, new: newState, source: subject)
+            let expectedChanges = Changes(new: newState, old: intialState)
             let changeWrapper = listenDidSet(for: subject, retainUntil: 0.5)
             subject.wrappedValue = newState
             thenAssert(
@@ -123,7 +126,7 @@ class ObservableSpec: QuickSpec {
             )
         }
         it("should ignore state") {
-            let changeWrapper = listenDidSet(for: subject.ignore(when: { _ in true }))
+            let changeWrapper = listenDidSet(for: subject.ignore { _ in true })
             subject.wrappedValue = .randomString(length: 18)
             expect(changeWrapper.changes).to(beNil())
         }
@@ -135,9 +138,9 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState2
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState1, source: subject),
+                shouldSimilarWith: Changes(new: newState1, old: intialState),
                 andAfter: .milliseconds(50),
-                shouldSimilarWith: Changes(old: newState1, new: newState2, source: subject)
+                shouldSimilarWith: Changes(new: newState2, old: newState1)
             )
         }
         it("should map subject") {
@@ -146,25 +149,25 @@ class ObservableSpec: QuickSpec {
             subject.wrappedValue = newState
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState.count, new: newState.count, source: subject),
+                shouldSimilarWith: Changes(new: newState.count, old: intialState.count),
                 setCount: 1
             )
         }
         it("should merge subjects") {
             let subject2 = Subject<String>(wrappedValue: intialState)
-            let changeWrapper = listenDidSet(for: subject.merge(with: subject2))
+            let changeWrapper = listenDidSet(for: subject.merged(with: subject2))
             let newState1: String = .randomString(length: 18)
             let newState2: String = .randomString(length: 18)
             subject.wrappedValue = newState1
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: intialState, new: newState1, source: subject),
+                shouldSimilarWith: Changes(new: newState1, old: intialState),
                 setCount: 1
             )
             subject2.wrappedValue = newState2
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: newState1, new: newState2, source: subject2),
+                shouldSimilarWith: Changes(new: newState2, old: newState1),
                 setCount: 2
             )
         }
@@ -173,56 +176,59 @@ class ObservableSpec: QuickSpec {
 
 // MARK: Given
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retain()
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, delayBy interval: TimeInterval) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, delayBy interval: TimeInterval) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .throttled(by: interval)
+        .observeChange { changes in
             changeWrapper.changes = changes
-        }.multipleSetDelayed(by: interval)
+        }
         .retain()
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, retainTo retainer: Retainer) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, retainTo retainer: Retainer) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retained(by: retainer)
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, retainUntilStateCount maxCount: Int) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, retainUntilStateCount maxCount: Int) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retainUntil(nextEventCount: maxCount)
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
+private func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
-        }.retainUntil { $0 == changes }
+        }.retainUntil {
+            $0 == changes
+        }
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, retainUntil timeInterval: TimeInterval) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, retainUntil timeInterval: TimeInterval) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retain(for: 0.5)
     return changeWrapper
@@ -232,30 +238,28 @@ fileprivate func listenDidSet<State>(for subject: Observable<State>, retainUntil
 
 // MARK: Assertion
 
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>, setCount: Int) {
         guard let changes = notifiedChanges.changes else {
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old).to(equal(expectedChanges.old))
         expect(notifiedChanges.setCount).to(equal(setCount))
     }
 
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>,
     after timeInterval: DispatchTimeInterval,
     setCount: Int) {
-        expect(notifiedChanges.changes?.source === expectedChanges.source).toEventually(beTrue(), pollInterval: timeInterval)
         expect(notifiedChanges.changes?.new).toEventually(equal(expectedChanges.new), pollInterval: timeInterval)
         expect(notifiedChanges.changes?.old).toEventually(equal(expectedChanges.old), pollInterval: timeInterval)
         expect(notifiedChanges.setCount).toEventually(equal(setCount), pollInterval: timeInterval)
     }
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>,
     andAfter timeInterval: DispatchTimeInterval,

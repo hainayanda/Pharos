@@ -13,6 +13,7 @@ import Nimble
 import UIKit
 #endif
 @testable import Pharos
+// swiftlint:disable function_body_length
 
 class CombineSpec: QuickSpec {
     
@@ -31,13 +32,13 @@ class CombineSpec: QuickSpec {
             subject.wrappedValue = newState1
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: (intialState, 0), new: (newState1, 0), source: subject),
+                shouldSimilarWith: Changes(new: (newState1, 0), old: (intialState, 0)),
                 setCount: 1
             )
             subject2.wrappedValue = newState2
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: (newState1, 0), new: (newState1, newState2), source: subject2),
+                shouldSimilarWith: Changes(new: (newState1, newState2), old: (newState1, 0)),
                 setCount: 2
             )
         }
@@ -51,9 +52,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (intialState, 0, false),
-                    new: (newState1, 0, false),
-                    source: subject
+                    new: (newState1, 0, false), old: (intialState, 0, false)
                 ),
                 setCount: 1
             )
@@ -61,9 +60,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (newState1, 0, false),
-                    new: (newState1, newState2, false),
-                    source: subject2
+                    new: (newState1, newState2, false), old: (newState1, 0, false)
                 ),
                 setCount: 2
             )
@@ -71,9 +68,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (newState1, newState2, false),
-                    new: (newState1, newState2, true),
-                    source: subject3
+                    new: (newState1, newState2, true), old: (newState1, newState2, false)
                 ),
                 setCount: 3
             )
@@ -90,9 +85,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (intialState, 0, false, 0),
-                    new: (newState1, 0, false, 0),
-                    source: subject
+                    new: (newState1, 0, false, 0), old: (intialState, 0, false, 0)
                 ),
                 setCount: 1
             )
@@ -100,9 +93,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (newState1, 0, false, 0),
-                    new: (newState1, newState2, false, 0),
-                    source: subject2
+                    new: (newState1, newState2, false, 0), old: (newState1, 0, false, 0)
                 ),
                 setCount: 2
             )
@@ -110,9 +101,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (newState1, newState2, false, 0),
-                    new: (newState1, newState2, true, 0),
-                    source: subject3
+                    new: (newState1, newState2, true, 0), old: (newState1, newState2, false, 0)
                 ),
                 setCount: 3
             )
@@ -120,9 +109,7 @@ class CombineSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(
-                    old: (newState1, newState2, true, 0),
-                    new: (newState1, newState2, true, newState4),
-                    source: subject4
+                    new: (newState1, newState2, true, newState4), old: (newState1, newState2, true, 0)
                 ),
                 setCount: 4
             )
@@ -132,47 +119,48 @@ class CombineSpec: QuickSpec {
 
 // MARK: Given
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retain()
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, delayBy interval: TimeInterval) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, delayBy interval: TimeInterval) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .throttled(by: interval)
+        .observeChange { changes in
             changeWrapper.changes = changes
-        }.multipleSetDelayed(by: interval)
+        }
         .retain()
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, retainTo retainer: Retainer) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, retainTo retainer: Retainer) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retained(by: retainer)
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>, retainUntilStateCount maxCount: Int) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>, retainUntilStateCount maxCount: Int) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retainUntil(nextEventCount: maxCount)
     return changeWrapper
 }
 
-fileprivate func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
+private func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retainUntil { $0 == changes }
     return changeWrapper
@@ -182,31 +170,29 @@ fileprivate func listenDidSet<State: Equatable>(for subject: Observable<State>, 
 
 // MARK: Assertion
 
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>, setCount: Int) {
         guard let changes = notifiedChanges.changes else {
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old).to(equal(expectedChanges.old))
         expect(notifiedChanges.setCount).to(equal(setCount))
     }
 
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>,
     after timeInterval: DispatchTimeInterval,
     setCount: Int) {
-        expect(notifiedChanges.changes?.source === expectedChanges.source).toEventually(beTrue(), pollInterval: timeInterval)
         expect(notifiedChanges.changes?.new).toEventually(equal(expectedChanges.new), pollInterval: timeInterval)
         expect(notifiedChanges.changes?.old).toEventually(equal(expectedChanges.old), pollInterval: timeInterval)
         expect(notifiedChanges.setCount).toEventually(equal(setCount), pollInterval: timeInterval)
     }
 
-fileprivate func thenAssert<State1: Equatable, State2: Equatable>(
+private func thenAssert<State1: Equatable, State2: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<(State1, State2)>,
     shouldSimilarWith expectedChanges: Changes<(State1, State2)>,
     setCount: Int) {
@@ -214,13 +200,12 @@ fileprivate func thenAssert<State1: Equatable, State2: Equatable>(
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old).to(equal(expectedChanges.old))
         expect(notifiedChanges.setCount).to(equal(setCount))
     }
 
-fileprivate func thenAssert<State1: Equatable, State2: Equatable, State3: Equatable>(
+private func thenAssert<State1: Equatable, State2: Equatable, State3: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<(State1, State2, State3)>,
     shouldSimilarWith expectedChanges: Changes<(State1, State2, State3)>,
     setCount: Int) {
@@ -228,13 +213,12 @@ fileprivate func thenAssert<State1: Equatable, State2: Equatable, State3: Equata
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old).to(equal(expectedChanges.old))
         expect(notifiedChanges.setCount).to(equal(setCount))
     }
 
-fileprivate func thenAssert<State1: Equatable, State2: Equatable, State3: Equatable, State4: Equatable>(
+private func thenAssert<State1: Equatable, State2: Equatable, State3: Equatable, State4: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<(State1, State2, State3, State4)>,
     shouldSimilarWith expectedChanges: Changes<(State1, State2, State3, State4)>,
     setCount: Int) {
@@ -242,7 +226,6 @@ fileprivate func thenAssert<State1: Equatable, State2: Equatable, State3: Equata
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old).to(equal(expectedChanges.old))
         expect(notifiedChanges.setCount).to(equal(setCount))

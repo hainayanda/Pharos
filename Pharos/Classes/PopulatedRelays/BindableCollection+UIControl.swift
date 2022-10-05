@@ -9,39 +9,39 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var isEnabledKey: String = "isEnabledKey"
-fileprivate var isSelectedKey: String = "isSelectedKey"
-fileprivate var isHighlightedKey: String = "isHighlightedKey"
-fileprivate var contentVerticalAlignmentKey: String = "contentVerticalAlignmentKey"
-fileprivate var contentHorizontalAlignmentKey: String = "contentHorizontalAlignmentKey"
-fileprivate var showsMenuAsPrimaryActionKey: String = "showsMenuAsPrimaryActionKey"
+private var isEnabledKey: String = "isEnabledKey"
+private var isSelectedKey: String = "isSelectedKey"
+private var isHighlightedKey: String = "isHighlightedKey"
+private var contentVerticalAlignmentKey: String = "contentVerticalAlignmentKey"
+private var contentHorizontalAlignmentKey: String = "contentHorizontalAlignmentKey"
+private var showsMenuAsPrimaryActionKey: String = "showsMenuAsPrimaryActionKey"
 
 public extension BindableCollection where Object: UIControl {
     
     // MARK: Two Way Relay
     
-    var isEnabled: BindableObservable<Bool> {
+    var isEnabled: Observable<Bool> {
         bindable(of: \.isEnabled, key: &isEnabledKey)
     }
     
-    var isSelected: BindableObservable<Bool> {
+    var isSelected: Observable<Bool> {
         bindable(of: \.isSelected, key: &isSelectedKey)
     }
     
-    var isHighlighted: BindableObservable<Bool> {
+    var isHighlighted: Observable<Bool> {
         bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
     
-    var contentVerticalAlignment: BindableObservable<UIControl.ContentVerticalAlignment> {
+    var contentVerticalAlignment: Observable<UIControl.ContentVerticalAlignment> {
         bindable(of: \.contentVerticalAlignment, key: &contentVerticalAlignmentKey)
     }
     
-    var contentHorizontalAlignment: BindableObservable<UIControl.ContentHorizontalAlignment> {
+    var contentHorizontalAlignment: Observable<UIControl.ContentHorizontalAlignment> {
         bindable(of: \.contentHorizontalAlignment, key: &contentHorizontalAlignmentKey)
     }
     
     @available(iOS 14.0, *)
-    var showsMenuAsPrimaryAction: BindableObservable<Bool> {
+    var showsMenuAsPrimaryAction: Observable<Bool> {
         bindable(of: \.showsMenuAsPrimaryAction, key: &showsMenuAsPrimaryActionKey)
     }
 }

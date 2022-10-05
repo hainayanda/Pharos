@@ -22,9 +22,9 @@ public final class BindableCollection<Object: NSObject> {
         self.underlyingObject = object
     }
     
-    func bindable<State>(of keyPath: ReferenceWritableKeyPath<Object, State>, key: UnsafeRawPointer) -> BindableObservable<State> {
-        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableObservable<State> else {
-            let newRelay = BindableKVOObservable(object: underlyingObject, keyPath: keyPath)
+    func bindable<State>(of keyPath: WritableKeyPath<Object, State>, key: UnsafeRawPointer) -> Observable<State> {
+        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? Observable<State> else {
+            let newRelay = KVOObservable(underlyingObject, keyPath)
             objc_setAssociatedObject(underlyingObject, key, newRelay, .OBJC_ASSOCIATION_RETAIN)
             return newRelay
         }
@@ -35,7 +35,7 @@ public final class BindableCollection<Object: NSObject> {
 
 public protocol PopulatedRelays: NSObject { }
 
-extension NSObject: PopulatedRelays { }
+extension NSObject: PopulatedRelays, ObjectRetainer { }
 
 public extension PopulatedRelays {
     var relayables: RelayableCollection<Self> {
@@ -51,17 +51,18 @@ public final class RelayableCollection<Object: NSObject> {
         self.underlyingObject = object
     }
     
-    func relayable<Observed>(of keyPath: ReferenceWritableKeyPath<Object, Observed>) -> BindableObservable<Observed> {
-        let key = String(keyPath.hashValue)
-        guard let relay = objc_getAssociatedObject(underlyingObject, key) as? BindableObservable<Observed> else {
-            let newRelay = BindableKVOObservable(object: underlyingObject, keyPath: keyPath)
-            objc_setAssociatedObject(underlyingObject, key, newRelay, .OBJC_ASSOCIATION_RETAIN)
-            return newRelay
+    func relayable<Observed>(of keyPath: WritableKeyPath<Object, Observed>) -> Observable<Observed> {
+        let found = underlyingObject.findRetained {
+            guard let kvo = $0 as? KVOObservable<Object, Observed> else { return false }
+            return kvo.keyPath == keyPath
         }
-        return relay
+        if let found = found as? KVOObservable<Object, Observed> { return found }
+        let observable = KVOObservable(underlyingObject, keyPath)
+        underlyingObject.retain(observable)
+        return observable
     }
     
-    public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> BindableObservable<Property> {
+    public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> Observable<Property> {
         relayable(of: member)
     }
 }

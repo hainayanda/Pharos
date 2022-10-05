@@ -9,48 +9,48 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var imageKey: String = "imageKey"
-fileprivate var highlightedImageKey: String = "highlightedImageKey"
-fileprivate var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
-fileprivate var isHighlightedKey: String = "isHighlightedKey"
-fileprivate var animationImagesKey: String = "animationImagesKey"
-fileprivate var highlightedAnimationImagesKey: String = "highlightedAnimationImagesKey"
-fileprivate var animationDurationKey: String = "animationDurationKey"
-fileprivate var animationRepeatCountKey: String = "animationDurationKey"
+private var imageKey: String = "imageKey"
+private var highlightedImageKey: String = "highlightedImageKey"
+private var isUserInteractionEnabledKey: String = "isUserInteractionEnabledKey"
+private var isHighlightedKey: String = "isHighlightedKey"
+private var animationImagesKey: String = "animationImagesKey"
+private var highlightedAnimationImagesKey: String = "highlightedAnimationImagesKey"
+private var animationDurationKey: String = "animationDurationKey"
+private var animationRepeatCountKey: String = "animationDurationKey"
 
 public extension BindableCollection where Object: UIImageView {
     
     // MARK: Two Way Relay
     
-    var image: BindableObservable<UIImage?> {
+    var image: Observable<UIImage?> {
         bindable(of: \.image, key: &imageKey)
     }
     
-    var highlightedImage: BindableObservable<UIImage?> {
+    var highlightedImage: Observable<UIImage?> {
         bindable(of: \.highlightedImage, key: &highlightedImageKey)
     }
 
-    var isUserInteractionEnabled: BindableObservable<Bool> {
+    var isUserInteractionEnabled: Observable<Bool> {
         bindable(of: \.isUserInteractionEnabled, key: &isUserInteractionEnabledKey)
     }
     
-    var isHighlighted: BindableObservable<Bool> {
+    var isHighlighted: Observable<Bool> {
         bindable(of: \.isHighlighted, key: &isHighlightedKey)
     }
     
-    var animationImages: BindableObservable<[UIImage]?> {
+    var animationImages: Observable<[UIImage]?> {
         bindable(of: \.animationImages, key: &animationImagesKey)
     }
 
-    var highlightedAnimationImages: BindableObservable<[UIImage]?> {
+    var highlightedAnimationImages: Observable<[UIImage]?> {
         bindable(of: \.highlightedAnimationImages, key: &highlightedAnimationImagesKey)
     }
     
-    var animationDuration: BindableObservable<TimeInterval> {
+    var animationDuration: Observable<TimeInterval> {
         bindable(of: \.animationDuration, key: &animationDurationKey)
     }
 
-    var animationRepeatCount: BindableObservable<Int> {
+    var animationRepeatCount: Observable<Int> {
         bindable(of: \.animationRepeatCount, key: &animationRepeatCountKey)
     }
     

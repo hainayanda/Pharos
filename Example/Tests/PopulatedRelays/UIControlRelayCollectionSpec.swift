@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UIControlRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -44,7 +45,7 @@ class UIControlRelayCollectionSpec: QuickSpec {
             it("should trigerred by event") {
                 var eventCount: Int = 0
                 var lastEvent: UIControl.Event?
-                view.whenDetectEvent {
+                view.observeEventChange {
                     lastEvent = $0.new
                     eventCount += 1
                 }.retain()

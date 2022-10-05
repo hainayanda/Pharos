@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UICollectionViewRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -26,8 +27,8 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UICollectionViewRelayCollectionSpec else {
                         fail()
                         return
@@ -41,8 +42,8 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dataSource,
                     keyPath: \.dataSource,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UICollectionViewRelayCollectionSpec else {
                         fail()
                         return
@@ -57,7 +58,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.collectionViewLayout,
                     keyPath: \.collectionViewLayout,
                     with: layout
-                ) { changes, oldValue in
+                ) { changes, _ in
                     expect(changes.new).to(equal(layout))
                 }
             }
@@ -67,8 +68,8 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.prefetchDataSource,
                     keyPath: \.prefetchDataSource,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UICollectionViewRelayCollectionSpec else {
                         fail()
                         return
@@ -83,8 +84,8 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dragDelegate,
                     keyPath: \.dragDelegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UICollectionViewRelayCollectionSpec else {
                         fail()
                         return
@@ -99,8 +100,8 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dropDelegate,
                     keyPath: \.dropDelegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UICollectionViewRelayCollectionSpec else {
                         fail()
                         return

@@ -10,14 +10,13 @@ import Foundation
 import UIKit
 
 class UIControlAction: NSObject {
-    @UIControlSubject var lastEvent: UIControl.Event = .allEvents
+    @Subject var lastEvent: UIControl.Event = .allEvents
     
-    var eventObservable: Observable<UIControl.Event> {
+    @inlinable var eventObservable: Observable<UIControl.Event> {
         $lastEvent
     }
     
-    func invoked(by sender: UIControl, with event: UIControl.Event) {
-        _lastEvent.sender = sender
+    @inlinable func invoked(by sender: UIControl, with event: UIControl.Event) {
         self.lastEvent = event
     }
     

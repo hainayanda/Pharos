@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UIScrollViewRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -40,8 +41,8 @@ class UIScrollViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UIScrollViewRelayCollectionSpec else {
                         fail()
                         return

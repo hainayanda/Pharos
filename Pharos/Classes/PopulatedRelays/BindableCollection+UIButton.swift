@@ -9,50 +9,50 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var contentEdgeInsetsKey: String = "contentEdgeInsetsKey"
-fileprivate var titleEdgeInsetsKey: String = "titleEdgeInsetsKey"
-fileprivate var reversesTitleShadowWhenHighlightedKey: String = "reversesTitleShadowWhenHighlightedKey"
-fileprivate var imageEdgeInsetsKey: String = "imageEdgeInsetsKey"
-fileprivate var adjustsImageWhenHighlightedKey: String = "adjustsImageWhenHighlightedKey"
-fileprivate var adjustsImageWhenDisabledKey: String = "adjustsImageWhenDisabledKey"
-fileprivate var showsTouchWhenHighlightedKey: String = "showsTouchWhenHighlightedKey"
-fileprivate var isPointerInteractionEnabledKey: String = "isPointerInteractionEnabledKey"
+private var contentEdgeInsetsKey: String = "contentEdgeInsetsKey"
+private var titleEdgeInsetsKey: String = "titleEdgeInsetsKey"
+private var reversesTitleShadowWhenHighlightedKey: String = "reversesTitleShadowWhenHighlightedKey"
+private var imageEdgeInsetsKey: String = "imageEdgeInsetsKey"
+private var adjustsImageWhenHighlightedKey: String = "adjustsImageWhenHighlightedKey"
+private var adjustsImageWhenDisabledKey: String = "adjustsImageWhenDisabledKey"
+private var showsTouchWhenHighlightedKey: String = "showsTouchWhenHighlightedKey"
+private var isPointerInteractionEnabledKey: String = "isPointerInteractionEnabledKey"
 
 public extension BindableCollection where Object: UIButton {
     
     // MARK: Two Way Relay
     
-    var contentEdgeInsets: BindableObservable<UIEdgeInsets> {
-        bindable(of:\.contentEdgeInsets, key: &contentEdgeInsetsKey)
+    var contentEdgeInsets: Observable<UIEdgeInsets> {
+        bindable(of: \.contentEdgeInsets, key: &contentEdgeInsetsKey)
     }
     
-    var titleEdgeInsets: BindableObservable<UIEdgeInsets> {
-        bindable(of:\.titleEdgeInsets, key: &titleEdgeInsetsKey)
+    var titleEdgeInsets: Observable<UIEdgeInsets> {
+        bindable(of: \.titleEdgeInsets, key: &titleEdgeInsetsKey)
     }
     
-    var reversesTitleShadowWhenHighlighted: BindableObservable<Bool> {
-        bindable(of:\.reversesTitleShadowWhenHighlighted, key: &reversesTitleShadowWhenHighlightedKey)
+    var reversesTitleShadowWhenHighlighted: Observable<Bool> {
+        bindable(of: \.reversesTitleShadowWhenHighlighted, key: &reversesTitleShadowWhenHighlightedKey)
     }
     
-    var imageEdgeInsets: BindableObservable<UIEdgeInsets> {
-        bindable(of:\.imageEdgeInsets, key: &imageEdgeInsetsKey)
+    var imageEdgeInsets: Observable<UIEdgeInsets> {
+        bindable(of: \.imageEdgeInsets, key: &imageEdgeInsetsKey)
     }
     
-    var adjustsImageWhenHighlighted: BindableObservable<Bool> {
-        bindable(of:\.adjustsImageWhenHighlighted, key: &adjustsImageWhenHighlightedKey)
+    var adjustsImageWhenHighlighted: Observable<Bool> {
+        bindable(of: \.adjustsImageWhenHighlighted, key: &adjustsImageWhenHighlightedKey)
     }
     
-    var adjustsImageWhenDisabled: BindableObservable<Bool> {
-        bindable(of:\.adjustsImageWhenDisabled, key: &adjustsImageWhenDisabledKey)
+    var adjustsImageWhenDisabled: Observable<Bool> {
+        bindable(of: \.adjustsImageWhenDisabled, key: &adjustsImageWhenDisabledKey)
     }
     
-    var showsTouchWhenHighlighted: BindableObservable<Bool> {
-        bindable(of:\.showsTouchWhenHighlighted, key: &showsTouchWhenHighlightedKey)
+    var showsTouchWhenHighlighted: Observable<Bool> {
+        bindable(of: \.showsTouchWhenHighlighted, key: &showsTouchWhenHighlightedKey)
     }
     
     @available(iOS 13.4, *)
-    var isPointerInteractionEnabled: BindableObservable<Bool> {
-        bindable(of:\.isPointerInteractionEnabled, key: &isPointerInteractionEnabledKey)
+    var isPointerInteractionEnabled: Observable<Bool> {
+        bindable(of: \.isPointerInteractionEnabled, key: &isPointerInteractionEnabledKey)
     }
     
 }

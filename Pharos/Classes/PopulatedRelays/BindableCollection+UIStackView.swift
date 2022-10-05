@@ -9,23 +9,23 @@ import Foundation
 #if canImport(UIKit)
 import UIKit
 
-fileprivate var spacingKey: String = "spacingKey"
-fileprivate var isBaselineRelativeArrangementKey: String = "isBaselineRelativeArrangementKey"
-fileprivate var isLayoutMarginsRelativeArrangementKey: String = "isLayoutMarginsRelativeArrangementKey"
+private var spacingKey: String = "spacingKey"
+private var isBaselineRelativeArrangementKey: String = "isBaselineRelativeArrangementKey"
+private var isLayoutMarginsRelativeArrangementKey: String = "isLayoutMarginsRelativeArrangementKey"
 
 public extension BindableCollection where Object: UIStackView {
     
     // MARK: Two Way Relay
     
-    var spacing: BindableObservable<CGFloat> {
+    var spacing: Observable<CGFloat> {
         bindable(of: \.spacing, key: &spacingKey)
     }
     
-    var isBaselineRelativeArrangement: BindableObservable<Bool> {
+    var isBaselineRelativeArrangement: Observable<Bool> {
         bindable(of: \.isBaselineRelativeArrangement, key: &isBaselineRelativeArrangementKey)
     }
     
-    var isLayoutMarginsRelativeArrangement: BindableObservable<Bool> {
+    var isLayoutMarginsRelativeArrangement: Observable<Bool> {
         bindable(of: \.isLayoutMarginsRelativeArrangement, key: &isLayoutMarginsRelativeArrangementKey)
     }
     
