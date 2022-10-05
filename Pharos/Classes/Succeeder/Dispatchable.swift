@@ -14,7 +14,7 @@ public protocol DispatchableObservable: Invokable {
     func dispatch(on queue: DispatchQueue, syncPrefered: Bool) -> Observable<Output>
 }
 
-extension DispatchableObservable where Self: ObservableProtocol, Self: ObserverParent {
+extension DispatchableObservable where Self: ObservableProtocol, Self: ObjectRetainer {
     public func dispatch(on queue: DispatchQueue, syncPrefered: Bool = true) -> Observable<Output> {
         succeeding(with: DispatchedObservable(parent: self, queue: queue, preferSync: syncPrefered))
     }

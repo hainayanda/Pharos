@@ -15,7 +15,7 @@ public protocol FilterableObservable: Invokable {
     func ignore(_ shouldIgnore: @escaping (Output) -> Bool) -> Observable<Output>
 }
 
-extension FilterableObservable where Self: ObservableProtocol, Self: ObserverParent {
+extension FilterableObservable where Self: ObservableProtocol, Self: ObjectRetainer {
     
     public func filterChange(_ shouldInclude: @escaping (Changes<Output>) -> Bool) -> Observable<Output> {
         succeeding(with: FilteredObservable(parent: self, shouldInclude))

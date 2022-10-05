@@ -17,7 +17,7 @@ public protocol ThrottleableObservable: Invokable {
     func throttled(by minimumInterval: TimeInterval) -> Observable<Output>
 }
 
-extension ThrottleableObservable where Self: ObservableProtocol, Self: ObserverParent {
+extension ThrottleableObservable where Self: ObservableProtocol, Self: ObjectRetainer {
     public func throttled(by minimumInterval: TimeInterval) -> Observable<Output> {
         succeeding(with: ThrottledObservable(parent: self, minimumInterval: minimumInterval))
     }

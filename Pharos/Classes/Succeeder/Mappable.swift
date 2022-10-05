@@ -14,7 +14,7 @@ public protocol MappableObservable: Invokable {
     func compactMapped<Mapped>(_ mapper: @escaping (Output) -> Mapped?) -> Observable<Mapped>
 }
 
-extension MappableObservable where Self: ObservableProtocol, Self: ObserverParent {
+extension MappableObservable where Self: ObservableProtocol, Self: ObjectRetainer {
     
     public func compactMapped<Mapped>(_ mapper: @escaping (Output) -> Mapped?) -> Observable<Mapped> {
         succeeding(with: MappedObservable<Output, Mapped>(parent: self, mapper))
