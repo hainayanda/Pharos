@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length type_body_length
 
 class UITableViewRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -26,8 +27,8 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITableViewRelayCollectionSpec else {
                         fail()
                         return
@@ -41,8 +42,8 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dataSource,
                     keyPath: \.dataSource,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITableViewRelayCollectionSpec else {
                         fail()
                         return
@@ -56,8 +57,8 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.prefetchDataSource,
                     keyPath: \.prefetchDataSource,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITableViewRelayCollectionSpec else {
                         fail()
                         return
@@ -72,8 +73,8 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dragDelegate,
                     keyPath: \.dragDelegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITableViewRelayCollectionSpec else {
                         fail()
                         return
@@ -88,8 +89,8 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.dropDelegate,
                     keyPath: \.dropDelegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITableViewRelayCollectionSpec else {
                         fail()
                         return
@@ -98,69 +99,69 @@ class UITableViewRelayCollectionSpec: QuickSpec {
                 }
             }
             it("should relay rowHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.rowHeight,
                     keyPath: \.rowHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay sectionHeaderHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.sectionHeaderHeight,
                     keyPath: \.sectionHeaderHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay sectionFooterHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.sectionFooterHeight,
                     keyPath: \.sectionFooterHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay estimatedRowHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.estimatedRowHeight,
                     keyPath: \.estimatedRowHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay estimatedSectionHeaderHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.estimatedSectionHeaderHeight,
                     keyPath: \.estimatedSectionHeaderHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay estimatedSectionFooterHeight") {
-                let newValue = CGFloat.random(in: 0..<1024)
+                let new = CGFloat.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.estimatedSectionFooterHeight,
                     keyPath: \.estimatedSectionFooterHeight,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay separatorInset") {

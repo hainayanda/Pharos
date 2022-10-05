@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UITextViewRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -119,8 +120,8 @@ class UITextViewRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITextViewRelayCollectionSpec else {
                         fail()
                         return
@@ -189,8 +190,8 @@ class UITextFieldRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UITextFieldRelayCollectionSpec else {
                         fail()
                         return
@@ -266,8 +267,8 @@ class UISearchBarRelayCollectionSpec: QuickSpec {
                     relay: view.bindables.delegate,
                     keyPath: \.delegate,
                     with: self
-                ) { changes, oldValue in
-                    expect(oldValue).to(beNil())
+                ) { changes, old in
+                    expect(old).to(beNil())
                     guard let spec = changes.new as? UISearchBarRelayCollectionSpec else {
                         fail()
                         return

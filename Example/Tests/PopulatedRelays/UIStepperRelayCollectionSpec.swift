@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UIStepperRelayCollectionSpec: QuickSpec {
     override func spec() {
@@ -42,36 +43,36 @@ class UIStepperRelayCollectionSpec: QuickSpec {
                 )
             }
             it("should relay minimumValue") {
-                let newValue = Double.random(in: 0..<1024)
+                let new = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.minimumValue,
                     keyPath: \.minimumValue,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay maximumValue") {
-                let newValue = Double.random(in: 0..<1024)
+                let new = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.maximumValue,
                     keyPath: \.maximumValue,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
             it("should relay stepValue") {
-                let newValue = Double.random(in: 0..<1024)
+                let new = Double.random(in: 0..<1024)
                 testRelay(
                     for: view,
                     relay: view.bindables.stepValue,
                     keyPath: \.stepValue,
-                    with: newValue) { changes, oldValue in
-                    expect(abs(changes.new - newValue)).to(beLessThan(0.0001))
-                    expect(abs(changes.old - oldValue)).to(beLessThan(0.0001))
+                    with: new) { changes, old in
+                    expect(abs(changes.new - new)).to(beLessThan(0.0001))
+                    expect(abs(changes.old - old)).to(beLessThan(0.0001))
                 }
             }
         }

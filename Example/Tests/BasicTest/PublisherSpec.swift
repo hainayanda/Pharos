@@ -24,10 +24,10 @@ class PublisherSpec: QuickSpec {
         it("should publish to subscriber") {
             let changeWrapper = listenDidSet(for: publisher)
             let newState: String = .randomString(length: 18)
-            publisher.publish(value: newState)
+            publisher.publish(newState)
             thenAssert(
                 changeWrapper,
-                shouldSimilarWith: Changes(old: nil, new: newState, source: publisher),
+                shouldSimilarWith: Changes(new: newState, old: nil),
                 setCount: 1
             )
         }
@@ -36,10 +36,10 @@ class PublisherSpec: QuickSpec {
 
 // MARK: Given
 
-fileprivate func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
+private func listenDidSet<State>(for subject: Observable<State>) -> ChangesClassWrapper<State> {
     let changeWrapper = ChangesClassWrapper<State>()
     subject
-        .whenDidSet { changes in
+        .observeChange { changes in
             changeWrapper.changes = changes
         }.retain()
     return changeWrapper
@@ -49,16 +49,14 @@ fileprivate func listenDidSet<State>(for subject: Observable<State>) -> ChangesC
 
 // MARK: Assertion
 
-fileprivate func thenAssert<State: Equatable>(
+private func thenAssert<State: Equatable>(
     _ notifiedChanges: ChangesClassWrapper<State>,
     shouldSimilarWith expectedChanges: Changes<State>, setCount: Int) {
         guard let changes = notifiedChanges.changes else {
             fail()
             return
         }
-        expect(changes.source === expectedChanges.source).to(beTrue())
         expect(changes.new).to(equal(expectedChanges.new))
         expect(changes.old == expectedChanges.old).to(beTrue())
         expect(notifiedChanges.setCount).to(equal(setCount))
     }
-

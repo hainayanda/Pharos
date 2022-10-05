@@ -12,6 +12,7 @@ import Nimble
 import Pharos
 #if canImport(UIKit)
 import UIKit
+// swiftlint:disable function_body_length
 
 class UISliderRelayCollectionSpec: QuickSpec {
     override func spec() {

@@ -5,6 +5,7 @@ import Nimble
 import UIKit
 #endif
 @testable import Pharos
+// swiftlint:disable function_body_length
 
 class BindSpec: QuickSpec {
     override func spec() {
@@ -24,74 +25,27 @@ class BindSpec: QuickSpec {
         }
         #if canImport(UIKit)
         it("should bond with UIView") {
-            var source: Any = self
             var didSetCount: Int = 0
             observables.bind(with: label.bindables.text)
                 .retain()
-            observables.whenDidSet { changes in
-                source = changes.source
+            observables.observeChange { _ in
                 didSetCount += 1
             }.retain()
             let fromLabel = String.randomString()
             label.text = fromLabel
             expect(observables.wrappedValue).to(equal(fromLabel))
-            expect(source as? UILabel).to(equal(label))
             expect(didSetCount).to(equal(1))
             let fromState = String.randomString()
             observables.wrappedValue = fromState
             expect(observables.wrappedValue).to(equal(fromState))
-            expect(source as? Subject<String?>).toNot(beNil())
             expect(didSetCount).to(equal(2))
-        }
-        it("should ignore binding when binding with view") {
-            var source: Any = self
-            var didSetCount: Int = 0
-            observables.bind(with: label.bindables.text)
-                .retain()
-            observables.onlyFromSet()
-                .whenDidSet{ changes in
-                    source = changes.source
-                    didSetCount += 1
-                }.retain()
-            let fromLabel = String.randomString()
-            label.text = fromLabel
-            expect(observables.wrappedValue).to(equal(fromLabel))
-            expect(didSetCount).to(equal(0))
-            let fromState = String.randomString()
-            observables.wrappedValue = fromState
-            expect(observables.wrappedValue).to(equal(fromState))
-            expect(source as? Subject<String?>).toNot(beNil())
-            expect(didSetCount).to(equal(1))
-        }
-        it("should ignore set when binding with view") {
-            var source: Any = self
-            var didSetCount: Int = 0
-            observables.bind(with: label.bindables.text)
-                .retain()
-            observables.onlyFromBinding()
-                .whenDidSet{ changes in
-                    source = changes.source
-                    didSetCount += 1
-                }.retain()
-            let fromLabel = String.randomString()
-            label.text = fromLabel
-            expect(observables.wrappedValue).to(equal(fromLabel))
-            expect(source as? UILabel).to(equal(label))
-            expect(didSetCount).to(equal(1))
-            let fromState = String.randomString()
-            observables.wrappedValue = fromState
-            expect(observables.wrappedValue).to(equal(fromState))
-            expect(source as? UILabel).to(equal(label))
-            expect(didSetCount).to(equal(1))
         }
         #endif
         it("should bear data to NSObject") {
-            var source: Any = self
             var didSetCount: Int = 0
             observables.relayChanges(to: object.relayables.text)
                 .retain()
-            observables.whenDidSet { changes in
-                source = changes.source
+            observables.observeChange { _ in
                 didSetCount += 1
             }.retain()
             expect(object.text).to(beNil())
@@ -99,12 +53,10 @@ class BindSpec: QuickSpec {
             let fromObject = String.randomString()
             object.text = fromObject
             expect(observables.wrappedValue).toNot(equal(fromObject))
-            expect(source as? Dummy).to(beNil())
             expect(didSetCount).to(equal(0))
             let fromState = String.randomString()
             observables.wrappedValue = fromState
             expect(observables.wrappedValue).to(equal(fromState))
-            expect(source as? Subject<String?>).toNot(beNil())
             expect(didSetCount).to(equal(1))
         }
     }
