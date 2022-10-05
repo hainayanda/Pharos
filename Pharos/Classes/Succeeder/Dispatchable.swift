@@ -11,20 +11,20 @@ import Chary
 public protocol DispatchableObservable: Invokable {
     associatedtype Output
     
-    func dispatch(on queue: DispatchQueue, preferSync: Bool) -> Observable<Output>
+    func dispatch(on queue: DispatchQueue, syncPrefered: Bool) -> Observable<Output>
 }
 
 extension DispatchableObservable where Self: ObservableProtocol, Self: ObserverParent {
-    public func dispatch(on queue: DispatchQueue, preferSync: Bool = true) -> Observable<Output> {
-        succeeding(with: DispatchedObservable(parent: self, queue: queue, preferSync: preferSync))
+    public func dispatch(on queue: DispatchQueue, syncPrefered: Bool = true) -> Observable<Output> {
+        succeeding(with: DispatchedObservable(parent: self, queue: queue, preferSync: syncPrefered))
     }
     
     public func dispatchOnMain(preferSync: Bool = true) -> Observable<Output> {
-        dispatch(on: .main, preferSync: preferSync)
+        dispatch(on: .main, syncPrefered: preferSync)
     }
     
     public func dispatchInBackground() -> Observable<Output> {
-        dispatch(on: .global(qos: .background), preferSync: false)
+        dispatch(on: .global(qos: .background), syncPrefered: false)
     }
 }
 

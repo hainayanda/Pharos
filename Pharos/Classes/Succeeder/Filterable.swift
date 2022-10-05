@@ -45,6 +45,11 @@ extension FilterableObservable where Output: Equatable {
     public func distinct() -> Observable<Output> {
         filterChange { $0.isChanging }
     }
+    
+    @available(*, deprecated, renamed: "distinct")
+    public func ignoreSameValue() -> Observable<Output> {
+        distinct()
+    }
 }
 
 extension Observable: FilterableObservable { }
