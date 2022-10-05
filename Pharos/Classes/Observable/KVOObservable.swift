@@ -44,7 +44,7 @@ final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
             let changes = self.latestKeyPathSet ?? Changes(new: newValue, old: kvoChanges.oldValue)
             self.latestKeyPathSet = nil
             guard !changes.alreadyConsumed(by: self) else { return }
-            self.send(changes: changes)
+            self.send(changes: changes.consumed(by: self))
         }
     }
     
@@ -86,7 +86,7 @@ final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
         let changes = latestKeyPathSet ?? Changes(new: new, old: old)
         latestKeyPathSet = nil
         guard !changes.alreadyConsumed(by: self) else { return }
-        self.send(changes: changes)
+        self.send(changes: changes.consumed(by: self))
     }
 #endif
     
