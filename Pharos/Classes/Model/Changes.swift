@@ -41,8 +41,8 @@ public struct Changes<State> {
 }
 
 extension Changes: Equatable where State: Equatable {
-    public var isChanging: Bool { new == old }
-    public var isNotChanging: Bool { !isChanging }
+    @inlinable public var isChanging: Bool { !isNotChanging }
+    @inlinable public var isNotChanging: Bool { new == old }
     
     @inlinable public static func == (lhs: Changes<State>, rhs: Changes<State>) -> Bool {
         lhs.new == rhs.new && lhs.old == rhs.old
