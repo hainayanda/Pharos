@@ -26,7 +26,8 @@ class CombineSpec: QuickSpec {
         }
         it("should combine 2 subjects") {
             let subject2 = Subject<Int>(wrappedValue: 0)
-            let changeWrapper = listenDidSet(for: subject.compactCombine(with: subject2))
+            let combined = subject.compactCombine(with: subject2)
+            let changeWrapper = listenDidSet(for: combined)
             let newState1: String = .randomString(length: 18)
             let newState2: Int = .random(in: -1000 ..< 1000)
             subject.wrappedValue = newState1
@@ -45,7 +46,8 @@ class CombineSpec: QuickSpec {
         it("should combine 3 subjects") {
             let subject2 = Subject<Int>(wrappedValue: 0)
             let subject3 = Subject<Bool>(wrappedValue: false)
-            let changeWrapper = listenDidSet(for: subject.compactCombine(with: subject2, subject3))
+            let combined = subject.compactCombine(with: subject2, subject3)
+            let changeWrapper = listenDidSet(for: combined)
             let newState1: String = .randomString(length: 18)
             let newState2: Int = .random(in: -1000 ..< 1000)
             subject.wrappedValue = newState1
@@ -154,15 +156,6 @@ private func listenDidSet<State>(for subject: Observable<State>, retainUntilStat
         .observeChange { changes in
             changeWrapper.changes = changes
         }.retainUntil(nextEventCount: maxCount)
-    return changeWrapper
-}
-
-private func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
-    let changeWrapper = ChangesClassWrapper<State>()
-    subject
-        .observeChange { changes in
-            changeWrapper.changes = changes
-        }.retainUntil { $0 == changes }
     return changeWrapper
 }
 

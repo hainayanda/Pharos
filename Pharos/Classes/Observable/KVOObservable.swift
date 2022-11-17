@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 #endif
 
-final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
+final class KVOObservable<Object: NSObject, Property>: BufferedObservable<Property> {
     weak var object: Object?
     let keyPath: KeyPath<Object, Property>
     var retainedContext: NSKeyValueObservation?
-    var latestState: Property?
     var latestKeyPathSet: Changes<Property>?
-    @inlinable override var recentState: Property? { object?[keyPath: keyPath] }
+    @inlinable var recentState: Property? { object?[keyPath: keyPath] }
     
     @inlinable init(_ object: Object, _ keyPath: KeyPath<Object, Property>) {
         self.object = object
@@ -43,14 +42,14 @@ final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
             guard let newValue = kvoChanges.newValue else { return }
             let changes = self.latestKeyPathSet ?? Changes(new: newValue, old: kvoChanges.oldValue)
             self.latestKeyPathSet = nil
-            guard !changes.alreadyConsumed(by: self) else { return }
+            guard changes.canBeConsumed(by: self) else { return }
             self.send(changes: changes.consumed(by: self))
         }
     }
     
     @discardableResult
-    @inlinable override func sendIfNeeded(for changes: Changes<Property>) -> Bool {
-        guard super.sendIfNeeded(for: changes) else { return false }
+    @inlinable override func accept(_ changes: Changes<Property>) -> Bool {
+        guard super.accept(changes) else { return false }
         guard let writableKeypath = keyPath as? WritableKeyPath<Object, Property> else {
             return true
         }
@@ -65,7 +64,7 @@ final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
         UITextField.textDidChangeNotification : UITextView.textDidChangeNotification
         if let textRange = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument),
            let latestState = textInput.text(in: textRange) as? Property {
-            self.latestState = latestState
+            self.buffer = latestState
         }
         NotificationCenter.default.addObserver(
             self,
@@ -81,11 +80,11 @@ final class KVOObservable<Object: NSObject, Property>: Observable<Property> {
               let new = textInput.text(in: textRange) as? Property else {
                   return
               }
-        let old = latestState
-        latestState = new
+        let old = buffer
+        buffer = new
         let changes = latestKeyPathSet ?? Changes(new: new, old: old)
         latestKeyPathSet = nil
-        guard !changes.alreadyConsumed(by: self) else { return }
+        guard changes.canBeConsumed(by: self) else { return }
         self.send(changes: changes.consumed(by: self))
     }
 #endif

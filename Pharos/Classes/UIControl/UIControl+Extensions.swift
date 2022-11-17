@@ -127,16 +127,16 @@ extension UIControl {
 
 extension UIControl {
     
-    @available(*, deprecated, renamed: "observeChange")
-    @inlinable public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    @available(*, deprecated, renamed: "observeEventChange")
+    @inlinable public func whenDetectEvent(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Retainable {
         observeEventChange(work)
     }
     
-    public func observeEventChange(_ observer: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    public func observeEventChange(_ observer: @escaping (Changes<UIControl.Event>) -> Void) -> Retainable {
         getControlAction().eventObservable.observeChange(observer)
     }
     
-    public func whenDidTriggered(by event: UIControl.Event, thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    public func whenDidTriggered(by event: UIControl.Event, thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Retainable {
         let eventUsed: [UIControl.Event]
         if event == .allEvents {
             eventUsed = allEvents
@@ -152,7 +152,7 @@ extension UIControl {
         }.observeChange(work)
     }
     
-    @inlinable public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Observed<UIControl.Event> {
+    @inlinable public func whenDidTapped(thenDo work: @escaping (Changes<UIControl.Event>) -> Void) -> Retainable {
         whenDidTriggered(by: .touchUpInside, thenDo: work)
     }
     

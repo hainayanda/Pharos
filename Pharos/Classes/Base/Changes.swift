@@ -9,12 +9,20 @@ import Foundation
 
 public struct Changes<State> {
     public let new: State
-    public private(set) var old: State?
-    private var consumers: [ObjectIdentifier] = []
+    public internal(set) var old: State?
+    var consumers: [ObjectIdentifier] = []
+    let triggers: [ObjectIdentifier]?
     
-    init(new: State, old: State? = nil) {
+    public init(new: State, old: State? = nil, triggers: [ObjectIdentifier]? = nil, consumers: [ObjectIdentifier] = []) {
+        self.triggers = triggers
         self.new = new
         self.old = old
+        self.consumers = consumers
+    }
+    
+    func canBeConsumed(by source: AnyObject) -> Bool {
+        guard let triggers = triggers else { return !alreadyConsumed(by: source) }
+        return triggers.contains(ObjectIdentifier(source))
     }
     
     func alreadyConsumed(by source: AnyObject) -> Bool {
@@ -27,16 +35,25 @@ public struct Changes<State> {
         return mutableSelf
     }
     
-    func withNoOld() -> Changes {
-        var mutableSelf = self
-        mutableSelf.old = nil
-        return mutableSelf
-    }
-    
     func with(old: State?) -> Changes {
         var mutableSelf = self
         mutableSelf.old = old
         return mutableSelf
+    }
+    
+    func mapped<NewState>(_ mapper: (State) -> NewState) -> Changes<NewState> {
+        var newChanges = Changes<NewState>(new: mapper(new))
+        newChanges.consumers = consumers
+        guard let old = self.old else { return newChanges }
+        return newChanges.with(old: mapper(old))
+    }
+    
+    func compactMapped<NewState>(_ mapper: (State) -> NewState?) -> Changes<NewState>? {
+        guard let newMapped = mapper(new) else { return nil }
+        var newChanges = Changes<NewState>(new: newMapped)
+        newChanges.consumers = consumers
+        guard let old = self.old else { return newChanges }
+        return newChanges.with(old: mapper(old))
     }
 }
 
