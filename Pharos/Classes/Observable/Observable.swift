@@ -17,12 +17,16 @@ open class Observable<Output>: InvokableObservable, Observing {
     private var observers: [WeakWrappedObserver<Output>] = []
     public private(set) var isAncestor: Bool
     
+    public init() {
+        self.isAncestor = true
+    }
+    
     init(parent: InvokableObservable?) {
         self._parent = parent
         self.isAncestor = parent == nil
     }
     
-    init(isAncestor: Bool = true) {
+    init(isAncestor: Bool) {
         self.isAncestor = isAncestor
     }
     
