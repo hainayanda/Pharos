@@ -83,7 +83,7 @@ extension Observable {
         filter { !shouldIgnore($0) }
     }
     
-    /// Run the observer in the given DispatchQueue
+    /// Run the observer in the given DispatchQueue synchronously if already in the given DispatchQueue
     /// - Parameter queue: DispatchQueue where the next observer will be run
     /// - Returns: New Observable with DispatchQueue
     public func observe(on queue: DispatchQueue) -> Observable<Output> {
@@ -94,10 +94,34 @@ extension Observable {
         }
     }
     
-    /// Run the next observer in the main thread
+    /// Run the observer in the given DispatchQueue asynchronously
+    /// - Parameter queue: DispatchQueue where the next observer will be run
+    /// - Returns: New Observable with DispatchQueue
+    public func dispatch(on queue: DispatchQueue) -> Observable<Output> {
+        addChildBindable { value, child in
+            queue.async {
+                child.accept(value)
+            }
+        }
+    }
+    
+    /// Run the next observer in the main thread synchronously if already in the given DispatchQueue
     /// - Returns: New Observable that will run the observer in the MainThread
     @inlinable public func observeOnMain() -> Observable<Output> {
         observe(on: .main)
+    }
+    
+    
+    /// Run the next observer in the main thread asynchronously
+    /// - Returns: New Observable that will run the observer in the MainThread
+    @inlinable public func dispatchOnMain() -> Observable<Output> {
+        dispatch(on: .main)
+    }
+    
+    /// Run the next observer in the background thread asynchronously
+    /// - Returns: New Observable that will run the observer in the background thread
+    @inlinable public func dispatchOnBackground() -> Observable<Output> {
+        dispatch(on: .global(qos: .background))
     }
     
     /// Throttled the value coming to the next observer by the given interval
