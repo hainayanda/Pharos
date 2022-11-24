@@ -130,6 +130,11 @@
 		AD022386EA01CE480072E4C2E261BEC6 /* QuickTestObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974427E0B49CA51DCEC7C7FB6F6B235 /* QuickTestObservation.swift */; };
 		AFB4F603FD0F5C407CB8920F6A5BA7A1 /* Expectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C147A233DFC4B050B24D23038CD67F29 /* Expectation.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		B93F3526A95D7F43EEBFEE5E453E4795 /* BeLessThan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D231BA828C6FFF76B52A9A60E4DB626 /* BeLessThan.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
+		BBD9C9B4292F8A6A00342CF8 /* InvokableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD9C9B3292F8A6A00342CF8 /* InvokableGroup.swift */; };
+		BBD9C9B6292F8A7C00342CF8 /* RetainableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD9C9B5292F8A7C00342CF8 /* RetainableGroup.swift */; };
+		BBD9C9B8292F8AA100342CF8 /* WeakWrappedObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD9C9B7292F8AA100342CF8 /* WeakWrappedObserver.swift */; };
+		BBD9C9BA292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD9C9B9292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift */; };
+		BBD9C9BE292F8B1700342CF8 /* WrappingObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD9C9BD292F8B1700342CF8 /* WrappingObserver.swift */; };
 		BD3ABAC28025564DCF2E6C12009435DF /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A1050D0A15E1085C4720F3EF7223F2F2 /* CwlMachBadInstructionHandler.m */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BF62525E5628A9F7604BA8479691318C /* BeLogical.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3EE749588F41E02FB974730BC4893E /* BeLogical.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		BFB3326F3FB9B74A66EE567DEC0941C1 /* Chary-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 436D7EBBBCA411E9ADB0986578B8B1A7 /* Chary-dummy.m */; };
@@ -346,6 +351,11 @@
 		B74EABBD3D313AB4CD73E46AB9BA6964 /* Pharos-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pharos-Info.plist"; sourceTree = "<group>"; };
 		BAE263041362D074978BB3B577DF0A05 /* Nimble */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Nimble; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF6684E2A88497CFD679D8CB1B8B2F9 /* Nimble-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-prefix.pch"; sourceTree = "<group>"; };
+		BBD9C9B3292F8A6A00342CF8 /* InvokableGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvokableGroup.swift; sourceTree = "<group>"; };
+		BBD9C9B5292F8A7C00342CF8 /* RetainableGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetainableGroup.swift; sourceTree = "<group>"; };
+		BBD9C9B7292F8AA100342CF8 /* WeakWrappedObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakWrappedObserver.swift; sourceTree = "<group>"; };
+		BBD9C9B9292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusiveRetainableWrapper.swift; sourceTree = "<group>"; };
+		BBD9C9BD292F8B1700342CF8 /* WrappingObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingObserver.swift; sourceTree = "<group>"; };
 		BC4270E252548DD6EDB17B10FA8B0F4E /* QCKDSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QCKDSL.h; path = Sources/QuickObjectiveC/DSL/QCKDSL.h; sourceTree = "<group>"; };
 		BCB71FF88004D6FB9D3520F18A97259B /* CwlMachBadInstructionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CwlMachBadInstructionHandler.h; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlMachBadInstructionHandler/include/CwlMachBadInstructionHandler.h; sourceTree = "<group>"; };
 		BCDE97CAC52383C07AF3FB9A99489893 /* ToSucceed.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToSucceed.swift; path = Sources/Nimble/Matchers/ToSucceed.swift; sourceTree = "<group>"; };
@@ -539,6 +549,7 @@
 		51623E4D040A5A2E1855BEAB89CAD147 /* Pharos */ = {
 			isa = PBXGroup;
 			children = (
+				BBD9C9BF292F8B2200342CF8 /* Retaining */,
 				73E673E82926906F006685B6 /* Base */,
 				7315FD182924B13200A31A41 /* Observable */,
 				B1F7739489BD235F2CD12C01CBC2925C /* Pod */,
@@ -607,8 +618,9 @@
 				7315FD112924B08E00A31A41 /* Changes.swift */,
 				7315FD1D2924EFED00A31A41 /* Invokable.swift */,
 				7315FD1B2924B33C00A31A41 /* Observing.swift */,
-				7315FD022924AEF300A31A41 /* Retainable.swift */,
 				7315FD042924AEF300A31A41 /* Unwrapable.swift */,
+				BBD9C9B3292F8A6A00342CF8 /* InvokableGroup.swift */,
+				BBD9C9BD292F8B1700342CF8 /* WrappingObserver.swift */,
 			);
 			name = Base;
 			path = Pharos/Classes/Base;
@@ -743,6 +755,18 @@
 				79157858B2A2354E73D553322E08E3BB /* README.md */,
 			);
 			name = Pod;
+			sourceTree = "<group>";
+		};
+		BBD9C9BF292F8B2200342CF8 /* Retaining */ = {
+			isa = PBXGroup;
+			children = (
+				7315FD022924AEF300A31A41 /* Retainable.swift */,
+				BBD9C9B9292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift */,
+				BBD9C9B7292F8AA100342CF8 /* WeakWrappedObserver.swift */,
+				BBD9C9B5292F8A7C00342CF8 /* RetainableGroup.swift */,
+			);
+			name = Retaining;
+			path = Pharos/Classes/Retaining;
 			sourceTree = "<group>";
 		};
 		CA4DD4A1326D1116B77E38259B7CCDFA /* Support Files */ = {
@@ -1161,6 +1185,7 @@
 				7315FD38292501C100A31A41 /* BindableCollectionCellView.swift in Sources */,
 				7315FD102924AEF300A31A41 /* Observable+Extensions.swift in Sources */,
 				7315FD37292501C100A31A41 /* BindableCollection+UILabel.swift in Sources */,
+				BBD9C9BE292F8B1700342CF8 /* WrappingObserver.swift in Sources */,
 				7315FD1C2924B33C00A31A41 /* Observing.swift in Sources */,
 				7315FD3E292501C100A31A41 /* BindableCollection+TextInput.swift in Sources */,
 				7315FD49292503F500A31A41 /* UIControl+Extensions.swift in Sources */,
@@ -1168,9 +1193,11 @@
 				7315FD3A292501C100A31A41 /* BindableCollection+UIControl.swift in Sources */,
 				7315FD122924B08E00A31A41 /* Changes.swift in Sources */,
 				7315FD3C292501C100A31A41 /* BindableCollection+UIStackView.swift in Sources */,
+				BBD9C9BA292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift in Sources */,
 				7315FD4A292503F500A31A41 /* UIControlAction.swift in Sources */,
 				7315FD0F2924AEF300A31A41 /* Observable.swift in Sources */,
 				7315FD1E2924EFED00A31A41 /* Invokable.swift in Sources */,
+				BBD9C9B6292F8A7C00342CF8 /* RetainableGroup.swift in Sources */,
 				7315FD0D2924AEF300A31A41 /* CombinedObservable.swift in Sources */,
 				7315FD222924FE2F00A31A41 /* ObservableBlock.swift in Sources */,
 				7315FD3D292501C100A31A41 /* BindableCollection+UIScrollView.swift in Sources */,
@@ -1182,12 +1209,14 @@
 				7315FD41292501C100A31A41 /* BindableCollection+UITableView.swift in Sources */,
 				7315FD3F292501C100A31A41 /* BindableCollection+UIView.swift in Sources */,
 				7315FD44292501C100A31A41 /* PopulatedRelays.swift in Sources */,
+				BBD9C9B4292F8A6A00342CF8 /* InvokableGroup.swift in Sources */,
 				7315FD1A2924B28200A31A41 /* AnyObservable.swift in Sources */,
 				7315FD45292501C100A31A41 /* BindableCollection+UIImageView.swift in Sources */,
 				7315FD43292501C100A31A41 /* BindableCollection+UISwitch.swift in Sources */,
 				7315FD39292501C100A31A41 /* BindableCollection+UISlider.swift in Sources */,
 				7315FD092924AEF300A31A41 /* Subject.swift in Sources */,
 				AA8CB378B118DCFB17AACFA778D69E9D /* Pharos-dummy.m in Sources */,
+				BBD9C9B8292F8AA100342CF8 /* WeakWrappedObserver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

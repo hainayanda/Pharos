@@ -12,21 +12,19 @@ extension Observable {
     /// - Parameter others: Other Observable to be merged
     /// - Returns: Observable
     public func merged(with others: Observable<Output>...) -> Observable<Output> {
-        var buffer: Output?
         var merged = others
         merged.append(self)
-        let child = MergedBindable(parents: merged)
+        let child = MergedObservable(parents: merged)
         merged.forEach { bindable in
             bindable.observeChange { [unowned child] value in
-                child.accept(value.with(old: buffer ?? value.old))
-                buffer = value.new
+                child.accept(value)
             }.retained(by: child)
         }
         return child
     }
 }
 
-class MergedBindable<Value>: Observable<Value> {
+class MergedObservable<Value>: BufferedObservable<Value> {
     
     private var weakParents: [WeakBindableWrapper]
     var parents: [InvokableObservable] {
@@ -48,14 +46,27 @@ class MergedBindable<Value>: Observable<Value> {
         super.init(isAncestor: false)
     }
     
+    @discardableResult
+    override func accept(_ changes: Changes<Value>) -> Bool {
+        super.accept(changes.with(old: buffer ?? changes.old))
+    }
+    
     override func fire() {
-        parents.forEach { $0.signalFire(from: [ObjectIdentifier(self)])}
+        guard buffer == nil else {
+            super.fire()
+            return
+        }
+        parents.first?.signalFire(from: [ObjectIdentifier(self)])
     }
     
     override func signalFire(from triggers: [ObjectIdentifier]) {
+        guard  buffer == nil else {
+            super.signalFire(from: triggers)
+            return
+        }
         var triggers = triggers
         triggers.append(ObjectIdentifier(self))
-        parents.forEach { $0.signalFire(from: triggers)}
+        parents.first?.signalFire(from: triggers)
     }
 }
 

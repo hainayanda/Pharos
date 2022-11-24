@@ -9,7 +9,7 @@ import Foundation
 
 extension Observable {
     public func combine<Output2>(with other: Observable<Output2>) -> Observable<(Output?, Output2?)> {
-        let child = CombinedBindable(parent1: self, parent2: other)
+        let child = CombinedObservable(parent1: self, parent2: other)
         var recentValue: Changes<(Output?, Output2?)>?
         if let buffered = self as? BufferedObservable<Output>, let buffer = buffered.buffer {
             recentValue = Changes(new: (buffer, nil))
@@ -88,7 +88,7 @@ extension Observable {
     }
 }
 
-class CombinedBindable<Value1, Output2>: Observable<(Value1?, Output2?)> {
+class CombinedObservable<Value1, Output2>: BufferedObservable<(Value1?, Output2?)> {
     private weak var parent1: Observable<Value1>?
     private weak var parent2: Observable<Output2>?
     
@@ -109,12 +109,20 @@ class CombinedBindable<Value1, Output2>: Observable<(Value1?, Output2?)> {
     }
     
     override func fire() {
+        guard buffer?.0 as? Value1 == nil || buffer?.1 as? Output2 == nil else {
+            super.fire()
+            return
+        }
         let trigger = [ObjectIdentifier(self)]
         parent1?.signalFire(from: trigger)
         parent2?.signalFire(from: trigger)
     }
     
     override func signalFire(from triggers: [ObjectIdentifier]) {
+        guard buffer?.0 as? Value1 == nil || buffer?.1 as? Output2 == nil else {
+            super.signalFire(from: triggers)
+            return
+        }
         var triggers = triggers
         triggers.append(ObjectIdentifier(self))
         parent1?.signalFire(from: triggers)

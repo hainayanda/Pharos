@@ -185,91 +185,6 @@ class RetainableObserver<Value>: Retainable, Observing, Invokable {
     }
 }
 
-class InvokableGroup: Invokable {
-    
-    let invokables: [Invokable]
-    
-    init(invokables: [Invokable]) {
-        self.invokables = invokables
-    }
-    
-    @inlinable func fire() {
-        invokables.first?.fire()
-    }
-}
-
-class RetainableGroup: Retainable {
-    
-    var retainables: [Retainable]
-    
-    init(retainables: [Retainable]) {
-        self.retainables = retainables
-    }
-    
-    func asParent<Child>(of observable: Child) -> Child where Child: AnyObservable {
-        retained(by: observable)
-        return observable
-    }
-    
-    @discardableResult
-    @inlinable func retained(by object: AnyObject) -> Invokable {
-        InvokableGroup(invokables: retainables.map { $0.retained(by: object) })
-    }
-    
-    @discardableResult
-    @inlinable func retainedExclusively(by object: AnyObject) -> Invokable {
-        InvokableGroup(invokables: retainables.map { $0.retainedExclusively(by: object) })
-    }
-    
-    @discardableResult
-    @inlinable func retain() -> Invokable {
-        InvokableGroup(invokables: retainables.map { $0.retain() })
-    }
-    
-    @discardableResult
-    @inlinable func retainUntil(_ shouldDiscard: @escaping () -> Bool) -> Invokable {
-        InvokableGroup(invokables: retainables.map { $0.retainUntil(shouldDiscard) })
-    }
-    
-    @inlinable func discard() {
-        retainables.forEach { $0.discard() }
-        retainables = []
-    }
-    
-}
-
-// MARK: WeakWrappedObserver
-
-struct WeakWrappedObserver<Value>: Observing {
-    var valid: Bool { observer != nil }
-    private weak var observer: RetainableObserver<Value>?
-    
-    init(observer: RetainableObserver<Value>) {
-        self.observer = observer
-    }
-    
-    @discardableResult
-    func accept(_ changes: Changes<Value>) -> Bool {
-        observer?.accept(changes) ?? false
-    }
-}
-
-// MARK: ExclusiveRetainableWrapper
-
-class ExclusiveRetainableWrapper {
-    var retained: Retainable
-    let source: ObjectIdentifier
-    
-    init(retained: Retainable, source: AnyObject) {
-        self.retained = retained
-        self.source = ObjectIdentifier(source)
-    }
-    
-    @inlinable func isComing(from source: AnyObject) -> Bool {
-        ObjectIdentifier(source) == self.source
-    }
-}
-
 // MARK: Retainer
 
 public class Retainer {
@@ -279,16 +194,4 @@ public class Retainer {
     public func discardAll() {
         objc_setAssociatedObject(self, &retainingKey, [], .OBJC_ASSOCIATION_RETAIN)
     }
-}
-
-protocol WrappingObserver {
-    var wrapped: AnyObject? { get }
-}
-
-extension WeakWrappedObserver: WrappingObserver {
-    var wrapped: AnyObject? { observer?.wrapped }
-}
-
-extension RetainableObserver: WrappingObserver {
-    var wrapped: AnyObject? { (child as? WrappingObserver)?.wrapped ?? child }
 }
