@@ -18,7 +18,7 @@ extension Observable {
             recentValue = Changes(new: (recentValue?.new.0, buffer))
         }
         
-        observeChange { value in
+        observeChange { [unowned child] value in
             let combinedValue: Changes<(Output?, Output2?)> = Changes(
                 new: (value.new, recentValue?.new.1),
                 old: (value.old, recentValue?.new.1),
@@ -29,7 +29,7 @@ extension Observable {
             recentValue = combinedValue
         }.retained(by: child)
         
-        other.observeChange { value in
+        other.observeChange { [unowned child] value in
             let combinedValue: Changes<(Output?, Output2?)> = Changes(
                 new: (recentValue?.new.0, value.new),
                 old: (recentValue?.new.0, value.old),
