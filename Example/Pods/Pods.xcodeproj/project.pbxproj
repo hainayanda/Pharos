@@ -617,9 +617,9 @@
 				7315FD192924B28200A31A41 /* AnyObservable.swift */,
 				7315FD112924B08E00A31A41 /* Changes.swift */,
 				7315FD1D2924EFED00A31A41 /* Invokable.swift */,
+				BBD9C9B3292F8A6A00342CF8 /* InvokableGroup.swift */,
 				7315FD1B2924B33C00A31A41 /* Observing.swift */,
 				7315FD042924AEF300A31A41 /* Unwrapable.swift */,
-				BBD9C9B3292F8A6A00342CF8 /* InvokableGroup.swift */,
 				BBD9C9BD292F8B1700342CF8 /* WrappingObserver.swift */,
 			);
 			name = Base;
@@ -760,10 +760,10 @@
 		BBD9C9BF292F8B2200342CF8 /* Retaining */ = {
 			isa = PBXGroup;
 			children = (
-				7315FD022924AEF300A31A41 /* Retainable.swift */,
 				BBD9C9B9292F8AB900342CF8 /* ExclusiveRetainableWrapper.swift */,
-				BBD9C9B7292F8AA100342CF8 /* WeakWrappedObserver.swift */,
+				7315FD022924AEF300A31A41 /* Retainable.swift */,
 				BBD9C9B5292F8A7C00342CF8 /* RetainableGroup.swift */,
+				BBD9C9B7292F8AA100342CF8 /* WeakWrappedObserver.swift */,
 			);
 			name = Retaining;
 			path = Pharos/Classes/Retaining;
