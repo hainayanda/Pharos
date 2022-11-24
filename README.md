@@ -43,7 +43,7 @@ pod 'Pharos'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Pharos.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **3.0.2** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **4.0.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -52,7 +52,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "3.0.2"))
+    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "4.0.0"))
 ]
 ```
 
@@ -162,6 +162,24 @@ class MyClass {
 ## Control Subscriber Retaining
 
 By default, if you observe Observable and end it with `retain()`. The closure will be retained by the Observable itself. It will automatically be removed by `ARC` if the Observable is removed by `ARC`.
+If you want to retain the closure with custom object, you could always do something like this:
+
+```swift
+class MyClass {
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.observeChange { changes in
+            print(changes.new)
+            print(changes.old)
+        }
+        .retained(by: self)
+    }
+}
+```
+
+At the example above, the closure will be retained by MyClass instance and will be removed if the instance is removed by ARC.
+
 If you want to handle the retaining manually, you could always use `Retainer` to retain the observer:
 
 ```swift
@@ -194,23 +212,6 @@ There are many ways to discard the subscriber managed by `Retainer`:
 - call `discardAllRetained()` from subscriber's retainer
 - replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed subscribers by default.
 - doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed subscribers by default.
-
-If you don't want to bother creating a Retainer, you can alwas retained it to itself. Keep in mind it will only work for class instance:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-   
-    func observeText() {
-        $text.observeChange { changes in
-            print(changes.new)
-            print(changes.old)
-        }
-        .retained(by: self)
-    }
-   
-}
-```
 
 You can always control how long you want to retain by using various retain methods:
 
@@ -257,6 +258,8 @@ class MyClass {
     
 }
 ```
+
+Use this retain capability wisely, since if you're not aware how the ARC work it can introduced retain cycle.
 
 ## UIControl
 
@@ -318,7 +321,7 @@ class MyClass {
     @Subject var text: String
     
     func observeText() {
-        $text.ignore { $0.new.isEmpty }
+        $text.ignore { $0.isEmpty }
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
@@ -336,7 +339,7 @@ class MyClass {
     @Subject var text: String
     
     func observeText() {
-        $text.filter { $0.new.count > 5 }
+        $text.filter { $0.count > 5 }
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
@@ -394,52 +397,18 @@ class MyClass {
 
 It will make all the subscriber after this dispatch call to be run asyncrhonously in the given `DispatchQueue`
 
-You could make it synchronous if its already in the same `DispatchQueue` by adding `syncPrefered` flag:
+You could make it synchronous if its already in the same `DispatchQueue` by use `observe(on:)`:
 
 ```swift
 class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.dispatch(on: .main, syncPrefered: true)
+        $text.observe(on: .main)
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
             }
-            .retain()
-    }
-}
-```
-
-If you want the queue only used by the last subscriber, use `observeOn` instead:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-    
-    func observeText() {
-        $text.observeChange { changes in
-                print(changes.new)
-                print(changes.old)
-            }
-            .observeOn(.main)
-            .retain()
-    }
-}
-```
-
-To make sure it always run asynchronously:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-    
-    func observeText() {
-        $text.observeChange { changes in
-                print(changes.new)
-                print(changes.old)
-            }
-            .observeOn(.main, asynchronously: true)
             .retain()
     }
 }
@@ -492,6 +461,20 @@ let myObservableFromBlock = ObservableBlock { accept in
 myObservableFromBlock.observeChange { changes in
     print(changes)
 }.retain()
+```
+
+## Publisher
+
+Publisher is the Observable that only used for Publishing value
+
+```swift
+let myPublisher = Publisher<Int>()
+
+...
+...
+
+// it will then publish 10 to all of its subscriber
+myPublisher.publish(10)
 ```
 
 ## Relay value to another Observable
@@ -562,6 +545,29 @@ class MyClass {
         $userName.combine(with: $fullName, $password)
             .mapped { 
                 User(
+                    userName: $0.new.0 ?? "", 
+                    fullName: $0.new.1 ?? "", 
+                    password: $0.new.2 ?? ""
+                )
+            }.relayChanges(to: $user)
+            .retain()
+    }
+}
+```
+
+It will generate Observable of all combined value but optional, since some value might not be there when one of the observable is triggered. To make sure that it will only called triggered when all of the combined value is available, you can use `compactCombine` instead
+
+```swift
+class MyClass {
+    @Subject var userName: String = ""
+    @Subject var fullName: String = ""
+    @Subject var password: String = ""
+    @Subject var user: User = User()
+    
+    func observeText() {
+        $userName.compactCombine(with: $fullName, $password)
+            .mapped { 
+                User(
                     userName: $0.new.0, 
                     fullName: $0.new.1, 
                     password: $0.new.2
@@ -571,6 +577,8 @@ class MyClass {
     }
 }
 ```
+
+It will not triggered until all the observable is emiting a value.
 
 ***
 

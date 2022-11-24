@@ -15,7 +15,7 @@ extension Observable {
     /// Listen this Observable while creating a new Observable that consume value coming from this Observable
     /// - Parameter observer: Closure that takes value from this bindable and the new Observable that will consume the value
     /// - Returns: New Observable that consume the value from this bindable
-    func addChildBindable<ChildOutput>(_ listener: @escaping (Changes<Output>, Observable<ChildOutput>) -> Void) -> Observable<ChildOutput> {
+    func addChildObservable<ChildOutput>(_ listener: @escaping (Changes<Output>, Observable<ChildOutput>) -> Void) -> Observable<ChildOutput> {
         let child = Observable<ChildOutput>(parent: self)
         return observeChange { [unowned child] value in
             listener(value, child)
@@ -26,7 +26,7 @@ extension Observable {
     /// - Parameter mapper: Closure that takes the value from this Observable and return its mapped value
     /// - Returns: New Observable with mapped value
     public func mapped<Mapped>(_ mapper: @escaping (Output) -> Mapped) -> Observable<Mapped> {
-        addChildBindable { value, child in
+        addChildObservable { value, child in
             child.accept(value.mapped(mapper))
         }
     }
@@ -36,7 +36,7 @@ extension Observable {
     /// - Returns: New Observable with mapped value
     public func compactMapped<Mapped>(_ mapper: @escaping (Output) -> Mapped?) -> Observable<Mapped> {
         var buffer: Mapped?
-        return addChildBindable { value, child in
+        return addChildObservable { value, child in
             guard let mapped = value.compactMapped(mapper) else {
                 guard let old = value.old, let oldMapped = mapper(old) else { return }
                 buffer = oldMapped
@@ -60,10 +60,13 @@ extension Observable {
         }
     }
     
-    public func filterChange(_ comparator: @escaping (Output?, Output) -> Bool) -> Observable<Output> {
+    /// Filter this Observable to include only the allowed changes
+    /// - Parameter comparator: Closure that takes old value if any and new value from this Observable and returns Bool indicated the changes is allowed or not
+    /// - Returns: New Observable with filtered value
+    public func filterChange(_ shouldInclude: @escaping (Output?, Output) -> Bool) -> Observable<Output> {
         var buffer: Output?
-        return addChildBindable { value, child in
-            guard comparator(value.old, value.new) else {
+        return addChildObservable { value, child in
+            guard shouldInclude(value.old, value.new) else {
                 buffer = value.old
                 return
             }
@@ -87,7 +90,7 @@ extension Observable {
     /// - Parameter queue: DispatchQueue where the next observer will be run
     /// - Returns: New Observable with DispatchQueue
     public func observe(on queue: DispatchQueue) -> Observable<Output> {
-        addChildBindable { value, child in
+        addChildObservable { value, child in
             queue.asyncIfNeeded {
                 child.accept(value)
             }
@@ -98,7 +101,7 @@ extension Observable {
     /// - Parameter queue: DispatchQueue where the next observer will be run
     /// - Returns: New Observable with DispatchQueue
     public func dispatch(on queue: DispatchQueue) -> Observable<Output> {
-        addChildBindable { value, child in
+        addChildObservable { value, child in
             queue.async {
                 child.accept(value)
             }
@@ -132,7 +135,7 @@ extension Observable {
     public func throttled(by minimumCallInterval: TimeInterval) -> Observable<Output> {
         var pendingBuffer: Changes<Output>?
         var lastBlockedTime: Date = .distantPast
-        return addChildBindable { value, child in
+        return addChildObservable { value, child in
             guard lastBlockedTime.timeIntervalUntilNow > minimumCallInterval else {
                 pendingBuffer = value
                 return
@@ -164,5 +167,9 @@ extension Observable where Output: Equatable {
     /// - Returns:Observable that only give unique value to the next listeners
     @inlinable public func distinct() -> Observable<Output> {
         filterChange { $0 != $1 }
+    }
+    
+    @inlinable public func ignore(_ value: Output) -> Observable<Output> {
+        ignore { $0 == value }
     }
 }
