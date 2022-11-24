@@ -34,6 +34,42 @@ class ObservableSpec: QuickSpec {
                 setCount: 1
             )
         }
+        it("should fire to the one request it") {
+            var firstObserverCalled: Bool = false
+            var secondObserverCalled: Bool = false
+            var thirdObserverCalled: Bool = false
+            var fourthObserverCalled: Bool = false
+            subject.observe { _ in
+                firstObserverCalled = true
+            }.retain()
+            
+            subject.filter { _ in true }.observe { _ in
+                secondObserverCalled = true
+            }.retain()
+            
+            subject.observe { _ in
+                thirdObserverCalled = true
+            }
+            .retain()
+            .fire()
+            
+            expect(firstObserverCalled).to(beFalse())
+            expect(secondObserverCalled).to(beFalse())
+            expect(thirdObserverCalled).to(beTrue())
+            
+            thirdObserverCalled = false
+            
+            subject.filter { _ in true }.observe { _ in
+                fourthObserverCalled = true
+            }
+            .retain()
+            .fire()
+            
+            expect(firstObserverCalled).to(beFalse())
+            expect(secondObserverCalled).to(beFalse())
+            expect(thirdObserverCalled).to(beFalse())
+            expect(fourthObserverCalled).to(beTrue())
+        }
         it("should retain subscriber using retainer") {
             var retainer: Retainer? = Retainer()
             let changeWrapper = listenDidSet(for: subject, retainTo: retainer!)
@@ -83,25 +119,6 @@ class ObservableSpec: QuickSpec {
             thenAssert(
                 changeWrapper,
                 shouldSimilarWith: Changes(new: newState, old: intialState),
-                setCount: 1
-            )
-        }
-        it("should retain subscriber until met condition") {
-            let newState: String = .randomString(length: 18)
-            let triggeringState: String = .randomString(length: 18)
-            let stopChanges = Changes(new: triggeringState, old: newState)
-            let expectedChanges = Changes(new: newState, old: intialState)
-            let changeWrapper = listenDidSet(for: subject, retainUntilState: stopChanges)
-            subject.wrappedValue = newState
-            thenAssert(
-                changeWrapper,
-                shouldSimilarWith: expectedChanges,
-                setCount: 1
-            )
-            subject.wrappedValue = triggeringState
-            thenAssert(
-                changeWrapper,
-                shouldSimilarWith: expectedChanges,
                 setCount: 1
             )
         }
@@ -155,7 +172,8 @@ class ObservableSpec: QuickSpec {
         }
         it("should merge subjects") {
             let subject2 = Subject<String>(wrappedValue: intialState)
-            let changeWrapper = listenDidSet(for: subject.merged(with: subject2))
+            let merged = subject.merged(with: subject2)
+            let changeWrapper = listenDidSet(for: merged)
             let newState1: String = .randomString(length: 18)
             let newState2: String = .randomString(length: 18)
             subject.wrappedValue = newState1
@@ -211,17 +229,6 @@ private func listenDidSet<State>(for subject: Observable<State>, retainUntilStat
         .observeChange { changes in
             changeWrapper.changes = changes
         }.retainUntil(nextEventCount: maxCount)
-    return changeWrapper
-}
-
-private func listenDidSet<State: Equatable>(for subject: Observable<State>, retainUntilState changes: Changes<State>) -> ChangesClassWrapper<State> {
-    let changeWrapper = ChangesClassWrapper<State>()
-    subject
-        .observeChange { changes in
-            changeWrapper.changes = changes
-        }.retainUntil {
-            $0 == changes
-        }
     return changeWrapper
 }
 

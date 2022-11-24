@@ -35,7 +35,7 @@ public final class BindableCollection<Object: NSObject> {
 
 public protocol PopulatedRelays: NSObject { }
 
-extension NSObject: PopulatedRelays, ObjectRetainer { }
+extension NSObject: PopulatedRelays { }
 
 public extension PopulatedRelays {
     var relayables: RelayableCollection<Self> {
@@ -64,5 +64,21 @@ public final class RelayableCollection<Object: NSObject> {
     
     public subscript<Property>(dynamicMember member: ReferenceWritableKeyPath<Object, Property>) -> Observable<Property> {
         relayable(of: member)
+    }
+}
+
+var populatedRelayRetainingKey: String = "populatedRelayRetainingKey"
+
+extension PopulatedRelays {
+    
+    func findRetained(where match: (AnyObject) -> Bool) -> AnyObject? {
+        let retained = objc_getAssociatedObject(self, &populatedRelayRetainingKey) as? [AnyObject] ?? []
+        return retained.first(where: match)
+    }
+    
+    func retain(_ object: AnyObject) {
+        var retained = objc_getAssociatedObject(self, &populatedRelayRetainingKey) as? [AnyObject] ?? []
+        retained.append(self)
+        objc_setAssociatedObject(self, &populatedRelayRetainingKey, retained, .OBJC_ASSOCIATION_RETAIN)
     }
 }

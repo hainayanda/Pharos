@@ -7,17 +7,19 @@
 
 import Foundation
 
-open class Publisher<Output>: Observable<Output> {
-    
-    private var _recentState: Output?
-    public override var recentState: Output? { _recentState }
+open class Publisher<Output>: BufferedObservable<Output> {
     
     public override init() {
         super.init()
     }
     
+    public init(_ buffer: Output) {
+        super.init()
+        self.buffer = buffer
+    }
+    
     open func publish(_ value: Output) {
-        defer { _recentState = value }
-        send(changes: Changes(new: value, old: recentState))
+        send(changes: Changes(new: value, old: buffer))
+        buffer = value
     }
 }

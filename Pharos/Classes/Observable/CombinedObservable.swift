@@ -7,205 +7,125 @@
 
 import Foundation
 
-final class BiCombinedObservable<Output1, Output2>: Observable<(Output1?, Output2?)> {
-    
-    private weak var observable1: Observable<Output1>?
-    private weak var observable2: Observable<Output2>?
-    
-    @inlinable override var recentState: (Output1?, Output2?)? {
-        (observable1?.recentState, observable2?.recentState)
-    }
-    
-    @inlinable init(observable1: Observable<Output1>, observable2: Observable<Output2>) {
-        super.init()
-        
-        self.observable1 = observable1
-        self.observable2 = observable2
-        
-        observable1.mapped { [weak self] state in
-            let recentState = self?.recentState
-            return (state, recentState?.1)
-        }
-        .relayChanges(to: self)
-        .retain()
-        observable2.mapped { [weak self] state in
-            let recentState = self?.recentState
-            return (recentState?.0, state)
-        }
-        .relayChanges(to: self)
-        .retain()
-        
-        observable1.retain(self)
-        observable2.retain(self)
-    }
-}
-
 extension Observable {
     public func combine<Output2>(with other: Observable<Output2>) -> Observable<(Output?, Output2?)> {
-        BiCombinedObservable(observable1: self, observable2: other)
+        let child = CombinedObservable(parent1: self, parent2: other)
+        var recentValue: Changes<(Output?, Output2?)>?
+        if let buffered = self as? BufferedObservable<Output>, let buffer = buffered.buffer {
+            recentValue = Changes(new: (buffer, nil))
+        }
+        if let buffered = other as? BufferedObservable<Output2>, let buffer = buffered.buffer {
+            recentValue = Changes(new: (recentValue?.new.0, buffer))
+        }
+        
+        observeChange { [unowned child] value in
+            let combinedValue: Changes<(Output?, Output2?)> = Changes(
+                new: (value.new, recentValue?.new.1),
+                old: (value.old, recentValue?.new.1),
+                triggers: value.triggers,
+                consumers: value.consumers
+            ).consumed(by: child)
+            child.send(changes: combinedValue)
+            recentValue = combinedValue
+        }.retained(by: child)
+        
+        other.observeChange { [unowned child] value in
+            let combinedValue: Changes<(Output?, Output2?)> = Changes(
+                new: (recentValue?.new.0, value.new),
+                old: (recentValue?.new.0, value.old),
+                triggers: value.triggers,
+                consumers: value.consumers
+            ).consumed(by: child)
+            child.send(changes: combinedValue)
+            recentValue = combinedValue
+        }.retained(by: child)
+        
+        return child
     }
     
-    @inlinable public func compactCombine<Output2>(
-        with other1: Observable<Output2>) -> Observable<(Output, Output2)> {
+    @inlinable public func compactCombine<Output2>(with other: Observable<Output2>) -> Observable<(Output, Output2)> {
+        combine(with: other).compactMapped { tuple in
+            guard let value1 = tuple.0, let value2 = tuple.1 else { return nil }
+            return (value1, value2)
+        }
+    }
+    
+    @inlinable public func combine<Output2, Output3>(
+        with other1: Observable<Output2>, _ other2: Observable<Output3>) -> Observable<(Output?, Output2?, Output3?)> {
             combine(with: other1)
-                .compactMapped {
-                    guard let output1 = $0.0,
-                          let output2 = $0.1 else {
-                        return nil
-                    }
-                    return (output1, output2)
+                .combine(with: other2)
+                .mapped { tuple in
+                    (tuple.0?.0, tuple.0?.1, tuple.1)
                 }
-        }
-}
-
-final class TriCombinedObservable<Output1, Output2, Output3>: Observable<(Output1?, Output2?, Output3?)> {
-    
-    private weak var observable1: Observable<Output1>?
-    private weak var observable2: Observable<Output2>?
-    private weak var observable3: Observable<Output3>?
-    
-    @inlinable override var recentState: (Output1?, Output2?, Output3?)? {
-        (observable1?.recentState, observable2?.recentState, observable3?.recentState)
-    }
-    
-    @inlinable init(
-        observable1: Observable<Output1>,
-        observable2: Observable<Output2>,
-        observable3: Observable<Output3>) {
-            super.init()
-            
-            self.observable1 = observable1
-            self.observable2 = observable2
-            self.observable3 = observable3
-            
-            observable1.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (state, recentState?.1, recentState?.2)
-            }
-            .relayChanges(to: self)
-            .retain()
-            observable2.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (recentState?.0, state, recentState?.2)
-            }
-            .relayChanges(to: self)
-            .retain()
-            observable3.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (recentState?.0, recentState?.1, state)
-            }
-            .relayChanges(to: self)
-            .retain()
-            
-            observable1.retain(self)
-            observable2.retain(self)
-            observable3.retain(self)
-        }
-}
-
-extension Observable {
-    public func combine<Output2, Output3>(
-        with other1: Observable<Output2>,
-        _ other2: Observable<Output3>) -> Observable<(Output?, Output2?, Output3?)> {
-            TriCombinedObservable(observable1: self, observable2: other1, observable3: other2)
         }
     
     @inlinable public func compactCombine<Output2, Output3>(
-        with other1: Observable<Output2>,
-        _ other2: Observable<Output3>) -> Observable<(Output, Output2, Output3)> {
-            combine(with: other1, other2)
-                .compactMapped {
-                    guard let output1 = $0.0,
-                          let output2 = $0.1,
-                          let output3 = $0.2 else {
-                        return nil
-                    }
-                    return (output1, output2, output3)
-                }
+        with other1: Observable<Output2>, _ other2: Observable<Output3>) -> Observable<(Output, Output2, Output3)> {
+            combine(with: other1, other2).compactMapped { tuple in
+                guard let value1 = tuple.0, let value2 = tuple.1, let value3 = tuple.2 else { return nil }
+                return (value1, value2, value3)
+            }
         }
-}
-
-final class QuadCombinedObservable<Output1, Output2, Output3, Output4>: Observable<(Output1?, Output2?, Output3?, Output4?)> {
     
-    private weak var observable1: Observable<Output1>?
-    private weak var observable2: Observable<Output2>?
-    private weak var observable3: Observable<Output3>?
-    private weak var observable4: Observable<Output4>?
-    
-    @inlinable override var recentState: (Output1?, Output2?, Output3?, Output4?)? {
-        (observable1?.recentState, observable2?.recentState, observable3?.recentState, observable4?.recentState)
+    @inlinable public func combine<Output2, Output3, Output4>(
+        with other1: Observable<Output2>, _ other2: Observable<Output3>, _ other3: Observable<Output4>)
+    -> Observable<(Output?, Output2?, Output3?, Output4?)> {
+        combine(with: other1)
+            .combine(with: other2)
+            .combine(with: other3)
+            .mapped { tuple in
+                (tuple.0?.0?.0, tuple.0?.0?.1, tuple.0?.1, tuple.1)
+            }
     }
     
-    @inlinable init(
-        observable1: Observable<Output1>,
-        observable2: Observable<Output2>,
-        observable3: Observable<Output3>,
-        observable4: Observable<Output4>) {
-            super.init()
-            
-            self.observable1 = observable1
-            self.observable2 = observable2
-            self.observable3 = observable3
-            self.observable4 = observable4
-            
-            observable1.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (state, recentState?.1, recentState?.2, recentState?.3)
-            }
-            .relayChanges(to: self)
-            .retain()
-            observable2.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (recentState?.0, state, recentState?.2, recentState?.3)
-            }
-            .relayChanges(to: self)
-            .retain()
-            observable3.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (recentState?.0, recentState?.1, state, recentState?.3)
-            }
-            .relayChanges(to: self)
-            .retain()
-            observable4.mapped { [weak self] state in
-                let recentState = self?.recentState
-                return (recentState?.0, recentState?.1, recentState?.2, state)
-            }
-            .relayChanges(to: self)
-            .retain()
-            
-            observable1.retain(self)
-            observable2.retain(self)
-            observable3.retain(self)
-            observable4.retain(self)
+    public func compactCombine<Output2, Output3, Output4>(
+        with other1: Observable<Output2>, _ other2: Observable<Output3>, _ other3: Observable<Output4>)
+    -> Observable<(Output, Output2, Output3, Output4)> {
+        combine(with: other1, other2, other3).compactMapped { tuple in
+            guard let value1 = tuple.0, let value2 = tuple.1, let value3 = tuple.2, let value4 = tuple.3 else { return nil }
+            return (value1, value2, value3, value4)
         }
+    }
 }
 
-extension Observable {
-    public func combine<Output2, Output3, Output4>(
-        with other1: Observable<Output2>,
-        _ other2: Observable<Output3>,
-        _ other3: Observable<Output4>) -> Observable<(Output?, Output2?, Output3?, Output4?)> {
-            QuadCombinedObservable(
-                observable1: self,
-                observable2: other1,
-                observable3: other2,
-                observable4: other3
-            )
-        }
+class CombinedObservable<Value1, Output2>: BufferedObservable<(Value1?, Output2?)> {
+    private weak var parent1: Observable<Value1>?
+    private weak var parent2: Observable<Output2>?
     
-    @inlinable public func compactCombine<Output2, Output3, Output4>(
-        with other1: Observable<Output2>,
-        _ other2: Observable<Output3>,
-        _ other3: Observable<Output4>) -> Observable<(Output, Output2, Output3, Output4)> {
-            combine(with: other1, other2, other3)
-                .compactMapped {
-                    guard let output1 = $0.0,
-                          let output2 = $0.1,
-                          let output3 = $0.2,
-                          let output4 = $0.3 else {
-                        return nil
-                    }
-                    return (output1, output2, output3, output4)
-                }
+    // this is not ancestor, but will be a source of autoRetain for next observer and its child
+    @inlinable var source: AnyObservable? { self }
+    
+    override var parent: AnyObservable? {
+        parent1 ?? parent2
+    }
+    var ancestor: AnyObservable? {
+        parent1?.ancestor ?? parent2?.ancestor
+    }
+    
+    init(parent1: Observable<Value1>, parent2: Observable<Output2>) {
+        self.parent1 = parent1
+        self.parent2 = parent2
+        super.init(isAncestor: false)
+    }
+    
+    override func fire() {
+        guard buffer?.0 as? Value1 == nil || buffer?.1 as? Output2 == nil else {
+            super.fire()
+            return
         }
+        let trigger = [ObjectIdentifier(self)]
+        parent1?.signalFire(from: trigger)
+        parent2?.signalFire(from: trigger)
+    }
+    
+    override func signalFire(from triggers: [ObjectIdentifier]) {
+        guard buffer?.0 as? Value1 == nil || buffer?.1 as? Output2 == nil else {
+            super.signalFire(from: triggers)
+            return
+        }
+        var triggers = triggers
+        triggers.append(ObjectIdentifier(self))
+        parent1?.signalFire(from: triggers)
+        parent2?.signalFire(from: triggers)
+    }
 }

@@ -4,7 +4,7 @@
 
 # Pharos
 
-Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming. Under the hood, it utilize [Chary](https://github.com/hainayanda/Chary) as DispatchQueue utilities
+Pharos is an Observer pattern framework for Swift that utilizes `propertyWrapper`. It could help a lot when designing Apps using reactive programming. Under the hood, it utilizes [Chary](https://github.com/hainayanda/Chary) as DispatchQueue utilities
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2d5055e1fe68483ea6a7c131990bf2d3)](https://www.codacy.com/gh/hainayanda/Pharos/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hainayanda/Pharos&amp;utm_campaign=Badge_Grade)
 ![build](https://github.com/hainayanda/Pharos/workflows/build/badge.svg)
@@ -43,7 +43,7 @@ pod 'Pharos'
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **<https://github.com/hainayanda/Pharos.git>** as Swift Package URL
-- Set rules at **version**, with **Up to Next Major** option and put **3.0.2** as its version
+- Set rules at **version**, with **Up to Next Major** option and put **4.0.0** as its version
 - Click next and wait
 
 ### Swift Package Manager from Package.swift
@@ -52,7 +52,7 @@ Add as your target dependency in **Package.swift**
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "3.0.2"))
+    .package(url: "https://github.com/hainayanda/Pharos.git", .upToNextMajor(from: "4.0.0"))
 ]
 ```
 
@@ -85,7 +85,7 @@ class MyClass {
 }
 ```
 
-to observe any changes that happen in the text, use its `projectedValue` to get its `Observable`. and pass the closure subscriber:
+to observe any changes that happen in the text, use its `projectedValue` to get its Observable`. and pass the closure subscriber:
 
 ```swift
 class MyClass {
@@ -101,7 +101,7 @@ class MyClass {
 ```
 
 every time any set happens in text, it will call the closure with its changes which include old value and new value.
-You could ignore any set that does not changing the value as long the value is `Equatable`
+You could ignore any set that does not change the value as long the value is `Equatable`
 
 ```swift
 class MyClass {
@@ -162,6 +162,24 @@ class MyClass {
 ## Control Subscriber Retaining
 
 By default, if you observe Observable and end it with `retain()`. The closure will be retained by the Observable itself. It will automatically be removed by `ARC` if the Observable is removed by `ARC`.
+If you want to retain the closure with a custom object, you could always do something like this:
+
+```swift
+class MyClass {
+    @Subject var text: String?
+    
+    func observeText() {
+        $text.observeChange { changes in
+            print(changes.new)
+            print(changes.old)
+        }
+        .retained(by: self)
+    }
+}
+```
+
+In the example above, the closure will be retained by the `MyClass` instance and will be removed if the instance is removed by ARC.
+
 If you want to handle the retaining manually, you could always use `Retainer` to retain the observer:
 
 ```swift
@@ -192,25 +210,8 @@ class MyClass {
 There are many ways to discard the subscriber managed by `Retainer`:
 
 - call `discardAllRetained()` from subscriber's retainer
-- replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory thus will discard all of its managed subscribers by default.
-- doing nothing, which if the object that has retainer is discarded by `ARC`, it will automatically discard the `Retainer` thus will discard all of its managed subscribers by default.
-
-If you don't want to bother creating a Retainer, you can alwas retained it to itself. Keep in mind it will only work for class instance:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-   
-    func observeText() {
-        $text.observeChange { changes in
-            print(changes.new)
-            print(changes.old)
-        }
-        .retained(by: self)
-    }
-   
-}
-```
+- replace the retainer with a new one, which will trigger `ARC` to remove the retainer from memory and thus will discard all of its managed subscribers by default.
+- doing nothing, which if the object that has a retainer is discarded by `ARC`, it will automatically discard the `Retainer` and thus will discard all of its managed subscribers by default.
 
 You can always control how long you want to retain by using various retain methods:
 
@@ -258,9 +259,11 @@ class MyClass {
 }
 ```
 
+Use this retain capability wisely, since if you're not aware of how the ARC work it can introduce retain cycle.
+
 ## UIControl
 
-You can observe event in `UIControl` as long as in iOS by call `observeEventChange`, or by using `whenDidTriggered(by:)` if you want to observe specific event or for more specific `whenDidTapped` for touchUpInside event:
+You can observe an event in `UIControl` as long as in iOS by calling `observeEventChange`, or by using `whenDidTriggered(by:)` if you want to observe a specific event or for more specific `whenDidTapped` for touchUpInside event:
 
 ```swift
 myButton.observeEventChange { changes in
@@ -278,7 +281,7 @@ myButton.whenDidTapped { _ in
 
 ## Bindable
 
-You can observe changes in supported `UIView` property by accessing its observables in `bindables`:
+You can observe changes in the supported `UIView` property by accessing its observables in `bindables`:
 
 ```swift
 class MyClass {
@@ -307,18 +310,18 @@ class MyClass {
 }
 ```
 
-At the example above, every time `text` is set, it will automatically set the `textField.text`, and when `textField.text` is set it will automatically set the `text`.
+In the example above, every time `text` is set, it will automatically set the `textField.text`, and when `textField.text` is set it will automatically set the `text`.
 
 ## Filtering Subscription
 
-You can filter value by passing a closure that returning `Bool` value which indicated that value should be ignored:
+You can filter value by passing a closure that returns the `Bool` value which indicated that value should be ignored:
 
 ```swift
 class MyClass {
     @Subject var text: String
     
     func observeText() {
-        $text.ignore { $0.new.isEmpty }
+        $text.ignore { $0.isEmpty }
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
@@ -327,16 +330,16 @@ class MyClass {
 }
 ```
 
-At the example above, `observeChange` closure will not run when the new value is empty
+In the example above, `observeChange` closure will not run when the new value is empty
 
-The opposite of ignore is `filter`
+The opposite of `ignore` is `filter`
 
 ```swift
 class MyClass {
     @Subject var text: String
     
     func observeText() {
-        $text.filter { $0.new.count > 5 }
+        $text.filter { $0.count > 5 }
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
@@ -345,11 +348,11 @@ class MyClass {
 }
 ```
 
-At the example above, observeChange closure will only run when the new value is bigger than 5
+In the example above, observeChange closure will only run when the new value is bigger than 5
 
 ## Throttling
 
-Sometimes you just want to delay some observing because if the value is coming too fast, it could be bottleneck some of your business logic like when you call API or something. It will automatically use the latest value when the closure fire:
+Sometimes you just want to delay some observing because if the value is coming too fast, it could bottleneck some of your business logic like when you call API or something. It will automatically use the latest value when the closure fire:
 
 ```swift
 class MyClass {
@@ -392,54 +395,20 @@ class MyClass {
 }
 ```
 
-It will make all the subscriber after this dispatch call to be run asyncrhonously in the given `DispatchQueue`
+It will make all the subscribers after this dispatch call to be run asynchronously in the given `DispatchQueue`
 
-You could make it synchronous if its already in the same `DispatchQueue` by adding `syncPrefered` flag:
+You could make it synchronous if it's already in the same `DispatchQueue` by using `observe(on:)`:
 
 ```swift
 class MyClass {
     @Subject var text: String?
     
     func observeText() {
-        $text.dispatch(on: .main, syncPrefered: true)
+        $text.observe(on: .main)
             .observeChange { changes in
                 print(changes.new)
                 print(changes.old)
             }
-            .retain()
-    }
-}
-```
-
-If you want the queue only used by the last subscriber, use `observeOn` instead:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-    
-    func observeText() {
-        $text.observeChange { changes in
-                print(changes.new)
-                print(changes.old)
-            }
-            .observeOn(.main)
-            .retain()
-    }
-}
-```
-
-To make sure it always run asynchronously:
-
-```swift
-class MyClass {
-    @Subject var text: String?
-    
-    func observeText() {
-        $text.observeChange { changes in
-                print(changes.new)
-                print(changes.old)
-            }
-            .observeOn(.main, asynchronously: true)
             .retain()
     }
 }
@@ -480,7 +449,7 @@ class MyClass {
 
 ## Observable Block
 
-You can always create `Observable` from code block by using `ObservableBlock`:
+You can always create `Observable` from the code block by using `ObservableBlock`:
 
 ```swift
 let myObservableFromBlock = ObservableBlock { accept in
@@ -492,6 +461,20 @@ let myObservableFromBlock = ObservableBlock { accept in
 myObservableFromBlock.observeChange { changes in
     print(changes)
 }.retain()
+```
+
+## Publisher
+
+The publisher is the Observable that is only used for Publishing value
+
+```swift
+let myPublisher = Publisher<Int>()
+
+...
+...
+
+// it will then publish 10 to all of its subscribers
+myPublisher.publish(10)
 ```
 
 ## Relay value to another Observable
@@ -562,6 +545,29 @@ class MyClass {
         $userName.combine(with: $fullName, $password)
             .mapped { 
                 User(
+                    userName: $0.new.0 ?? "", 
+                    fullName: $0.new.1 ?? "", 
+                    password: $0.new.2 ?? ""
+                )
+            }.relayChanges(to: $user)
+            .retain()
+    }
+}
+```
+
+It will generate an Observable of all combined values but is optional since some values might not be there when one of the observables is triggered. To make sure that it will only be called triggered when all of the combined value is available, you can use `compactCombine` instead
+
+```swift
+class MyClass {
+    @Subject var userName: String = ""
+    @Subject var fullName: String = ""
+    @Subject var password: String = ""
+    @Subject var user: User = User()
+    
+    func observeText() {
+        $userName.compactCombine(with: $fullName, $password)
+            .mapped { 
+                User(
                     userName: $0.new.0, 
                     fullName: $0.new.1, 
                     password: $0.new.2
@@ -572,8 +578,10 @@ class MyClass {
 }
 ```
 
+It will not be triggered until all the observable is emitting a value.
+
 ***
 
 ## Contribute
 
-You know-how. Just clone and do pull request
+You know-how. Just clone and do a pull request
