@@ -114,7 +114,6 @@ extension Observable {
         observe(on: .main)
     }
     
-    
     /// Run the next observer in the main thread asynchronously
     /// - Returns: New Observable that will run the observer in the MainThread
     @inlinable public func dispatchOnMain() -> Observable<Output> {
