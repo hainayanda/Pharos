@@ -9,8 +9,13 @@ import Foundation
 
 open class Publisher<Output>: BufferedObservable<Output> {
     
-    public init() {
+    public override init() {
         super.init()
+    }
+    
+    public init(_ buffer: Output) {
+        super.init()
+        self.buffer = buffer
     }
     
     open func publish(_ value: Output) {

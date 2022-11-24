@@ -21,8 +21,14 @@ public struct Changes<State> {
     }
     
     func canBeConsumed(by source: AnyObject) -> Bool {
-        guard let triggers = triggers else { return !alreadyConsumed(by: source) }
-        return triggers.contains(ObjectIdentifier(source))
+        guard !alreadyConsumed(by: source) else { return false }
+        guard let triggers = triggers else { return true }
+        let realSource = (source as? WrappingObserver)?.wrapped ?? source
+        guard triggers.contains(ObjectIdentifier(realSource)) else {
+            guard let parent = (realSource as? AnyObservable)?.parent else { return false }
+            return triggers.contains(ObjectIdentifier(parent))
+        }
+        return true
     }
     
     func alreadyConsumed(by source: AnyObject) -> Bool {

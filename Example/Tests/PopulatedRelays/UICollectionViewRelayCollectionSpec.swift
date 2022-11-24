@@ -175,7 +175,7 @@ class UICollectionViewRelayCollectionSpec: QuickSpec {
     }
 }
 
-extension UICollectionViewRelayCollectionSpec:
+extension UICollectionViewRelayCollectionSpec :
     UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) { }

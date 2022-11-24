@@ -307,7 +307,7 @@ class UITableViewRelayCollectionSpec: QuickSpec {
     }
 }
 
-extension UITableViewRelayCollectionSpec:
+extension UITableViewRelayCollectionSpec :
     UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         2

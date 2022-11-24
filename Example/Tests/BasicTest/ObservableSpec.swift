@@ -34,6 +34,42 @@ class ObservableSpec: QuickSpec {
                 setCount: 1
             )
         }
+        it("should fire to the one request it") {
+            var firstObserverCalled: Bool = false
+            var secondObserverCalled: Bool = false
+            var thirdObserverCalled: Bool = false
+            var fourthObserverCalled: Bool = false
+            subject.observe { _ in
+                firstObserverCalled = true
+            }.retain()
+            
+            subject.filter { _ in true }.observe { _ in
+                secondObserverCalled = true
+            }.retain()
+            
+            subject.observe { _ in
+                thirdObserverCalled = true
+            }
+            .retain()
+            .fire()
+            
+            expect(firstObserverCalled).to(beFalse())
+            expect(secondObserverCalled).to(beFalse())
+            expect(thirdObserverCalled).to(beTrue())
+            
+            thirdObserverCalled = false
+            
+            subject.filter { _ in true }.observe { _ in
+                fourthObserverCalled = true
+            }
+            .retain()
+            .fire()
+            
+            expect(firstObserverCalled).to(beFalse())
+            expect(secondObserverCalled).to(beFalse())
+            expect(thirdObserverCalled).to(beFalse())
+            expect(fourthObserverCalled).to(beTrue())
+        }
         it("should retain subscriber using retainer") {
             var retainer: Retainer? = Retainer()
             let changeWrapper = listenDidSet(for: subject, retainTo: retainer!)

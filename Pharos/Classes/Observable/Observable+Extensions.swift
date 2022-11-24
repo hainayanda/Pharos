@@ -17,10 +17,9 @@ extension Observable {
     /// - Returns: New Observable that consume the value from this bindable
     func addChildBindable<ChildOutput>(_ listener: @escaping (Changes<Output>, Observable<ChildOutput>) -> Void) -> Observable<ChildOutput> {
         let child = Observable<ChildOutput>(parent: self)
-        observeChange { [unowned child] value in
+        return observeChange { [unowned child] value in
             listener(value, child)
-        }.retained(by: child)
-        return child
+        }.asParent(of: child)
     }
     
     /// Map this Observable into another form of Observable

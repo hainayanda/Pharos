@@ -553,6 +553,7 @@
 		7315FD182924B13200A31A41 /* Observable */ = {
 			isa = PBXGroup;
 			children = (
+				73E673E629268FED006685B6 /* BufferedObservable.swift */,
 				7315FD052924AEF300A31A41 /* CombinedObservable.swift */,
 				7315FD232924FF6200A31A41 /* KVOObservable.swift */,
 				7315FD032924AEF300A31A41 /* MergedObservable.swift */,
@@ -561,7 +562,6 @@
 				7315FD212924FE2F00A31A41 /* ObservableBlock.swift */,
 				7315FD252925009C00A31A41 /* Publisher.swift */,
 				7315FD012924AEF300A31A41 /* Subject.swift */,
-				73E673E629268FED006685B6 /* BufferedObservable.swift */,
 			);
 			name = Observable;
 			path = Pharos/Classes/Observable;
@@ -604,11 +604,11 @@
 			isa = PBXGroup;
 			children = (
 				7315FD192924B28200A31A41 /* AnyObservable.swift */,
+				7315FD112924B08E00A31A41 /* Changes.swift */,
 				7315FD1D2924EFED00A31A41 /* Invokable.swift */,
 				7315FD1B2924B33C00A31A41 /* Observing.swift */,
 				7315FD022924AEF300A31A41 /* Retainable.swift */,
 				7315FD042924AEF300A31A41 /* Unwrapable.swift */,
-				7315FD112924B08E00A31A41 /* Changes.swift */,
 			);
 			name = Base;
 			path = Pharos/Classes/Base;

@@ -10,6 +10,12 @@ import Foundation
 // MARK: Retainable
 
 public protocol Retainable: AnyObject {
+    
+    /// Retain this object as parent of AnyObservable
+    /// - Parameter observable: Child
+    /// - Returns: given Child
+    func asParent<Child: AnyObservable>(of observable: Child) -> Child
+    
     /// Retain this object to the given object
     /// - Parameter object: object where this object will be retained
     /// - Returns: Invokable
@@ -105,12 +111,13 @@ extension AnyObservable {
 class RetainableObserver<Value>: Retainable, Observing, Invokable {
     
     public typealias Observer = (Changes<Value>) -> Void
-    // to make sure it will only retained child Observable not Boxed, so Boxed will only be retained by object where they are declared
+    // to make sure it will only retained child Observable not Boxed, so Observable will only be retained by object where they are declared
     private var retainedParent: InvokableObservable?
     private weak var weakParent: InvokableObservable?
     var parent: AnyObservable? {
         retainedParent ?? weakParent
     }
+    weak var child: AnyObservable?
     private var observer: Observer?
     private var shouldDiscard: (() -> Bool)?
     var isDiscarded: Bool { observer == nil }
@@ -129,6 +136,12 @@ class RetainableObserver<Value>: Retainable, Observing, Invokable {
         guard !discarded(), changes.canBeConsumed(by: self) else { return false }
         observer?(changes.consumed(by: self))
         return true
+    }
+    
+    func asParent<Child>(of observable: Child) -> Child where Child: AnyObservable {
+        child = observable
+        retained(by: observable)
+        return observable
     }
     
     @inlinable func retain() -> Invokable {
@@ -157,10 +170,11 @@ class RetainableObserver<Value>: Retainable, Observing, Invokable {
         retainedParent = nil
         weakParent = nil
         observer = nil
+        child = nil
     }
     
     @inlinable func fire() {
-        (parent as? InvokableObservable)?.signalFire(from: [ObjectIdentifier(self)])
+        (parent as? InvokableObservable)?.signalFire(from: [ObjectIdentifier(child ?? self)])
     }
     
     private func discarded() -> Bool {
@@ -192,18 +206,27 @@ class RetainableGroup: Retainable {
         self.retainables = retainables
     }
     
+    func asParent<Child>(of observable: Child) -> Child where Child: AnyObservable {
+        retained(by: observable)
+        return observable
+    }
+    
+    @discardableResult
     @inlinable func retained(by object: AnyObject) -> Invokable {
         InvokableGroup(invokables: retainables.map { $0.retained(by: object) })
     }
     
+    @discardableResult
     @inlinable func retainedExclusively(by object: AnyObject) -> Invokable {
         InvokableGroup(invokables: retainables.map { $0.retainedExclusively(by: object) })
     }
     
+    @discardableResult
     @inlinable func retain() -> Invokable {
         InvokableGroup(invokables: retainables.map { $0.retain() })
     }
     
+    @discardableResult
     @inlinable func retainUntil(_ shouldDiscard: @escaping () -> Bool) -> Invokable {
         InvokableGroup(invokables: retainables.map { $0.retainUntil(shouldDiscard) })
     }
@@ -256,4 +279,16 @@ public class Retainer {
     public func discardAll() {
         objc_setAssociatedObject(self, &retainingKey, [], .OBJC_ASSOCIATION_RETAIN)
     }
+}
+
+protocol WrappingObserver {
+    var wrapped: AnyObject? { get }
+}
+
+extension WeakWrappedObserver: WrappingObserver {
+    var wrapped: AnyObject? { observer?.wrapped }
+}
+
+extension RetainableObserver: WrappingObserver {
+    var wrapped: AnyObject? { (child as? WrappingObserver)?.wrapped ?? child }
 }
